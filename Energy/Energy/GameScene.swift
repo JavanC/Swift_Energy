@@ -20,10 +20,30 @@ class GameScene: SKScene {
             moneyLabel.text = "Money: \(money)"
         }
     }
+    // tileMap
+    var tileMap: Array<Array<String>> = []
     
     override func didMoveToView(view: SKView) {
-        // MARK: Tick Updata Data
-        gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "dataUpdate", userInfo: nil, repeats: true)
+        
+        // MARK: tileMap
+        for _ in 0 ..< 3 {
+            let test = Array(count: 4, repeatedValue: "x")
+            tileMap.append(test)
+        }
+        print(tileMap)
+        print(tileMap.count)
+        print(frame.size.width)
+        print(frame.size.height)
+        for (row, line) in tileMap.enumerate() {
+            for (column, letter) in line.enumerate() {
+                let position = CGPoint(x: 64 * column + 800, y: 64 * row + 640)
+                if letter == "x" {
+                    let node = SKSpriteNode(imageNamed: "block")
+                    node.position = position
+                    addChild(node)
+                }
+            }
+        }
         
         // MARK: Setting Money Label
         moneyLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -35,7 +55,11 @@ class GameScene: SKScene {
         // MARK: Load Score
         defaults = NSUserDefaults.standardUserDefaults()
         money = defaults.integerForKey("Money")
-        print(money)
+        
+        // MARK: Tick Updata Data
+        let tick = 0.5
+        gameTimer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
+        
         
         
         // MARK: Load Map
@@ -50,17 +74,22 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
+        let touch = touches.first {
+            print(touch.
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {
+        
     }
-    func dataUpdate() {
-        money += 100
+    func tickUpdata() {
+        money += 10
         save()
     }
     func save() {
         defaults.setInteger(money, forKey: "Money")
+        
+        defaults.setObject(tileMap, forKey: "TileMap")
     }
 //    
 //    func loadLevel() {
