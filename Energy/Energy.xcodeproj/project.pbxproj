@@ -27,6 +27,7 @@
 		6541D6CE1C0D9EEC0034C292 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6541D6C11C0D9EEC0034C292 /* star@2x.png */; };
 		6541D6CF1C0D9EEC0034C292 /* vortex.png in Resources */ = {isa = PBXBuildFile; fileRef = 6541D6C21C0D9EEC0034C292 /* vortex.png */; };
 		6541D6D01C0D9EEC0034C292 /* vortex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6541D6C31C0D9EEC0034C292 /* vortex@2x.png */; };
+		65A5E77B1C102BC2002DC5AB /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A5E77A1C102BC2002DC5AB /* land.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		6541D6C11C0D9EEC0034C292 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		6541D6C21C0D9EEC0034C292 /* vortex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vortex.png; sourceTree = "<group>"; };
 		6541D6C31C0D9EEC0034C292 /* vortex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vortex@2x.png"; sourceTree = "<group>"; };
+		65A5E77A1C102BC2002DC5AB /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 		6541D6B61C0D9EEC0034C292 /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				65A5E77A1C102BC2002DC5AB /* land.png */,
 				6541D6B71C0D9EEC0034C292 /* background.jpg */,
 				6541D6B81C0D9EEC0034C292 /* background@2x.jpg */,
 				6541D6B91C0D9EEC0034C292 /* block.png */,
@@ -177,6 +180,7 @@
 			files = (
 				6541D6A31C0D9C2A0034C292 /* GameScene.sks in Resources */,
 				6541D6C61C0D9EEC0034C292 /* block.png in Resources */,
+				65A5E77B1C102BC2002DC5AB /* land.png in Resources */,
 				6541D6CB1C0D9EEC0034C292 /* player.png in Resources */,
 				6541D6C41C0D9EEC0034C292 /* background.jpg in Resources */,
 				6541D6AF1C0D9C2A0034C292 /* LaunchScreen.storyboard in Resources */,
@@ -352,6 +356,7 @@
 				6541D6B51C0D9C2A0034C292 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
