@@ -20,30 +20,51 @@ class GameScene: SKScene {
             moneyLabel.text = "Money: \(money)"
         }
     }
+    
+    var tilemap: TileMap!
     // tileMap
-    var tileMap: Array<Array<String>> = []
+//    var tileMapType: Array<Array<String>> = []
     
     override func didMoveToView(view: SKView) {
         
-        // MARK: tileMap
-        for _ in 0 ..< 3 {
-            let test = Array(count: 4, repeatedValue: "x")
-            tileMap.append(test)
-        }
-        print(tileMap)
-        print(tileMap.count)
+        let tileset = Tileset(name: "tileset", tileSize: CGSize(width: 64, height: 64))
+        tileset.addTileData("block")
+        tilemap = TileMap(name: "test map", mapSize: CGSize(width: 3, height: 3), maxMapSize: 3, tileset: tileset)
+        tilemap.position = CGPoint(x: 200, y: 200)
+        addChild(tilemap)
+        tilemap.creatBlankMap()
+        
         print(frame.size.width)
         print(frame.size.height)
-        for (row, line) in tileMap.enumerate() {
-            for (column, letter) in line.enumerate() {
-                let position = CGPoint(x: 64 * column + 800, y: 64 * row + 640)
-                if letter == "x" {
-                    let node = SKSpriteNode(imageNamed: "block")
-                    node.position = position
-                    addChild(node)
-                }
-            }
-        }
+        
+        
+        
+        // MARK: tileMap
+//        for _ in 0 ..< 3 {
+//            let test = Array(count: 4, repeatedValue: "x")
+//            tileMapType.append(test)
+//        }
+//        
+//        let W: CGFloat = 4
+//        let H: CGFloat = 3
+//        let scale: CGFloat = 2
+//        let Map = SKSpriteNode()
+//        Map.position = CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0)
+//        
+//        for (row, line) in tileMapType.enumerate() {
+//            for (column, letter) in line.enumerate() {
+//                let position = CGPoint(x: 64 * column + 32, y: 64 * row + 32)
+//                if letter == "x" {
+//                    let node = SKSpriteNode(imageNamed: "block")
+//                    node.position = position
+//                    Map.addChild(node)
+//                }
+//            }
+//        }
+//        
+//        Map.size = CGSizeMake(64 * W * scale, 64 * H * scale)
+//        addChild(Map)
+        
         
         // MARK: Setting Money Label
         moneyLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -74,8 +95,17 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first {
-            print(touch.
+        if let touch = touches.first {
+            let location = touch.locationInNode(self)
+            print(location)
+            
+            let tilemaplocation = touch.locationInNode(tilemap)
+            let coord = tilemap.Position2Coord(tilemaplocation)
+            print(coord)
+            
+            if let tile = tilemap.tileForCoord(coord) {
+                tile.sprite.alpha = 0.5
+            }
         }
     }
    
@@ -89,7 +119,7 @@ class GameScene: SKScene {
     func save() {
         defaults.setInteger(money, forKey: "Money")
         
-        defaults.setObject(tileMap, forKey: "TileMap")
+//        defaults.setObject(tileMapType, forKey: "TileMap")
     }
 //    
 //    func loadLevel() {
