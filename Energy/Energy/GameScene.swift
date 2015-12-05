@@ -29,7 +29,7 @@ class GameScene: SKScene {
         
         let tileset = Tileset(name: "level1", tileSize: CGSize(width: 64, height: 64))
         tileset.addTileData("x", imageName: "block")
-        tilemap = TileMap(name: "level1", mapSize: CGSize(width: 3, height: 3), maxMapSize: 3, tileset: tileset)
+        tilemap = TileMap(name: "level1", mapSize: CGSize(width: 4, height: 3), tileset: tileset)
         
         tilemap.position = CGPoint(x: 200, y: 200)
         addChild(tilemap)

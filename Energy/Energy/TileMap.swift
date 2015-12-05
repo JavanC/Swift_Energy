@@ -10,9 +10,9 @@ import SpriteKit
 
 class Tile : SKNode {
     // MARK: Properties
-    let sprite: SKSpriteNode
-    let texture: SKTexture
     let coord: CGPoint
+    let texture: SKTexture
+    let sprite: SKSpriteNode
     
     // MARK: Initialization
     init(coord: CGPoint, texture: SKTexture) {
@@ -51,62 +51,60 @@ class Tileset {
 class TileMap : SKNode {
     // MARK: Properties
     let mapSize: CGSize
-    let maxMapSize: Int
     var tileset: Tileset
     var tiles = Array< Array<Tile?>>()
     
     // MARK: Initialization
-    init(name: String, mapSize: CGSize, maxMapSize: Int, tileset: Tileset) {
+    init(name: String, mapSize: CGSize, tileset: Tileset) {
         self.mapSize = mapSize
-        self.maxMapSize = maxMapSize
         self.tileset = tileset
         
         super.init()
         
-        for _ in 0 ..< maxMapSize {
-            tiles.append(Array(count: maxMapSize, repeatedValue: nil))
+        for _ in 0 ..< Int(mapSize.height) {
+            tiles.append(Array(count: Int(mapSize.width), repeatedValue: nil))
         }
+        print(tiles)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Coord transfer position
+    // MARK: Coord transfer to position
     func Coord2Position(coord: CGPoint) -> CGPoint {
         let x = tileset.tileSize.width * coord.x
         let y = tileset.tileSize.height * -coord.y
         return CGPoint(x: x, y: y)
     }
+    // MARK: Position transfer to Coord
     func Position2Coord(tilemapPosition: CGPoint) -> CGPoint {
         let x = tilemapPosition.x / tileset.tileSize.width
         let y = tilemapPosition.y / -tileset.tileSize.height
         return CGPoint(x: Int(x), y: Int(y))
     }
+    // MARK: Return the tile by coord
     func tileForCoord(coord: CGPoint) -> Tile? {
-        if validCoord(coord) {
-            return tiles[Int(coord.x)][Int(coord.y)]
+        if coord.x < 0 || coord.x > mapSize.width - 1 || coord.y < 0 || coord.y > mapSize.height - 1 {
+            return nil
         }
-        return nil
+        return tiles[Int(coord.y)][Int(coord.x)]
     }
-    func validCoord(coord: CGPoint) -> Bool {
-        if coord.x < 0 || coord.x > CGFloat(maxMapSize - 1) || coord.y < 0 || coord.y > CGFloat(maxMapSize - 1) {
-            return false
-        }
-        return true
-    }
+    
+    
     
     // test
     func creatBlankMap() {
-        for x in 0...2 {
+        for x in 0...3 {
             for y in 0...2 {
                 if let data = tileset.tileData["x"] {
                     let coord = CGPoint(x: x, y: y)
                     let tile = Tile(coord: coord, texture: data)
                     tile.position = Coord2Position(coord)
                     addChild(tile)
-                    tiles[x][y] = tile
+                    tiles[y][x] = tile
                 }
             }
         }
+        print(tiles)
     }
 }
