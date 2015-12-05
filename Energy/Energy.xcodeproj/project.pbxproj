@@ -69,8 +69,8 @@
 				6541D6A41C0D9C2A0034C292 /* GameScene.swift */,
 				6541D6A61C0D9C2A0034C292 /* GameViewController.swift */,
 				6541D6A81C0D9C2A0034C292 /* Main.storyboard */,
-				6541D6AB1C0D9C2A0034C292 /* Assets.xcassets */,
 				6541D6AD1C0D9C2A0034C292 /* LaunchScreen.storyboard */,
+				6541D6AB1C0D9C2A0034C292 /* Assets.xcassets */,
 				6541D6B01C0D9C2A0034C292 /* Info.plist */,
 			);
 			path = Energy;

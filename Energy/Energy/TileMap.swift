@@ -11,15 +11,15 @@ import SpriteKit
 class Tile : SKNode {
     // MARK: Properties
     let sprite: SKSpriteNode
-    let data: TileData
+    let texture: SKTexture
     let coord: CGPoint
     
     // MARK: Initialization
-    init(coord: CGPoint,data: TileData) {
+    init(coord: CGPoint, texture: SKTexture) {
         self.coord = coord
-        self.data = data
-        self.sprite = SKSpriteNode(texture: data.texture)
-
+        self.texture = texture
+        self.sprite = SKSpriteNode(texture: texture)
+        
         super.init()
         
         sprite.anchorPoint = CGPoint(x: 0, y: 1)
@@ -30,23 +30,11 @@ class Tile : SKNode {
     }
 }
 
-class TileData {
-    // MARK: Properties
-    let name: String
-    let texture: SKTexture
-    
-    // MARK: Initialization
-    init(name: String, texture: String) {
-        self.name = name
-        self.texture = SKTexture(imageNamed: texture)
-    }
-}
-
 class Tileset {
     // MARK: Properties
     let name: String
     let tileSize: CGSize
-    var tileData = [String: TileData]()
+    var tileData = [String: SKTexture]()
     
     // MARK: Initialization
     init(name: String, tileSize: CGSize) {
@@ -54,9 +42,9 @@ class Tileset {
         self.tileSize = tileSize
     }
     // MARK: Add Tile Data function
-    func addTileData(name: String) {
-        let data = TileData(name: name, texture: name)
-        tileData[name] = data
+    func addTileData(word: String, imageName: String) {
+        let texture = SKTexture(imageNamed: imageName)
+        tileData[word] = texture
     }
 }
 
@@ -66,8 +54,6 @@ class TileMap : SKNode {
     let maxMapSize: Int
     var tileset: Tileset
     var tiles = Array< Array<Tile?>>()
-    let tileLayer = SKNode()
-    
     
     // MARK: Initialization
     init(name: String, mapSize: CGSize, maxMapSize: Int, tileset: Tileset) {
@@ -80,12 +66,11 @@ class TileMap : SKNode {
         for _ in 0 ..< maxMapSize {
             tiles.append(Array(count: maxMapSize, repeatedValue: nil))
         }
-        addChild(tileLayer)
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     // MARK: Coord transfer position
     func Coord2Position(coord: CGPoint) -> CGPoint {
         let x = tileset.tileSize.width * coord.x
@@ -104,7 +89,7 @@ class TileMap : SKNode {
         return nil
     }
     func validCoord(coord: CGPoint) -> Bool {
-        if coord.x < 0 || coord.x > CGFloat(maxMapSize) || coord.y < 0 || coord.y > CGFloat(maxMapSize) {
+        if coord.x < 0 || coord.x > CGFloat(maxMapSize - 1) || coord.y < 0 || coord.y > CGFloat(maxMapSize - 1) {
             return false
         }
         return true
@@ -114,11 +99,11 @@ class TileMap : SKNode {
     func creatBlankMap() {
         for x in 0...2 {
             for y in 0...2 {
-                if let data = tileset.tileData["block"] {
+                if let data = tileset.tileData["x"] {
                     let coord = CGPoint(x: x, y: y)
-                    let tile = Tile(coord: coord, data: data)
+                    let tile = Tile(coord: coord, texture: data)
                     tile.position = Coord2Position(coord)
-                    tileLayer.addChild(tile)
+                    addChild(tile)
                     tiles[x][y] = tile
                 }
             }
