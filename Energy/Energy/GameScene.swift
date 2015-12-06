@@ -34,7 +34,21 @@ class GameScene: SKScene {
         tilemap.position = CGPoint(x: 200, y: 200)
         addChild(tilemap)
         
-        tilemap.creatBlankMap()
+        
+        
+        for x in 0...3 {
+            for y in 0...2 {
+                if let texture = tileset.tileData["x"] {
+                    let coord = CGPoint(x: x, y: y)
+                    let tile = Tile(coord: coord, texture: texture)
+                    tile.position = tilemap.Coord2Position(coord)
+                    tilemap.addChild(tile)
+                    tilemap.tiles[y][x] = tile
+                }
+            }
+        }
+        
+//        tilemap.creatBlankMap()
         
         print(frame.size.width)
         print(frame.size.height)
@@ -105,7 +119,7 @@ class GameScene: SKScene {
             let coord = tilemap.Position2Coord(tilemaplocation)
             print(coord)
             
-            if let tile = tilemap.tileForCoord(coord) {
+            if let tile = tilemap.TileForCoord(coord) {
                 tile.sprite.alpha = 0.5
             }
         }
