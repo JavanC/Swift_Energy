@@ -15,13 +15,14 @@ class Tile : SKNode {
     let sprite: SKSpriteNode
     
     // MARK: Initialization
-    init(coord: CGPoint, texture: SKTexture) {
+    init(name: String, coord: CGPoint, texture: SKTexture) {
         self.coord = coord
         self.texture = texture
         self.sprite = SKSpriteNode(texture: texture)
         
         super.init()
         
+        self.name = name
         sprite.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(sprite)
     }
@@ -42,7 +43,7 @@ class Tileset {
         self.tileSize = tileSize
     }
     // MARK: Add Tile Data function
-    func addTileData(word: String, imageName: String) {
+    func addTileData(word word: String, imageName: String) {
         let texture = SKTexture(imageNamed: imageName)
         tileData[word] = texture
     }
@@ -64,15 +65,6 @@ class TileMap : SKNode {
         // Set tiles Array initial
         for _ in 0 ..< Int(mapSize.height) {
             tiles.append(Array(count: Int(mapSize.width), repeatedValue: nil))
-        }
-        // Set all tile initial
-        for x in  0...Int(mapSize.width - 1) {
-            for y in 0...Int(mapSize.height - 1) {
-                let coord = CGPoint(x: x, y: y)
-                let texture = SKTexture()
-                let tile = Tile(coord: coord, texture: texture)
-                addChild(tile)
-            }
         }
     }
     required init?(coder aDecoder: NSCoder) {
@@ -98,36 +90,25 @@ class TileMap : SKNode {
         }
         return tiles[Int(coord.y)][Int(coord.x)]
     }
-    // MARK: Set tile in coord
-    func SetTileMapElement(coord: CGPoint, word: String) {
+    // MARK: Set tiles by word in coord
+    func SetTileMapElement(coord coord: CGPoint, word: String) {
+        if let T = TileForCoord(coord) {
+            T.removeFromParent()
+        }
         if let texture = tileset.tileData[word] {
-            let tile = Tile(coord: coord, texture: texture)
-            tiles[Int(coord.y)][Int(coord.x)] = tile
+            let tile = Tile(name: word, coord: coord, texture: texture)
             tile.position = Coord2Position(coord)
             addChild(tile)
+            tiles[Int(coord.y)][Int(coord.x)] = tile
         }
     }
-    
-    // test
-    func creatBlankMap() {
-        for x in 0...3 {
-            for y in 0...2 {
-                let coord = CGPoint(x: x, y: y)
-                if let tile = TileForCoord(coord) {
-                    if let texture = tileset.tileData["x"] {
-                        tile.texture = texture
-                    }
-                }
-//                
-//                if let data = tileset.tileData["x"] {
-//                    let coord = CGPoint(x: x, y: y)
-//                    let tile = Tile(coord: coord, texture: data)
-//                    tile.position = Coord2Position(coord)
-//                    addChild(tile)
-//                    tiles[y][x] = tile
-//                }
+    // MARK: Load Tile Map by word array
+    func LoadTileMap(array array: Array<Array<String>>) {
+        for (row, line) in array.enumerate() {
+            for (colume, letter) in line.enumerate() {
+                let coord = CGPoint(x: colume, y: row)
+                SetTileMapElement(coord: coord, word: letter)
             }
         }
-        print(tiles.count)
     }
 }
