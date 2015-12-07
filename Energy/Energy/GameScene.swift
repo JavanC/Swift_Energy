@@ -13,30 +13,50 @@ class GameScene: SKScene {
     var gameTimer: NSTimer!
     // Load
     var defaults: NSUserDefaults!
-    // Money Label
-    var moneyLabel: SKLabelNode!
-    var money: Int = 0 {
-        didSet {
-            moneyLabel.text = "Money: \(money)"
-        }
-    }
+    // Data
+    var money: Int = 0
+    var energy: Int = 0
+    var upgrade: Int = 0
     // tilemap
+    var tileset: Tileset!
     var tilemap: TileMap!
-    
+    let mapsize = CGPoint(x: 13, y: 9)
+    var mapscale: CGFloat!
+    // Show
+    var moneyLabel: SKLabelNode!
+
     override func didMoveToView(view: SKView) {
         
-        loadLevel1Map()
-        tilemap.SetTileMapElement(coord: CGPoint(x: 1, y: 1), word: "s")
-        
-        // MARK: Setting Money Label
-        moneyLabel = SKLabelNode(fontNamed: "Chalkduster")
-        moneyLabel.position = CGPoint(x: frame.size.width / 20.0, y: frame.size.height / 2.0)
-        moneyLabel.horizontalAlignmentMode = .Left
-        moneyLabel.fontSize = 20
-        addChild(moneyLabel)
+        mapscale = frame.size.height / (mapsize.y * 64)
         // MARK: Load Score
         defaults = NSUserDefaults.standardUserDefaults()
         money = defaults.integerForKey("Money")
+        
+        // tile initial
+        tileset = Tileset(name: "BuildingSet", tileSize: CGSize(width: 64, height: 64))
+        tileset.addTileData(word: "x", imageName: "block")
+        tileset.addTileData(word: "s", imageName: "star")
+        
+        // tileMap
+        loadLevelMap("level1")
+        // left Area
+        let left = SKSpriteNode(imageNamed: "background.jpg")
+        left.size = CGSizeMake(frame.size.width - 64 * mapsize.x * mapscale, frame.size.height)
+        left.anchorPoint = CGPoint(x: 0, y: 0)
+        left.position = CGPoint(x: 0, y: 0)
+        addChild(left)
+        
+        
+        
+
+        
+        
+        // MARK: Setting Money Label
+        moneyLabel = SKLabelNode(fontNamed: "Chalkduster")
+        moneyLabel.position = CGPoint(x: left.size.width / 2.0, y: frame.size.height / 2.0)
+        moneyLabel.horizontalAlignmentMode = .Left
+        moneyLabel.fontSize = 20
+        left.addChild(moneyLabel)
         
         // MARK: Tick Updata Data
         let tick = 0.5
@@ -61,6 +81,7 @@ class GameScene: SKScene {
     
     func tickUpdata() {
         money += 10
+        moneyLabel.text = "Money: \(money)"
         save()
     }
     
@@ -68,20 +89,11 @@ class GameScene: SKScene {
         defaults.setInteger(money, forKey: "Money")
     }
     
-    func loadLevel1Map() {
-        // tile initial
-        let tileset = Tileset(name: "level1", tileSize: CGSize(width: 64, height: 64))
-        tileset.addTileData(word: "x", imageName: "block")
-        tileset.addTileData(word: "s", imageName: "star")
-        
-        // tilemap initial
-        let mapsize = CGPoint(x: 13, y: 9)
-        let mapscale: CGFloat = frame.size.height / (mapsize.y * 64)
-        tilemap = TileMap(name: "level1", mapSize: CGSize(width: mapsize.x, height: mapsize.y), tileset: tileset)
+    func loadLevelMap(level: String) {
+        tilemap = TileMap(name: "Building", mapSize: CGSize(width: mapsize.x, height: mapsize.y), tileset: tileset)
         tilemap.position = CGPoint(x: frame.size.width - 64 * mapsize.x * mapscale, y: frame.size.height)
         tilemap.setScale(mapscale)
         addChild(tilemap)
-        
         // tilemap load data
         let array = Array(count: Int(mapsize.y), repeatedValue: Array(count: Int(mapsize.x), repeatedValue: "x"))
         tilemap.LoadTileMap(array: array)
