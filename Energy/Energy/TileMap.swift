@@ -57,10 +57,12 @@ class TileMap : SKNode {
     
     // MARK: Initialization
     init(name: String, mapSize: CGSize, tileset: Tileset) {
+        
         self.mapSize = mapSize
         self.tileset = tileset
         
         super.init()
+        self.name = name
         
         // Set tiles Array initial
         for _ in 0 ..< Int(mapSize.height) {
@@ -110,5 +112,17 @@ class TileMap : SKNode {
                 SetTileMapElement(coord: coord, word: letter)
             }
         }
+    }
+    // MARK: Check building Number
+    func checkBuildNumber(word: String) -> Int {
+        var num = 0
+        for (_, line) in tiles.enumerate() {
+            for (_, tile) in line.enumerate() {
+                if tile?.name == "s" {
+                    num++
+                }
+            }
+        }
+        return num
     }
 }
