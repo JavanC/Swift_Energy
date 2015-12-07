@@ -19,6 +19,7 @@ class GameScene: SKScene {
     var moneyLabel: SKLabelNode!
     var money: Int = 0
     var money_add: Int = 0
+    var energyLabel: SKLabelNode!
     var energy: Int = 0
     var upgrade: Int = 0
     var snum: Int = 0
@@ -35,7 +36,7 @@ class GameScene: SKScene {
     // BUTTON
     var buttonArea: SKSpriteNode!
     var choiceshow: SKSpriteNode!
-    var choicename: String!
+    var choicename: String = "s"
 
 
     override func didMoveToView(view: SKView) {
@@ -47,7 +48,6 @@ class GameScene: SKScene {
         
         
         // TOP
-        money = defaults.integerForKey("Money")
         moneyLabel = SKLabelNode(fontNamed: "San Francisco")
         moneyLabel.fontColor = UIColor.yellowColor()
         moneyLabel.fontSize = 20
@@ -55,7 +55,15 @@ class GameScene: SKScene {
         moneyLabel.horizontalAlignmentMode = .Left
         moneyLabel.zPosition = 3
         addChild(moneyLabel)
-
+        money = defaults.integerForKey("Money")
+        
+        energyLabel = SKLabelNode(fontNamed: "San Francisco")
+        energyLabel.fontColor = UIColor.blueColor()
+        energyLabel.fontSize = 20
+        energyLabel.position = CGPoint(x: 16, y: frame.size.height - 60)
+        energyLabel.horizontalAlignmentMode = .Left
+        energyLabel.zPosition = 3
+        addChild(energyLabel)
         
         // MID
         tile_initial()
@@ -76,11 +84,11 @@ class GameScene: SKScene {
         buttonArea.zPosition = 2
         addChild(buttonArea)
         
+        
         choiceshow = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 74, height: 74))
-        choiceshow.alpha = 0.6
+        choiceshow.alpha = 0
         choiceshow.zPosition = 4
         addChild(choiceshow)
-        
         
         let a1 = SKSpriteNode(imageNamed: "block")
         a1.name = "a1"
@@ -101,7 +109,7 @@ class GameScene: SKScene {
             let location = touch.locationInNode(self)
             print(location)
             for node in nodesAtPoint(location) {
-                
+
                 if node.name == "Building" {
                     let tilemaplocation = touch.locationInNode(tilemap)
                     print(tilemaplocation)
@@ -109,13 +117,15 @@ class GameScene: SKScene {
                     print(coord)
                     tilemap.SetTileMapElement(coord: coord, word: choicename)
                 }
-                
+            
                 if node.name == "a1" {
                     choicename = "x"
+                    choiceshow.alpha = 0.6
                     choiceshow.position = node.position
                 }
                 if node.name == "b1" {
                     choicename = "s"
+                    choiceshow.alpha = 0.6
                     choiceshow.position = node.position
                 }
                 
@@ -128,8 +138,9 @@ class GameScene: SKScene {
     }
     
     func tickUpdata() {
-        money += snum * 10
-        moneyLabel.text = "Money: \(money) +\(snum * 10)"
+        energy += snum * 10
+        moneyLabel.text = "Money: \(money)"
+        energyLabel.text = "Energy: \(energy) +\(snum * 10)"
         save()
     }
     func save() {
