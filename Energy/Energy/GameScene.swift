@@ -9,72 +9,45 @@
 import SpriteKit
 
 class GameScene: SKScene {
-    // Timer
+    
+    // OTHER
     var gameTimer: NSTimer!
-    // Load
     var defaults: NSUserDefaults!
-    // Show
+    
+    
+    // TOP
     var moneyLabel: SKLabelNode!
-    // Data
     var money: Int = 0
     var money_add: Int = 0
     var energy: Int = 0
     var upgrade: Int = 0
     var snum: Int = 0
     
+    
+    // MID
     var midArea: SKSpriteNode!
-    var buttomArea: SKSpriteNode!
-    
-    
-    // tilemap
     var tileset: Tileset!
     var tilemap: TileMap!
     let mapsize = CGPoint(x: 9, y: 11)
     var mapscale: CGFloat!
+    
+    
+    // BUTTON
+    var buttonArea: SKSpriteNode!
+    var choiceshow: SKSpriteNode!
+    var choicename: String!
 
 
     override func didMoveToView(view: SKView) {
         
-        mapscale = frame.size.width / (mapsize.x * 64)
-        tile_initial()
-
-        // mid Area
-        midArea = SKSpriteNode()
-        midArea.size = CGSizeMake(frame.size.width, 64 * mapsize.y * mapscale)
-        midArea.position = CGPoint(x: 0, y: frame.size.height - 64 * 2 * mapscale)
-        midArea.zPosition = 1
-        addChild(midArea)
-    
-        // button Area
-        buttomArea = SKSpriteNode(imageNamed: "background.jpg")
-        buttomArea.size = CGSizeMake(frame.size.width, frame.size.height - 64 * (mapsize.y + 2) * mapscale)
-        buttomArea.anchorPoint = CGPoint(x: 0, y: 0)
-        buttomArea.position = CGPoint(x: 0, y: 0)
-        buttomArea.zPosition = 2
-        addChild(buttomArea)
-        
-        let a1 = SKSpriteNode(imageNamed: "block")
-        a1.name = "a1"
-        a1.position = CGPoint(x: buttomArea.size.width / 4.0, y: buttomArea.size.height / 2.0)
-        buttomArea.addChild(a1)
-        
-        let b1 = SKSpriteNode(imageNamed: "star")
-        b1.name = "b1"
-        b1.position = CGPoint(x: buttomArea.size.width * 3 / 4.0, y: buttomArea.size.height / 2.0)
-        buttomArea.addChild(b1)
-        
-        
-        // tileMap
-        loadLevelMap("level1")
-        
-        
-        
-        
-        
-        // MARK: Load Score
+        // OTHER
+        let tick = 0.5
+        gameTimer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
         defaults = NSUserDefaults.standardUserDefaults()
+        
+        
+        // TOP
         money = defaults.integerForKey("Money")
-        // MARK: Setting Money Label
         moneyLabel = SKLabelNode(fontNamed: "San Francisco")
         moneyLabel.fontColor = UIColor.yellowColor()
         moneyLabel.fontSize = 20
@@ -84,12 +57,43 @@ class GameScene: SKScene {
         addChild(moneyLabel)
 
         
+        // MID
+        tile_initial()
+        mapscale = frame.size.width / (mapsize.x * 64)
+        midArea = SKSpriteNode()
+        midArea.size = CGSizeMake(frame.size.width, 64 * mapsize.y * mapscale)
+        midArea.position = CGPoint(x: 0, y: frame.size.height - 64 * 2 * mapscale)
+        midArea.zPosition = 1
+        addChild(midArea)
+        loadLevelMap("level1")
+    
         
+        // BUTTON
+        buttonArea = SKSpriteNode(imageNamed: "background.jpg")
+        buttonArea.size = CGSizeMake(frame.size.width, frame.size.height - 64 * (mapsize.y + 2) * mapscale)
+        buttonArea.anchorPoint = CGPoint(x: 0, y: 0)
+        buttonArea.position = CGPoint(x: 0, y: 0)
+        buttonArea.zPosition = 2
+        addChild(buttonArea)
+        
+        choiceshow = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 74, height: 74))
+        choiceshow.alpha = 0.6
+        choiceshow.zPosition = 4
+        addChild(choiceshow)
+        
+        
+        let a1 = SKSpriteNode(imageNamed: "block")
+        a1.name = "a1"
+        a1.position = CGPoint(x: buttonArea.size.width / 4.0, y: buttonArea.size.height / 2.0)
+        a1.zPosition = 3
+        buttonArea.addChild(a1)
+        
+        let b1 = SKSpriteNode(imageNamed: "star")
+        b1.name = "b1"
+        b1.position = CGPoint(x: buttonArea.size.width * 3 / 4.0, y: buttonArea.size.height / 2.0)
+        b1.zPosition = 3
+        buttonArea.addChild(b1)
 
-        
-        // MARK: Tick Updata Data
-        let tick = 0.5
-        gameTimer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -103,13 +107,17 @@ class GameScene: SKScene {
                     print(tilemaplocation)
                     let coord = tilemap.Position2Coord(tilemaplocation)
                     print(coord)
-                    tilemap.SetTileMapElement(coord: coord, word: "s")
+                    tilemap.SetTileMapElement(coord: coord, word: choicename)
                 }
                 
                 if node.name == "a1" {
-                    node.alpha = 0.4
+                    choicename = "x"
+                    choiceshow.position = node.position
                 }
-                
+                if node.name == "b1" {
+                    choicename = "s"
+                    choiceshow.position = node.position
+                }
                 
             }
         }
