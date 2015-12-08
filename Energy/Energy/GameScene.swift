@@ -38,6 +38,13 @@ class GameScene: SKScene {
     var bottomArea: SKSpriteNode!
     var choiceshow: SKSpriteNode!
     var choicename: String = "s"
+    var test: SKSpriteNode!
+    
+    var component: Dictionary<String, String>!
+    
+    var a1: SKSpriteNode!
+    var b1: SKSpriteNode!
+    var f1: SKSpriteNode!
     
     
     override func didMoveToView(view: SKView) {
@@ -112,31 +119,44 @@ class GameScene: SKScene {
         choiceshow.alpha = 0
         choiceshow.zPosition = 4
         addChild(choiceshow)
+
         
-        let a1 = SKSpriteNode(imageNamed: "block")
-        a1.name = "a1"
+        
+        a1 = SKSpriteNode(imageNamed: "block")
+        a1.name = "x"
         a1.position = CGPoint(x: bottomArea.size.width / 4.0, y: bottomArea.size.height / 2.0)
         a1.zPosition = 3
         bottomArea.addChild(a1)
         
-        let b1 = SKSpriteNode(imageNamed: "風力")
-        b1.name = "b1"
+        b1 = SKSpriteNode(imageNamed: "風力")
+        b1.name = "s"
         b1.position = CGPoint(x: bottomArea.size.width * 2 / 4.0, y: bottomArea.size.height / 2.0)
         b1.zPosition = 3
         bottomArea.addChild(b1)
         
-        let f1 = SKSpriteNode(imageNamed: "辦公室1")
-        f1.name = "f1"
+        f1 = SKSpriteNode(imageNamed: "辦公室1")
+        f1.name = "o"
         f1.position = CGPoint(x: bottomArea.size.width * 3 / 4.0, y: bottomArea.size.height / 2.0)
         f1.zPosition = 3
         bottomArea.addChild(f1)
     }
     
+    func choice(sprite: SKSpriteNode) {
+        choicename = sprite.name!
+        choiceshow.alpha = 0.6
+        choiceshow.position = sprite.position
+    }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.locationInNode(self)
             print(location)
             
+            if bottomArea.containsPoint(location) {
+                if a1.containsPoint(location) { choice(a1) }
+                if b1.containsPoint(location) { choice(b1) }
+                if f1.containsPoint(location) { choice(f1) }
+            }
+    
             for node in nodesAtPoint(location) {
                 print(node)
                 
@@ -152,22 +172,6 @@ class GameScene: SKScene {
                         money -= price!
                         tilemap.SetTileMapElement(coord: coord, word: choicename)
                     }
-                }
-                
-                if node.name == "a1" {
-                    choicename = "x"
-                    choiceshow.alpha = 0.6
-                    choiceshow.position = node.position
-                }
-                if node.name == "b1" {
-                    choicename = "s"
-                    choiceshow.alpha = 0.6
-                    choiceshow.position = node.position
-                }
-                if node.name == "f1" {
-                    choicename = "o"
-                    choiceshow.alpha = 0.6
-                    choiceshow.position = node.position
                 }
                 
                 if node.name == "sellButton" {
@@ -211,15 +215,17 @@ class GameScene: SKScene {
         let blockData = TileData(imageNamed: "block", price: 0)
         blockData.addOutputData(-1, produceEnergySpeed: 0)
         tileset.addTileData(word: "x", data: blockData)
+        component["x"] = "block"
         
         let WData = TileData(imageNamed: "風力", price: 1)
         WData.addOutputData(4, produceEnergySpeed: 1)
         tileset.addTileData(word: "s", data: WData)
+        component["s"] = "風力"
         
         let oData = TileData(imageNamed: "辦公室1", price: 10)
         oData.addOfficeData(5)
         tileset.addTileData(word: "o", data: oData)
-        
+        component["o"] = "辦公室1"
     }
     
     func loadLevelMap(level: String) {
