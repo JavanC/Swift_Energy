@@ -26,6 +26,7 @@ class GameScene: SKScene {
     var upgrade: Int = 0
     var snum: Int = 0
     var sellButton: SKLabelNode!
+    var autoSellValue: Int = 0
     
     // MID
     var midArea: SKSpriteNode!
@@ -37,10 +38,10 @@ class GameScene: SKScene {
     var bottomArea: SKSpriteNode!
     var choiceshow: SKSpriteNode!
     var choicename: String = "s"
-
-
+    
+    
     override func didMoveToView(view: SKView) {
-
+        
         // OTHER
         let tick = 0.5
         gameTimer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
@@ -66,7 +67,7 @@ class GameScene: SKScene {
         moneyLabel.zPosition = 3
         topArea.addChild(moneyLabel)
         money = defaults.integerForKey("Money")
-
+        
         energyLabel = SKLabelNode(fontNamed: "San Francisco")
         energyLabel.fontColor = UIColor.blueColor()
         energyLabel.fontSize = 20
@@ -95,7 +96,7 @@ class GameScene: SKScene {
         addChild(midArea)
         tile_initial()
         loadLevelMap("level1")
-    
+        
         
         // BOTTOM
         bottomArea = SKSpriteNode(imageNamed: "background.jpg")
@@ -120,9 +121,15 @@ class GameScene: SKScene {
         
         let b1 = SKSpriteNode(imageNamed: "風力")
         b1.name = "b1"
-        b1.position = CGPoint(x: bottomArea.size.width * 3 / 4.0, y: bottomArea.size.height / 2.0)
+        b1.position = CGPoint(x: bottomArea.size.width * 2 / 4.0, y: bottomArea.size.height / 2.0)
         b1.zPosition = 3
         bottomArea.addChild(b1)
+        
+        let f1 = SKSpriteNode(imageNamed: "辦公室1")
+        f1.name = "f1"
+        f1.position = CGPoint(x: bottomArea.size.width * 3 / 4.0, y: bottomArea.size.height / 2.0)
+        f1.zPosition = 3
+        bottomArea.addChild(f1)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -146,7 +153,7 @@ class GameScene: SKScene {
                         tilemap.SetTileMapElement(coord: coord, word: choicename)
                     }
                 }
-            
+                
                 if node.name == "a1" {
                     choicename = "x"
                     choiceshow.alpha = 0.6
@@ -157,27 +164,40 @@ class GameScene: SKScene {
                     choiceshow.alpha = 0.6
                     choiceshow.position = node.position
                 }
+                if node.name == "f1" {
+                    choicename = "o"
+                    choiceshow.alpha = 0.6
+                    choiceshow.position = node.position
+                }
                 
                 if node.name == "sellButton" {
-                    sellEnergy()
+                    sellEnergy("all")
                 }
             }
         }
     }
-   
+    
     override func update(currentTime: CFTimeInterval) {
         moneyLabel.text = "Money: \(money)"
         energyLabel.text = "Energy: \(energy) +\(snum)"
     }
     
     func tickUpdata() {
-        
+        // count
         tilemap.tickProduce()
+        
+        // produce
         snum = tilemap.checkBuildNumber("s")
         energy += snum
         if energy >= energy_max {
             energy = energy_max
         }
+        
+        // sell
+        let onum = tilemap.checkBuildNumber("o")
+        autoSellValue = onum * tileset.tileData["o"]!.sales
+        sellEnergy("auto")
+        
         save()
     }
     func save() {
@@ -196,6 +216,9 @@ class GameScene: SKScene {
         WData.addOutputData(4, produceEnergySpeed: 1)
         tileset.addTileData(word: "s", data: WData)
         
+        let oData = TileData(imageNamed: "辦公室1", price: 10)
+        oData.addOfficeData(5)
+        tileset.addTileData(word: "o", data: oData)
         
     }
     
@@ -209,9 +232,19 @@ class GameScene: SKScene {
         tilemap.LoadTileMap(array: array)
     }
     
-    func sellEnergy() {
-        print("sell!")
-        money += energy
-        energy = 0
+    func sellEnergy(method: String) {
+        if method == "all" {
+            print("sell all!")
+            money += energy
+            energy = 0
+        } else if method == "auto" {
+            if energy >= autoSellValue {
+                money += autoSellValue
+                energy -= autoSellValue
+            } else {
+                money += energy
+                energy = 0
+            }
+        }
     }
 }

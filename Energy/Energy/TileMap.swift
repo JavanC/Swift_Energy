@@ -38,9 +38,12 @@ class TileData {
     let texture: SKTexture
     let price: Int
     
+    
     var category: String = ""
     var produceMaxTime: Int = 0
     var produceEnergySpeed: Int = 0
+    
+    var sales: Int = 0
     
     // MARK: Initialization
     init(imageNamed: String, price: Int) {
@@ -53,6 +56,11 @@ class TileData {
         self.category = "Output"
         self.produceMaxTime = produceMaxTime
         self.produceEnergySpeed = produceEnergySpeed
+    }
+    
+    func addOfficeData(sales: Int) {
+        self.category = "office"
+        self.sales = sales
     }
 }
 
