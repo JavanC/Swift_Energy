@@ -11,18 +11,17 @@ import SpriteKit
 class Tile : SKNode {
     // MARK: Properties
     let coord: CGPoint
-    var texture: SKTexture
+    var data: TileData
     let sprite: SKSpriteNode
     
     // MARK: Initialization
-    init(name: String, coord: CGPoint, texture: SKTexture) {
+    init(name: String, coord: CGPoint, data: TileData) {
         self.coord = coord
-        self.texture = texture
-        self.sprite = SKSpriteNode(texture: texture)
+        self.data = data
+        self.sprite = SKSpriteNode(texture: data.texture)
         
         super.init()
-        
-        self.name = name
+        self.name = "Tile_\(name)"
         sprite.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(sprite)
     }
@@ -31,11 +30,26 @@ class Tile : SKNode {
     }
 }
 
+class TileData {
+    // MARK: properties
+    let name: String
+    let texture: SKTexture
+    
+    var produceEnergySpeed: Int
+    
+    // MARK: Initialization
+    init(name: String, imageNamed: String, produceEnergySpeed: Int) {
+        self.name = name
+        self.texture = SKTexture(imageNamed: imageNamed)
+        self.produceEnergySpeed = produceEnergySpeed
+    }
+}
+
 class Tileset {
     // MARK: Properties
     let name: String
     let tileSize: CGSize
-    var tileData = [String: SKTexture]()
+    var tileData = [String: TileData]()
     
     // MARK: Initialization
     init(name: String, tileSize: CGSize) {
@@ -43,9 +57,10 @@ class Tileset {
         self.tileSize = tileSize
     }
     // MARK: Add Tile Data function
-    func addTileData(word word: String, imageName: String) {
-        let texture = SKTexture(imageNamed: imageName)
-        tileData[word] = texture
+    func addTileData(word word: String, imageName: String, produceEnergySpeed: Int) {
+        
+        let data = TileData(name: word, imageNamed: imageName, produceEnergySpeed: produceEnergySpeed)
+        tileData[word] = data
     }
 }
 
@@ -94,11 +109,12 @@ class TileMap : SKNode {
     }
     // MARK: Set tiles by word in coord
     func SetTileMapElement(coord coord: CGPoint, word: String) {
-        if let T = TileForCoord(coord) {
-            T.removeFromParent()
+        if let Tile = TileForCoord(coord) {
+            Tile.removeFromParent()
         }
-        if let texture = tileset.tileData[word] {
-            let tile = Tile(name: word, coord: coord, texture: texture)
+        
+        if let data = tileset.tileData[word] {
+            let tile = Tile(name: word, coord: coord, data: data)
             tile.position = Coord2Position(coord)
             addChild(tile)
             tiles[Int(coord.y)][Int(coord.x)] = tile
@@ -118,7 +134,7 @@ class TileMap : SKNode {
         var num = 0
         for (_, line) in tiles.enumerate() {
             for (_, tile) in line.enumerate() {
-                if tile?.name == "s" {
+                if tile?.name == "Tile_\(word)" {
                     num++
                 }
             }
