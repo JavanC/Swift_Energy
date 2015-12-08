@@ -22,9 +22,10 @@ class GameScene: SKScene {
     var money_add: Int = 0
     var energyLabel: SKLabelNode!
     var energy: Int = 0
+    var energy_max: Int = 0
     var upgrade: Int = 0
     var snum: Int = 0
-    var sellButton: SKButton!
+    var sellButton: SKLabelNode!
     
     // MID
     var midArea: SKSpriteNode!
@@ -50,7 +51,7 @@ class GameScene: SKScene {
         // TOP
         topArea = SKSpriteNode()
         topArea.name = "topArea"
-        topArea.color = UIColor.blackColor()
+        topArea.color = UIColor.grayColor()
         topArea.size = CGSizeMake(frame.size.width, 64 * 2 * framescale)
         topArea.anchorPoint = CGPoint(x: 0, y: 0)
         topArea.position = CGPoint(x: 0, y: frame.size.height - 64 * 2 * framescale)
@@ -60,7 +61,7 @@ class GameScene: SKScene {
         moneyLabel = SKLabelNode(fontNamed: "San Francisco")
         moneyLabel.fontColor = UIColor.yellowColor()
         moneyLabel.fontSize = 20
-        moneyLabel.position = CGPoint(x: 16, y: 0)
+        moneyLabel.position = CGPoint(x: 16, y: topArea.size.height * 2 / 3)
         moneyLabel.horizontalAlignmentMode = .Left
         moneyLabel.zPosition = 3
         topArea.addChild(moneyLabel)
@@ -69,15 +70,18 @@ class GameScene: SKScene {
         energyLabel = SKLabelNode(fontNamed: "San Francisco")
         energyLabel.fontColor = UIColor.blueColor()
         energyLabel.fontSize = 20
-        energyLabel.position = CGPoint(x: 16, y: topArea.size.height - 60)
+        energyLabel.position = CGPoint(x: 16, y: topArea.size.height * 1 / 3)
         energyLabel.horizontalAlignmentMode = .Left
         energyLabel.zPosition = 3
         topArea.addChild(energyLabel)
+        energy_max = 100
         
-        sellButton = SKButton(defaultButtonImage: "button", activeButtonImage: "button_active", buttonAction: sellEnergy)
+        sellButton = SKLabelNode(text: "SELL")
+        sellButton.fontName = "San Francisco"
         sellButton.name = "sellButton"
-        sellButton.setScale(2)
-        sellButton.position = CGPoint(x: frame.size.width - 100, y: frame.size.height - 50)
+        sellButton.fontSize = 40
+        sellButton.fontColor = UIColor.blueColor()
+        sellButton.position = CGPoint(x: topArea.size.width - 100, y: topArea.size.height * 1 / 3)
         sellButton.zPosition = 3
         topArea.addChild(sellButton)
         
@@ -136,13 +140,11 @@ class GameScene: SKScene {
                     print(coord)
                     
                     //building
-                    let price = 1
+                    let price = tileset.tileData["s"]?.price
                     if money >= price {
-                        money -= price
+                        money -= price!
                         tilemap.SetTileMapElement(coord: coord, word: choicename)
                     }
-                    
-                    
                 }
             
                 if node.name == "a1" {
@@ -157,21 +159,25 @@ class GameScene: SKScene {
                 }
                 
                 if node.name == "sellButton" {
-                    sellButton.action()
+                    sellEnergy()
                 }
-                
             }
         }
     }
    
     override func update(currentTime: CFTimeInterval) {
-        snum = tilemap.checkBuildNumber("s")
+        moneyLabel.text = "Money: \(money)"
+        energyLabel.text = "Energy: \(energy) +\(snum)"
     }
     
     func tickUpdata() {
+        
+        tilemap.tickProduce()
+        snum = tilemap.checkBuildNumber("s")
         energy += snum
-        moneyLabel.text = "Money: \(money)"
-        energyLabel.text = "Energy: \(energy) +\(snum)"
+        if energy >= energy_max {
+            energy = energy_max
+        }
         save()
     }
     func save() {
@@ -181,8 +187,16 @@ class GameScene: SKScene {
     func tile_initial() {
         
         tileset = Tileset(name: "BuildingSet", tileSize: CGSize(width: 64, height: 64))
-        tileset.addTileData(word: "x", imageName: "block", produceEnergySpeed: 0)
-        tileset.addTileData(word: "s", imageName: "風力", produceEnergySpeed: 1)
+        
+        let blockData = TileData(imageNamed: "block", price: 0)
+        blockData.addOutputData(-1, produceEnergySpeed: 0)
+        tileset.addTileData(word: "x", data: blockData)
+        
+        let WData = TileData(imageNamed: "風力", price: 1)
+        WData.addOutputData(4, produceEnergySpeed: 1)
+        tileset.addTileData(word: "s", data: WData)
+        
+        
     }
     
     func loadLevelMap(level: String) {

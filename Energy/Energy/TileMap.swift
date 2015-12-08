@@ -14,6 +14,8 @@ class Tile : SKNode {
     var data: TileData
     let sprite: SKSpriteNode
     
+    var produceTime: Int = 0
+    
     // MARK: Initialization
     init(name: String, coord: CGPoint, data: TileData) {
         self.coord = coord
@@ -34,13 +36,22 @@ class TileData {
     // MARK: properties
     let name: String
     let texture: SKTexture
+    let price: Int
     
-    var produceEnergySpeed: Int
+    var category: String = ""
+    var produceMaxTime: Int = 0
+    var produceEnergySpeed: Int = 0
     
     // MARK: Initialization
-    init(name: String, imageNamed: String, produceEnergySpeed: Int) {
-        self.name = name
+    init(imageNamed: String, price: Int) {
+        self.name = imageNamed
         self.texture = SKTexture(imageNamed: imageNamed)
+        self.price = price
+    }
+    
+    func addOutputData(produceMaxTime: Int, produceEnergySpeed: Int) {
+        self.category = "Output"
+        self.produceMaxTime = produceMaxTime
         self.produceEnergySpeed = produceEnergySpeed
     }
 }
@@ -57,9 +68,7 @@ class Tileset {
         self.tileSize = tileSize
     }
     // MARK: Add Tile Data function
-    func addTileData(word word: String, imageName: String, produceEnergySpeed: Int) {
-        
-        let data = TileData(name: word, imageNamed: imageName, produceEnergySpeed: produceEnergySpeed)
+    func addTileData(word word: String, data: TileData) {
         tileData[word] = data
     }
 }
@@ -115,6 +124,7 @@ class TileMap : SKNode {
         
         if let data = tileset.tileData[word] {
             let tile = Tile(name: word, coord: coord, data: data)
+            tile.produceTime = data.produceMaxTime
             tile.position = Coord2Position(coord)
             addChild(tile)
             tiles[Int(coord.y)][Int(coord.x)] = tile
@@ -129,13 +139,29 @@ class TileMap : SKNode {
             }
         }
     }
+    // MARK: tickProduce
+    func tickProduce() {
+        for (_, line) in tiles.enumerate() {
+            for (_, tile) in line.enumerate() {
+                if tile?.data.category == "Output" {
+                    if tile?.produceTime > 0 {
+                        tile?.produceTime -= 1
+                    } else if tile?.produceTime == 0 {
+                        tile?.alpha = 0.5
+                    }
+                }
+            }
+        }
+    }
     // MARK: Check building Number
     func checkBuildNumber(word: String) -> Int {
         var num = 0
         for (_, line) in tiles.enumerate() {
             for (_, tile) in line.enumerate() {
                 if tile?.name == "Tile_\(word)" {
-                    num++
+                    if tile?.alpha == 1 {
+                        num++
+                    }
                 }
             }
         }
