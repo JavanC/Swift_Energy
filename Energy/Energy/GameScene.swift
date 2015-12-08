@@ -40,7 +40,7 @@ class GameScene: SKScene {
     var choicename: String = "s"
     var test: SKSpriteNode!
     
-    var component: Dictionary<String, String>!
+    var component = [String: SKSpriteNode]()
     
     var a1: SKSpriteNode!
     var b1: SKSpriteNode!
@@ -121,7 +121,6 @@ class GameScene: SKScene {
         addChild(choiceshow)
 
         
-        
         a1 = SKSpriteNode(imageNamed: "block")
         a1.name = "x"
         a1.position = CGPoint(x: bottomArea.size.width / 4.0, y: bottomArea.size.height / 2.0)
@@ -140,6 +139,8 @@ class GameScene: SKScene {
         f1.zPosition = 3
         bottomArea.addChild(f1)
     }
+    
+    
     
     func choice(sprite: SKSpriteNode) {
         choicename = sprite.name!
@@ -215,17 +216,17 @@ class GameScene: SKScene {
         let blockData = TileData(imageNamed: "block", price: 0)
         blockData.addOutputData(-1, produceEnergySpeed: 0)
         tileset.addTileData(word: "x", data: blockData)
-        component["x"] = "block"
+        component["x"] = SKSpriteNode(imageNamed: "block")
         
         let WData = TileData(imageNamed: "風力", price: 1)
         WData.addOutputData(4, produceEnergySpeed: 1)
         tileset.addTileData(word: "s", data: WData)
-        component["s"] = "風力"
+        component["s"] = SKSpriteNode(imageNamed: "風力")
         
         let oData = TileData(imageNamed: "辦公室1", price: 10)
         oData.addOfficeData(5)
         tileset.addTileData(word: "o", data: oData)
-        component["o"] = "辦公室1"
+        component["o"] = SKSpriteNode(imageNamed: "辦公室1")
     }
     
     func loadLevelMap(level: String) {
