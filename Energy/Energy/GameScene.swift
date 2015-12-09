@@ -222,8 +222,11 @@ class GameScene: SKScene {
     }
     
     func tickUpdata() {
-        buildingMap.update()
+        buildingMap.Update()
+//        print(buildingMap.BuildingsNumber["Wind"])
+        print(BuildMenu.BuildMenuLength)
         
+//        print(String(BuildMenu.Wind))
         
         // produce
 //        snum = tilemap.checkBuildNumber("s")

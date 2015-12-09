@@ -11,8 +11,13 @@ import SpriteKit
 enum Level {
     case One, Two
 }
-enum BuildMenu {
+enum BuildMenu: Int {
     case Wind, Fire, Default
+    static var BuildMenuLength: Int { return Default.hashValue + 1 }
+}
+enum testenum: Int {
+    case test1 = 1
+    case test2 = 2
 }
 
 class Building: SKNode {
@@ -42,7 +47,7 @@ class Building: SKNode {
         
         if build == .Wind {
             buildingNode = SKSpriteNode(imageNamed: "風力")
-            name = "Wind"
+            name = String(build)
             buildingLevel = level
             level = buildLevel
             price = 1
@@ -64,13 +69,14 @@ class Building: SKNode {
                 currentTime -= 1
             } else if currentTime == 0 {
                 currentTime -= 1
+                Activate = false
                 alpha = 0.5
             } else {
                 if rebuild {
                     currentTime = maxTime
+                    Activate = true
                     alpha = 1
                 }
-                destroy = true
             }
             // 判斷是否爆炸
             if maxHot > 0 {
@@ -88,7 +94,7 @@ class BuildingMap: SKNode {
     var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array< Array<Building?>>()
     
-    var BuildingNumber = [String: Int]()
+    var BuildingsNumber = [String: Int]()
     
     func configureAtPosition(position: CGPoint, level: Level) {
         self.position = position
@@ -120,11 +126,25 @@ class BuildingMap: SKNode {
         }
         return buildings[Int(coord.y)][Int(coord.x)]
     }
+    // MARK: Remove building from coord
+    func RemoveBuilding(coord: CGPoint) {
+        let building = BuildingForCoord(coord)
+        if building != nil {
+            buildings[Int(coord.y)][Int(coord.x)]!.removeFromParent()
+            buildings[Int(coord.y)][Int(coord.x)] = nil
+        }
+    }
     // MARK: Set tiles by word in coord
     func SetTileMapElement(coord coord: CGPoint, build: BuildMenu) {
         let x = Int(coord.x)
         let y = Int(coord.y)
-        if buildings[y][x] != nil {
+        
+        // 如果有建築，且不活躍，移除
+        if (buildings[y][x] != nil && !buildings[y][x]!.Activate) {
+            RemoveBuilding(coord)
+        }
+        // 如果為空，建造
+        if (buildings[y][x] == nil) {
             let building = Building()
             buildings[y][x] = building
             building.configureAtCoord(coord, build: build, buildLevel: 1)
@@ -132,9 +152,12 @@ class BuildingMap: SKNode {
             addChild(building)
         }
     }
+    
     // MARK: BuildingMap Update
-    func update() {
-        BuildingNumber.removeAll()
+    func Update() {
+        //重置建築計數
+        ResetBuildingNumber()
+        //逐一檢查
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
                 if building != nil {
@@ -142,11 +165,14 @@ class BuildingMap: SKNode {
                     building!.update()
                     //判斷爆炸
                     if building!.destroy {
-                        buildings[y][x]!.removeFromParent()
-                        buildings[y][x] = nil
+                        let coord = CGPoint(x: x, y: y)
+                        RemoveBuilding(coord)
                     }
                     //計算數量
-                    if building!.name == "Wind" {
+                    if building!.Activate {
+                        print(building?.name!)
+                        
+                        AddBuildingNumber(building!.name!)
                         
                     }
                     
@@ -154,6 +180,18 @@ class BuildingMap: SKNode {
             }
         }
     }
+    // Reset Building Number
+    func ResetBuildingNumber() {
+//        BuildingsNumber["Wind"] = 0
+        for count in 0..<BuildMenu.BuildMenuLength {
+            let name = String(BuildMenu(rawValue: count))
+            BuildingsNumber[name] = 0
+        }
+    }
+    func AddBuildingNumber(name: String) {
+        BuildingsNumber[name] = BuildingsNumber[name]! + 1
+    }
+
     // MARK: Load Tile Map by word array
 //    func LoadTileMap() {
 //        for (row, line) in buildings.enumerate() {
