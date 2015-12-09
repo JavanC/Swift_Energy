@@ -17,20 +17,21 @@ class GameScene: SKScene {
     var midArea: SKSpriteNode!
     var botArea: SKSpriteNode!
     
+    
+    var gameTimer: NSTimer!
     var buildingMap: BuildingMap!
     
+    var moneyLabel: SKLabelNode!
+    var money: Int = 10
+    var money_add: Int = 0
     
     
     // OTHER
-//    var gameTimer: NSTimer!
 //    var defaults: NSUserDefaults!
     
     
     // TOP
 
-//    var moneyLabel: SKLabelNode!
-//    var money: Int = 10
-//    var money_add: Int = 0
 //    var energyLabel: SKLabelNode!
 //    var energy: Int = 0
 //    var energy_max: Int = 0
@@ -75,12 +76,11 @@ class GameScene: SKScene {
         botArea.position = CGPoint(x: 0, y: 0)
         addChild(botArea)
         
-
+        gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
         
         buildingMap = BuildingMap()
         buildingMap.configureAtPosition(CGPoint(x: 0, y: 0), level: .One)
         buildingMap.setScale(framescale)
-        buildingMap.zPosition = 2
         midArea.addChild(buildingMap)
         
         
@@ -205,6 +205,7 @@ class GameScene: SKScene {
 //                }
 //            }
             
+            // touch Map Area
             if midArea.containsPoint(location) {
                 let buildingmaplocation = touch.locationInNode(buildingMap)
                 let coord = buildingMap.Position2Coord(buildingmaplocation)
@@ -220,24 +221,24 @@ class GameScene: SKScene {
 //        energyLabel.text = "Energy: \(energy) +\(snum)"
     }
     
-//    func tickUpdata() {
-//        // count
-//        tilemap.tickProduce()
-//        
-//        // produce
+    func tickUpdata() {
+        buildingMap.update()
+        
+        
+        // produce
 //        snum = tilemap.checkBuildNumber("s")
 //        energy += snum
 //        if energy >= energy_max {
 //            energy = energy_max
 //        }
-//        
-//        // sell
+        
+        // sell
 //        let onum = tilemap.checkBuildNumber("o")
 //        autoSellValue = onum * tileset.tileData["o"]!.sales
 //        sellEnergy("auto")
 //        
 //        save()
-//    }
+    }
 //    func save() {
 //        defaults.setInteger(money, forKey: "Money")
 //    }
