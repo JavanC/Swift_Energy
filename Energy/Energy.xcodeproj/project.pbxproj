@@ -32,7 +32,7 @@
 		6541D6B01C0D9C2A0034C292 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6541D6BD1C0D9EEC0034C292 /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 		6567575A1C114330006463A0 /* TileMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileMap.swift; sourceTree = "<group>"; };
-		65D0BBF31C17BAA000850D22 /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
+		65D0BBF31C17BAA000850D22 /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Building.swift; path = ../Building.swift; sourceTree = "<group>"; };
 		65D7514B1C16714C00CC8133 /* SKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SKButton.swift; path = ../SKButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -50,7 +50,6 @@
 		6541D6941C0D9C2A0034C292 = {
 			isa = PBXGroup;
 			children = (
-				65D0BBF31C17BAA000850D22 /* Building.swift */,
 				6541D69F1C0D9C2A0034C292 /* Energy */,
 				6541D69E1C0D9C2A0034C292 /* Products */,
 			);
@@ -69,6 +68,7 @@
 			children = (
 				6541D6B61C0D9EEC0034C292 /* Content */,
 				6541D6A01C0D9C2A0034C292 /* AppDelegate.swift */,
+				65D0BBF31C17BAA000850D22 /* Building.swift */,
 				6567575A1C114330006463A0 /* TileMap.swift */,
 				65D7514B1C16714C00CC8133 /* SKButton.swift */,
 				6541D6A21C0D9C2A0034C292 /* GameScene.sks */,
