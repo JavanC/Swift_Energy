@@ -34,6 +34,8 @@ class GameScene: SKScene {
     var tilemap: TileMap!
     let mapsize = CGPoint(x: 9, y: 11)
     
+    var buildingMap: BuildingMap!
+    
     // BOTTOM
     var bottomArea: SKSpriteNode!
     var choiceshow: SKSpriteNode!
@@ -138,6 +140,10 @@ class GameScene: SKScene {
         f1.position = CGPoint(x: bottomArea.size.width * 3 / 4.0, y: bottomArea.size.height / 2.0)
         f1.zPosition = 3
         bottomArea.addChild(f1)
+        
+        
+        
+        
     }
     
     
@@ -178,6 +184,14 @@ class GameScene: SKScene {
                 if node.name == "sellButton" {
                     sellEnergy("all")
                 }
+            }
+            
+            if midArea.containsPoint(location) {
+                let buildingmaplocation = touch.locationInNode(buildingMap)
+                let coord = buildingMap.Position2Coord(buildingmaplocation)
+                print(coord)
+                
+                buildingMap.SetTileMapElement(coord: coord, build: .Wind)
             }
         }
     }
@@ -237,6 +251,17 @@ class GameScene: SKScene {
         // tilemap load data
         let array = Array(count: Int(mapsize.y), repeatedValue: Array(count: Int(mapsize.x), repeatedValue: "x"))
         tilemap.LoadTileMap(array: array)
+        
+        
+        
+        
+        buildingMap = BuildingMap()
+        buildingMap.configureAtPosition(CGPoint(x: 0, y: 0), level: .One)
+        buildingMap.setScale(framescale)
+        buildingMap.zPosition = 2
+//        buildingMap.LoadTileMap()
+        midArea.addChild(buildingMap)
+        
     }
     
     func sellEnergy(method: String) {

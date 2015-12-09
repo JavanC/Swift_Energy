@@ -16,6 +16,7 @@
 		6541D6AF1C0D9C2A0034C292 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6541D6AD1C0D9C2A0034C292 /* LaunchScreen.storyboard */; };
 		6541D6CA1C0D9EEC0034C292 /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6541D6BD1C0D9EEC0034C292 /* level1.txt */; };
 		6567575B1C114330006463A0 /* TileMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567575A1C114330006463A0 /* TileMap.swift */; };
+		65D0BBF41C17BAA000850D22 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D0BBF31C17BAA000850D22 /* Building.swift */; };
 		65D7514C1C16714C00CC8133 /* SKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D7514B1C16714C00CC8133 /* SKButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		6541D6B01C0D9C2A0034C292 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6541D6BD1C0D9EEC0034C292 /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 		6567575A1C114330006463A0 /* TileMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileMap.swift; sourceTree = "<group>"; };
+		65D0BBF31C17BAA000850D22 /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		65D7514B1C16714C00CC8133 /* SKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SKButton.swift; path = ../SKButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,6 +50,7 @@
 		6541D6941C0D9C2A0034C292 = {
 			isa = PBXGroup;
 			children = (
+				65D0BBF31C17BAA000850D22 /* Building.swift */,
 				6541D69F1C0D9C2A0034C292 /* Energy */,
 				6541D69E1C0D9C2A0034C292 /* Products */,
 			);
@@ -161,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65D7514C1C16714C00CC8133 /* SKButton.swift in Sources */,
+				65D0BBF41C17BAA000850D22 /* Building.swift in Sources */,
 				6567575B1C114330006463A0 /* TileMap.swift in Sources */,
 				6541D6A51C0D9C2A0034C292 /* GameScene.swift in Sources */,
 				6541D6A71C0D9C2A0034C292 /* GameViewController.swift in Sources */,
