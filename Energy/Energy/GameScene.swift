@@ -17,14 +17,22 @@ class GameScene: SKScene {
     var midArea: SKSpriteNode!
     var botArea: SKSpriteNode!
     
-    
     var gameTimer: NSTimer!
     var buildingMap: BuildingMap!
     
     var moneyLabel: SKLabelNode!
     var money: Int = 10
     var money_add: Int = 0
-    
+    var reserchLabel: SKLabelNode!
+    var reserch: Int = 0
+    var reserch_add: Int = 0
+    var energyLabel: SKLabelNode!
+    var energy: Int = 0
+    var energy_add: Int = 0
+    var energy_maxLabel: SKLabelNode!
+    var energy_max: Int = 100
+    var energySellButton: SKLabelNode!
+    var rebuildButton: SKLabelNode!
     
     // OTHER
 //    var defaults: NSUserDefaults!
@@ -60,7 +68,7 @@ class GameScene: SKScene {
         
         framescale = frame.size.width / (midsize.width * 64)
         
-        topArea = SKSpriteNode(color: UIColor.blackColor(), size: CGSizeMake(frame.size.width, topsize.height * tilesize.height * framescale))
+        topArea = SKSpriteNode(color: UIColor.grayColor(), size: CGSizeMake(frame.size.width, topsize.height * tilesize.height * framescale))
         topArea.name = "topArea"
         topArea.anchorPoint = CGPoint(x: 0, y: 0)
         topArea.position = CGPoint(x: 0, y: frame.size.height - topArea.size.height)
@@ -83,40 +91,52 @@ class GameScene: SKScene {
         buildingMap.setScale(framescale)
         midArea.addChild(buildingMap)
         
+        let gap: CGFloat = 12
+        let labelsize = (topArea.size.height - gap * 5) / 4
+        moneyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        moneyLabel.text = "Money: \(money) + \(money_add)"
+        moneyLabel.fontColor = UIColor.yellowColor()
+        moneyLabel.fontSize = labelsize
+        moneyLabel.horizontalAlignmentMode = .Left
+        moneyLabel.position = CGPoint(x: 16, y: gap * 4 + labelsize * 3)
+        topArea.addChild(moneyLabel)
+        reserchLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        reserchLabel.text = "Reserch: \(reserch) + \(reserch_add)"
+        reserchLabel.fontColor = UIColor.greenColor()
+        reserchLabel.fontSize = labelsize
+        reserchLabel.horizontalAlignmentMode = .Left
+        reserchLabel.position = CGPoint(x: 16, y: gap * 3 + labelsize * 2)
+        topArea.addChild(reserchLabel)
+        energyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        energyLabel.text = "Energy: \(energy) + \(energy_add)"
+        energyLabel.fontColor = UIColor.blueColor()
+        energyLabel.fontSize = labelsize
+        energyLabel.horizontalAlignmentMode = .Left
+        energyLabel.position = CGPoint(x: 16, y: gap * 2 + labelsize * 1)
+        topArea.addChild(energyLabel)
+        energy_maxLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        energy_maxLabel.text = "EnergyMax: \(energy_max)"
+        energy_maxLabel.fontColor = UIColor.blueColor()
+        energy_maxLabel.fontSize = labelsize
+        energy_maxLabel.horizontalAlignmentMode = .Left
+        energy_maxLabel.position = CGPoint(x: 16, y: gap * 1)
+        topArea.addChild(energy_maxLabel)
+        energySellButton = SKLabelNode(fontNamed: "Verdana-Bold")
+        energySellButton.text = "SELL"
+        energySellButton.fontColor = UIColor.blueColor()
+        energySellButton.fontSize = labelsize * 2
+        energySellButton.horizontalAlignmentMode = .Right
+        energySellButton.position = CGPoint(x: topArea.size.width - 16, y: gap * 1)
+        topArea.addChild(energySellButton)
+        
         
         // OTHER
 //        let tick = 0.5
 //        gameTimer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
 //        defaults = NSUserDefaults.standardUserDefaults()
         
-        // TOP
-//        topArea = SKSpriteNode()
-//        topArea.name = "topArea"
-//        topArea.color = UIColor.grayColor()
-//        topArea.size = CGSizeMake(frame.size.width, 64 * 2 * framescale)
-//        topArea.anchorPoint = CGPoint(x: 0, y: 0)
-//        topArea.position = CGPoint(x: 0, y: frame.size.height - 64 * 2 * framescale)
-//        topArea.zPosition = 2
-//        addChild(topArea)
-//        
-//        moneyLabel = SKLabelNode(fontNamed: "San Francisco")
-//        moneyLabel.fontColor = UIColor.yellowColor()
-//        moneyLabel.fontSize = 20
-//        moneyLabel.position = CGPoint(x: 16, y: topArea.size.height * 2 / 3)
-//        moneyLabel.horizontalAlignmentMode = .Left
-//        moneyLabel.zPosition = 3
-//        topArea.addChild(moneyLabel)
-//        money = defaults.integerForKey("Money")
-//        
-//        energyLabel = SKLabelNode(fontNamed: "San Francisco")
-//        energyLabel.fontColor = UIColor.blueColor()
-//        energyLabel.fontSize = 20
-//        energyLabel.position = CGPoint(x: 16, y: topArea.size.height * 1 / 3)
-//        energyLabel.horizontalAlignmentMode = .Left
-//        energyLabel.zPosition = 3
-//        topArea.addChild(energyLabel)
-//        energy_max = 100
-//        
+
+//
 //        sellButton = SKLabelNode(text: "SELL")
 //        sellButton.fontName = "San Francisco"
 //        sellButton.name = "sellButton"
@@ -127,15 +147,6 @@ class GameScene: SKScene {
 //        topArea.addChild(sellButton)
         
         // BOTTOM
-//        bottomArea = SKSpriteNode(imageNamed: "background.jpg")
-//        bottomArea.name = "bottomArea"
-//        bottomArea.size = CGSizeMake(frame.size.width, frame.size.height - 64 * (mapsize.y + 2) * framescale)
-//        bottomArea.anchorPoint = CGPoint(x: 0, y: 0)
-//        bottomArea.position = CGPoint(x: 0, y: 0)
-//        bottomArea.zPosition = 2
-//        addChild(bottomArea)
-//        
-//        
 //        choiceshow = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 74, height: 74))
 //        choiceshow.alpha = 0
 //        choiceshow.zPosition = 4
@@ -229,9 +240,7 @@ class GameScene: SKScene {
         print("Wind:" + String(buildingMap.GetBuildingNumber(.Wind)))
         print("Fire:" + String(buildingMap.GetBuildingNumber(.Fire)))
 
-//        print(BuildMenu.BuildMenuLength)
         
-//        print(String(BuildMenu.Wind))
         
         // produce
 //        snum = tilemap.checkBuildNumber("s")
