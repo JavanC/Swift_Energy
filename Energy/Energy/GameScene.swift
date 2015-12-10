@@ -204,6 +204,9 @@ class GameScene: SKScene {
 //                    sellEnergy("all")
 //                }
 //            }
+            for node in nodesAtPoint(location) {
+                print(node)
+            }
             
             // touch Map Area
             if midArea.containsPoint(location) {
@@ -223,8 +226,10 @@ class GameScene: SKScene {
     
     func tickUpdata() {
         buildingMap.Update()
-//        print(buildingMap.BuildingsNumber["Wind"])
-        print(BuildMenu.BuildMenuLength)
+        print("Wind:" + String(buildingMap.GetBuildingNumber(.Wind)))
+        print("Fire:" + String(buildingMap.GetBuildingNumber(.Fire)))
+
+//        print(BuildMenu.BuildMenuLength)
         
 //        print(String(BuildMenu.Wind))
         

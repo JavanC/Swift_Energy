@@ -12,8 +12,8 @@ enum Level {
     case One, Two
 }
 enum BuildMenu: Int {
-    case Wind, Fire, Default
-    static var BuildMenuLength: Int { return Default.hashValue + 1 }
+    case Wind, Fire, Default, BuildMenuLength
+//    static var BuildMenuLength: Int { return Default.hashValue + 1 }
 }
 enum testenum: Int {
     case test1 = 1
@@ -47,7 +47,7 @@ class Building: SKNode {
         
         if build == .Wind {
             buildingNode = SKSpriteNode(imageNamed: "風力")
-            name = String(build)
+            name = String(build.hashValue)
             buildingLevel = level
             level = buildLevel
             price = 1
@@ -168,28 +168,26 @@ class BuildingMap: SKNode {
                         let coord = CGPoint(x: x, y: y)
                         RemoveBuilding(coord)
                     }
-                    //計算數量
+                    //計算各建築數量
                     if building!.Activate {
-                        print(building?.name!)
-                        
                         AddBuildingNumber(building!.name!)
-                        
                     }
-                    
                 }
             }
         }
     }
     // Reset Building Number
     func ResetBuildingNumber() {
-//        BuildingsNumber["Wind"] = 0
-        for count in 0..<BuildMenu.BuildMenuLength {
-            let name = String(BuildMenu(rawValue: count))
+        for count in 0..<BuildMenu.BuildMenuLength.hashValue {
+            let name = String(count)
             BuildingsNumber[name] = 0
         }
     }
     func AddBuildingNumber(name: String) {
         BuildingsNumber[name] = BuildingsNumber[name]! + 1
+    }
+    func GetBuildingNumber(Building: BuildMenu) -> Int {
+        return BuildingsNumber[String(Building.hashValue)]!
     }
 
     // MARK: Load Tile Map by word array
