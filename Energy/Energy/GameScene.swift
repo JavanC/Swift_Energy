@@ -27,7 +27,7 @@ class GameScene: SKScene {
     var reserch: Int = 0
     var reserch_add: Int = 0
     var energyLabel: SKLabelNode!
-    var energy: Int = 0
+    var energy: Int = 1000
     var energy_add: Int = 0
     var energy_maxLabel: SKLabelNode!
     var energy_max: Int = 100
@@ -36,33 +36,12 @@ class GameScene: SKScene {
     
     // OTHER
 //    var defaults: NSUserDefaults!
-    
-    
-    // TOP
-
-//    var energyLabel: SKLabelNode!
-//    var energy: Int = 0
-//    var energy_max: Int = 0
-//    var upgrade: Int = 0
-//    var snum: Int = 0
-//    var sellButton: SKLabelNode!
-//    var autoSellValue: Int = 0
-    
-    // MID
-//    var tileset: Tileset!
-//    var tilemap: TileMap!
-    
     // BOTTOM
 //    var choiceshow: SKSpriteNode!
 //    var choicename: String = "s"
 //    var test: SKSpriteNode!
-//    
-//    var component = [String: SKSpriteNode]()
-//    
-//    var a1: SKSpriteNode!
-//    var b1: SKSpriteNode!
-//    var f1: SKSpriteNode!
     
+//    var component = [String: SKSpriteNode]()
     
     override func didMoveToView(view: SKView) {
         
@@ -131,20 +110,7 @@ class GameScene: SKScene {
         
         
         // OTHER
-//        let tick = 0.5
-//        gameTimer = NSTimer.scheduledTimerWithTimeInterval(tick, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
 //        defaults = NSUserDefaults.standardUserDefaults()
-        
-
-//
-//        sellButton = SKLabelNode(text: "SELL")
-//        sellButton.fontName = "San Francisco"
-//        sellButton.name = "sellButton"
-//        sellButton.fontSize = 40
-//        sellButton.fontColor = UIColor.blueColor()
-//        sellButton.position = CGPoint(x: topArea.size.width - 100, y: topArea.size.height * 1 / 3)
-//        sellButton.zPosition = 3
-//        topArea.addChild(sellButton)
         
         // BOTTOM
 //        choiceshow = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 74, height: 74))
@@ -176,48 +142,9 @@ class GameScene: SKScene {
 //        
     }
     
-    
-    
-    func choice(sprite: SKSpriteNode) {
-//        choicename = sprite.name!
-//        choiceshow.alpha = 0.6
-//        choiceshow.position = sprite.position
-    }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.locationInNode(self)
-            print(location)
-            
-//            if bottomArea.containsPoint(location) {
-//                if a1.containsPoint(location) { choice(a1) }
-//                if b1.containsPoint(location) { choice(b1) }
-//                if f1.containsPoint(location) { choice(f1) }
-//            }
-    
-//            for node in nodesAtPoint(location) {
-//                print(node)
-//                
-//                if node.name == "Building" {
-//                    let tilemaplocation = touch.locationInNode(tilemap)
-//                    print(tilemaplocation)
-//                    let coord = tilemap.Position2Coord(tilemaplocation)
-//                    print(coord)
-//                    
-//                    //building
-//                    let price = tileset.tileData["s"]?.price
-//                    if money >= price {
-//                        money -= price!
-//                        tilemap.SetTileMapElement(coord: coord, word: choicename)
-//                    }
-//                }
-//                
-//                if node.name == "sellButton" {
-//                    sellEnergy("all")
-//                }
-//            }
-            for node in nodesAtPoint(location) {
-                print(node)
-            }
             
             // touch Map Area
             if midArea.containsPoint(location) {
@@ -225,53 +152,59 @@ class GameScene: SKScene {
                 let coord = buildingMap.Position2Coord(buildingmaplocation)
                 print(coord)
                 
-                buildingMap.SetTileMapElement(coord: coord, build: .Wind)
+                buildingMap.SetTileMapElement(coord: coord, build: .Office)
+                // updata imformation
+            }
+            // sell button
+            if energySellButton.containsPoint(location) {
+                money += energy
+                energy = 0
             }
         }
     }
     
     override func update(currentTime: CFTimeInterval) {
-//        moneyLabel.text = "Money: \(money)"
-//        energyLabel.text = "Energy: \(energy) +\(snum)"
+
     }
-    
+   
     func tickUpdata() {
+        
         buildingMap.Update()
         print("Wind:" + String(buildingMap.GetBuildingNumber(.Wind)))
         print("Fire:" + String(buildingMap.GetBuildingNumber(.Fire)))
-
+        print("Office:" + String(buildingMap.GetBuildingNumber(.Office)))
         
+        //計算研究生產量
+        reserch += reserch_add
+        //計算能源生產量
+        let WindNum = buildingMap.GetBuildingNumber(.Wind)
+        energy_add = WindNum * BuildinfData(building: .Wind, level: 1).produceEnergy
+        energy += energy_add
+        //計算金錢生產量
+        let OfficeNum = buildingMap.GetBuildingNumber(.Office)
+        money_add = OfficeNum * BuildinfData(building: .Office, level: 1).ProduceMoney
+        if energy >= money_add {
+            money += money_add
+            energy -= money_add
+        } else {
+            money_add = energy
+            money += money_add
+            energy = 0
+        }
+        //計算能源上限
+        if energy > energy_max {
+            energy = energy_max
+        }
         
-        // produce
-//        snum = tilemap.checkBuildNumber("s")
-//        energy += snum
-//        if energy >= energy_max {
-//            energy = energy_max
-//        }
+        // updata imformation
+        moneyLabel.text = "Money: \(money) + \(money_add)"
+        reserchLabel.text = "Reserch: \(reserch) + \(reserch_add)"
+        energyLabel.text = "Energy: \(energy) + \(energy_add)"
+        energy_maxLabel.text = "EnergyMax: \(energy_max)"
         
-        // sell
-//        let onum = tilemap.checkBuildNumber("o")
-//        autoSellValue = onum * tileset.tileData["o"]!.sales
-//        sellEnergy("auto")
-//        
-//        save()
+        //        save()
     }
 //    func save() {
 //        defaults.setInteger(money, forKey: "Money")
-//    }
-//    func sellEnergy(method: String) {
-//        if method == "all" {
-//            print("sell all!")
-//            money += energy
-//            energy = 0
-//        } else if method == "auto" {
-//            if energy >= autoSellValue {
-//                money += autoSellValue
-//                energy -= autoSellValue
-//            } else {
-//                money += energy
-//                energy = 0
-//            }
-//        }
 //    }
 }

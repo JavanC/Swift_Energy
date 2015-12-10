@@ -12,50 +12,62 @@ enum Level {
     case One, Two
 }
 enum BuildMenu: Int {
-    case Wind, Fire, Default, BuildMenuLength
-//    static var BuildMenuLength: Int { return Default.hashValue + 1 }
+    case Wind, Fire, Office, BuildMenuLength
 }
 enum testenum: Int {
     case test1 = 1
     case test2 = 2
 }
 
-class Building: SKNode {
+class BuildinfData {
     
-    var coord: CGPoint!
-    var buildingNode: SKSpriteNode!
-    var buildingLevel: Int!
-    var level: Int!
+    var imageName: String!
     var price: Int!
-    var rebuild: Bool = false
-    var Activate: Bool = true
-    var destroy: Bool = false
-    
     var maxTime: Int = -1
     var currentTime: Int = -1
     var produceEnergy: Int = -1
+    var produceReserch: Int = -1
+    var ProduceMoney: Int = -1
     var produceHot: Int = -1
     var maxHot: Int = -1
     var currentHot: Int = -1
     var produceWater: Int = -1
     var maxWater: Int = -1
     var currentWater: Int = -1
-    
-    
-    func configureAtCoord(coord: CGPoint, build: BuildMenu, buildLevel: Int) {
-        self.coord = coord
-        
-        if build == .Wind {
-            buildingNode = SKSpriteNode(imageNamed: "風力")
-            name = String(build.hashValue)
-            buildingLevel = level
-            level = buildLevel
+
+    init(building: BuildMenu, level: Int) {
+        if building == .Wind {
+            imageName = "風力"
             price = 1
-            
             maxTime = 5
             currentTime = maxTime
             produceEnergy = 1
         }
+        if building == .Office {
+            imageName = "辦公室1"
+            price = 10
+            ProduceMoney = 5
+        }
+    }
+}
+
+class Building: SKNode {
+    
+    var coord: CGPoint!
+    var buildingNode: SKSpriteNode!
+    var level: Int!
+    var rebuild: Bool = false
+    var Activate: Bool = true
+    var destroy: Bool = false
+    var buildingData: BuildinfData!
+
+    
+    func configureAtCoord(coord: CGPoint, build: BuildMenu, level: Int) {
+        self.coord = coord
+        name = String(build.hashValue)
+        
+        buildingData = BuildinfData(building: build, level: level)
+        buildingNode = SKSpriteNode(imageNamed: buildingData.imageName)
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(buildingNode)
     }
@@ -65,22 +77,22 @@ class Building: SKNode {
             // 更新當前資訊
             
             // 更新當前週期
-            if currentTime > 0 {
-                currentTime -= 1
-            } else if currentTime == 0 {
-                currentTime -= 1
+            if buildingData.currentTime > 0 {
+                buildingData.currentTime -= 1
+            } else if buildingData.currentTime == 0 {
+                buildingData.currentTime -= 1
                 Activate = false
                 alpha = 0.5
             } else {
                 if rebuild {
-                    currentTime = maxTime
+                    buildingData.currentTime = buildingData.maxTime
                     Activate = true
                     alpha = 1
                 }
             }
             // 判斷是否爆炸
-            if maxHot > 0 {
-                if currentHot >= maxHot {
+            if buildingData.maxHot > 0 {
+                if buildingData.currentHot >= buildingData.maxHot {
                     destroy = true
                 }
             }
@@ -106,6 +118,8 @@ class BuildingMap: SKNode {
         for _ in 0 ..< Int(mapSize.height) {
             buildings.append(Array(count: Int(mapSize.width), repeatedValue: nil))
         }
+        
+        ResetBuildingNumber()
     }
     // MARK: Coord transfer to position
     func Coord2Position(coord: CGPoint) -> CGPoint {
@@ -139,15 +153,15 @@ class BuildingMap: SKNode {
         let x = Int(coord.x)
         let y = Int(coord.y)
         
-        // 如果有建築，且不活躍，移除
+        // Have Building and not Activate, remove!
         if (buildings[y][x] != nil && !buildings[y][x]!.Activate) {
             RemoveBuilding(coord)
         }
-        // 如果為空，建造
+        // if nil, build
         if (buildings[y][x] == nil) {
             let building = Building()
             buildings[y][x] = building
-            building.configureAtCoord(coord, build: build, buildLevel: 1)
+            building.configureAtCoord(coord, build: build, level: 1)
             building.position = Coord2Position(coord)
             addChild(building)
         }
@@ -155,20 +169,20 @@ class BuildingMap: SKNode {
     
     // MARK: BuildingMap Update
     func Update() {
-        //重置建築計數
+        
         ResetBuildingNumber()
-        //逐一檢查
+        
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
                 if building != nil {
-                    //更新
+                    // building data updata
                     building!.update()
-                    //判斷爆炸
+                    // destroy building
                     if building!.destroy {
                         let coord = CGPoint(x: x, y: y)
                         RemoveBuilding(coord)
                     }
-                    //計算各建築數量
+                    // calculate buildings count
                     if building!.Activate {
                         AddBuildingNumber(building!.name!)
                     }
