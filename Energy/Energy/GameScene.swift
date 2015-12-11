@@ -108,7 +108,6 @@ class GameScene: SKScene {
         energySellButton.position = CGPoint(x: topArea.size.width - 16, y: gap * 1)
         topArea.addChild(energySellButton)
         
-        
         // OTHER
 //        defaults = NSUserDefaults.standardUserDefaults()
         
@@ -152,11 +151,12 @@ class GameScene: SKScene {
                 let coord = buildingMap.Position2Coord(buildingmaplocation)
                 print(coord)
                 
-                buildingMap.SetTileMapElement(coord: coord, build: .Office)
+                buildingMap.SetTileMapElement(coord: coord, build: .Fire)
                 // updata imformation
             }
-            // sell button
-            if energySellButton.containsPoint(location) {
+            
+            // touch SELL Button
+            if energySellButton.containsPoint(touch.locationInNode(topArea)) {
                 money += energy
                 energy = 0
             }

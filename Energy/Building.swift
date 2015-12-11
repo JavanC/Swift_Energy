@@ -48,6 +48,15 @@ class BuildinfData {
             price = 10
             ProduceMoney = 5
         }
+        if building == .Fire {
+            imageName = "火力"
+            price = 20
+            maxTime = 10
+            currentTime = 10
+            produceHot = 20
+            maxHot = 100
+            currentHot = 0
+        }
     }
 }
 
@@ -74,7 +83,8 @@ class Building: SKNode {
     
     func update() {
         if Activate {
-            // 更新當前資訊
+            // 更新當前數據
+            
             
             // 更新當前週期
             if buildingData.currentTime > 0 {
