@@ -68,7 +68,7 @@ class GameScene: SKScene {
         buildingMap.setScale(framescale)
         midArea.addChild(buildingMap)
         buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), build: .Fire)
-//        buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Generator)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Fire)
         buildingMap.setTileMapElement(coord: CGPoint(x: 2, y: 0), build: .Generator)
         buildingMap.setTileMapElement(coord: CGPoint(x: 3, y: 0), build: .Generator)
         
@@ -169,7 +169,7 @@ class GameScene: SKScene {
         // 1. update map data
         buildingMap.Update()
         print(buildingMap.buildingForCoord(CGPoint(x: 0, y: 0))?.buildingData.hot_Current)
-        print(buildingMap.buildingForCoord(CGPoint(x: 1, y: 0))?.buildingData.hot_Current)
+        print(buildingMap.buildingForCoord(CGPoint(x: 1, y: 0))?.buildingData.hot_Max)
         
         // 2. calculate reserch
         reserch += reserch_add

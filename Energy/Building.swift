@@ -19,8 +19,9 @@ class BuildingData {
     
     var imageName: String!
     var price: Int!
+    var rebuild: Bool = true
     
-    var rebuild: Bool = false
+    var time_Progress: Bool = false
     var time_Max: Int = 0
     var time_Current: Int = -1
     var reserch_Produce: Int = 0
@@ -30,6 +31,7 @@ class BuildingData {
     var energy_produce: Int = 0
     var energy_current: Int = 0
     
+    var hot_Progress: Bool = false
     var hot_CanBeEnergy: Bool = false
     var hot_IsOutput: Bool = false
     var hot_IsInput: Bool = false
@@ -37,13 +39,14 @@ class BuildingData {
     var hot_Current: Int = 0
     var hot_Max: Int = 0
     
+    var water_Progress: Bool = false
     var water_CanBeEnergy: Bool = false
     var water_IsOutput: Bool = false
     var water_IsInput: Bool = false
     var water_Produce: Int = 0
     var water_Current: Int = 0
     var water_Max: Int = 0
-
+    
     init(building: BuildMenu, level: Int) {
         if building == .Nil {
             imageName = "block"
@@ -55,6 +58,7 @@ class BuildingData {
             
             time_Max = 5
             time_Current = 5
+            time_Progress = true
             
             energy_produce = 1
             energy_current = 0
@@ -65,11 +69,14 @@ class BuildingData {
             
             time_Max = 10
             time_Current = 10
+            time_Progress = true
+        
             
             hot_IsOutput = true
             hot_Produce = 20
             hot_Max = 400
             hot_Current = 0
+            hot_Progress = true
         }
         if building == .Generator {
             imageName = "發電機1"
@@ -81,6 +88,7 @@ class BuildingData {
             hot_IsInput = true
             hot_Max = 1000
             hot_Current = 0
+//            hot_Progress = true
             
             energy_current = 0
         }
@@ -100,6 +108,13 @@ class Building: SKNode {
 
     var activate: Bool = true
     var buildingData: BuildingData!
+    
+    var timeProgressBack: SKShapeNode!
+    var timeProgress: SKShapeNode!
+    var hotProgressBack: SKShapeNode!
+    var hotProgress: SKShapeNode!
+    var waterProgressBack: SKShapeNode!
+    var waterProgress: SKShapeNode!
 
     func configureAtCoord(coord: CGPoint, buildMenu: BuildMenu, level: Int) {
         self.coord = coord
@@ -113,6 +128,43 @@ class Building: SKNode {
         if buildMenu == .Nil {
             buildingNode.alpha = 0.2
             activate = false
+        }
+        
+        // add time progress
+        if buildingData.time_Progress {
+            timeProgressBack = SKShapeNode(rect: CGRect(x: 4, y: -60, width: 56, height: 5), cornerRadius: 2)
+            timeProgressBack.fillColor = SKColor.redColor()
+            timeProgressBack.zPosition = 1
+            addChild(timeProgressBack)
+            timeProgress = SKShapeNode(rect: CGRect(x: 4, y: -60, width: 56, height: 5), cornerRadius: 2)
+            timeProgress.fillColor = SKColor.greenColor()
+            timeProgress.zPosition = 2
+            addChild(timeProgress)
+        }
+        
+        // add hot progress
+        if buildingData.hot_Progress {
+            hotProgressBack = SKShapeNode(rect: CGRect(x: 4, y: -50, width: 56, height: 5), cornerRadius: 2)
+            hotProgressBack.fillColor = SKColor.redColor()
+            hotProgressBack.zPosition = 1
+            addChild(hotProgressBack)
+            hotProgress = SKShapeNode(rect: CGRect(x: 4, y: -50, width: 56, height: 5), cornerRadius: 2)
+            hotProgress.fillColor = SKColor.greenColor()
+            hotProgress.zPosition = 2
+            addChild(hotProgress)
+        }
+    }
+    
+    func progressUpdate() {
+        // update Time progress
+        if buildingData.time_Progress {
+            let persent = CGFloat(buildingData.time_Current) / CGFloat(buildingData.time_Max)
+            timeProgress.xScale = persent
+        }
+        // update Hot progress
+        if buildingData.hot_Progress {
+            let persent = CGFloat(buildingData.hot_Current) / CGFloat(buildingData.hot_Max)
+            hotProgress.xScale = persent
         }
     }
 }
@@ -189,6 +241,7 @@ class BuildingMap: SKNode {
     
     // MARK: BuildingMap Update
     func Update() {
+        
         
         // 1. produce Update
         for (_, line) in buildings.enumerate() {
@@ -275,6 +328,7 @@ class BuildingMap: SKNode {
                             buildingData.water_Current = 0
                             buildingData.energy_current = 0
                         }
+                        building!.progressUpdate()
                     }
                     // C. Caculater Building Number
                     addBuildingNumber(building!.name!)
@@ -284,6 +338,7 @@ class BuildingMap: SKNode {
                         buildingData.time_Current = buildingData.time_Max
                         building!.activate = true
                         building!.alpha = 1
+                        building!.progressUpdate()
                     }
                 }
             }
