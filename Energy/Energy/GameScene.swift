@@ -41,8 +41,6 @@ class GameScene: SKScene {
 //    var choicename: String = "s"
 //    var test: SKSpriteNode!
     
-//    var component = [String: SKSpriteNode]()
-    
     override func didMoveToView(view: SKView) {
         
         framescale = frame.size.width / (midsize.width * 64)
@@ -69,10 +67,10 @@ class GameScene: SKScene {
         buildingMap.configureAtPosition(CGPoint(x: 0, y: 0), level: .One)
         buildingMap.setScale(framescale)
         midArea.addChild(buildingMap)
-        buildingMap.SetTileMapElement(coord: CGPoint(x: 0, y: 0), build: .Fire)
-        buildingMap.SetTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Generator)
-        buildingMap.SetTileMapElement(coord: CGPoint(x: 2, y: 0), build: .Generator)
-        buildingMap.SetTileMapElement(coord: CGPoint(x: 3, y: 0), build: .Generator)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), build: .Fire)
+//        buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Generator)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 2, y: 0), build: .Generator)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 3, y: 0), build: .Generator)
         
         
         let gap: CGFloat = 12
@@ -148,11 +146,10 @@ class GameScene: SKScene {
             // touch Map Area
             if midArea.containsPoint(location) {
                 let buildingmaplocation = touch.locationInNode(buildingMap)
-                let coord = buildingMap.Position2Coord(buildingmaplocation)
+                let coord = buildingMap.position2Coord(buildingmaplocation)
                 print(coord)
-                
-                buildingMap.SetTileMapElement(coord: coord, build: .Generator)
-                // updata imformation
+                //building
+                buildingMap.setTileMapElement(coord: coord, build: .Generator)
             }
             
             // touch SELL Button
@@ -168,30 +165,30 @@ class GameScene: SKScene {
     }
    
     func tickUpdata() {
-        // 更新地圖數據
-        buildingMap.Update()
-        print(buildingMap.BuildingForCoord(CGPoint(x: 2, y: 0))?.buildingData.currentHot)
-        print(buildingMap.BuildingForCoord(CGPoint(x: 3, y: 0))?.buildingData.currentHot)
         
-        // 計算研究生產總量
+        // 1. update map data
+        buildingMap.Update()
+        print(buildingMap.buildingForCoord(CGPoint(x: 0, y: 0))?.buildingData.hot_Current)
+        print(buildingMap.buildingForCoord(CGPoint(x: 1, y: 0))?.buildingData.hot_Current)
+        
+        // 2. calculate reserch
         reserch += reserch_add
-        // 計算增加生產總量
+        
+        // 3. calculate energy
         energy_add = 0
         for (_, line) in buildingMap.buildings.enumerate() {
             for (_, building) in line.enumerate() {
-                if building != nil {
-                    if building!.Activate == true {
-                        energy_add += (building?.buildingData.currentEnergy)!
-                        building?.buildingData.currentEnergy = 0
-                    }
+                if building!.activate == true {
+                    energy_add += (building?.buildingData.energy_current)!
+                    building?.buildingData.energy_current = 0
                 }
             }
         }
         energy += energy_add
         
-        // 計算金錢生產量總量
-        let OfficeNum = buildingMap.GetBuildingNumber(.Office)
-        money_add = OfficeNum * BuildinfData(building: .Office, level: 1).ProduceMoney
+        // 4. calculate money
+        let OfficeNum = buildingMap.getBuildingNumber(.Office)
+        money_add = OfficeNum * BuildingData(building: .Office, level: 1).money_Sales
         if energy >= money_add {
             money += money_add
             energy -= money_add
@@ -200,12 +197,13 @@ class GameScene: SKScene {
             money += money_add
             energy = 0
         }
-        //計算能源上限
+        
+        // 5. calculate energy max
         if energy > energy_max {
             energy = energy_max
         }
         
-        // updata imformation
+        // 6. updata imformation
         moneyLabel.text = "Money: \(money) + \(money_add)"
         reserchLabel.text = "Reserch: \(reserch) + \(reserch_add)"
         energyLabel.text = "Energy: \(energy) + \(energy_add)"
