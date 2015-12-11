@@ -27,7 +27,7 @@ class GameScene: SKScene {
     var reserch: Int = 0
     var reserch_add: Int = 0
     var energyLabel: SKLabelNode!
-    var energy: Int = 1000
+    var energy: Int = 50
     var energy_add: Int = 0
     var energy_maxLabel: SKLabelNode!
     var energy_max: Int = 100
@@ -69,6 +69,11 @@ class GameScene: SKScene {
         buildingMap.configureAtPosition(CGPoint(x: 0, y: 0), level: .One)
         buildingMap.setScale(framescale)
         midArea.addChild(buildingMap)
+        buildingMap.SetTileMapElement(coord: CGPoint(x: 0, y: 0), build: .Fire)
+        buildingMap.SetTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Generator)
+        buildingMap.SetTileMapElement(coord: CGPoint(x: 2, y: 0), build: .Generator)
+        buildingMap.SetTileMapElement(coord: CGPoint(x: 3, y: 0), build: .Generator)
+        
         
         let gap: CGFloat = 12
         let labelsize = (topArea.size.height - gap * 5) / 4
@@ -116,8 +121,7 @@ class GameScene: SKScene {
 //        choiceshow.alpha = 0
 //        choiceshow.zPosition = 4
 //        addChild(choiceshow)
-//
-//        
+
 //        a1 = SKSpriteNode(imageNamed: "block")
 //        a1.name = "x"
 //        a1.position = CGPoint(x: bottomArea.size.width / 4.0, y: bottomArea.size.height / 2.0)
@@ -135,10 +139,6 @@ class GameScene: SKScene {
 //        f1.position = CGPoint(x: bottomArea.size.width * 3 / 4.0, y: bottomArea.size.height / 2.0)
 //        f1.zPosition = 3
 //        bottomArea.addChild(f1)
-//        
-//        
-//        
-//        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -151,7 +151,7 @@ class GameScene: SKScene {
                 let coord = buildingMap.Position2Coord(buildingmaplocation)
                 print(coord)
                 
-                buildingMap.SetTileMapElement(coord: coord, build: .Fire)
+                buildingMap.SetTileMapElement(coord: coord, build: .Generator)
                 // updata imformation
             }
             
@@ -168,19 +168,28 @@ class GameScene: SKScene {
     }
    
     func tickUpdata() {
-        
+        // 更新地圖數據
         buildingMap.Update()
-        print("Wind:" + String(buildingMap.GetBuildingNumber(.Wind)))
-        print("Fire:" + String(buildingMap.GetBuildingNumber(.Fire)))
-        print("Office:" + String(buildingMap.GetBuildingNumber(.Office)))
+        print(buildingMap.BuildingForCoord(CGPoint(x: 2, y: 0))?.buildingData.currentHot)
+        print(buildingMap.BuildingForCoord(CGPoint(x: 3, y: 0))?.buildingData.currentHot)
         
-        //計算研究生產量
+        // 計算研究生產總量
         reserch += reserch_add
-        //計算能源生產量
-        let WindNum = buildingMap.GetBuildingNumber(.Wind)
-        energy_add = WindNum * BuildinfData(building: .Wind, level: 1).produceEnergy
+        // 計算增加生產總量
+        energy_add = 0
+        for (_, line) in buildingMap.buildings.enumerate() {
+            for (_, building) in line.enumerate() {
+                if building != nil {
+                    if building!.Activate == true {
+                        energy_add += (building?.buildingData.currentEnergy)!
+                        building?.buildingData.currentEnergy = 0
+                    }
+                }
+            }
+        }
         energy += energy_add
-        //計算金錢生產量
+        
+        // 計算金錢生產量總量
         let OfficeNum = buildingMap.GetBuildingNumber(.Office)
         money_add = OfficeNum * BuildinfData(building: .Office, level: 1).ProduceMoney
         if energy >= money_add {

@@ -12,7 +12,7 @@ enum Level {
     case One, Two
 }
 enum BuildMenu: Int {
-    case Wind, Fire, Office, BuildMenuLength
+    case Nil, Wind, Fire, Generator, Office, BuildMenuLength
 }
 enum testenum: Int {
     case test1 = 1
@@ -25,37 +25,70 @@ class BuildinfData {
     var price: Int!
     var maxTime: Int = -1
     var currentTime: Int = -1
-    var produceEnergy: Int = -1
     var produceReserch: Int = -1
     var ProduceMoney: Int = -1
-    var produceHot: Int = -1
-    var maxHot: Int = -1
-    var currentHot: Int = -1
-    var produceWater: Int = -1
-    var maxWater: Int = -1
-    var currentWater: Int = -1
+
+    var maxProduceEnergy: Int = 0
+    var produceEnergy: Int = 0
+    var currentEnergy: Int = 0
+    
+    var hot2Energy: Bool = false
+    var HotOutput: Bool = false
+    var HotInput: Bool = false
+    var produceHot: Int = 0
+    var currentHot: Int = 0
+    var maxHot: Int = 0
+    
+    var WaterInput: Bool = false
+    var produceWater: Int = 0
+    var currentWater: Int = 0
+    var maxWater: Int = 0
 
     init(building: BuildMenu, level: Int) {
+        if building == .Nil {
+            imageName = "block"
+        }
         if building == .Wind {
             imageName = "風力"
             price = 1
+            
             maxTime = 5
-            currentTime = maxTime
+            currentTime = 5
+            
             produceEnergy = 1
-        }
-        if building == .Office {
-            imageName = "辦公室1"
-            price = 10
-            ProduceMoney = 5
+            currentEnergy = 0
         }
         if building == .Fire {
             imageName = "火力"
             price = 20
-            maxTime = 10
-            currentTime = 10
+            
+            maxTime = 100
+            currentTime = 100
+            
+            HotOutput = true
             produceHot = 20
-            maxHot = 100
+            maxHot = 400
             currentHot = 0
+        }
+        if building == .Generator {
+            imageName = "發電機1"
+            price = 50
+
+            maxProduceEnergy = 100
+            
+            hot2Energy = true
+            HotInput = true
+            maxHot = 1000
+            currentHot = 0
+            
+            currentEnergy = 0
+        }
+        
+        
+        if building == .Office {
+            imageName = "辦公室1"
+            price = 10
+            ProduceMoney = 5
         }
     }
 }
@@ -67,10 +100,8 @@ class Building: SKNode {
     var level: Int!
     var rebuild: Bool = false
     var Activate: Bool = true
-    var destroy: Bool = false
     var buildingData: BuildinfData!
 
-    
     func configureAtCoord(coord: CGPoint, build: BuildMenu, level: Int) {
         self.coord = coord
         name = String(build.hashValue)
@@ -79,33 +110,10 @@ class Building: SKNode {
         buildingNode = SKSpriteNode(imageNamed: buildingData.imageName)
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(buildingNode)
-    }
-    
-    func update() {
-        if Activate {
-            // 更新當前數據
-            
-            
-            // 更新當前週期
-            if buildingData.currentTime > 0 {
-                buildingData.currentTime -= 1
-            } else if buildingData.currentTime == 0 {
-                buildingData.currentTime -= 1
-                Activate = false
-                alpha = 0.5
-            } else {
-                if rebuild {
-                    buildingData.currentTime = buildingData.maxTime
-                    Activate = true
-                    alpha = 1
-                }
-            }
-            // 判斷是否爆炸
-            if buildingData.maxHot > 0 {
-                if buildingData.currentHot >= buildingData.maxHot {
-                    destroy = true
-                }
-            }
+        
+        if build == .Nil {
+            buildingNode.alpha = 0.2
+            Activate = false
         }
     }
 }
@@ -128,7 +136,12 @@ class BuildingMap: SKNode {
         for _ in 0 ..< Int(mapSize.height) {
             buildings.append(Array(count: Int(mapSize.width), repeatedValue: nil))
         }
-        
+        for y in 0 ..< Int(mapSize.height) {
+            for x in 0 ..< Int(mapSize.width) {
+                let coord = CGPoint(x: x, y: y)
+                SetTileMapElement(coord: coord, build: .Nil)
+            }
+        }
         ResetBuildingNumber()
     }
     // MARK: Coord transfer to position
@@ -152,11 +165,8 @@ class BuildingMap: SKNode {
     }
     // MARK: Remove building from coord
     func RemoveBuilding(coord: CGPoint) {
-        let building = BuildingForCoord(coord)
-        if building != nil {
-            buildings[Int(coord.y)][Int(coord.x)]!.removeFromParent()
-            buildings[Int(coord.y)][Int(coord.x)] = nil
-        }
+        buildings[Int(coord.y)][Int(coord.x)]!.removeFromParent()
+        buildings[Int(coord.y)][Int(coord.x)] = nil
     }
     // MARK: Set tiles by word in coord
     func SetTileMapElement(coord coord: CGPoint, build: BuildMenu) {
@@ -180,22 +190,98 @@ class BuildingMap: SKNode {
     // MARK: BuildingMap Update
     func Update() {
         
-        ResetBuildingNumber()
         
+        // 1. produce Update
+        for (_, line) in buildings.enumerate() {
+            for (_, building) in line.enumerate() {
+                if building!.Activate == true {
+                    let buildingData = building!.buildingData
+                    // 產生能源
+                    buildingData.currentEnergy += buildingData.produceEnergy
+                    // 產生熱量
+                    buildingData.currentHot += buildingData.produceHot
+                }
+            }
+        }
+        
+        // 2. transport Hot
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
-                if building != nil {
-                    // building data updata
-                    building!.update()
-                    // destroy building
-                    if building!.destroy {
-                        let coord = CGPoint(x: x, y: y)
-                        RemoveBuilding(coord)
+                //判斷是否為熱輸出
+                if (building!.Activate == true && building?.buildingData.HotOutput == true) {
+                    //取得周遭熱平衡建築座標
+                    var aroundCoords = [CGPoint]()
+                    if (y - 1 >= 0 && buildings[y-1][x]?.Activate == true && buildings[y-1][x]?.buildingData.HotInput == true) {
+                        aroundCoords.append(CGPoint(x: x, y: y - 1))
                     }
-                    // calculate buildings count
-                    if building!.Activate {
-                        AddBuildingNumber(building!.name!)
+                    if (y + 1 <= 11 && buildings[y+1][x]?.Activate == true && buildings[y+1][x]?.buildingData.HotInput == true) {
+                        aroundCoords.append(CGPoint(x: x, y: y + 1))
                     }
+                    if (x - 1 >= 0 && buildings[y][x-1]?.Activate == true && buildings[y][x-1]?.buildingData.HotInput == true) {
+                        aroundCoords.append(CGPoint(x: x - 1, y: y))
+                    }
+                    if (x + 1 <= 9 && buildings[y][x+1]?.Activate == true && buildings[y][x+1]?.buildingData.HotInput == true) {
+                        aroundCoords.append(CGPoint(x: x + 1, y: y))
+                    }
+                    //根據座標數量，算出熱平衡量
+                    if aroundCoords.count > 0 {
+                        let balancehot = building!.buildingData.currentHot / aroundCoords.count
+                        for coord in aroundCoords {
+                            buildings[Int(coord.y)][Int(coord.x)]!.buildingData.currentHot += balancehot
+                        }
+                        building!.buildingData.currentHot = 0
+                    }
+                }
+            }
+        }
+        
+        // 3. Consume Hot
+        for (_, line) in buildings.enumerate() {
+            for (_, building) in line.enumerate() {
+                if (building!.Activate == true && building!.buildingData.hot2Energy == true) {
+                    let buildingData = building!.buildingData
+                    
+                    if buildingData.currentHot >= buildingData.maxProduceEnergy {
+                        buildingData.currentEnergy += buildingData.maxProduceEnergy
+                        buildingData.currentHot -= buildingData.maxProduceEnergy
+                    } else {
+                        buildingData.currentEnergy += buildingData.currentHot
+                        buildingData.currentHot = 0
+                    }
+                }
+            }
+        }
+        
+        // 4. Destroy & Activate & Caculate
+        ResetBuildingNumber()
+        for (y, line) in buildings.enumerate() {
+            for (x, building) in line.enumerate() {
+                if building!.Activate == true {
+                    let buildingData = building!.buildingData
+                    // Destroy
+                    if buildingData.maxHot > 0 {
+                        if buildingData.currentHot > buildingData.maxHot {
+                            let coord = CGPoint(x: x, y: y)
+                            RemoveBuilding(coord)
+                            SetTileMapElement(coord: coord, build: .Nil)
+                        }
+                    }
+                    // Activate
+                    if buildingData.currentTime > 0 {
+                        buildingData.currentTime -= 1
+                    } else if buildingData.currentTime == 0 {
+                        buildingData.currentTime -= 1
+                        building!.Activate = false
+                        building!.alpha = 0.5
+                    } else {
+                        if building!.rebuild {
+                            buildingData.currentTime = buildingData.maxTime
+                            building!.Activate = true
+                            building!.alpha = 1
+                        }
+                    }
+                    // Caculater Building Number
+                    AddBuildingNumber(building!.name!)
                 }
             }
         }
