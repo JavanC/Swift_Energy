@@ -8,11 +8,14 @@
 
 import SpriteKit
 
-enum Level {
+enum MapLevel {
     case One, Two
 }
 enum BuildMenu: Int {
     case Nil, Wind, Fire, Generator, Office, BuildMenuLength
+}
+enum ProgressType {
+    case Time, Hot, Water
 }
 
 class BuildingData {
@@ -20,32 +23,29 @@ class BuildingData {
     var imageName: String!
     var price: Int!
     var rebuild: Bool = true
+    var progress: ProgressType!
     
-    var time_Progress: Bool = false
-    var time_Max: Int = 0
-    var time_Current: Int = -1
-    var reserch_Produce: Int = 0
-    var money_Sales: Int = 0
-
-    var energy_Produce_Max: Int = 0
-    var energy_produce: Int = 0
+    var time_Max: Int!
+    var time_Current: Int!
+    var reserch_Produce: Int!
+    var money_Sales: Int!
     var energy_current: Int = 0
     
-    var hot_Progress: Bool = false
-    var hot_CanBeEnergy: Bool = false
     var hot_IsOutput: Bool = false
     var hot_IsInput: Bool = false
-    var hot_Produce: Int = 0
-    var hot_Current: Int = 0
-    var hot_Max: Int = 0
+    var hot_Produce: Int!
+    var hot_Current: Int!
+    var hot_Max: Int!
     
-    var water_Progress: Bool = false
     var water_CanBeEnergy: Bool = false
     var water_IsOutput: Bool = false
     var water_IsInput: Bool = false
-    var water_Produce: Int = 0
-    var water_Current: Int = 0
-    var water_Max: Int = 0
+    var water_Produce: Int!
+    var water_Current: Int!
+    var water_Max: Int!
+    
+    var isHot2Energy: Bool = false
+    var hot2Energy_Max: Int!
     
     init(building: BuildMenu, level: Int) {
         if building == .Nil {
@@ -55,42 +55,44 @@ class BuildingData {
         if building == .Wind {
             imageName = "風力"
             price = 1
+            progress = .Time
             
             time_Max = 5
             time_Current = 5
-            time_Progress = true
+         
+            hot_Produce = 1
+            hot_Max = 10
+            hot_Current = 0
+            isHot2Energy = true
+            hot2Energy_Max = 1
             
-            energy_produce = 1
             energy_current = 0
         }
         if building == .Fire {
             imageName = "火力"
             price = 20
+            progress = .Time
+            hot_IsOutput = true
             
             time_Max = 10
             time_Current = 10
-            time_Progress = true
-        
             
-            hot_IsOutput = true
             hot_Produce = 20
-            hot_Max = 400
+            hot_Max = 1
             hot_Current = 0
-            hot_Progress = true
         }
         if building == .Generator {
             imageName = "發電機1"
             price = 50
-
-            energy_Produce_Max = 100
-            
-            hot_CanBeEnergy = true
+            progress = .Hot
             hot_IsInput = true
-            hot_Max = 1000
-            hot_Current = 0
-//            hot_Progress = true
+            isHot2Energy = true
             
             energy_current = 0
+            hot2Energy_Max = 10
+            
+            hot_Max = 400
+            hot_Current = 100
         }
         if building == .Office {
             imageName = "辦公室1"
@@ -109,12 +111,8 @@ class Building: SKNode {
     var activate: Bool = true
     var buildingData: BuildingData!
     
-    var timeProgressBack: SKShapeNode!
-    var timeProgress: SKShapeNode!
-    var hotProgressBack: SKShapeNode!
-    var hotProgress: SKShapeNode!
-    var waterProgressBack: SKShapeNode!
-    var waterProgress: SKShapeNode!
+    var progressBack: SKSpriteNode!
+    var progress: SKSpriteNode!
 
     func configureAtCoord(coord: CGPoint, buildMenu: BuildMenu, level: Int) {
         self.coord = coord
@@ -130,41 +128,50 @@ class Building: SKNode {
             activate = false
         }
         
-        // add time progress
-        if buildingData.time_Progress {
-            timeProgressBack = SKShapeNode(rect: CGRect(x: 4, y: -60, width: 56, height: 5), cornerRadius: 2)
-            timeProgressBack.fillColor = SKColor.redColor()
-            timeProgressBack.zPosition = 1
-            addChild(timeProgressBack)
-            timeProgress = SKShapeNode(rect: CGRect(x: 4, y: -60, width: 56, height: 5), cornerRadius: 2)
-            timeProgress.fillColor = SKColor.greenColor()
-            timeProgress.zPosition = 2
-            addChild(timeProgress)
-        }
-        
-        // add hot progress
-        if buildingData.hot_Progress {
-            hotProgressBack = SKShapeNode(rect: CGRect(x: 4, y: -50, width: 56, height: 5), cornerRadius: 2)
-            hotProgressBack.fillColor = SKColor.redColor()
-            hotProgressBack.zPosition = 1
-            addChild(hotProgressBack)
-            hotProgress = SKShapeNode(rect: CGRect(x: 4, y: -50, width: 56, height: 5), cornerRadius: 2)
-            hotProgress.fillColor = SKColor.greenColor()
-            hotProgress.zPosition = 2
-            addChild(hotProgress)
+        // Add progress
+        if buildingData.progress != nil {
+            progressBack = SKSpriteNode()
+            progressBack.size = CGSize(width: 56, height: 5)
+            progressBack.anchorPoint = CGPoint(x: 0, y: 0)
+            progressBack.position = CGPoint(x: 4, y: -60)
+            progressBack.alpha = 0.3
+            progressBack.zPosition = 1
+            addChild(progressBack)
+            progress = SKSpriteNode()
+            progress = SKSpriteNode()
+            progress.size = CGSize(width: 56, height: 5)
+            progress.anchorPoint = CGPoint(x: 0, y: 0)
+            progress.position = CGPoint(x: 4, y: -60)
+            progress.alpha = 0.7
+            progress.zPosition = 1
+            addChild(progress)
+            switch buildingData.progress! {
+            case .Time:
+                progressBack.color = SKColor.yellowColor()
+                progress.color = SKColor.yellowColor()
+            case .Hot:
+                progressBack.color = SKColor.redColor()
+                progress.color = SKColor.redColor()
+            case .Water:
+                progressBack.color = SKColor.blueColor()
+                progress.color = SKColor.blueColor()
+            }
         }
     }
     
+    // MARK: progress update
     func progressUpdate() {
-        // update Time progress
-        if buildingData.time_Progress {
-            let persent = CGFloat(buildingData.time_Current) / CGFloat(buildingData.time_Max)
-            timeProgress.xScale = persent
-        }
-        // update Hot progress
-        if buildingData.hot_Progress {
-            let persent = CGFloat(buildingData.hot_Current) / CGFloat(buildingData.hot_Max)
-            hotProgress.xScale = persent
+        if buildingData.progress != nil {
+            switch buildingData.progress! {
+            case .Time:
+                let persent = CGFloat(buildingData.time_Current) / CGFloat(buildingData.time_Max)
+                progress.xScale = persent
+            case .Hot:
+                let persent = CGFloat(buildingData.hot_Current) / CGFloat(buildingData.hot_Max)
+                progress.xScale = persent
+            case .Water:
+                break
+            }
         }
     }
 }
@@ -177,7 +184,7 @@ class BuildingMap: SKNode {
     var buildingsNumber = [String: Int]()
     
     // MARK: Configure At Position
-    func configureAtPosition(position: CGPoint, level: Level) {
+    func configureAtPosition(position: CGPoint, level: MapLevel) {
         self.position = position
         
         if level == .One {
@@ -196,18 +203,21 @@ class BuildingMap: SKNode {
         }
         resetBuildingNumber()
     }
+    
     // MARK: Coord transfer to position
     func coord2Position(coord: CGPoint) -> CGPoint {
         let x = tileSize.width * coord.x
         let y = tileSize.height * -coord.y
         return CGPoint(x: x, y: y)
     }
+    
     // MARK: Position transfer to Coord
     func position2Coord(mapPosition: CGPoint) -> CGPoint {
         let x = mapPosition.x / tileSize.width
         let y = mapPosition.y / -tileSize.height
         return CGPoint(x: Int(x), y: Int(y))
     }
+    
     // MARK: Return the building by coord
     func buildingForCoord(coord: CGPoint) -> Building? {
         if coord.x < 0 || coord.x > mapSize.width - 1 || coord.y < 0 || coord.y > mapSize.height - 1 {
@@ -215,11 +225,13 @@ class BuildingMap: SKNode {
         }
         return buildings[Int(coord.y)][Int(coord.x)]
     }
+    
     // MARK: Remove building from coord
     func removeBuilding(coord: CGPoint) {
         buildings[Int(coord.y)][Int(coord.x)]!.removeFromParent()
         buildings[Int(coord.y)][Int(coord.x)] = nil
     }
+    
     // MARK: Set tiles by word in coord
     func setTileMapElement(coord coord: CGPoint, build: BuildMenu) {
         let x = Int(coord.x)
@@ -242,16 +254,15 @@ class BuildingMap: SKNode {
     // MARK: BuildingMap Update
     func Update() {
         
-        
         // 1. produce Update
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {
                 if building!.activate {
                     let buildingData = building!.buildingData
-                    // priduce energy
-                    buildingData.energy_current += buildingData.energy_produce
                     // produce hot
-                    buildingData.hot_Current += buildingData.hot_Produce
+                    if buildingData.hot_Produce != nil {
+                        buildingData.hot_Current! += buildingData.hot_Produce
+                    }
                 }
             }
         }
@@ -279,7 +290,7 @@ class BuildingMap: SKNode {
                     if aroundCoords.count > 0 {
                         let balancehot = building!.buildingData.hot_Current / aroundCoords.count
                         for coord in aroundCoords {
-                            buildings[Int(coord.y)][Int(coord.x)]!.buildingData.hot_Current += balancehot
+                            buildings[Int(coord.y)][Int(coord.x)]!.buildingData.hot_Current! += balancehot
                         }
                         building!.buildingData.hot_Current = 0
                     }
@@ -290,12 +301,11 @@ class BuildingMap: SKNode {
         // 3. Consume Hot
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {
-                if (building!.activate && building!.buildingData.hot_CanBeEnergy) {
+                if (building!.activate && building!.buildingData.isHot2Energy) {
                     let buildingData = building!.buildingData
-                    
-                    if buildingData.hot_Current >= buildingData.energy_Produce_Max {
-                        buildingData.energy_current += buildingData.energy_Produce_Max
-                        buildingData.hot_Current -= buildingData.energy_Produce_Max
+                    if buildingData.hot_Current >= buildingData.hot2Energy_Max {
+                        buildingData.energy_current += buildingData.hot2Energy_Max
+                        buildingData.hot_Current! -= buildingData.hot2Energy_Max
                     } else {
                         buildingData.energy_current += buildingData.hot_Current
                         buildingData.hot_Current = 0
@@ -304,8 +314,7 @@ class BuildingMap: SKNode {
             }
         }
         
-        // 4. Destroy & Activate & Caculate & Rebuild
-        resetBuildingNumber()
+        // 4. Destroy & Activate & Rebuild & Update Progress
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
                 let buildingData = building!.buildingData
@@ -319,31 +328,30 @@ class BuildingMap: SKNode {
                         }
                     }
                     // B. Activate
-                    if buildingData.time_Max > 0 {
-                        buildingData.time_Current--
-                        if buildingData.time_Current == 0 {
+                    if buildingData.time_Max != nil {
+                        buildingData.time_Current!--
+                        if buildingData.time_Current < 0 {
                             building!.activate = false
                             building!.alpha = 0.5
                             buildingData.hot_Current = 0
                             buildingData.water_Current = 0
                             buildingData.energy_current = 0
                         }
-                        building!.progressUpdate()
                     }
-                    // C. Caculater Building Number
-                    addBuildingNumber(building!.name!)
                 } else {
-                    // D. Rebuild
+                    // C. Rebuild
                     if buildingData.rebuild {
                         buildingData.time_Current = buildingData.time_Max
                         building!.activate = true
                         building!.alpha = 1
-                        building!.progressUpdate()
                     }
                 }
+                // D. Update progress
+                building!.progressUpdate()
             }
         }
     }
+    
     // Reset Building Number
     func resetBuildingNumber() {
         for count in 0..<BuildMenu.BuildMenuLength.hashValue {

@@ -67,10 +67,10 @@ class GameScene: SKScene {
         buildingMap.configureAtPosition(CGPoint(x: 0, y: 0), level: .One)
         buildingMap.setScale(framescale)
         midArea.addChild(buildingMap)
-        buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), build: .Fire)
-        buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Fire)
-        buildingMap.setTileMapElement(coord: CGPoint(x: 2, y: 0), build: .Generator)
-        buildingMap.setTileMapElement(coord: CGPoint(x: 3, y: 0), build: .Generator)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), build: .Wind)
+//        buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Fire)
+//        buildingMap.setTileMapElement(coord: CGPoint(x: 2, y: 0), build: .Generator)
+//        buildingMap.setTileMapElement(coord: CGPoint(x: 3, y: 0), build: .Generator)
         
         
         let gap: CGFloat = 12
@@ -170,6 +170,8 @@ class GameScene: SKScene {
         buildingMap.Update()
         print(buildingMap.buildingForCoord(CGPoint(x: 0, y: 0))?.buildingData.hot_Current)
         print(buildingMap.buildingForCoord(CGPoint(x: 1, y: 0))?.buildingData.hot_Max)
+        print(buildingMap.buildingForCoord(CGPoint(x: 2, y: 0))?.buildingData.hot_Current)
+        print(buildingMap.buildingForCoord(CGPoint(x: 3, y: 0))?.buildingData.hot_Max)
         
         // 2. calculate reserch
         reserch += reserch_add
@@ -178,7 +180,7 @@ class GameScene: SKScene {
         energy_add = 0
         for (_, line) in buildingMap.buildings.enumerate() {
             for (_, building) in line.enumerate() {
-                if building!.activate == true {
+                if (building!.activate == true && building?.buildingData.energy_current != nil) {
                     energy_add += (building?.buildingData.energy_current)!
                     building?.buildingData.energy_current = 0
                 }
@@ -187,8 +189,14 @@ class GameScene: SKScene {
         energy += energy_add
         
         // 4. calculate money
-        let OfficeNum = buildingMap.getBuildingNumber(.Office)
-        money_add = OfficeNum * BuildingData(building: .Office, level: 1).money_Sales
+        money_add = 0
+        for (_, line) in buildingMap.buildings.enumerate() {
+            for (_, building) in line.enumerate() {
+                if (building!.activate == true && building?.buildingData.money_Sales != nil) {
+                    money_add += (building?.buildingData.money_Sales)!
+                }
+            }
+        }
         if energy >= money_add {
             money += money_add
             energy -= money_add
