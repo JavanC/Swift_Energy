@@ -156,6 +156,7 @@ class Building: SKNode {
                 progress.color = SKColor.blueColor()
             }
         }
+        progressUpdate()
     }
     
     // MARK: progress update
