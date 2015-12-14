@@ -29,15 +29,14 @@ class BuildingData {
     var time_Current: Int!
     var reserch_Produce: Int!
     var money_Sales: Int!
-    var energy_current: Int = 0
+    var energy_Current: Int = 0
     
     var hot_IsOutput: Bool = false
     var hot_IsInput: Bool = false
     var hot_Produce: Int!
     var hot_Current: Int!
     var hot_Max: Int!
-    
-    var water_CanBeEnergy: Bool = false
+
     var water_IsOutput: Bool = false
     var water_IsInput: Bool = false
     var water_Produce: Int!
@@ -66,7 +65,7 @@ class BuildingData {
             isHot2Energy = true
             hot2Energy_Max = 1
             
-            energy_current = 0
+            energy_Current = 0
         }
         if building == .Fire {
             imageName = "火力"
@@ -88,7 +87,7 @@ class BuildingData {
             hot_IsInput = true
             isHot2Energy = true
             
-            energy_current = 0
+            energy_Current = 0
             hot2Energy_Max = 10
             
             hot_Max = 400
@@ -304,10 +303,10 @@ class BuildingMap: SKNode {
                 if (building!.activate && building!.buildingData.isHot2Energy) {
                     let buildingData = building!.buildingData
                     if buildingData.hot_Current >= buildingData.hot2Energy_Max {
-                        buildingData.energy_current += buildingData.hot2Energy_Max
+                        buildingData.energy_Current += buildingData.hot2Energy_Max
                         buildingData.hot_Current! -= buildingData.hot2Energy_Max
                     } else {
-                        buildingData.energy_current += buildingData.hot_Current
+                        buildingData.energy_Current += buildingData.hot_Current
                         buildingData.hot_Current = 0
                     }
                 }
@@ -335,7 +334,7 @@ class BuildingMap: SKNode {
                             building!.alpha = 0.5
                             buildingData.hot_Current = 0
                             buildingData.water_Current = 0
-                            buildingData.energy_current = 0
+                            buildingData.energy_Current = 0
                         }
                     }
                 } else {

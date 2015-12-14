@@ -8,6 +8,10 @@
 
 import SpriteKit
 
+enum TouchType: Int {
+    case Nil, Sell, Build, Reserch
+}
+
 class GameScene: SKScene {
     var framescale: CGFloat!
     let tilesize = CGSizeMake(64, 64)
@@ -16,6 +20,7 @@ class GameScene: SKScene {
     var topArea: SKSpriteNode!
     var midArea: SKSpriteNode!
     var botArea: SKSpriteNode!
+    var touchType: TouchType = .Nil
     
     var gameTimer: NSTimer!
     var buildingMap: BuildingMap!
@@ -31,8 +36,15 @@ class GameScene: SKScene {
     var energy_add: Int = 0
     var energy_maxLabel: SKLabelNode!
     var energy_max: Int = 100
-    var energySellButton: SKLabelNode!
-    var rebuildButton: SKLabelNode!
+    
+    var buttonMenu: SKSpriteNode!
+    var buttonRebuild: SKSpriteNode!
+    var buttonPause: SKSpriteNode!
+
+    var buttonSell: SKSpriteNode!
+    var buttonBuile: SKSpriteNode!
+    var buttonReserch: SKSpriteNode!
+
     
     // OTHER
 //    var defaults: NSUserDefaults!
@@ -103,60 +115,76 @@ class GameScene: SKScene {
         energy_maxLabel.horizontalAlignmentMode = .Left
         energy_maxLabel.position = CGPoint(x: 16, y: gap * 1)
         topArea.addChild(energy_maxLabel)
-        energySellButton = SKLabelNode(fontNamed: "Verdana-Bold")
-        energySellButton.text = "SELL"
-        energySellButton.fontColor = UIColor.blueColor()
-        energySellButton.fontSize = labelsize * 2
-        energySellButton.horizontalAlignmentMode = .Right
-        energySellButton.position = CGPoint(x: topArea.size.width - 16, y: gap * 1)
-        topArea.addChild(energySellButton)
+        
+        buttonMenu = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: 64 * framescale, height: 64 * framescale))
+        buttonMenu.anchorPoint = CGPoint(x: 0, y: 0)
+        buttonMenu.position = CGPoint(x: topArea.size.width - 64 * 3 * framescale, y: 64 * framescale)
+        topArea.addChild(buttonMenu)
+        buttonRebuild = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: 64 * framescale, height: 64 * framescale))
+        buttonRebuild.anchorPoint = CGPoint(x: 0, y: 0)
+        buttonRebuild.position = CGPoint(x: topArea.size.width - 64 * 2 * framescale, y: 64 * framescale)
+        topArea.addChild(buttonRebuild)
+        buttonPause = SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: 64 * framescale, height: 64 * framescale))
+        buttonPause.anchorPoint = CGPoint(x: 0, y: 0)
+        buttonPause.position = CGPoint(x: topArea.size.width - 64 * 1 * framescale, y: 64 * framescale)
+        topArea.addChild(buttonPause)
+        buttonSell = SKSpriteNode(color: SKColor.yellowColor(), size: CGSize(width: 64 * framescale, height: 64 * framescale))
+        buttonSell.anchorPoint = CGPoint(x: 0, y: 0)
+        buttonSell.position = CGPoint(x: topArea.size.width - 64 * 3 * framescale, y: 0)
+        topArea.addChild(buttonSell)
+        buttonBuile = SKSpriteNode(color: SKColor.blueColor(), size: CGSize(width: 64 * framescale, height: 64 * framescale))
+        buttonBuile.anchorPoint = CGPoint(x: 0, y: 0)
+        buttonBuile.position = CGPoint(x: topArea.size.width - 64 * 2 * framescale, y: 0)
+        topArea.addChild(buttonBuile)
+        buttonReserch = SKSpriteNode(color: SKColor.greenColor(), size: CGSize(width: 64 * framescale, height: 64 * framescale))
+        buttonReserch.anchorPoint = CGPoint(x: 0, y: 0)
+        buttonReserch.position = CGPoint(x: topArea.size.width - 64 * 1 * framescale, y: 0)
+        topArea.addChild(buttonReserch)
+        
         
         // OTHER
 //        defaults = NSUserDefaults.standardUserDefaults()
-        
-        // BOTTOM
-//        choiceshow = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 74, height: 74))
-//        choiceshow.alpha = 0
-//        choiceshow.zPosition = 4
-//        addChild(choiceshow)
 
-//        a1 = SKSpriteNode(imageNamed: "block")
-//        a1.name = "x"
-//        a1.position = CGPoint(x: bottomArea.size.width / 4.0, y: bottomArea.size.height / 2.0)
-//        a1.zPosition = 3
-//        bottomArea.addChild(a1)
-//        
-//        b1 = SKSpriteNode(imageNamed: "風力")
-//        b1.name = "s"
-//        b1.position = CGPoint(x: bottomArea.size.width * 2 / 4.0, y: bottomArea.size.height / 2.0)
-//        b1.zPosition = 3
-//        bottomArea.addChild(b1)
-//        
-//        f1 = SKSpriteNode(imageNamed: "辦公室1")
-//        f1.name = "o"
-//        f1.position = CGPoint(x: bottomArea.size.width * 3 / 4.0, y: bottomArea.size.height / 2.0)
-//        f1.zPosition = 3
-//        bottomArea.addChild(f1)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.locationInNode(self)
             
+            // touch Top Area
+            if topArea.containsPoint(location) {
+                let topAreaLocation = touch.locationInNode(topArea)
+                
+                // reset touch type
+                touchType = .Nil
+                buttonSell.alpha = 1
+                buttonBuile.alpha = 1
+                // touch build Button
+                if buttonBuile.containsPoint(topAreaLocation) {
+                    touchType = .Build
+                    buttonBuile.alpha = 0.3
+                }
+                // touch SELL Button
+                if buttonSell.containsPoint(topAreaLocation) {
+                    touchType = .Sell
+                    buttonSell.alpha = 0.3
+                }
+            }
             // touch Map Area
             if midArea.containsPoint(location) {
                 let buildingmaplocation = touch.locationInNode(buildingMap)
                 let coord = buildingMap.position2Coord(buildingmaplocation)
                 print(coord)
-                //building
-                buildingMap.setTileMapElement(coord: coord, build: .Generator)
+                
+                if touchType == .Sell {
+                    buildingMap.removeBuilding(coord)
+                }
+                
+                if touchType == .Build {
+                    buildingMap.setTileMapElement(coord: coord, build: .Generator)
+                }
             }
             
-            // touch SELL Button
-            if energySellButton.containsPoint(touch.locationInNode(topArea)) {
-                money += energy
-                energy = 0
-            }
         }
     }
     
@@ -180,9 +208,9 @@ class GameScene: SKScene {
         energy_add = 0
         for (_, line) in buildingMap.buildings.enumerate() {
             for (_, building) in line.enumerate() {
-                if (building!.activate == true && building?.buildingData.energy_current != nil) {
-                    energy_add += (building?.buildingData.energy_current)!
-                    building?.buildingData.energy_current = 0
+                if (building!.activate == true && building?.buildingData.energy_Current != nil) {
+                    energy_add += (building?.buildingData.energy_Current)!
+                    building?.buildingData.energy_Current = 0
                 }
             }
         }
