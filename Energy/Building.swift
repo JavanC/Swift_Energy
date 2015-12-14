@@ -108,6 +108,7 @@ class Building: SKNode {
     var level: Int!
 
     var activate: Bool = true
+    var buildingType: BuildMenu!
     var buildingData: BuildingData!
     
     var progressBack: SKSpriteNode!
@@ -117,6 +118,7 @@ class Building: SKNode {
         self.coord = coord
         name = String(buildMenu.hashValue)
         
+        buildingType = buildMenu
         buildingData = BuildingData(building: buildMenu, level: level)
         buildingNode = SKSpriteNode(imageNamed: buildingData.imageName)
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
@@ -333,6 +335,7 @@ class BuildingMap: SKNode {
                         if buildingData.time_Current < 0 {
                             building!.activate = false
                             building!.alpha = 0.5
+                            buildingData.time_Current = 0
                             buildingData.hot_Current = 0
                             buildingData.water_Current = 0
                             buildingData.energy_Current = 0

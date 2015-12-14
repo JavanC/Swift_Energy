@@ -9,7 +9,7 @@
 import SpriteKit
 
 enum TouchType: Int {
-    case Nil, Sell, Build, Reserch
+    case Nil, Sell, Build, Reserch, Building
 }
 
 class GameScene: SKScene {
@@ -45,9 +45,17 @@ class GameScene: SKScene {
     var buttonBuile: SKSpriteNode!
     var buttonReserch: SKSpriteNode!
     
-    var energy_maxLabel: SKLabelNode!
     var energy_Progress: SKSpriteNode!
+    var energy_maxLabel: SKLabelNode!
+    var energy_ProgressFront: SKSpriteNode!
     var energy_ProgressBack: SKSpriteNode!
+    
+    var info: SKSpriteNode!
+    var info_Building: Building!
+    var info_1: SKLabelNode!
+    var info_2: SKLabelNode!
+    var info_3: SKLabelNode!
+    var info_4: SKLabelNode!
     
     // OTHER
 //    var defaults: NSUserDefaults!
@@ -79,9 +87,9 @@ class GameScene: SKScene {
         buildingMap.setScale(framescale)
         midArea.addChild(buildingMap)
         buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), build: .Wind)
-//        buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Fire)
-//        buildingMap.setTileMapElement(coord: CGPoint(x: 2, y: 0), build: .Generator)
-//        buildingMap.setTileMapElement(coord: CGPoint(x: 3, y: 0), build: .Generator)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Fire)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 2, y: 0), build: .Generator)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 3, y: 0), build: .Generator)
         
         
         let gap: CGFloat = 15
@@ -135,25 +143,55 @@ class GameScene: SKScene {
         buttonReserch.position = CGPoint(x: topArea.size.width - 64 * 1 * framescale, y: 0)
         topArea.addChild(buttonReserch)
         
+        
+        // Energy Progress
         let energy_ProgressSize = CGSize(width: botArea.size.width * 3 / 4, height: botArea.size.height / 2)
+        energy_Progress = SKSpriteNode()
+        energy_Progress.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height / 2)
+        botArea.addChild(energy_Progress)
         energy_ProgressBack = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
         energy_ProgressBack.alpha = 0.3
         energy_ProgressBack.anchorPoint = CGPoint(x: 0, y: 0.5)
-        energy_ProgressBack.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height / 2)
-        botArea.addChild(energy_ProgressBack)
-        energy_Progress = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
-        energy_Progress.alpha = 0.7
-        energy_Progress.anchorPoint = CGPoint(x: 0, y: 0.5)
-        energy_Progress.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height / 2)
-        botArea.addChild(energy_Progress)
-        
+        energy_ProgressBack.position = CGPoint(x: 0, y: 0)
+        energy_Progress.addChild(energy_ProgressBack)
+        energy_ProgressFront = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
+        energy_ProgressFront.alpha = 0.7
+        energy_ProgressFront.anchorPoint = CGPoint(x: 0, y: 0.5)
+        energy_ProgressFront.position = CGPoint(x: 0, y: 0)
+        energy_Progress.addChild(energy_ProgressFront)
         energy_maxLabel = SKLabelNode(fontNamed: "Verdana-Bold")
         energy_maxLabel.text = "Energy: \(energy) (Max:\(energy_max))"
         energy_maxLabel.fontColor = colorEnergy
         energy_maxLabel.fontSize = labelsize
         energy_maxLabel.horizontalAlignmentMode = .Left
-        energy_maxLabel.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height * 3 / 4 + 10)
-        botArea.addChild(energy_maxLabel)
+        energy_maxLabel.position = CGPoint(x: 0, y: botArea.size.height / 4 + 10)
+        energy_Progress.addChild(energy_maxLabel)
+        // Building Information
+        let infogap: CGFloat = 15
+        let infosize = (botArea.size.height - 5 * infogap) / 4
+        info = SKSpriteNode()
+        info.position = CGPoint(x: infogap * 2, y: 0)
+        botArea.addChild(info)
+        info_1 = SKLabelNode(fontNamed: "Verdana-Bold")
+        info_1.fontSize = infosize
+        info_1.horizontalAlignmentMode = .Left
+        info_1.position = CGPoint(x: 0, y: infogap * 4 + infosize * 3)
+        info.addChild(info_1)
+        info_2 = SKLabelNode(fontNamed: "Verdana-Bold")
+        info_2.fontSize = infosize
+        info_2.horizontalAlignmentMode = .Left
+        info_2.position = CGPoint(x: 0, y: infogap * 3 + infosize * 2)
+        info.addChild(info_2)
+        info_3 = SKLabelNode(fontNamed: "Verdana-Bold")
+        info_3.fontSize = infosize
+        info_3.horizontalAlignmentMode = .Left
+        info_3.position = CGPoint(x: 0, y: infogap * 2 + infosize * 1)
+        info.addChild(info_3)
+        info_4 = SKLabelNode(fontNamed: "Verdana-Bold")
+        info_4.fontSize = infosize
+        info_4.horizontalAlignmentMode = .Left
+        info_4.position = CGPoint(x: 0, y: infogap * 1)
+        info.addChild(info_4)
         
         
         // OTHER
@@ -191,8 +229,17 @@ class GameScene: SKScene {
                 let coord = buildingMap.position2Coord(buildingmaplocation)
                 print(coord)
                 
+                if touchType == .Nil || touchType == .Building {
+                    if buildingMap.buildingForCoord(coord)!.activate {
+                        touchType = .Building
+                        info_Building = buildingMap.buildingForCoord(coord)
+                    } else {
+                        touchType = .Nil
+                    }
+                }
+                
                 if touchType == .Sell {
-                    if buildingMap.buildingForCoord(coord)!.activate{
+                    if buildingMap.buildingForCoord(coord)!.activate {
                         let price = buildingMap.buildingForCoord(coord)!.buildingData.price
                         money += price
                         buildingMap.removeBuilding(coord)
@@ -208,29 +255,51 @@ class GameScene: SKScene {
             if botArea.containsPoint(location) {
                 let bottomLocation = touch.locationInNode(botArea)
                 if touchType == .Sell {
-                    if energy_ProgressBack.containsPoint(bottomLocation) {
+                    if energy_Progress.containsPoint(bottomLocation) {
                         money += energy
                         energy = 0
                     }
                 }
-                
             }
         }
     }
     
     override func update(currentTime: CFTimeInterval) {
-        let persent = CGFloat(energy) / CGFloat(energy_max)
-        energy_Progress.xScale = persent
+        // update touch nil & sell
+        if touchType == .Nil || touchType == .Sell {
+            energy_Progress.hidden = false
+            info.hidden = true
+            
+            let persent = CGFloat(energy) / CGFloat(energy_max)
+            energy_ProgressFront.xScale = persent
+        }
+        // update building
+        if touchType == .Building {
+            energy_Progress.hidden = true
+            info.hidden = false
+            
+            if info_Building.buildingType == .Wind {
+                info_1.text = "Time: \(info_Building.buildingData.time_Current) / \(info_Building.buildingData.time_Max)"
+                info_2.text = "Produce Energy: \(info_Building.buildingData.hot2Energy_Max)"
+                info_3.text = "Sell Money: \(info_Building.buildingData.price)"
+            }
+            if info_Building.buildingType == .Fire {
+                info_1.text = "Time: \(info_Building.buildingData.time_Current) / \(info_Building.buildingData.time_Max)"
+                info_2.text = "Produce Hot: \(info_Building.buildingData.hot_Produce)"
+                info_3.text = "Sell Money: \(info_Building.buildingData.price)"
+            }
+            if info_Building.buildingType == .Generator {
+                info_1.text = "Hot: \(info_Building.buildingData.hot_Current) / \(info_Building.buildingData.hot_Max)"
+                info_2.text = "Converted Energy: \(info_Building.buildingData.hot2Energy_Max)"
+                info_3.text = "Sell Money: \(info_Building.buildingData.price)"
+            }
+        }
     }
    
     func tickUpdata() {
         
         // 1. update map data
         buildingMap.Update()
-        print(buildingMap.buildingForCoord(CGPoint(x: 0, y: 0))?.buildingData.hot_Current)
-        print(buildingMap.buildingForCoord(CGPoint(x: 1, y: 0))?.buildingData.hot_Max)
-        print(buildingMap.buildingForCoord(CGPoint(x: 2, y: 0))?.buildingData.hot_Current)
-        print(buildingMap.buildingForCoord(CGPoint(x: 3, y: 0))?.buildingData.hot_Max)
         
         // 2. calculate reserch
         reserch += reserch_add
@@ -276,8 +345,6 @@ class GameScene: SKScene {
         let persent = CGFloat(energy) / CGFloat(energy_max) * 100
         energyLabel.text = "Energy: \(persent)%"
         energy_maxLabel.text = "Energy: \(energy) (Max:\(energy_max))"
-        
-
         
         //        save()
     }
