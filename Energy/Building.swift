@@ -59,11 +59,11 @@ class BuildingData {
             time_Max = 5
             time_Current = 5
          
-            hot_Produce = 1
-            hot_Max = 10
+            hot_Produce = 1 * level
+            hot_Max = 10 * level
             hot_Current = 0
             isHot2Energy = true
-            hot2Energy_Max = 1
+            hot2Energy_Max = 1 * level
             
             energy_Current = 0
         }
@@ -76,7 +76,7 @@ class BuildingData {
             time_Max = 10
             time_Current = 10
             
-            hot_Produce = 20
+            hot_Produce = 20 * level
             hot_Max = 1
             hot_Current = 0
         }
@@ -88,15 +88,15 @@ class BuildingData {
             isHot2Energy = true
             
             energy_Current = 0
-            hot2Energy_Max = 10
+            hot2Energy_Max = 10 * level
             
-            hot_Max = 400
+            hot_Max = 400 * level
             hot_Current = 100
         }
         if building == .Office {
             imageName = "辦公室1"
             price = 10
-            money_Sales = 5
+            money_Sales = 5 * level
         }
     }
 }
@@ -104,21 +104,22 @@ class BuildingData {
 class Building: SKNode {
     
     var coord: CGPoint!
-    var buildingNode: SKSpriteNode!
+    var buildMenu: BuildMenu!
     var level: Int!
-
-    var activate: Bool = true
-    var buildingType: BuildMenu!
+    var buildingNode: SKSpriteNode!
+    
     var buildingData: BuildingData!
+    var activate: Bool = true
     
     var progressBack: SKSpriteNode!
     var progress: SKSpriteNode!
 
     func configureAtCoord(coord: CGPoint, buildMenu: BuildMenu, level: Int) {
         self.coord = coord
+        self.buildMenu = buildMenu
+        self.level = level
         name = String(buildMenu.hashValue)
         
-        buildingType = buildMenu
         buildingData = BuildingData(building: buildMenu, level: level)
         buildingNode = SKSpriteNode(imageNamed: buildingData.imageName)
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
@@ -183,27 +184,29 @@ class BuildingMap: SKNode {
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array< Array<Building?>>()
-    var buildingsNumber = [String: Int]()
+    var buildingsLevel = [String: Int]()
     
     // MARK: Configure At Position
-    func configureAtPosition(position: CGPoint, level: MapLevel) {
+    func configureAtPosition(position: CGPoint, maplevel: MapLevel) {
         self.position = position
         
-        if level == .One {
+        if maplevel == .One {
             self.name = "level_One"
         }
         
         // Initialization map
+        initBuildingLevel()
+        setBuildingLevel(.Wind, level: 2)
         for _ in 0 ..< Int(mapSize.height) {
             buildings.append(Array(count: Int(mapSize.width), repeatedValue: nil))
         }
         for y in 0 ..< Int(mapSize.height) {
             for x in 0 ..< Int(mapSize.width) {
                 let coord = CGPoint(x: x, y: y)
-                setTileMapElement(coord: coord, build: .Nil)
+                setTileMapElement(coord: coord, buildMenu: .Nil)
             }
         }
-        resetBuildingNumber()
+        
     }
     
     // MARK: Coord transfer to position
@@ -235,7 +238,7 @@ class BuildingMap: SKNode {
     }
     
     // MARK: Set tiles by word in coord
-    func setTileMapElement(coord coord: CGPoint, build: BuildMenu) {
+    func setTileMapElement(coord coord: CGPoint, buildMenu: BuildMenu) {
         let x = Int(coord.x)
         let y = Int(coord.y)
         
@@ -246,8 +249,9 @@ class BuildingMap: SKNode {
         // if nil, build
         if (buildings[y][x] == nil) {
             let building = Building()
+            let level = getBuildingLevel(buildMenu)
             buildings[y][x] = building
-            building.configureAtCoord(coord, buildMenu: build, level: 1)
+            building.configureAtCoord(coord, buildMenu: buildMenu, level: level)
             building.position = coord2Position(coord)
             addChild(building)
         }
@@ -326,7 +330,7 @@ class BuildingMap: SKNode {
                         if buildingData.hot_Current > buildingData.hot_Max {
                             let coord = CGPoint(x: x, y: y)
                             removeBuilding(coord)
-                            setTileMapElement(coord: coord, build: .Nil)
+                            setTileMapElement(coord: coord, buildMenu: .Nil)
                         }
                     }
                     // B. Activate
@@ -355,18 +359,20 @@ class BuildingMap: SKNode {
         }
     }
     
-    // Reset Building Number
-    func resetBuildingNumber() {
+    // Building level function
+    func initBuildingLevel() {
         for count in 0..<BuildMenu.BuildMenuLength.hashValue {
             let name = String(count)
-            buildingsNumber[name] = 0
+            buildingsLevel[name] = 1
         }
     }
-    func addBuildingNumber(name: String) {
-        buildingsNumber[name] = buildingsNumber[name]! + 1
+    func setBuildingLevel(building: BuildMenu, level: Int) {
+        let name = String(building.hashValue)
+        buildingsLevel[name] = level
     }
-    func getBuildingNumber(Building: BuildMenu) -> Int {
-        return buildingsNumber[String(Building.hashValue)]!
+    func getBuildingLevel(building: BuildMenu) -> Int {
+        let name = String(building.hashValue)
+        return buildingsLevel[name]!
     }
 
     // MARK: Load Tile Map by word array

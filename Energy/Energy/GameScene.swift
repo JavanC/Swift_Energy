@@ -83,13 +83,13 @@ class GameScene: SKScene {
         gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
         
         buildingMap = BuildingMap()
-        buildingMap.configureAtPosition(CGPoint(x: 0, y: 0), level: .One)
+        buildingMap.configureAtPosition(CGPoint(x: 0, y: 0), maplevel: .One)
         buildingMap.setScale(framescale)
         midArea.addChild(buildingMap)
-        buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), build: .Wind)
-        buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), build: .Fire)
-        buildingMap.setTileMapElement(coord: CGPoint(x: 2, y: 0), build: .Generator)
-        buildingMap.setTileMapElement(coord: CGPoint(x: 3, y: 0), build: .Generator)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildMenu: .Wind)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), buildMenu: .Fire)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 2, y: 0), buildMenu: .Generator)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 3, y: 0), buildMenu: .Generator)
         
         
         let gap: CGFloat = 15
@@ -193,7 +193,6 @@ class GameScene: SKScene {
         info_4.position = CGPoint(x: 0, y: infogap * 1)
         info.addChild(info_4)
         
-        
         // OTHER
 //        defaults = NSUserDefaults.standardUserDefaults()
 
@@ -243,12 +242,12 @@ class GameScene: SKScene {
                         let price = buildingMap.buildingForCoord(coord)!.buildingData.price
                         money += price
                         buildingMap.removeBuilding(coord)
-                        buildingMap.setTileMapElement(coord: coord, build: .Nil)
+                        buildingMap.setTileMapElement(coord: coord, buildMenu: .Nil)
                     }
                 }
 
                 if touchType == .Build {
-                    buildingMap.setTileMapElement(coord: coord, build: .Generator)
+                    buildingMap.setTileMapElement(coord: coord, buildMenu: .Generator)
                 }
             }
             // touch Bottom Area
@@ -278,17 +277,17 @@ class GameScene: SKScene {
             energy_Progress.hidden = true
             info.hidden = false
             
-            if info_Building.buildingType == .Wind {
+            if info_Building.buildMenu == .Wind {
                 info_1.text = "Time: \(info_Building.buildingData.time_Current) / \(info_Building.buildingData.time_Max)"
                 info_2.text = "Produce Energy: \(info_Building.buildingData.hot2Energy_Max)"
                 info_3.text = "Sell Money: \(info_Building.buildingData.price)"
             }
-            if info_Building.buildingType == .Fire {
+            if info_Building.buildMenu == .Fire {
                 info_1.text = "Time: \(info_Building.buildingData.time_Current) / \(info_Building.buildingData.time_Max)"
                 info_2.text = "Produce Hot: \(info_Building.buildingData.hot_Produce)"
                 info_3.text = "Sell Money: \(info_Building.buildingData.price)"
             }
-            if info_Building.buildingType == .Generator {
+            if info_Building.buildMenu == .Generator {
                 info_1.text = "Hot: \(info_Building.buildingData.hot_Current) / \(info_Building.buildingData.hot_Max)"
                 info_2.text = "Converted Energy: \(info_Building.buildingData.hot2Energy_Max)"
                 info_3.text = "Sell Money: \(info_Building.buildingData.price)"
