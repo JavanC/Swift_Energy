@@ -96,6 +96,11 @@ class BuildingData {
         if building == .Office {
             imageName = "辦公室1"
             price = 10
+            hot_IsInput = true
+            
+            hot_Max = 10
+            hot_Current = 0
+            
             money_Sales = 5 * level
         }
     }
@@ -326,7 +331,7 @@ class BuildingMap: SKNode {
                 let buildingData = building!.buildingData
                 if building!.activate {
                     // A. Destroy
-                    if buildingData.hot_Max > 0 {
+                    if buildingData.hot_Max != nil {
                         if buildingData.hot_Current > buildingData.hot_Max {
                             let coord = CGPoint(x: x, y: y)
                             removeBuilding(coord)

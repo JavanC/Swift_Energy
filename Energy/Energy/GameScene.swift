@@ -61,13 +61,13 @@ class GameScene: SKScene {
     var buildSelect: SKSpriteNode!
     var buildBox: SKSpriteNode!
     var build1: SKSpriteNode!
-    var build1_select: Building!
+    var build1_select: BuildMenu!
     var build2: SKSpriteNode!
-    var build2_select: Building!
+    var build2_select: BuildMenu!
     var build3: SKSpriteNode!
-    var build3_select: Building!
+    var build3_select: BuildMenu!
     var build4: SKSpriteNode!
-    var build4_select: Building!
+    var build4_select: BuildMenu!
     
     
     
@@ -159,86 +159,105 @@ class GameScene: SKScene {
         buildingMap.configureAtPosition(CGPoint(x: 0, y: 0), maplevel: .One)
         buildingMap.setScale(framescale)
         midArea.addChild(buildingMap)
-        buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildMenu: .Wind)
+        buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildMenu: .Office)
         buildingMap.setTileMapElement(coord: CGPoint(x: 1, y: 0), buildMenu: .Fire)
         buildingMap.setTileMapElement(coord: CGPoint(x: 2, y: 0), buildMenu: .Generator)
         buildingMap.setTileMapElement(coord: CGPoint(x: 3, y: 0), buildMenu: .Generator)
         
         // Bottom Area 1 - Energy progress
         let energy_ProgressSize = CGSize(width: botArea.size.width * 3 / 4, height: botArea.size.height / 2)
-        energy_Progress = SKSpriteNode()
-        energy_Progress.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height / 2)
+        energy_Progress = SKSpriteNode(color: SKColor.blueColor(), size: botArea.size)
+        energy_Progress.anchorPoint = CGPoint(x: 0, y: 0)
         botArea.addChild(energy_Progress)
         energy_ProgressBack = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
         energy_ProgressBack.alpha = 0.3
         energy_ProgressBack.anchorPoint = CGPoint(x: 0, y: 0.5)
-        energy_ProgressBack.position = CGPoint(x: 0, y: 0)
+        energy_ProgressBack.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height / 2)
         energy_Progress.addChild(energy_ProgressBack)
         energy_ProgressFront = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
         energy_ProgressFront.alpha = 0.7
         energy_ProgressFront.anchorPoint = CGPoint(x: 0, y: 0.5)
-        energy_ProgressFront.position = CGPoint(x: 0, y: 0)
+        energy_ProgressFront.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height / 2)
         energy_Progress.addChild(energy_ProgressFront)
         energy_maxLabel = SKLabelNode(fontNamed: "Verdana-Bold")
         energy_maxLabel.text = "Energy: \(energy) (Max:\(energy_max))"
         energy_maxLabel.fontColor = colorEnergy
         energy_maxLabel.fontSize = labelsize
         energy_maxLabel.horizontalAlignmentMode = .Left
-        energy_maxLabel.position = CGPoint(x: 0, y: botArea.size.height / 4 + 10)
+        energy_maxLabel.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height * 3 / 4 + 10)
         energy_Progress.addChild(energy_maxLabel)
         
         // Bottom Area 2 - Building information
         let infogap: CGFloat = 15
         let infosize = (botArea.size.height - 5 * infogap) / 4
-        info = SKSpriteNode()
-        info.position = CGPoint(x: infogap * 2, y: 0)
+        info = SKSpriteNode(color: SKColor.redColor(), size: botArea.size)
+        info.anchorPoint = CGPoint(x: 0, y: 0)
+        info.position = CGPoint(x: 0, y: -botArea.size.height * 2)
         botArea.addChild(info)
         info_1 = SKLabelNode(fontNamed: "Verdana-Bold")
         info_1.fontSize = infosize
         info_1.horizontalAlignmentMode = .Left
-        info_1.position = CGPoint(x: 0, y: infogap * 4 + infosize * 3)
+        info_1.position = CGPoint(x: infogap * 2, y: infogap * 4 + infosize * 3)
         info.addChild(info_1)
         info_2 = SKLabelNode(fontNamed: "Verdana-Bold")
         info_2.fontSize = infosize
         info_2.horizontalAlignmentMode = .Left
-        info_2.position = CGPoint(x: 0, y: infogap * 3 + infosize * 2)
+        info_2.position = CGPoint(x: infogap * 2, y: infogap * 3 + infosize * 2)
         info.addChild(info_2)
         info_3 = SKLabelNode(fontNamed: "Verdana-Bold")
         info_3.fontSize = infosize
         info_3.horizontalAlignmentMode = .Left
-        info_3.position = CGPoint(x: 0, y: infogap * 2 + infosize * 1)
+        info_3.position = CGPoint(x: infogap * 2, y: infogap * 2 + infosize * 1)
         info.addChild(info_3)
         info_4 = SKLabelNode(fontNamed: "Verdana-Bold")
         info_4.fontSize = infosize
         info_4.horizontalAlignmentMode = .Left
-        info_4.position = CGPoint(x: 0, y: infogap * 1)
+        info_4.position = CGPoint(x: infogap * 2, y: infogap * 1)
         info.addChild(info_4)
         
         // Bottom Area 3 - Building select
         buildSelect = SKSpriteNode()
-        buildSelect.size = CGSize(width: botArea.size.width, height: botArea.size.height)
+        buildSelect.size = botArea.size
         buildSelect.color = SKColor.brownColor()
         buildSelect.anchorPoint = CGPoint(x: 0, y: 0)
+        buildSelect.position = CGPoint(x: 0, y: -botArea.size.height * 2)
         botArea.addChild(buildSelect)
-        build1 = SKSpriteNode(imageNamed: "風力")
-        build1.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        build1 = SKSpriteNode()
+        build1.name = "build1"
         build1.position = CGPoint(x: buildSelect.size.width * 1 / 8, y: buildSelect.size.height / 2)
         buildSelect.addChild(build1)
-        build2 = SKSpriteNode(imageNamed: "火力")
-        build2.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        build2 = SKSpriteNode()
+        build2.name = "build2"
         build2.position = CGPoint(x: buildSelect.size.width * 3 / 8, y: buildSelect.size.height / 2)
         buildSelect.addChild(build2)
-        build3 = SKSpriteNode(imageNamed: "辦公室1")
-        build3.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        build3 = SKSpriteNode()
+        build3.name = "build3"
         build3.position = CGPoint(x: buildSelect.size.width * 5 / 8, y: buildSelect.size.height / 2)
         buildSelect.addChild(build3)
-        build4 = SKSpriteNode(imageNamed: "辦公室2")
-        build4.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        build4 = SKSpriteNode()
+        build4.name = "build4"
         build4.position = CGPoint(x: buildSelect.size.width * 7 / 8, y: buildSelect.size.height / 2)
         buildSelect.addChild(build4)
         buildBox = SKSpriteNode(color: SKColor.redColor(), size: CGSize(width: tilesize.width * framescale * 1.1, height: tilesize.height * framescale * 1.1))
         buildBox.position = build1.position
         buildSelect.addChild(buildBox)
+        
+        build1_select = .Wind
+        let build1_selectNode = SKSpriteNode(imageNamed: "風力")
+        build1_selectNode.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        build1.addChild(build1_selectNode)
+        build2_select = .Fire
+        let build2_selectNode = SKSpriteNode(imageNamed: "火力")
+        build2_selectNode.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        build2.addChild(build2_selectNode)
+        build3_select = .Generator
+        let build3_selectNode = SKSpriteNode(imageNamed: "發電機1")
+        build3_selectNode.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        build3.addChild(build3_selectNode)
+        build4_select = .Office
+        let build4_selectNode = SKSpriteNode(imageNamed: "辦公室1")
+        build4_selectNode.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        build4.addChild(build4_selectNode)
         
         
 //        buildingImage = SKSpriteNode(imageNamed: "風力")
@@ -293,12 +312,13 @@ class GameScene: SKScene {
                 let coord = buildingMap.position2Coord(buildingmaplocation)
                 print(coord)
                 
-                if touchType == .Nil || touchType == .Building {
+                
+                if touchType == .Building || touchType == .Nil || touchType == .Build1 || touchType == .Build2 || touchType == .Build3 || touchType == .Build4 {
                     if buildingMap.buildingForCoord(coord)!.activate {
+                        buttonSell.alpha = 1
+                        buttonBuile.alpha = 1
                         touchType = .Building
                         info_Building = buildingMap.buildingForCoord(coord)
-                    } else {
-                        touchType = .Nil
                     }
                 }
                 
@@ -311,8 +331,38 @@ class GameScene: SKScene {
                     }
                 }
 
+                
                 if touchType == .Build1 {
-                    buildingMap.setTileMapElement(coord: coord, buildMenu: .Generator)
+                    let building = build1_select
+                    let price = BuildingData.init(building: building, level: 1).price
+                    if money >= price {
+                        buildingMap.setTileMapElement(coord: coord, buildMenu: building)
+                        money -= price
+                    }
+                }
+                if touchType == .Build2 {
+                    let building = build2_select
+                    let price = BuildingData.init(building: building, level: 1).price
+                    if money >= price {
+                        buildingMap.setTileMapElement(coord: coord, buildMenu: building)
+                        money -= price
+                    }
+                }
+                if touchType == .Build3 {
+                    let building = build3_select
+                    let price = BuildingData.init(building: building, level: 1).price
+                    if money >= price {
+                        buildingMap.setTileMapElement(coord: coord, buildMenu: building)
+                        money -= price
+                    }
+                }
+                if touchType == .Build4 {
+                    let building = build4_select
+                    let price = BuildingData.init(building: building, level: 1).price
+                    if money >= price {
+                        buildingMap.setTileMapElement(coord: coord, buildMenu: building)
+                        money -= price
+                    }
                 }
             }
             // Touch Bottom Area
@@ -324,25 +374,39 @@ class GameScene: SKScene {
                         energy = 0
                     }
                 }
+                if buildSelect.containsPoint(bottomLocation) {
+                    if build1.containsPoint(bottomLocation) {
+                        touchType = .Build1
+                    }
+                    if build2.containsPoint(bottomLocation) {
+                        touchType = .Build2
+                    }
+                    if build3.containsPoint(bottomLocation) {
+                        touchType = .Build3
+                    }
+                    if build4.containsPoint(bottomLocation) {
+                        touchType = .Build4
+                    }
+                }
             }
         }
     }
     
     override func update(currentTime: CFTimeInterval) {
+        let Up = SKAction.moveTo(CGPoint(x: 0, y: 0), duration: 0.1)
+        let Down = SKAction.moveTo(CGPoint(x: 0, y: -botArea.size.height * 2), duration: 0.1)
         // Touch nil & sell
         if touchType == .Nil || touchType == .Sell {
-            energy_Progress.hidden = false
-            buildSelect.hidden = true
-            info.hidden = true
+            buildSelect.runAction(Down)
+            info.runAction(Down){ self.energy_Progress.runAction(Up) }
             
             let persent = CGFloat(energy) / CGFloat(energy_max)
             energy_ProgressFront.xScale = persent
         }
         // Touch building
         if touchType == .Building {
-            energy_Progress.hidden = true
-            buildSelect.hidden = true
-            info.hidden = false
+            energy_Progress.runAction(Down)
+            buildSelect.runAction(Down){ self.info.runAction(Up) }
             
             if info_Building.buildMenu == .Wind {
                 info_1.text = "Time: \(info_Building.buildingData.time_Current) / \(info_Building.buildingData.time_Max)"
@@ -359,19 +423,33 @@ class GameScene: SKScene {
                 info_2.text = "Converted Energy: \(info_Building.buildingData.hot2Energy_Max)"
                 info_3.text = "Sell Money: \(info_Building.buildingData.price)"
             }
+            if info_Building.buildMenu == .Office {
+                info_1.text = "Hot: \(info_Building.buildingData.hot_Current) / \(info_Building.buildingData.hot_Max)"
+                info_2.text = "Produce Money: \(info_Building.buildingData.money_Sales)"
+                info_3.text = "Sell Money: \(info_Building.buildingData.price)"
+            }
         }
         // Touch building select
         if touchType == .Build1 {
-            energy_Progress.hidden = true
-            buildSelect.hidden = false
-            info.hidden = true
+            energy_Progress.runAction(Down)
+            info.runAction(Down){ self.buildSelect.runAction(Up) }
             
-            
+            buildBox.position = build1.position
+        }
+        if touchType == .Build2 {
+            buildBox.position = build2.position
+        }
+        if touchType == .Build3 {
+            buildBox.position = build3.position
+        }
+        if touchType == .Build4 {
+            buildBox.position = build4.position
         }
     }
    
     func tickUpdata() {
-        
+        print(touchType)
+        print(build1.position)
         // 1. Update map data
         buildingMap.Update()
         
