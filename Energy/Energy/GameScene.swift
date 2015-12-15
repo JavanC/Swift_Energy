@@ -69,14 +69,9 @@ class GameScene: SKScene {
     var build4: SKSpriteNode!
     var build4_select: BuildMenu!
     
+    var buildSelectPage: SKSpriteNode!
+    var buildSelectInfo: SKSpriteNode!
     
-    
-//    var buildingSelect: SKSpriteNode!
-//    var buildingmenu: SKSpriteNode!
-//    var buildingImage: SKSpriteNode!
-//    var buildingInfo: SKLabelNode!
-//    var buildingUpgrade: SKLabelNode!
-//    var buildingDegrade: SKLabelNode!
     // Bottom 4
     
     //    var defaults: NSUserDefaults!
@@ -102,6 +97,7 @@ class GameScene: SKScene {
         botArea.name = "botArea"
         botArea.anchorPoint = CGPoint(x: 0, y: 0)
         botArea.position = CGPoint(x: 0, y: 0)
+        botArea.zPosition = 1
         addChild(botArea)
         
         // Top Area
@@ -216,9 +212,7 @@ class GameScene: SKScene {
         info.addChild(info_4)
         
         // Bottom Area 3 - Building select
-        buildSelect = SKSpriteNode()
-        buildSelect.size = botArea.size
-        buildSelect.color = SKColor.brownColor()
+        buildSelect = SKSpriteNode(color: SKColor.brownColor(), size: botArea.size)
         buildSelect.anchorPoint = CGPoint(x: 0, y: 0)
         buildSelect.position = CGPoint(x: 0, y: -botArea.size.height * 2)
         botArea.addChild(buildSelect)
@@ -259,6 +253,32 @@ class GameScene: SKScene {
         build4_selectNode.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
         build4.addChild(build4_selectNode)
         
+        buildSelectPage = SKSpriteNode(color: SKColor.blackColor(), size: midArea.size)
+        buildSelectPage.anchorPoint = CGPoint(x: 0, y: 0)
+        buildSelectPage.position = CGPoint(x: 0, y: botArea.size.height)
+        botArea.addChild(buildSelectPage)
+        
+        buildSelectInfo = AddBuildingSelectElement(.Wind, info1text: "123123", info2text: "12313123", info3text: "13123123")
+        buildSelectInfo.position = CGPoint(x: 20, y: 20)
+        buildSelectPage.addChild(buildSelectInfo)
+        
+        
+
+        
+        
+        
+        
+//        var buildingUpgrade: SKLabelNode!
+//        var buildingDegrade: SKLabelNode!
+        
+        
+        
+//        var buildInfo: SKSpriteNode!
+//        var buildImage: SKSpriteNode!
+//        var buildData: SKSpriteNode!
+//        var buildingUpgrade: SKLabelNode!
+//        var buildingDegrade: SKLabelNode!
+        
         
 //        buildingImage = SKSpriteNode(imageNamed: "風力")
 //        buildingImage.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
@@ -280,6 +300,51 @@ class GameScene: SKScene {
         
         // Bottom Area 5 - Reserch upgrade
         
+    }
+    
+    func AddBuildingSelectElement(buildMenu: BuildMenu, info1text: String, info2text: String, info3text: String) -> SKSpriteNode {
+        
+        let Gap: CGFloat = 20
+        let SpriteNode = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: midArea.size.width - Gap * 2, height: (midArea.size.height - Gap * 7) / 6))
+        SpriteNode.anchorPoint = CGPoint(x: 0, y: 0)
+        
+        let buildingImage = SKSpriteNode(imageNamed: BuildingData(building: buildMenu, level: 1).imageName)
+        buildingImage.anchorPoint = CGPoint(x: 0, y: 0.5)
+        buildingImage.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        buildingImage.position = CGPoint(x: Gap, y: SpriteNode.size.height / 2)
+        SpriteNode.addChild(buildingImage)
+        
+        let infoGap: CGFloat = 8
+        let infoSize = (SpriteNode.size.height - infoGap * 4) / 3
+        let Info1 = SKLabelNode(fontNamed: "Verdana-Bold")
+        Info1.text = info1text
+        Info1.fontSize = infoSize
+        Info1.horizontalAlignmentMode = .Left
+        Info1.position = CGPoint(x: tilesize.width * framescale + Gap * 2, y: infoGap * 3 + infoSize * 2)
+        SpriteNode.addChild(Info1)
+        let info2 = SKLabelNode(fontNamed: "Verdana-Bold")
+        info2.text = info2text
+        info2.fontSize = infoSize
+        info2.horizontalAlignmentMode = .Left
+        info2.position = CGPoint(x: tilesize.width * framescale + Gap * 2, y: infoGap * 2 + infoSize * 1)
+        SpriteNode.addChild(info2)
+        let info3 = SKLabelNode(fontNamed: "Verdana-Bold")
+        info3.text = info3text
+        info3.fontSize = infoSize
+        info3.horizontalAlignmentMode = .Left
+        info3.position = CGPoint(x: tilesize.width * framescale + Gap * 2, y: infoGap * 1)
+        SpriteNode.addChild(info3)
+        
+        let buildingUpgrade = SKSpriteNode(color: SKColor.greenColor(), size: buildingImage.size)
+        buildingUpgrade.anchorPoint = CGPoint(x: 1, y: 0.5)
+        buildingUpgrade.position = CGPoint(x: SpriteNode.size.width - Gap, y: SpriteNode.size.height / 2)
+        SpriteNode.addChild(buildingUpgrade)
+        let buildingDegrade = SKSpriteNode(color: SKColor.redColor(), size: buildingImage.size)
+        buildingDegrade.anchorPoint = CGPoint(x: 1, y: 0.5)
+        buildingDegrade.position = CGPoint(x: SpriteNode.size.width - Gap * 2 - buildingImage.size.width, y: SpriteNode.size.height / 2)
+        SpriteNode.addChild(buildingDegrade)
+        
+        return SpriteNode
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
