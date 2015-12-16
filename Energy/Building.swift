@@ -51,6 +51,7 @@ class BuildingData {
     
     init(buildType: BuildType, level: Int) {
         self.buildType = buildType
+        self.level = level
         if buildType == .Nil {
             imageName = "block"
             rebuild = false
@@ -58,6 +59,7 @@ class BuildingData {
         if buildType == .Wind {
             imageName = "風力"
             buildPrice = 1
+            nextLevelPrice = 100 * level
             progress = .Time
             
             time_Max = 5
@@ -74,6 +76,7 @@ class BuildingData {
         if buildType == .Fire {
             imageName = "火力"
             buildPrice = 20
+            nextLevelPrice = 200 * level
             progress = .Time
             hot_IsOutput = true
             
@@ -87,6 +90,7 @@ class BuildingData {
         if buildType == .Generator {
             imageName = "發電機1"
             buildPrice = 50
+            nextLevelPrice = 300 * level
             progress = .Hot
             hot_IsInput = true
             isHot2Energy = true
@@ -100,6 +104,7 @@ class BuildingData {
         if buildType == .Office {
             imageName = "辦公室1"
             buildPrice = 10
+            nextLevelPrice = 400 * level
             hot_IsInput = true
             
             hot_Max = 10
@@ -134,9 +139,24 @@ class BuildingData {
         return info
     }
     
-//    func buildingLevelInfo(buildMenu: BuildType) -> [String] {
-//        
-//    }
+    func buildingLevelInfo(buildMenu: BuildType) -> [String] {
+        var info = [String]()
+        info.append("\(buildMenu)  Lv.\(level) ")
+        info.append("Next:\(nextLevelPrice)$")
+        if buildType == .Wind {
+            info.append("123123123123123")
+        }
+        if buildType == .Fire {
+            info.append("123123123123123")
+        }
+        if buildType == .Generator {
+            info.append("123123123123123")
+        }
+        if buildType == .Office {
+            info.append("123123123123123")
+        }
+        return info
+    }
 }
 
 class Building: SKNode {

@@ -61,6 +61,7 @@ class GameScene: SKScene {
     var buildSelectPoint = [CGPoint]()
     var buildSelectBox: SKSpriteNode!
     
+    var ShowBuildSelectPage: Bool = false
     var buildSelectPage: SKSpriteNode!
     
     // Bottom 4
@@ -90,7 +91,7 @@ class GameScene: SKScene {
         botArea.name = "botArea"
         botArea.anchorPoint = CGPoint(x: 0, y: 0)
         botArea.position = CGPoint(x: 0, y: 0)
-        botArea.zPosition = 1
+        botArea.zPosition = 2
         addChild(botArea)
         
         // Top Area
@@ -214,13 +215,31 @@ class GameScene: SKScene {
         buildSelectBox.position = buildSelectPoint[0]
         bottomPage_Build.addChild(buildSelectBox)
         
-        buildSelectPage = SKSpriteNode(color: SKColor.blackColor(), size: midArea.size)
+        buildSelectPage = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: midArea.size.width * 4, height: midArea.size.height))
         buildSelectPage.anchorPoint = CGPoint(x: 0, y: 0)
         buildSelectPage.position = CGPoint(x: 0, y: botArea.size.height)
-//        botArea.addChild(buildSelectPage)
-//        let build1_6 = addBuildingSelectElement(.Wind, info1text: "!23123", info2text: "rwerwer", info3text: "123123123")
-//        build1_6.position = CGPoint(x:20, y:20)
-//        buildSelectPage.addChild(build1_6)
+        buildSelectPage.zPosition = -1
+        botArea.addChild(buildSelectPage)
+        
+        
+        let building1_6 = BuildingData(buildType: .Wind, level: buildingMap.getBuildingLevel(.Wind))
+        let levelinfo1_6 = building1_6.buildingLevelInfo(.Wind)
+        let build1_6 = addBuildingSelectElement(.Wind, info1text: levelinfo1_6[0], info2text: levelinfo1_6[1], info3text: levelinfo1_6[2])
+        build1_6.position = CGPoint(x:20, y:20)
+        buildSelectPage.addChild(build1_6)
+        
+        let building1_5 = BuildingData(buildType: .Fire, level: buildingMap.getBuildingLevel(.Fire))
+        let levelinfo1_5 = building1_5.buildingLevelInfo(.Fire)
+        let build1_5 = addBuildingSelectElement(.Fire, info1text: levelinfo1_5[0], info2text: levelinfo1_5[1], info3text: levelinfo1_5[2])
+        build1_5.position = CGPoint(x: 20, y: 40 + build1_5.size.height)
+        buildSelectPage.addChild(build1_5)
+
+        let building2_6 = BuildingData(buildType: .Wind, level: buildingMap.getBuildingLevel(.Wind))
+        let levelinfo2_6 = building2_6.buildingLevelInfo(.Wind)
+        let build2_6 = addBuildingSelectElement(.Wind, info1text: levelinfo2_6[0], info2text: levelinfo2_6[1], info3text: levelinfo2_6[2])
+        build2_6.position = CGPoint(x:20 + botArea.size.width, y:20)
+        buildSelectPage.addChild(build2_6)
+        
         // Bottom Area 5 - Reserch upgrade
         
     }
@@ -231,7 +250,6 @@ class GameScene: SKScene {
         return buildingImage
     }
     func addBuildingSelectElement(buildType: BuildType, info1text: String, info2text: String, info3text: String) -> SKSpriteNode {
-        
         let Gap: CGFloat = 20
         let SelectElementSize = (midArea.size.height - Gap * 7) / 6
         let SpriteNode = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: midArea.size.width - Gap * 2, height: SelectElementSize))
@@ -277,6 +295,7 @@ class GameScene: SKScene {
             // Touch Top Area
             if topArea.containsPoint(location) {
                 let topAreaLocation = touch.locationInNode(topArea)
+                ShowBuildSelectPage = false
                 
                 // reset touch type
                 touchType = .Nil
@@ -294,37 +313,42 @@ class GameScene: SKScene {
                 }
             }
             
-            // Touch Map Area
+            // Touch Middle Area
             if midArea.containsPoint(location) {
-                let buildingmaplocation = touch.locationInNode(buildingMap)
-                let coord = buildingMap.position2Coord(buildingmaplocation)
-                if touchType == .Building || touchType == .Nil || touchType == .BuildSelect {
-                    if buildingMap.buildingForCoord(coord)!.activate {
-                        buttonSell.alpha = 1
-                        buttonBuile.alpha = 1
-                        touchType = .Building
-                        info_Building = buildingMap.buildingForCoord(coord)
+                // Touch building Map
+                if buildingMap.containsPoint(location) {
+                    let buildingmaplocation = touch.locationInNode(buildingMap)
+                    let coord = buildingMap.position2Coord(buildingmaplocation)
+                    if touchType == .Building || touchType == .Nil || touchType == .BuildSelect {
+                        if buildingMap.buildingForCoord(coord)!.activate {
+                            buttonSell.alpha = 1
+                            buttonBuile.alpha = 1
+                            touchType = .Building
+                            info_Building = buildingMap.buildingForCoord(coord)
+                        }
+                    }
+                    
+                    if touchType == .Sell {
+                        if buildingMap.buildingForCoord(coord)!.activate {
+                            let price = buildingMap.buildingForCoord(coord)!.buildingData.buildPrice
+                            money += price
+                            buildingMap.removeBuilding(coord)
+                            buildingMap.setTileMapElement(coord: coord, buildType: .Nil)
+                        }
+                    }
+                    
+                    
+                    if touchType == .BuildSelect {
+                        let building = buildSelectMenu[buildSelect]
+                        let price = BuildingData.init(buildType: building, level: 1).buildPrice
+                        if money >= price {
+                            buildingMap.setTileMapElement(coord: coord, buildType: building)
+                            money -= price
+                        }
                     }
                 }
-                
-                if touchType == .Sell {
-                    if buildingMap.buildingForCoord(coord)!.activate {
-                        let price = buildingMap.buildingForCoord(coord)!.buildingData.buildPrice
-                        money += price
-                        buildingMap.removeBuilding(coord)
-                        buildingMap.setTileMapElement(coord: coord, buildType: .Nil)
-                    }
-                }
+                // Touch Select Page
 
-                
-                if touchType == .BuildSelect {
-                    let building = buildSelectMenu[buildSelect]
-                    let price = BuildingData.init(buildType: building, level: 1).buildPrice
-                    if money >= price {
-                        buildingMap.setTileMapElement(coord: coord, buildType: building)
-                        money -= price
-                    }
-                }
             }
             // Touch Bottom Area
             if botArea.containsPoint(location) {
@@ -340,8 +364,13 @@ class GameScene: SKScene {
                     for node in nodes {
                         for i in 1...4 {
                             if node.name == "build\(i)" {
-                                buildSelect = i - 1
-                                buildSelectBox.position = node.position
+                                // Change or ReTap
+                                if buildSelect != i - 1 {
+                                    buildSelect = i - 1
+                                    buildSelectBox.position = node.position
+                                } else {
+                                    ShowBuildSelectPage = !ShowBuildSelectPage
+                                }
                             }
                         }
                     }
@@ -365,6 +394,17 @@ class GameScene: SKScene {
             bottomPage_Energy.runAction(Down)
             bottomPage_Info.runAction(Down){ self.bottomPage_Build.runAction(Up) }
         }
+    }
+    func floatBuildSelectPage(On: Bool) {
+        let Up = SKAction.moveToY(botArea.size.height, duration: 0.1)
+        let Down = SKAction.moveToY(-buildSelectPage.size.height, duration: 0.1)
+        if On {
+            buildSelectPage.runAction(Up) { self.buildingMap.position = CGPoint(x: self.midArea.size.width, y: 0) }
+        } else {
+            buildingMap.position = CGPoint(x: 0, y: 0)
+            buildSelectPage.runAction(Down)
+        }
+        buildSelectPage.runAction(SKAction.moveToX(-botArea.size.width * CGFloat(buildSelect), duration: 0.1))
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -401,6 +441,8 @@ class GameScene: SKScene {
         case .Reserch:
             break
         }
+        
+        floatBuildSelectPage(ShowBuildSelectPage)
     }
    
     func tickUpdata() {
