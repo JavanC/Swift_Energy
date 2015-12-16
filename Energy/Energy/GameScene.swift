@@ -46,19 +46,15 @@ class GameScene: SKScene {
     var buildingMap: BuildingMap!
     
     // Bottom 1
-    var energy_Progress: SKSpriteNode!
+    var bottomPage_Energy: SKSpriteNode!
     var energy_maxLabel: SKLabelNode!
     var energy_ProgressFront: SKSpriteNode!
     var energy_ProgressBack: SKSpriteNode!
     // Bottom 2
-    var info: SKSpriteNode!
+    var bottomPage_Info: SKSpriteNode!
     var info_Building: Building!
-    var info_1: SKLabelNode!
-    var info_2: SKLabelNode!
-    var info_3: SKLabelNode!
-    var info_4: SKLabelNode!
     // Bottom 3
-    var buildSelect: SKSpriteNode!
+    var bottomPage_Build: SKSpriteNode!
     var buildBox: SKSpriteNode!
     var build1: SKSpriteNode!
     var build1_select: BuildMenu!
@@ -70,7 +66,6 @@ class GameScene: SKScene {
     var build4_select: BuildMenu!
     
     var buildSelectPage: SKSpriteNode!
-    var buildSelectInfo: SKSpriteNode!
     
     // Bottom 4
     
@@ -117,9 +112,8 @@ class GameScene: SKScene {
         reserchLabel.horizontalAlignmentMode = .Left
         reserchLabel.position = CGPoint(x: 16, y: labelgap * 2 + labelsize * 1)
         topArea.addChild(reserchLabel)
-        let persent = CGFloat(energy) / CGFloat(energy_max) * 100
         energyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-        energyLabel.text = "Energy: \(persent)%"
+        energyLabel.text = "Energy: \(CGFloat(energy) / CGFloat(energy_max) * 100)%"
         energyLabel.fontColor = colorEnergy
         energyLabel.fontSize = labelsize
         energyLabel.horizontalAlignmentMode = .Left
@@ -162,79 +156,73 @@ class GameScene: SKScene {
         
         // Bottom Area 1 - Energy progress
         let energy_ProgressSize = CGSize(width: botArea.size.width * 3 / 4, height: botArea.size.height / 2)
-        energy_Progress = SKSpriteNode(color: SKColor.blueColor(), size: botArea.size)
-        energy_Progress.anchorPoint = CGPoint(x: 0, y: 0)
-        botArea.addChild(energy_Progress)
+        bottomPage_Energy = SKSpriteNode(color: SKColor.blueColor(), size: botArea.size)
+        bottomPage_Energy.anchorPoint = CGPoint(x: 0, y: 0)
+        botArea.addChild(bottomPage_Energy)
         energy_ProgressBack = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
         energy_ProgressBack.alpha = 0.3
         energy_ProgressBack.anchorPoint = CGPoint(x: 0, y: 0.5)
         energy_ProgressBack.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height / 2)
-        energy_Progress.addChild(energy_ProgressBack)
+        bottomPage_Energy.addChild(energy_ProgressBack)
         energy_ProgressFront = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
         energy_ProgressFront.alpha = 0.7
         energy_ProgressFront.anchorPoint = CGPoint(x: 0, y: 0.5)
         energy_ProgressFront.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height / 2)
-        energy_Progress.addChild(energy_ProgressFront)
+        bottomPage_Energy.addChild(energy_ProgressFront)
         energy_maxLabel = SKLabelNode(fontNamed: "Verdana-Bold")
         energy_maxLabel.text = "Energy: \(energy) (Max:\(energy_max))"
         energy_maxLabel.fontColor = colorEnergy
         energy_maxLabel.fontSize = labelsize
         energy_maxLabel.horizontalAlignmentMode = .Left
         energy_maxLabel.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height * 3 / 4 + 10)
-        energy_Progress.addChild(energy_maxLabel)
+        bottomPage_Energy.addChild(energy_maxLabel)
         
         // Bottom Area 2 - Building information
+        bottomPage_Info = SKSpriteNode(color: SKColor.redColor(), size: botArea.size)
+        bottomPage_Info.anchorPoint = CGPoint(x: 0, y: 0)
+        bottomPage_Info.position = CGPoint(x: 0, y: -botArea.size.height * 2)
+        botArea.addChild(bottomPage_Info)
+        let infoImage = SKSpriteNode(imageNamed: BuildingData(building: .Nil, level: 1).imageName)
+        infoImage.name = "infoImage"
+        infoImage.anchorPoint = CGPoint(x: 0, y: 0.5)
+        infoImage.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        infoImage.position = CGPoint(x: 40, y: bottomPage_Info.size.height / 2)
+        bottomPage_Info.addChild(infoImage)
         let infogap: CGFloat = 15
-        let infosize = (botArea.size.height - 5 * infogap) / 4
-        info = SKSpriteNode(color: SKColor.redColor(), size: botArea.size)
-        info.anchorPoint = CGPoint(x: 0, y: 0)
-        info.position = CGPoint(x: 0, y: -botArea.size.height * 2)
-        botArea.addChild(info)
-        info_1 = SKLabelNode(fontNamed: "Verdana-Bold")
-        info_1.fontSize = infosize
-        info_1.horizontalAlignmentMode = .Left
-        info_1.position = CGPoint(x: infogap * 2, y: infogap * 4 + infosize * 3)
-        info.addChild(info_1)
-        info_2 = SKLabelNode(fontNamed: "Verdana-Bold")
-        info_2.fontSize = infosize
-        info_2.horizontalAlignmentMode = .Left
-        info_2.position = CGPoint(x: infogap * 2, y: infogap * 3 + infosize * 2)
-        info.addChild(info_2)
-        info_3 = SKLabelNode(fontNamed: "Verdana-Bold")
-        info_3.fontSize = infosize
-        info_3.horizontalAlignmentMode = .Left
-        info_3.position = CGPoint(x: infogap * 2, y: infogap * 2 + infosize * 1)
-        info.addChild(info_3)
-        info_4 = SKLabelNode(fontNamed: "Verdana-Bold")
-        info_4.fontSize = infosize
-        info_4.horizontalAlignmentMode = .Left
-        info_4.position = CGPoint(x: infogap * 2, y: infogap * 1)
-        info.addChild(info_4)
+        let infosize = (botArea.size.height - 6 * infogap) / 5
+        for i in 1...5 {
+            let label = SKLabelNode(fontNamed: "Verdana-Bold")
+            label.name = "info\(i)"
+            label.fontSize = infosize
+            label.horizontalAlignmentMode = .Left
+            label.position = CGPoint(x: infoImage.size.width + 80, y: infogap * (6 - CGFloat(i)) + infosize * (5 - CGFloat(i)))
+            bottomPage_Info.addChild(label)
+        }
         
         // Bottom Area 3 - Building select
-        buildSelect = SKSpriteNode(color: SKColor.brownColor(), size: botArea.size)
-        buildSelect.anchorPoint = CGPoint(x: 0, y: 0)
-        buildSelect.position = CGPoint(x: 0, y: -botArea.size.height * 2)
-        botArea.addChild(buildSelect)
+        bottomPage_Build = SKSpriteNode(color: SKColor.brownColor(), size: botArea.size)
+        bottomPage_Build.anchorPoint = CGPoint(x: 0, y: 0)
+        bottomPage_Build.position = CGPoint(x: 0, y: -botArea.size.height * 2)
+        botArea.addChild(bottomPage_Build)
         build1 = SKSpriteNode()
         build1.name = "build1"
-        build1.position = CGPoint(x: buildSelect.size.width * 1 / 8, y: buildSelect.size.height / 2)
-        buildSelect.addChild(build1)
+        build1.position = CGPoint(x: bottomPage_Build.size.width * 1 / 8, y: bottomPage_Build.size.height / 2)
+        bottomPage_Build.addChild(build1)
         build2 = SKSpriteNode()
         build2.name = "build2"
-        build2.position = CGPoint(x: buildSelect.size.width * 3 / 8, y: buildSelect.size.height / 2)
-        buildSelect.addChild(build2)
+        build2.position = CGPoint(x: bottomPage_Build.size.width * 3 / 8, y: bottomPage_Build.size.height / 2)
+        bottomPage_Build.addChild(build2)
         build3 = SKSpriteNode()
         build3.name = "build3"
-        build3.position = CGPoint(x: buildSelect.size.width * 5 / 8, y: buildSelect.size.height / 2)
-        buildSelect.addChild(build3)
+        build3.position = CGPoint(x: bottomPage_Build.size.width * 5 / 8, y: bottomPage_Build.size.height / 2)
+        bottomPage_Build.addChild(build3)
         build4 = SKSpriteNode()
         build4.name = "build4"
-        build4.position = CGPoint(x: buildSelect.size.width * 7 / 8, y: buildSelect.size.height / 2)
-        buildSelect.addChild(build4)
+        build4.position = CGPoint(x: bottomPage_Build.size.width * 7 / 8, y: bottomPage_Build.size.height / 2)
+        bottomPage_Build.addChild(build4)
         buildBox = SKSpriteNode(color: SKColor.redColor(), size: CGSize(width: tilesize.width * framescale * 1.1, height: tilesize.height * framescale * 1.1))
         buildBox.position = build1.position
-        buildSelect.addChild(buildBox)
+        bottomPage_Build.addChild(buildBox)
         
         build1_select = .Wind
         let build1_selectNode = SKSpriteNode(imageNamed: "風力")
@@ -253,59 +241,29 @@ class GameScene: SKScene {
         build4_selectNode.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
         build4.addChild(build4_selectNode)
         
-        buildSelectPage = SKSpriteNode(color: SKColor.blackColor(), size: midArea.size)
-        buildSelectPage.anchorPoint = CGPoint(x: 0, y: 0)
-        buildSelectPage.position = CGPoint(x: 0, y: botArea.size.height)
-        botArea.addChild(buildSelectPage)
+//        buildSelectPage = SKSpriteNode(color: SKColor.blackColor(), size: midArea.size)
+//        buildSelectPage.anchorPoint = CGPoint(x: 0, y: 0)
+//        buildSelectPage.position = CGPoint(x: 0, y: botArea.size.height)
+//        botArea.addChild(buildSelectPage)
+//        
+//        let buildSelectPageElement = AddBuildingSelectElement(.Wind, info1text: "123123", info2text: "12313123", info3text: "13123123")
+//        buildSelectPageElement.position = CGPoint(x: 20, y: 20)
+//        buildSelectPage.addChild(buildSelectPageElement)
         
-        buildSelectInfo = AddBuildingSelectElement(.Wind, info1text: "123123", info2text: "12313123", info3text: "13123123")
-        buildSelectInfo.position = CGPoint(x: 20, y: 20)
-        buildSelectPage.addChild(buildSelectInfo)
-        
-        
-
-        
-        
-        
-        
-//        var buildingUpgrade: SKLabelNode!
-//        var buildingDegrade: SKLabelNode!
-        
-        
-        
-//        var buildInfo: SKSpriteNode!
-//        var buildImage: SKSpriteNode!
-//        var buildData: SKSpriteNode!
-//        var buildingUpgrade: SKLabelNode!
-//        var buildingDegrade: SKLabelNode!
-        
-        
-//        buildingImage = SKSpriteNode(imageNamed: "風力")
-//        buildingImage.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
-//        buildingImage.anchorPoint = CGPoint(x: 0, y: 0.5)
-//        buildingImage.position = CGPoint(x: 30, y: buildingSelect.size.height / 2)
-//        buildingSelect.addChild(buildingImage)
-//        buildingmenu = SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: buildingImage.size.width, height: buildingImage.size.height / 2))
-//        buildingmenu.anchorPoint = CGPoint(x: 0, y: 0)
-//        buildingmenu.position = CGPoint(x: 0, y: buildingImage.size.height / 2)
-//        buildingImage.addChild(buildingmenu)
-//        buildingInfo = SKLabelNode(fontNamed: "Verdana-Blod")
-        
-        
-        
-        
-//        var buildingInfo: SKLabelNode!
-//        var buildingUpgrade: SKLabelNode!
-//        var buildingDegrade: SKLabelNode!
         
         // Bottom Area 5 - Reserch upgrade
         
     }
-    
+    func BuildingImage(buildMenu: BuildMenu) -> SKSpriteNode {
+        let buildingImage = SKSpriteNode(imageNamed: BuildingData(building: buildMenu, level: 1).imageName)
+        buildingImage.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        return buildingImage
+    }
     func AddBuildingSelectElement(buildMenu: BuildMenu, info1text: String, info2text: String, info3text: String) -> SKSpriteNode {
         
         let Gap: CGFloat = 20
-        let SpriteNode = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: midArea.size.width - Gap * 2, height: (midArea.size.height - Gap * 7) / 6))
+        let SelectElementSize = (midArea.size.height - Gap * 7) / 6
+        let SpriteNode = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: midArea.size.width - Gap * 2, height: SelectElementSize))
         SpriteNode.anchorPoint = CGPoint(x: 0, y: 0)
         
         let buildingImage = SKSpriteNode(imageNamed: BuildingData(building: buildMenu, level: 1).imageName)
@@ -316,30 +274,23 @@ class GameScene: SKScene {
         
         let infoGap: CGFloat = 8
         let infoSize = (SpriteNode.size.height - infoGap * 4) / 3
-        let Info1 = SKLabelNode(fontNamed: "Verdana-Bold")
-        Info1.text = info1text
-        Info1.fontSize = infoSize
-        Info1.horizontalAlignmentMode = .Left
-        Info1.position = CGPoint(x: tilesize.width * framescale + Gap * 2, y: infoGap * 3 + infoSize * 2)
-        SpriteNode.addChild(Info1)
-        let info2 = SKLabelNode(fontNamed: "Verdana-Bold")
-        info2.text = info2text
-        info2.fontSize = infoSize
-        info2.horizontalAlignmentMode = .Left
-        info2.position = CGPoint(x: tilesize.width * framescale + Gap * 2, y: infoGap * 2 + infoSize * 1)
-        SpriteNode.addChild(info2)
-        let info3 = SKLabelNode(fontNamed: "Verdana-Bold")
-        info3.text = info3text
-        info3.fontSize = infoSize
-        info3.horizontalAlignmentMode = .Left
-        info3.position = CGPoint(x: tilesize.width * framescale + Gap * 2, y: infoGap * 1)
-        SpriteNode.addChild(info3)
+        for i in 1...3 {
+            let label = SKLabelNode(fontNamed: "Verdana-Bold")
+            label.name = "info\(CGFloat(i))"
+            label.text = info1text
+            label.fontSize = infoSize
+            label.horizontalAlignmentMode = .Left
+            label.position = CGPoint(x: tilesize.width * framescale + Gap * 2, y: infoGap * (4 - CGFloat(i)) + infoSize * (3 - CGFloat(i)))
+            SpriteNode.addChild(label)
+        }
         
         let buildingUpgrade = SKSpriteNode(color: SKColor.greenColor(), size: buildingImage.size)
+        buildingUpgrade.name = "Upgrade_" + String(buildMenu)
         buildingUpgrade.anchorPoint = CGPoint(x: 1, y: 0.5)
         buildingUpgrade.position = CGPoint(x: SpriteNode.size.width - Gap, y: SpriteNode.size.height / 2)
         SpriteNode.addChild(buildingUpgrade)
         let buildingDegrade = SKSpriteNode(color: SKColor.redColor(), size: buildingImage.size)
+        buildingDegrade.name = "Degrade_" + String(buildMenu)
         buildingDegrade.anchorPoint = CGPoint(x: 1, y: 0.5)
         buildingDegrade.position = CGPoint(x: SpriteNode.size.width - Gap * 2 - buildingImage.size.width, y: SpriteNode.size.height / 2)
         SpriteNode.addChild(buildingDegrade)
@@ -433,13 +384,13 @@ class GameScene: SKScene {
             // Touch Bottom Area
             if botArea.containsPoint(location) {
                 let bottomLocation = touch.locationInNode(botArea)
-                if touchType == .Sell {
-                    if energy_Progress.containsPoint(bottomLocation) {
-                        money += energy
-                        energy = 0
-                    }
+                // Energy Progress
+                if energy_ProgressBack.containsPoint(bottomLocation) {
+                    money += energy
+                    energy = 0
                 }
-                if buildSelect.containsPoint(bottomLocation) {
+                // BuildSelect
+                if bottomPage_Build.containsPoint(bottomLocation) {
                     if build1.containsPoint(bottomLocation) {
                         touchType = .Build1
                     }
@@ -462,42 +413,53 @@ class GameScene: SKScene {
         let Down = SKAction.moveTo(CGPoint(x: 0, y: -botArea.size.height * 2), duration: 0.1)
         // Touch nil & sell
         if touchType == .Nil || touchType == .Sell {
-            buildSelect.runAction(Down)
-            info.runAction(Down){ self.energy_Progress.runAction(Up) }
+            bottomPage_Build.runAction(Down)
+            bottomPage_Info.runAction(Down){ self.bottomPage_Energy.runAction(Up) }
             
             let persent = CGFloat(energy) / CGFloat(energy_max)
             energy_ProgressFront.xScale = persent
         }
         // Touch building
         if touchType == .Building {
-            energy_Progress.runAction(Down)
-            buildSelect.runAction(Down){ self.info.runAction(Up) }
+            bottomPage_Energy.runAction(Down)
+            bottomPage_Build.runAction(Down){ self.bottomPage_Info.runAction(Up) }
             
+            bottomPage_Info.childNodeWithName("infoImage")!.removeFromParent()
+            let infoImage = SKSpriteNode(imageNamed: BuildingData(building: info_Building.buildMenu, level: 1).imageName)
+            infoImage.name = "infoImage"
+            infoImage.anchorPoint = CGPoint(x: 0, y: 0.5)
+            infoImage.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+            infoImage.position = CGPoint(x: 40, y: bottomPage_Info.size.height / 2)
+            bottomPage_Info.addChild(infoImage)
+            
+            let infoData = info_Building.buildingData
             if info_Building.buildMenu == .Wind {
-                info_1.text = "Time: \(info_Building.buildingData.time_Current) / \(info_Building.buildingData.time_Max)"
-                info_2.text = "Produce Energy: \(info_Building.buildingData.hot2Energy_Max)"
-                info_3.text = "Sell Money: \(info_Building.buildingData.price)"
+                (bottomPage_Info.childNodeWithName("info1") as! SKLabelNode).text = "Time: \(infoData.time_Current) / \(infoData.time_Max)"
+                (bottomPage_Info.childNodeWithName("info2") as! SKLabelNode).text = "Produce Energy: \(infoData.hot2Energy_Max)"
+                (bottomPage_Info.childNodeWithName("info3") as! SKLabelNode).text = "Sell Money: \(infoData.price)"
+                (bottomPage_Info.childNodeWithName("info4") as! SKLabelNode).text = "123123"
+                (bottomPage_Info.childNodeWithName("info5") as! SKLabelNode).text = "123123123123"
             }
             if info_Building.buildMenu == .Fire {
-                info_1.text = "Time: \(info_Building.buildingData.time_Current) / \(info_Building.buildingData.time_Max)"
-                info_2.text = "Produce Hot: \(info_Building.buildingData.hot_Produce)"
-                info_3.text = "Sell Money: \(info_Building.buildingData.price)"
+                (bottomPage_Info.childNodeWithName("info1") as! SKLabelNode).text = "Time: \(infoData.time_Current) / \(infoData.time_Max)"
+                (bottomPage_Info.childNodeWithName("info2") as! SKLabelNode).text = "Produce Hot: \(infoData.hot_Produce)"
+                (bottomPage_Info.childNodeWithName("info3") as! SKLabelNode).text = "Sell Money: \(infoData.price)"
             }
             if info_Building.buildMenu == .Generator {
-                info_1.text = "Hot: \(info_Building.buildingData.hot_Current) / \(info_Building.buildingData.hot_Max)"
-                info_2.text = "Converted Energy: \(info_Building.buildingData.hot2Energy_Max)"
-                info_3.text = "Sell Money: \(info_Building.buildingData.price)"
+                (bottomPage_Info.childNodeWithName("info1") as! SKLabelNode).text = "Hot: \(infoData.hot_Current) / \(infoData.hot_Max)"
+                (bottomPage_Info.childNodeWithName("info2") as! SKLabelNode).text = "Converted Energy: \(infoData.hot2Energy_Max)"
+                (bottomPage_Info.childNodeWithName("info3") as! SKLabelNode).text = "Sell Money: \(infoData.price)"
             }
             if info_Building.buildMenu == .Office {
-                info_1.text = "Hot: \(info_Building.buildingData.hot_Current) / \(info_Building.buildingData.hot_Max)"
-                info_2.text = "Produce Money: \(info_Building.buildingData.money_Sales)"
-                info_3.text = "Sell Money: \(info_Building.buildingData.price)"
+                (bottomPage_Info.childNodeWithName("info1") as! SKLabelNode).text = "Hot: \(infoData.hot_Current) / \(infoData.hot_Max)"
+                (bottomPage_Info.childNodeWithName("info2") as! SKLabelNode).text = "Produce Money: \(infoData.money_Sales)"
+                (bottomPage_Info.childNodeWithName("info3") as! SKLabelNode).text = "Sell Money: \(infoData.price)"
             }
         }
         // Touch building select
         if touchType == .Build1 {
-            energy_Progress.runAction(Down)
-            info.runAction(Down){ self.buildSelect.runAction(Up) }
+            bottomPage_Energy.runAction(Down)
+            bottomPage_Info.runAction(Down){ self.bottomPage_Build.runAction(Up) }
             
             buildBox.position = build1.position
         }
