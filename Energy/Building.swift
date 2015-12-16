@@ -11,7 +11,7 @@ import SpriteKit
 enum MapLevel {
     case One, Two
 }
-enum BuildMenu: Int {
+enum BuildType: Int {
     case Nil, Wind, Fire, Generator, Office, BuildMenuLength
 }
 enum ProgressType {
@@ -21,7 +21,10 @@ enum ProgressType {
 class BuildingData {
     
     var imageName: String!
-    var price: Int!
+    var buildType: BuildType!
+    var buildPrice: Int!
+    var level: Int!
+    var nextLevelPrice: Int!
     var rebuild: Bool = true
     var progress: ProgressType!
     
@@ -46,14 +49,15 @@ class BuildingData {
     var isHot2Energy: Bool = false
     var hot2Energy_Max: Int!
     
-    init(building: BuildMenu, level: Int) {
-        if building == .Nil {
+    init(buildType: BuildType, level: Int) {
+        self.buildType = buildType
+        if buildType == .Nil {
             imageName = "block"
             rebuild = false
         }
-        if building == .Wind {
+        if buildType == .Wind {
             imageName = "風力"
-            price = 1
+            buildPrice = 1
             progress = .Time
             
             time_Max = 5
@@ -67,9 +71,9 @@ class BuildingData {
             
             energy_Current = 0
         }
-        if building == .Fire {
+        if buildType == .Fire {
             imageName = "火力"
-            price = 20
+            buildPrice = 20
             progress = .Time
             hot_IsOutput = true
             
@@ -80,9 +84,9 @@ class BuildingData {
             hot_Max = 1
             hot_Current = 0
         }
-        if building == .Generator {
+        if buildType == .Generator {
             imageName = "發電機1"
-            price = 50
+            buildPrice = 50
             progress = .Hot
             hot_IsInput = true
             isHot2Energy = true
@@ -93,9 +97,9 @@ class BuildingData {
             hot_Max = 400 * level
             hot_Current = 100
         }
-        if building == .Office {
+        if buildType == .Office {
             imageName = "辦公室1"
-            price = 10
+            buildPrice = 10
             hot_IsInput = true
             
             hot_Max = 10
@@ -104,12 +108,40 @@ class BuildingData {
             money_Sales = 5 * level
         }
     }
+    
+    func buildingInfo(buildType: BuildType) -> [String] {
+        var info = [String]()
+        if buildType == .Wind {
+            info.append("Time: \(time_Current) / \(time_Max)")
+            info.append("Produce Energy: \(hot2Energy_Max)")
+            info.append("Sell Money: \(buildPrice)")
+        }
+        if buildType == .Fire {
+            info.append("Time: \(time_Current) / \(time_Max)")
+            info.append("Produce Hot: \(hot_Produce)")
+            info.append("Sell Money: \(buildPrice)")
+        }
+        if buildType == .Generator {
+            info.append("Hot: \(hot_Current) / \(hot_Max)")
+            info.append("Converted Energy: \(hot2Energy_Max)")
+            info.append("Sell Money: \(buildPrice)")
+        }
+        if buildType == .Office {
+            info.append("Hot: \(hot_Current) / \(hot_Max)")
+            info.append("Produce Money: \(money_Sales)")
+            info.append("Sell Money: \(buildPrice)")
+        }
+        return info
+    }
+    
+//    func buildingLevelInfo(buildMenu: BuildType) -> [String] {
+//        
+//    }
 }
 
 class Building: SKNode {
     
     var coord: CGPoint!
-    var buildMenu: BuildMenu!
     var level: Int!
     var buildingNode: SKSpriteNode!
     
@@ -119,18 +151,17 @@ class Building: SKNode {
     var progressBack: SKSpriteNode!
     var progress: SKSpriteNode!
 
-    func configureAtCoord(coord: CGPoint, buildMenu: BuildMenu, level: Int) {
+    func configureAtCoord(coord: CGPoint, buildType: BuildType, level: Int) {
         self.coord = coord
-        self.buildMenu = buildMenu
         self.level = level
-        name = String(buildMenu.hashValue)
+        name = String(buildType.hashValue)
         
-        buildingData = BuildingData(building: buildMenu, level: level)
+        buildingData = BuildingData(buildType: buildType, level: level)
         buildingNode = SKSpriteNode(imageNamed: buildingData.imageName)
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(buildingNode)
         
-        if buildMenu == .Nil {
+        if buildType == .Nil {
             buildingNode.alpha = 0.2
             activate = false
         }
@@ -208,7 +239,7 @@ class BuildingMap: SKNode {
         for y in 0 ..< Int(mapSize.height) {
             for x in 0 ..< Int(mapSize.width) {
                 let coord = CGPoint(x: x, y: y)
-                setTileMapElement(coord: coord, buildMenu: .Nil)
+                setTileMapElement(coord: coord, buildType: .Nil)
             }
         }
         
@@ -243,7 +274,7 @@ class BuildingMap: SKNode {
     }
     
     // MARK: Set tiles by word in coord
-    func setTileMapElement(coord coord: CGPoint, buildMenu: BuildMenu) {
+    func setTileMapElement(coord coord: CGPoint, buildType: BuildType) {
         let x = Int(coord.x)
         let y = Int(coord.y)
         
@@ -254,9 +285,9 @@ class BuildingMap: SKNode {
         // if nil, build
         if (buildings[y][x] == nil) {
             let building = Building()
-            let level = getBuildingLevel(buildMenu)
+            let level = getBuildingLevel(buildType)
             buildings[y][x] = building
-            building.configureAtCoord(coord, buildMenu: buildMenu, level: level)
+            building.configureAtCoord(coord, buildType: buildType, level: level)
             building.position = coord2Position(coord)
             addChild(building)
         }
@@ -335,7 +366,7 @@ class BuildingMap: SKNode {
                         if buildingData.hot_Current > buildingData.hot_Max {
                             let coord = CGPoint(x: x, y: y)
                             removeBuilding(coord)
-                            setTileMapElement(coord: coord, buildMenu: .Nil)
+                            setTileMapElement(coord: coord, buildType: .Nil)
                         }
                     }
                     // B. Activate
@@ -366,16 +397,16 @@ class BuildingMap: SKNode {
     
     // Building level function
     func initBuildingLevel() {
-        for count in 0..<BuildMenu.BuildMenuLength.hashValue {
+        for count in 0..<BuildType.BuildMenuLength.hashValue {
             let name = String(count)
             buildingsLevel[name] = 1
         }
     }
-    func setBuildingLevel(building: BuildMenu, level: Int) {
+    func setBuildingLevel(building: BuildType, level: Int) {
         let name = String(building.hashValue)
         buildingsLevel[name] = level
     }
-    func getBuildingLevel(building: BuildMenu) -> Int {
+    func getBuildingLevel(building: BuildType) -> Int {
         let name = String(building.hashValue)
         return buildingsLevel[name]!
     }
