@@ -211,10 +211,10 @@ class GameScene: SKScene {
         buildSelectPage = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: midArea.size.width * 4, height: midArea.size.height))
         buildSelectPage.name = "buildingSelectPage"
         buildSelectPage.anchorPoint = CGPoint(x: 0, y: 0)
-        buildSelectPage.position = CGPoint(x: 0, y: botArea.size.height)
-        buildSelectPage.zPosition = -1
-        botArea.addChild(buildSelectPage)
-        UpdateBuildingSelectPage()
+        buildSelectPage.position = CGPoint(x: 0, y: -midArea.size.height)
+//        buildSelectPage.zPosition = 
+        midArea.addChild(buildSelectPage)
+//        UpdateBuildingSelectPage()
 
         
         // Bottom Area 4 - Reserch upgrade
@@ -273,7 +273,13 @@ class GameScene: SKScene {
                         }
                     }
                 }
+                
+                print("mid")
                 // Touch Select Page
+                if buildSelectPage.containsPoint(midAreaLocation) {
+                    let nodes = nodesAtPoint(midAreaLocation)
+                    print(nodes)
+                }
 
             }
             // Touch Bottom Area
@@ -400,10 +406,10 @@ class GameScene: SKScene {
         }
     }
     func floatBuildSelectPage(On: Bool) {
-        let Up = SKAction.moveToY(botArea.size.height, duration: 0.1)
-        let Down = SKAction.moveToY(-buildSelectPage.size.height, duration: 0.1)
+        let Up = SKAction.moveToY(-midArea.size.height, duration: 0.1)
+        let Down = SKAction.moveToY(-midArea.size.height * 2, duration: 0.1)
         if On {
-            buildSelectPage.runAction(Up) { self.buildingMap.position = CGPoint(x: self.midArea.size.width, y: 0) }
+            buildSelectPage.runAction(Up) { self.buildingMap.position = CGPoint(x: self.midArea.size.width * 2, y: 0) }
         } else {
             buildingMap.position = CGPoint(x: 0, y: 0)
             buildSelectPage.runAction(Down)
@@ -460,19 +466,19 @@ class GameScene: SKScene {
     }
     
     // Update building select page
-    func UpdateBuildingSelectPage() {
-        buildSelectPage.removeAllChildren()
-        let page1:[BuildType] = [.Wind, .Fire, .Office]
-        for (count, buildType) in page1.enumerate() {
-            let buildlevel = buildingMap.getBuildingLevel(buildType)
-            let levelInfo = BuildingData(buildType: buildType, level: buildlevel).buildingLevelInfo(buildType)
-            if buildlevel > 0 {
-                let selectElement = addBuildingSelectElement(buildType, levelInfo: levelInfo)
-                selectElement.position = CGPoint(x: 20, y: midArea.size.height - (20 + selectElement.size.height) * CGFloat(count + 1))
-                buildSelectPage.addChild(selectElement)
-            }
-        }
-    }
+//    func UpdateBuildingSelectPage() {
+//        buildSelectPage.removeAllChildren()
+//        let page1:[BuildType] = [.Wind, .Fire, .Office]
+//        for (count, buildType) in page1.enumerate() {
+//            let buildlevel = buildingMap.getBuildingLevel(buildType)
+//            let levelInfo = BuildingData(buildType: buildType, level: buildlevel).buildingLevelInfo(buildType)
+//            if buildlevel > 0 {
+//                let selectElement = addBuildingSelectElement(buildType, levelInfo: levelInfo)
+//                selectElement.position = CGPoint(x: 20, y: midArea.size.height - (20 + selectElement.size.height) * CGFloat(count + 1))
+//                buildSelectPage.addChild(selectElement)
+//            }
+//        }
+//    }
 //    func save() {
 //        defaults.setInteger(money, forKey: "Money")
 //    }
