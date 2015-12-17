@@ -241,12 +241,16 @@ class BuildingMap: SKSpriteNode {
     var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array< Array<Building?>>()
     var buildingsLevel = [String: Int]()
+    var money_TickAdd: Int = 0
+    var reserch_TickAdd: Int = 0
+    var energy_TickAdd: Int = 0
+    var energy: Int = 0
+    var energyMax: Int = 100
     
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, maplevel: MapLevel) {
         self.position = position
         self.size = CGSize(width: 64 * 9, height: 64 * 11)
-//        self.color = SKColor.blackColor()
         self.anchorPoint = CGPoint(x: 0, y: 1)
         
         if maplevel == .One {
@@ -318,7 +322,7 @@ class BuildingMap: SKSpriteNode {
     // MARK: BuildingMap Update
     func Update() {
         
-        // 1. produce Update
+        // 1. Hot produce
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {
                 if building!.activate {
@@ -331,7 +335,7 @@ class BuildingMap: SKSpriteNode {
             }
         }
         
-        // 2. transport Hot
+        // 2. Hot transport
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
                 // if building was hot output
@@ -362,7 +366,7 @@ class BuildingMap: SKSpriteNode {
             }
         }
         
-        // 3. Consume Hot
+        // 3. Hot Consume
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {
                 if (building!.activate && building!.buildingData.isHot2Energy) {
@@ -414,6 +418,49 @@ class BuildingMap: SKSpriteNode {
                 // D. Update progress
                 building!.progressUpdate()
             }
+        }
+        
+        // 5. Calculate reserch tick add
+        reserch_TickAdd = 0
+        for (_, line) in buildings.enumerate() {
+            for (_, building) in line.enumerate() {
+                if (building!.activate == true && building?.buildingData.reserch_Produce != nil) {
+                    energy_TickAdd += (building?.buildingData.reserch_Produce)!
+                }
+            }
+        }
+        
+        // 6. Calculate energy
+        energy_TickAdd = 0
+        for (_, line) in buildings.enumerate() {
+            for (_, building) in line.enumerate() {
+                if (building!.activate == true && building?.buildingData.energy_Current != nil) {
+                    energy_TickAdd += (building?.buildingData.energy_Current)!
+                    building?.buildingData.energy_Current = 0
+                }
+            }
+        }
+        energy += energy_TickAdd
+    
+        // 7. Calculate money tick add
+        money_TickAdd = 0
+        for (_, line) in buildings.enumerate() {
+            for (_, building) in line.enumerate() {
+                if (building!.activate == true && building?.buildingData.money_Sales != nil) {
+                    money_TickAdd += (building?.buildingData.money_Sales)!
+                }
+            }
+        }
+        if energy >= money_TickAdd {
+            energy -= money_TickAdd
+        } else {
+            money_TickAdd = energy
+            energy = 0
+        }
+        
+        // 8. Calculate energy left
+        if energy > energyMax {
+            energy = energyMax
         }
     }
     

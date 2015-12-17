@@ -15,7 +15,6 @@ enum TouchType: Int {
 let frame = 5
 
 class GameScene: SKScene {
-    var gameData: GameData!
     var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
     var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
     var framescale: CGFloat!
@@ -30,16 +29,10 @@ class GameScene: SKScene {
     var touchType: TouchType = .Nil
 
     // Top
-    var moneyLabel: SKLabelNode!
     var money: Int = 10
-    var money_add: Int = 0
-    var reserchLabel: SKLabelNode!
     var reserch: Int = 0
-    var reserch_add: Int = 0
-    var energyLabel: SKLabelNode!
-    var energy: Int = 50
-    var energy_add: Int = 0
-    var energy_max: Int = 100
+//    var energy: Int = 50
+//    var energy_max: Int = 100
     var buttonMenu: SKSpriteNode!
     var buttonRebuild: SKSpriteNode!
     var buttonPause: SKSpriteNode!
@@ -75,9 +68,6 @@ class GameScene: SKScene {
         
         framescale = frame.size.width / (midsize.width * 64)
         tilesScaleSize = CGSize(width: tilesize.width * framescale, height: tilesize.width * framescale)
-        gameData = GameData()
-        
-        
         
         gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
         //        defaults = NSUserDefaults.standardUserDefaults()
@@ -105,30 +95,17 @@ class GameScene: SKScene {
         // Top Area
         let labelgap: CGFloat = 15
         let labelsize = (topArea.size.height - labelgap * 4) / 3
-        moneyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-        moneyLabel.name = "moneyLabel"
-        moneyLabel.text = "Money: \(money) + \(money_add)"
-        moneyLabel.fontColor = SKColor.yellowColor()
-        moneyLabel.fontSize = labelsize
-        moneyLabel.horizontalAlignmentMode = .Left
-        moneyLabel.position = CGPoint(x: 16, y: labelgap * 3 + labelsize * 2)
-        topArea.addChild(moneyLabel)
-        reserchLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-        reserchLabel.name = "reserchLabel"
-        reserchLabel.text = "Reserch: \(reserch) + \(reserch_add)"
-        reserchLabel.fontColor = colorReserch
-        reserchLabel.fontSize = labelsize
-        reserchLabel.horizontalAlignmentMode = .Left
-        reserchLabel.position = CGPoint(x: 16, y: labelgap * 2 + labelsize * 1)
-        topArea.addChild(reserchLabel)
-        energyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-        energyLabel.name = "energyLabel"
-        energyLabel.text = "Energy: \(CGFloat(energy) / CGFloat(energy_max) * 100)%"
-        energyLabel.fontColor = colorEnergy
-        energyLabel.fontSize = labelsize
-        energyLabel.horizontalAlignmentMode = .Left
-        energyLabel.position = CGPoint(x: 16, y: labelgap * 1 + labelsize * 0)
-        topArea.addChild(energyLabel)
+        let labelName = ["energyLabel", "reserchLabel", "moneyLabel"]
+        let labelColor = [colorEnergy, colorReserch, SKColor.yellowColor()]
+        for i in 1...3 {
+            let label = SKLabelNode(fontNamed: "Verdana-Bold")
+            label.name = labelName[i - 1]
+            label.fontColor = labelColor[i - 1]
+            label.fontSize = labelsize
+            label.horizontalAlignmentMode = .Left
+            label.position = CGPoint(x: labelgap, y: labelgap * CGFloat(i) + labelsize * CGFloat(i - 1))
+            topArea.addChild(label)
+        }
         buttonMenu = SKSpriteNode(color: SKColor.blackColor(), size: tilesScaleSize)
         buttonMenu.anchorPoint = CGPoint(x: 0, y: 0)
         buttonMenu.position = CGPoint(x: topArea.size.width - 64 * 3 * framescale, y: 64 * framescale)
@@ -180,7 +157,7 @@ class GameScene: SKScene {
         energy_ProgressFront.position = CGPoint(x: botArea.size.width / 8, y: botArea.size.height / 2)
         bottomPage_Energy.addChild(energy_ProgressFront)
         energy_maxLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-        energy_maxLabel.text = "Energy: \(energy) (Max:\(energy_max))"
+        energy_maxLabel.text = "Energy: \(buildingMap.energy) (Max:\(buildingMap.energyMax))"
         energy_maxLabel.fontColor = colorEnergy
         energy_maxLabel.fontSize = labelsize
         energy_maxLabel.horizontalAlignmentMode = .Left
@@ -368,8 +345,8 @@ class GameScene: SKScene {
                 let bottomLocation = touch.locationInNode(botArea)
                 // Energy Progress
                 if energy_ProgressBack.containsPoint(bottomLocation) {
-                    money += energy
-                    energy = 0
+                    money += buildingMap.energy
+                    buildingMap.energy = 0
                 }
                 // BuildSelect
                 if bottomPage_Build.containsPoint(bottomLocation) {
@@ -425,12 +402,12 @@ class GameScene: SKScene {
         switch touchType {
         case .Nil:
             floatBottomPage(1)
-            let persent = CGFloat(energy) / CGFloat(energy_max)
+            let persent = CGFloat(buildingMap.energy) / CGFloat(buildingMap.energyMax)
             energy_ProgressFront.xScale = persent
             
         case .Sell:
             floatBottomPage(1)
-            let persent = CGFloat(energy) / CGFloat(energy_max)
+            let persent = CGFloat(buildingMap.energy) / CGFloat(buildingMap.energyMax)
             energy_ProgressFront.xScale = persent
             
         case .Building:
@@ -462,57 +439,17 @@ class GameScene: SKScene {
         // 1. Update map data
         buildingMap.Update()
         
-        // 2. Calculate reserch
-        reserch += reserch_add
-        
-        // 3. Calculate energy
-        energy_add = 0
-        for (_, line) in buildingMap.buildings.enumerate() {
-            for (_, building) in line.enumerate() {
-                if (building!.activate == true && building?.buildingData.energy_Current != nil) {
-                    energy_add += (building?.buildingData.energy_Current)!
-                    building?.buildingData.energy_Current = 0
-                }
-            }
-        }
-        energy += energy_add
-        
-        // 4. Calculate money
-        money_add = 0
-        for (_, line) in buildingMap.buildings.enumerate() {
-            for (_, building) in line.enumerate() {
-                if (building!.activate == true && building?.buildingData.money_Sales != nil) {
-                    money_add += (building?.buildingData.money_Sales)!
-                }
-            }
-        }
-        if energy >= money_add {
-            money += money_add
-            gameData.moneytest += money_add
-            energy -= money_add
-        } else {
-            money_add = energy
-            money += money_add
-            gameData.moneytest += money_add
-            energy = 0
-        }
-        
-        // 5. Calculate energy max
-        if energy > energy_max {
-            energy = energy_max
-        }
-        
-        // 6. Updata imformation
-        (topArea.childNodeWithName("moneyLabel") as! SKLabelNode).text = "Money: \(gameData.moneytest) + \(money_add)"
-        (topArea.childNodeWithName("reserchLabel") as! SKLabelNode).text = "Reserch: \(reserch) + \(reserch_add)"
-        let persent = CGFloat(energy) / CGFloat(energy_max) * 100
+        // 2. Calculate money and reserch
+        money += buildingMap.money_TickAdd
+        reserch += buildingMap.reserch_TickAdd
+
+        // 3. Updata imformation
+        (topArea.childNodeWithName("moneyLabel") as! SKLabelNode).text = "Money: \(money) + \(buildingMap.money_TickAdd)"
+        (topArea.childNodeWithName("reserchLabel") as! SKLabelNode).text = "Reserch: \(reserch) + \(buildingMap.reserch_TickAdd)"
+        let persent = CGFloat(buildingMap.energy) / CGFloat(buildingMap.energyMax) * 100
         (topArea.childNodeWithName("energyLabel") as! SKLabelNode).text = "Energy: \(persent)%"
         
-//        moneyLabel.text = "Money: \(money) + \(money_add)"
-//        reserchLabel.text = "Reserch: \(reserch) + \(reserch_add)"
-//        let persent = CGFloat(energy) / CGFloat(energy_max) * 100
-//        energyLabel.text = "Energy: \(persent)%"
-        energy_maxLabel.text = "Energy: \(energy) (Max:\(energy_max))"
+        energy_maxLabel.text = "Energy: \(buildingMap.energy) (Max:\(buildingMap.energyMax))"
         
         //        save()
     }
