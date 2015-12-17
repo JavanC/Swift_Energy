@@ -420,47 +420,39 @@ class BuildingMap: SKSpriteNode {
             }
         }
         
-        // 5. Calculate reserch tick add
+        // 5. Calculate reserch, energy, money tick add
         reserch_TickAdd = 0
-        for (_, line) in buildings.enumerate() {
-            for (_, building) in line.enumerate() {
-                if (building!.activate == true && building?.buildingData.reserch_Produce != nil) {
-                    energy_TickAdd += (building?.buildingData.reserch_Produce)!
-                }
-            }
-        }
-        
-        // 6. Calculate energy
         energy_TickAdd = 0
-        for (_, line) in buildings.enumerate() {
-            for (_, building) in line.enumerate() {
-                if (building!.activate == true && building?.buildingData.energy_Current != nil) {
-                    energy_TickAdd += (building?.buildingData.energy_Current)!
-                    building?.buildingData.energy_Current = 0
-                }
-            }
-        }
-        energy += energy_TickAdd
-    
-        // 7. Calculate money tick add
         money_TickAdd = 0
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {
-                if (building!.activate == true && building?.buildingData.money_Sales != nil) {
-                    money_TickAdd += (building?.buildingData.money_Sales)!
+                if building!.activate == true {
+                    // reserch
+                    if building!.buildingData.reserch_Produce != nil {
+                        reserch_TickAdd += (building?.buildingData.reserch_Produce)!
+                    }
+                    // energy
+                    if building?.buildingData.energy_Current != nil {
+                        energy_TickAdd += (building?.buildingData.energy_Current)!
+                        building?.buildingData.energy_Current = 0
+                    }
+                    // money
+                    if building?.buildingData.money_Sales != nil {
+                        money_TickAdd += (building?.buildingData.money_Sales)!
+                    }
                 }
             }
         }
+        // 6. Calculate energy
+        energy += energy_TickAdd
+        
+        // 7. Calculate real money tick add and energy left
         if energy >= money_TickAdd {
             energy -= money_TickAdd
+            if energy > energyMax { energy = energyMax }
         } else {
             money_TickAdd = energy
             energy = 0
-        }
-        
-        // 8. Calculate energy left
-        if energy > energyMax {
-            energy = energyMax
         }
     }
     
