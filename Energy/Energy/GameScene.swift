@@ -21,7 +21,7 @@ class GameScene: SKScene {
     var gameTimer: NSTimer!
     let tilesize = CGSizeMake(64, 64)
     var tilesScaleSize: CGSize!
-    let topsize = CGSizeMake(9, 2)
+    let topsize = CGSizeMake(9, 1.5)
     let midsize = CGSizeMake(9, 10)
     var topArea: SKSpriteNode!
     var midArea: SKSpriteNode!
@@ -91,27 +91,27 @@ class GameScene: SKScene {
         addChild(botArea)
         
         // Top Area
-        let labelgap: CGFloat = 15
-        let labelsize = (topArea.size.height - labelgap * 4) / 3
-        let labelName = ["energyLabel", "reserchLabel", "moneyLabel"]
-        let labelColor = [colorEnergy, colorReserch, SKColor.yellowColor()]
-        for i in 1...3 {
+        buttonMenu = SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: topArea.size.height, height: topArea.size.height))
+        buttonMenu.anchorPoint = CGPoint(x: 0, y: 0)
+        buttonMenu.position = CGPoint(x: 0, y: 0)
+        topArea.addChild(buttonMenu)
+        buttonRebuild = SKSpriteNode(color: SKColor.whiteColor(), size: tilesScaleSize)
+        buttonRebuild.anchorPoint = CGPoint(x: 1, y: 1)
+        buttonRebuild.position = CGPoint(x: topArea.size.width, y: topArea.size.height)
+        topArea.addChild(buttonRebuild)
+        let labelgap: CGFloat = 18
+        let labelsize = (topArea.size.height - labelgap * 3) / 2
+        let labelName = ["reserchLabel", "moneyLabel"]
+        let labelColor = [colorReserch, SKColor.yellowColor()]
+        for i in 1...2 {
             let label = SKLabelNode(fontNamed: "Verdana-Bold")
             label.name = labelName[i - 1]
             label.fontColor = labelColor[i - 1]
             label.fontSize = labelsize
             label.horizontalAlignmentMode = .Left
-            label.position = CGPoint(x: labelgap, y: labelgap * CGFloat(i) + labelsize * CGFloat(i - 1))
+            label.position = CGPoint(x: buttonMenu.size.width + 20, y: labelgap * CGFloat(i) + labelsize * CGFloat(i - 1))
             topArea.addChild(label)
         }
-        buttonMenu = SKSpriteNode(color: SKColor.blackColor(), size: tilesScaleSize)
-        buttonMenu.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonMenu.position = CGPoint(x: topArea.size.width - 64 * 3 * framescale, y: 64 * framescale)
-        topArea.addChild(buttonMenu)
-        buttonRebuild = SKSpriteNode(color: SKColor.whiteColor(), size: tilesScaleSize)
-        buttonRebuild.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonRebuild.position = CGPoint(x: topArea.size.width - 64 * 2 * framescale, y: 64 * framescale)
-        topArea.addChild(buttonRebuild)
         
         // Middle Area
         buildingMap = BuildingMap()
@@ -192,7 +192,7 @@ class GameScene: SKScene {
         for i in 1...5 {
             buildSelectPoint.append(CGPoint(x: selectGap * CGFloat(i) + tilesScaleSize.width * (0.5 + CGFloat(i - 1)), y: bottomPage_Build.size.height / 2))
         }
-        buildSelectMenu = [BuildType]([.Wind, .Fire, .Generator, .Office])
+        buildSelectMenu = [.Wind, .Fire, .Generator, .Office]
         for i in 1...4 {
             let build = buildingImage("build\(i)", buildType: buildSelectMenu[i - 1])
             build.position = buildSelectPoint[i - 1]
@@ -209,76 +209,16 @@ class GameScene: SKScene {
         bottomPage_Build.addChild(buildSelectBox)
         
         buildSelectPage = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: midArea.size.width * 4, height: midArea.size.height))
+        buildSelectPage.name = "buildingSelectPage"
         buildSelectPage.anchorPoint = CGPoint(x: 0, y: 0)
         buildSelectPage.position = CGPoint(x: 0, y: botArea.size.height)
         buildSelectPage.zPosition = -1
         botArea.addChild(buildSelectPage)
-        
-        
-        let building1_6 = BuildingData(buildType: .Wind, level: buildingMap.getBuildingLevel(.Wind))
-        let levelinfo1_6 = building1_6.buildingLevelInfo(.Wind)
-        let build1_6 = addBuildingSelectElement(.Wind, info1text: levelinfo1_6[0], info2text: levelinfo1_6[1], info3text: levelinfo1_6[2])
-        build1_6.position = CGPoint(x:20, y:20)
-        buildSelectPage.addChild(build1_6)
-        
-        let building1_5 = BuildingData(buildType: .Fire, level: buildingMap.getBuildingLevel(.Fire))
-        let levelinfo1_5 = building1_5.buildingLevelInfo(.Fire)
-        let build1_5 = addBuildingSelectElement(.Fire, info1text: levelinfo1_5[0], info2text: levelinfo1_5[1], info3text: levelinfo1_5[2])
-        build1_5.position = CGPoint(x: 20, y: 40 + build1_5.size.height)
-        buildSelectPage.addChild(build1_5)
+        UpdateBuildingSelectPage()
 
-        let building2_6 = BuildingData(buildType: .Wind, level: buildingMap.getBuildingLevel(.Wind))
-        let levelinfo2_6 = building2_6.buildingLevelInfo(.Wind)
-        let build2_6 = addBuildingSelectElement(.Wind, info1text: levelinfo2_6[0], info2text: levelinfo2_6[1], info3text: levelinfo2_6[2])
-        build2_6.position = CGPoint(x:20 + botArea.size.width, y:20)
-        buildSelectPage.addChild(build2_6)
         
         // Bottom Area 4 - Reserch upgrade
         
-    }
-    func buildingImage(name: String, buildType: BuildType) -> SKSpriteNode {
-        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType).imageName)
-        buildingImage.name = name
-        buildingImage.size = tilesScaleSize
-        return buildingImage
-    }
-    func addBuildingSelectElement(buildType: BuildType, info1text: String, info2text: String, info3text: String) -> SKSpriteNode {
-        let Gap: CGFloat = 20
-        let SelectElementSize = (midArea.size.height - Gap * 7) / 6
-        let SpriteNode = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: midArea.size.width - Gap * 2, height: SelectElementSize))
-        SpriteNode.anchorPoint = CGPoint(x: 0, y: 0)
-        
-        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType).imageName)
-        buildingImage.anchorPoint = CGPoint(x: 0, y: 0.5)
-        buildingImage.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
-        buildingImage.position = CGPoint(x: Gap, y: SpriteNode.size.height / 2)
-        SpriteNode.addChild(buildingImage)
-        
-        let infoGap: CGFloat = 8
-        let infoSize = (SpriteNode.size.height - infoGap * 4) / 3
-        let infotext = [info1text, info2text, info3text]
-        for i in 1...3 {
-            let label = SKLabelNode(fontNamed: "Verdana-Bold")
-            label.name = "info\(CGFloat(i))"
-            label.text = infotext[i - 1]
-            label.fontSize = infoSize
-            label.horizontalAlignmentMode = .Left
-            label.position = CGPoint(x: tilesize.width * framescale + Gap * 2, y: infoGap * (4 - CGFloat(i)) + infoSize * (3 - CGFloat(i)))
-            SpriteNode.addChild(label)
-        }
-        
-        let buildingUpgrade = SKSpriteNode(color: SKColor.greenColor(), size: buildingImage.size)
-        buildingUpgrade.name = "Upgrade_" + String(buildType)
-        buildingUpgrade.anchorPoint = CGPoint(x: 1, y: 0.5)
-        buildingUpgrade.position = CGPoint(x: SpriteNode.size.width - Gap, y: SpriteNode.size.height / 2)
-        SpriteNode.addChild(buildingUpgrade)
-        let buildingDegrade = SKSpriteNode(color: SKColor.redColor(), size: buildingImage.size)
-        buildingDegrade.name = "Degrade_" + String(buildType)
-        buildingDegrade.anchorPoint = CGPoint(x: 1, y: 0.5)
-        buildingDegrade.position = CGPoint(x: SpriteNode.size.width - Gap * 2 - buildingImage.size.width, y: SpriteNode.size.height / 2)
-        SpriteNode.addChild(buildingDegrade)
-        
-        return SpriteNode
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -382,6 +322,58 @@ class GameScene: SKScene {
         }
     }
     
+    override func update(currentTime: CFTimeInterval) {
+        
+        floatBottomPage(touchType)
+        floatBuildSelectPage(ShowBuildSelectPage)
+        
+        switch touchType {
+        case .Building:
+            bottomPage_Info.childNodeWithName("infoImage")!.removeFromParent()
+            let infobuildType = info_Building.buildingData.buildType
+            let infoImage = buildingImage("infoImage", buildType: infobuildType)
+            infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: bottomPage_Info.size.height / 2)
+            bottomPage_Info.addChild(infoImage)
+            let info = info_Building.buildingData.buildingInfo(infobuildType)
+            for i in 1 ... 4 {
+                (bottomPage_Info.childNodeWithName("info\(i)") as! SKLabelNode).text = ""
+            }
+            for i in 1...info.count {
+                (bottomPage_Info.childNodeWithName("info\(i)") as! SKLabelNode).text = info[i - 1]
+            }
+            
+        case .Energy:
+            let persent = CGFloat(buildingMap.energy) / CGFloat(buildingMap.energyMax)
+            energy_ProgressFront.xScale = persent
+            
+        case .BuildSelect:
+            break
+            
+        case .Reserch:
+            break
+        }
+    }
+   
+    func tickUpdata() {
+        // 1. Update map data
+        buildingMap.Update()
+        
+        // 2. Calculate money and reserch
+        money += buildingMap.money_TickAdd
+        reserch += buildingMap.reserch_TickAdd
+
+        // 3. Updata imformation
+        (topArea.childNodeWithName("moneyLabel") as! SKLabelNode).text = "Money: \(money) + \(buildingMap.money_TickAdd)"
+        (topArea.childNodeWithName("reserchLabel") as! SKLabelNode).text = "Reserch: \(reserch) + \(buildingMap.reserch_TickAdd)"
+//        let persent = CGFloat(buildingMap.energy) / CGFloat(buildingMap.energyMax) * 100
+//        (topArea.childNodeWithName("energyLabel") as! SKLabelNode).text = "Energy: \(persent)%"
+        
+        energy_maxLabel.text = "Energy: \(buildingMap.energy) (Max:\(buildingMap.energyMax))"
+        
+        //        save()
+    }
+    
+    
     func floatBottomPage(touchType: TouchType) {
         let Up = SKAction.moveTo(CGPoint(x: 0, y: 100), duration: 0.1)
         let Down = SKAction.moveTo(CGPoint(x: 0, y: -botArea.size.height * 2), duration: 0.1)
@@ -419,56 +411,67 @@ class GameScene: SKScene {
         buildSelectPage.runAction(SKAction.moveToX(-botArea.size.width * CGFloat(buildSelect), duration: 0.1))
     }
     
-    override func update(currentTime: CFTimeInterval) {
+    // Creat Building Image
+    func buildingImage(name: String, buildType: BuildType) -> SKSpriteNode {
+        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType).imageName)
+        buildingImage.name = name
+        buildingImage.size = tilesScaleSize
+        return buildingImage
+    }
+    
+    // Add Building Select Element
+    func addBuildingSelectElement(buildType: BuildType, levelInfo: [String]) -> SKSpriteNode {
+        let Gap: CGFloat = 20
+        let SelectElementSize = (midArea.size.height - Gap * 7) / 6
+        let SpriteNode = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: midArea.size.width - Gap * 2, height: SelectElementSize))
+        SpriteNode.anchorPoint = CGPoint(x: 0, y: 0)
         
-        floatBottomPage(touchType)
+        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType).imageName)
+        buildingImage.anchorPoint = CGPoint(x: 0, y: 0.5)
+        buildingImage.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
+        buildingImage.position = CGPoint(x: Gap, y: SpriteNode.size.height / 2)
+        SpriteNode.addChild(buildingImage)
         
-        switch touchType {
-        case .Building:
-            bottomPage_Info.childNodeWithName("infoImage")!.removeFromParent()
-            let infobuildType = info_Building.buildingData.buildType
-            let infoImage = buildingImage("infoImage", buildType: infobuildType)
-            infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: bottomPage_Info.size.height / 2)
-            bottomPage_Info.addChild(infoImage)
-            let info = info_Building.buildingData.buildingInfo(infobuildType)
-            for i in 1 ... 4 {
-                (bottomPage_Info.childNodeWithName("info\(i)") as! SKLabelNode).text = ""
-            }
-            for i in 1...info.count {
-                (bottomPage_Info.childNodeWithName("info\(i)") as! SKLabelNode).text = info[i - 1]
-            }
-            
-        case .Energy:
-            let persent = CGFloat(buildingMap.energy) / CGFloat(buildingMap.energyMax)
-            energy_ProgressFront.xScale = persent
-            
-        case .BuildSelect:
-            break
-            
-        case .Reserch:
-            break
+        let infoGap: CGFloat = 8
+        let infoSize = (SpriteNode.size.height - infoGap * 4) / 3
+        for i in 1...3 {
+            let label = SKLabelNode(fontNamed: "Verdana-Bold")
+            label.name = "info\(CGFloat(i))"
+            label.text = levelInfo[i - 1]
+            label.fontSize = infoSize
+            label.horizontalAlignmentMode = .Left
+            label.position = CGPoint(x: tilesize.width * framescale + Gap * 2, y: infoGap * (4 - CGFloat(i)) + infoSize * (3 - CGFloat(i)))
+            SpriteNode.addChild(label)
         }
         
-        floatBuildSelectPage(ShowBuildSelectPage)
+        let buildingUpgrade = SKSpriteNode(color: SKColor.greenColor(), size: buildingImage.size)
+        buildingUpgrade.name = "Upgrade_" + String(buildType)
+        buildingUpgrade.anchorPoint = CGPoint(x: 1, y: 0.5)
+        buildingUpgrade.position = CGPoint(x: SpriteNode.size.width - Gap, y: SpriteNode.size.height / 2)
+        SpriteNode.addChild(buildingUpgrade)
+        if buildingMap.getBuildingLevel(buildType) > 1 {
+            let buildingDegrade = SKSpriteNode(color: SKColor.redColor(), size: buildingImage.size)
+            buildingDegrade.name = "Degrade_" + String(buildType)
+            buildingDegrade.anchorPoint = CGPoint(x: 1, y: 0.5)
+            buildingDegrade.position = CGPoint(x: SpriteNode.size.width - Gap * 2 - buildingImage.size.width, y: SpriteNode.size.height / 2)
+            SpriteNode.addChild(buildingDegrade)
+        }
+        return SpriteNode
     }
-   
-    func tickUpdata() {
-        // 1. Update map data
-        buildingMap.Update()
-        
-        // 2. Calculate money and reserch
-        money += buildingMap.money_TickAdd
-        reserch += buildingMap.reserch_TickAdd
-
-        // 3. Updata imformation
-        (topArea.childNodeWithName("moneyLabel") as! SKLabelNode).text = "Money: \(money) + \(buildingMap.money_TickAdd)"
-        (topArea.childNodeWithName("reserchLabel") as! SKLabelNode).text = "Reserch: \(reserch) + \(buildingMap.reserch_TickAdd)"
-        let persent = CGFloat(buildingMap.energy) / CGFloat(buildingMap.energyMax) * 100
-        (topArea.childNodeWithName("energyLabel") as! SKLabelNode).text = "Energy: \(persent)%"
-        
-        energy_maxLabel.text = "Energy: \(buildingMap.energy) (Max:\(buildingMap.energyMax))"
-        
-        //        save()
+    
+    // Update building select page
+    func UpdateBuildingSelectPage() {
+        buildSelectPage.removeAllChildren()
+        let page1:[BuildType] = [.Wind, .Fire, .Office]
+        for (count, buildType) in page1.enumerate() {
+            let buildlevel = buildingMap.getBuildingLevel(buildType)
+            let levelInfo = BuildingData(buildType: buildType, level: buildlevel).buildingLevelInfo(buildType)
+            if buildlevel > 0 {
+                let selectElement = addBuildingSelectElement(buildType, levelInfo: levelInfo)
+                selectElement.position = CGPoint(x: 20, y: midArea.size.height - (20 + selectElement.size.height) * CGFloat(count + 1))
+                buildSelectPage.addChild(selectElement)
+            }
+        }
     }
 //    func save() {
 //        defaults.setInteger(money, forKey: "Money")
