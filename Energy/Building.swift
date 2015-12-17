@@ -238,7 +238,7 @@ class Building: SKNode {
 class BuildingMap: SKSpriteNode {
     
     var tileSize: CGSize = CGSizeMake(64, 64)
-    var mapSize: CGSize = CGSizeMake(9, 11)
+    var mapSize: CGSize = CGSizeMake(9, 10)
     var buildings = Array< Array<Building?>>()
     var buildingsLevel = [String: Int]()
     var money_TickAdd: Int = 0
@@ -250,7 +250,7 @@ class BuildingMap: SKSpriteNode {
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, maplevel: MapLevel) {
         self.position = position
-        self.size = CGSize(width: 64 * 9, height: 64 * 11)
+        self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
         self.anchorPoint = CGPoint(x: 0, y: 1)
         
         if maplevel == .One {
