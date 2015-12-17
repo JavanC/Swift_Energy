@@ -49,7 +49,7 @@ class BuildingData {
     var isHot2Energy: Bool = false
     var hot2Energy_Max: Int!
     
-    init(buildType: BuildType, level: Int) {
+    init(buildType: BuildType, level: Int = 0) {
         self.buildType = buildType
         self.level = level
         if buildType == .Nil {
@@ -235,7 +235,7 @@ class Building: SKNode {
     }
 }
 
-class BuildingMap: SKNode {
+class BuildingMap: SKSpriteNode {
     
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 11)
@@ -245,6 +245,9 @@ class BuildingMap: SKNode {
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, maplevel: MapLevel) {
         self.position = position
+        self.size = CGSize(width: 64 * 9, height: 64 * 11)
+//        self.color = SKColor.blackColor()
+        self.anchorPoint = CGPoint(x: 0, y: 1)
         
         if maplevel == .One {
             self.name = "level_One"
@@ -262,7 +265,6 @@ class BuildingMap: SKNode {
                 setTileMapElement(coord: coord, buildType: .Nil)
             }
         }
-        
     }
     
     // MARK: Coord transfer to position

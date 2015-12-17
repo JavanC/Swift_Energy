@@ -12,7 +12,10 @@ enum TouchType: Int {
     case Nil, Sell, Reserch, Building, BuildSelect
 }
 
+let frame = 5
+
 class GameScene: SKScene {
+    var gameData: GameData!
     var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
     var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
     var framescale: CGFloat!
@@ -72,6 +75,9 @@ class GameScene: SKScene {
         
         framescale = frame.size.width / (midsize.width * 64)
         tilesScaleSize = CGSize(width: tilesize.width * framescale, height: tilesize.width * framescale)
+        gameData = GameData()
+        
+        
         
         gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
         //        defaults = NSUserDefaults.standardUserDefaults()
@@ -94,10 +100,13 @@ class GameScene: SKScene {
         botArea.zPosition = 2
         addChild(botArea)
         
+        
+        
         // Top Area
         let labelgap: CGFloat = 15
         let labelsize = (topArea.size.height - labelgap * 4) / 3
         moneyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        moneyLabel.name = "moneyLabel"
         moneyLabel.text = "Money: \(money) + \(money_add)"
         moneyLabel.fontColor = SKColor.yellowColor()
         moneyLabel.fontSize = labelsize
@@ -105,6 +114,7 @@ class GameScene: SKScene {
         moneyLabel.position = CGPoint(x: 16, y: labelgap * 3 + labelsize * 2)
         topArea.addChild(moneyLabel)
         reserchLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        reserchLabel.name = "reserchLabel"
         reserchLabel.text = "Reserch: \(reserch) + \(reserch_add)"
         reserchLabel.fontColor = colorReserch
         reserchLabel.fontSize = labelsize
@@ -112,6 +122,7 @@ class GameScene: SKScene {
         reserchLabel.position = CGPoint(x: 16, y: labelgap * 2 + labelsize * 1)
         topArea.addChild(reserchLabel)
         energyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        energyLabel.name = "energyLabel"
         energyLabel.text = "Energy: \(CGFloat(energy) / CGFloat(energy_max) * 100)%"
         energyLabel.fontColor = colorEnergy
         energyLabel.fontSize = labelsize
@@ -244,7 +255,7 @@ class GameScene: SKScene {
         
     }
     func buildingImage(name: String, buildType: BuildType) -> SKSpriteNode {
-        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType, level: 1).imageName)
+        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType).imageName)
         buildingImage.name = name
         buildingImage.size = tilesScaleSize
         return buildingImage
@@ -255,7 +266,7 @@ class GameScene: SKScene {
         let SpriteNode = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: midArea.size.width - Gap * 2, height: SelectElementSize))
         SpriteNode.anchorPoint = CGPoint(x: 0, y: 0)
         
-        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType, level: 1).imageName)
+        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType).imageName)
         buildingImage.anchorPoint = CGPoint(x: 0, y: 0.5)
         buildingImage.size = CGSize(width: tilesize.width * framescale, height: tilesize.height * framescale)
         buildingImage.position = CGPoint(x: Gap, y: SpriteNode.size.height / 2)
@@ -315,8 +326,10 @@ class GameScene: SKScene {
             
             // Touch Middle Area
             if midArea.containsPoint(location) {
+                let midAreaLocation = touch.locationInNode(midArea)
+                
                 // Touch building Map
-                if buildingMap.containsPoint(location) {
+                if buildingMap.containsPoint(midAreaLocation) {
                     let buildingmaplocation = touch.locationInNode(buildingMap)
                     let coord = buildingMap.position2Coord(buildingmaplocation)
                     if touchType == .Building || touchType == .Nil || touchType == .BuildSelect {
@@ -340,7 +353,7 @@ class GameScene: SKScene {
                     
                     if touchType == .BuildSelect {
                         let building = buildSelectMenu[buildSelect]
-                        let price = BuildingData.init(buildType: building, level: 1).buildPrice
+                        let price = BuildingData.init(buildType: building).buildPrice
                         if money >= price {
                             buildingMap.setTileMapElement(coord: coord, buildType: building)
                             money -= price
@@ -475,10 +488,12 @@ class GameScene: SKScene {
         }
         if energy >= money_add {
             money += money_add
+            gameData.moneytest += money_add
             energy -= money_add
         } else {
             money_add = energy
             money += money_add
+            gameData.moneytest += money_add
             energy = 0
         }
         
@@ -488,10 +503,15 @@ class GameScene: SKScene {
         }
         
         // 6. Updata imformation
-        moneyLabel.text = "Money: \(money) + \(money_add)"
-        reserchLabel.text = "Reserch: \(reserch) + \(reserch_add)"
+        (topArea.childNodeWithName("moneyLabel") as! SKLabelNode).text = "Money: \(gameData.moneytest) + \(money_add)"
+        (topArea.childNodeWithName("reserchLabel") as! SKLabelNode).text = "Reserch: \(reserch) + \(reserch_add)"
         let persent = CGFloat(energy) / CGFloat(energy_max) * 100
-        energyLabel.text = "Energy: \(persent)%"
+        (topArea.childNodeWithName("energyLabel") as! SKLabelNode).text = "Energy: \(persent)%"
+        
+//        moneyLabel.text = "Money: \(money) + \(money_add)"
+//        reserchLabel.text = "Reserch: \(reserch) + \(reserch_add)"
+//        let persent = CGFloat(energy) / CGFloat(energy_max) * 100
+//        energyLabel.text = "Energy: \(persent)%"
         energy_maxLabel.text = "Energy: \(energy) (Max:\(energy_max))"
         
         //        save()
