@@ -8,21 +8,20 @@
 
 import SpriteKit
 
+let tilesize = CGSizeMake(64, 64)
+var framescale: CGFloat!
+var tilesScaleSize: CGSize!
+let topsize = CGSizeMake(9, 1.5)
+let midsize = CGSizeMake(9, 10)
+var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
+var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
 enum TouchType: Int {
     case Building, Energy, Reserch, BuildSelect
 }
 
-let frame = 5
-
 class GameScene: SKScene {
-    var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
-    var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
-    var framescale: CGFloat!
+
     var gameTimer: NSTimer!
-    let tilesize = CGSizeMake(64, 64)
-    var tilesScaleSize: CGSize!
-    let topsize = CGSizeMake(9, 1.5)
-    let midsize = CGSizeMake(9, 10)
     var topArea: SKSpriteNode!
     var midArea: SKSpriteNode!
     var botArea: SKSpriteNode!
@@ -37,7 +36,7 @@ class GameScene: SKScene {
     // Middle
     var buildingMap: BuildingMap!
     
-    // Bottom
+    // Bottom - button
     var buttonBuile: SKSpriteNode!
     var buttonEnergy: SKSpriteNode!
     var buttonReserch: SKSpriteNode!
@@ -72,6 +71,8 @@ class GameScene: SKScene {
         gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
         //        defaults = NSUserDefaults.standardUserDefaults()
         
+
+        
         // Add three Area
         topArea = SKSpriteNode(color: SKColor.grayColor(), size: CGSizeMake(frame.size.width, topsize.height * tilesScaleSize.height))
         topArea.name = "topArea"
@@ -80,8 +81,8 @@ class GameScene: SKScene {
         addChild(topArea)
         midArea = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(frame.size.width, midsize.height * tilesScaleSize.height))
         midArea.name = "midArea"
-        midArea.anchorPoint = CGPoint(x: 0, y: 1)
-        midArea.position = CGPoint(x: 0, y: frame.size.height - topArea.size.height)
+        midArea.anchorPoint = CGPoint(x: 0, y: 0)
+        midArea.position = CGPoint(x: 0, y: frame.size.height - topArea.size.height - midArea.size.height)
         addChild(midArea)
         botArea = SKSpriteNode(color: SKColor.grayColor(), size: CGSizeMake(frame.size.width, frame.size.height - (topsize.height + midsize.height) * tilesScaleSize.height))
         botArea.name = "botArea"
@@ -89,6 +90,15 @@ class GameScene: SKScene {
         botArea.position = CGPoint(x: 0, y: 0)
         botArea.zPosition = 2
         addChild(botArea)
+        
+        let test = GamePlayTop(size: CGSizeMake(frame.size.width, topsize.height * tilesScaleSize.height))
+        
+        
+        
+        test.zPosition = 100
+        test.position = CGPoint(x: 0, y: frame.size.height - topArea.size.height)
+        addChild(test)
+        
         
         // Top Area
         buttonMenu = SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: topArea.size.height, height: topArea.size.height))
@@ -115,7 +125,7 @@ class GameScene: SKScene {
         
         // Middle Area
         buildingMap = BuildingMap()
-        buildingMap.configureAtPosition(CGPoint(x: 0, y: 0), maplevel: .One)
+        buildingMap.configureAtPosition(CGPoint(x: 0, y: midArea.size.height), maplevel: .One)
         buildingMap.setScale(framescale)
         midArea.addChild(buildingMap)
         buildingMap.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Office)
@@ -208,13 +218,13 @@ class GameScene: SKScene {
         buildSelectBox.position = buildSelectPoint[0]
         bottomPage_Build.addChild(buildSelectBox)
         
+        
         buildSelectPage = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: midArea.size.width * 4, height: midArea.size.height))
         buildSelectPage.name = "buildingSelectPage"
         buildSelectPage.anchorPoint = CGPoint(x: 0, y: 0)
-        buildSelectPage.position = CGPoint(x: 0, y: -midArea.size.height)
-//        buildSelectPage.zPosition = 
+        buildSelectPage.position = CGPoint(x: 0, y: 0)
         midArea.addChild(buildSelectPage)
-//        UpdateBuildingSelectPage()
+        UpdateBuildingSelectPage()
 
         
         // Bottom Area 4 - Reserch upgrade
@@ -224,7 +234,7 @@ class GameScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.locationInNode(self)
-
+            
             // Touch Top Area
             if topArea.containsPoint(location) {
                 let topAreaLocation = touch.locationInNode(topArea)
@@ -276,10 +286,10 @@ class GameScene: SKScene {
                 
                 print("mid")
                 // Touch Select Page
-                if buildSelectPage.containsPoint(midAreaLocation) {
-                    let nodes = nodesAtPoint(midAreaLocation)
-                    print(nodes)
-                }
+//                if buildSelectPage.containsPoint(midAreaLocation) {
+//                    let nodes = nodesAtPoint(midAreaLocation)
+//                    print(nodes)
+//                }
 
             }
             // Touch Bottom Area
@@ -406,12 +416,12 @@ class GameScene: SKScene {
         }
     }
     func floatBuildSelectPage(On: Bool) {
-        let Up = SKAction.moveToY(-midArea.size.height, duration: 0.1)
-        let Down = SKAction.moveToY(-midArea.size.height * 2, duration: 0.1)
+        let Up = SKAction.moveToY(0, duration: 0.1)
+        let Down = SKAction.moveToY(-midArea.size.height, duration: 0.1)
         if On {
-            buildSelectPage.runAction(Up) { self.buildingMap.position = CGPoint(x: self.midArea.size.width * 2, y: 0) }
+            buildSelectPage.runAction(Up) { self.buildingMap.position = CGPoint(x: self.midArea.size.width * 2, y: self.midArea.size.height) }
         } else {
-            buildingMap.position = CGPoint(x: 0, y: 0)
+            buildingMap.position = CGPoint(x: 0, y: midArea.size.height)
             buildSelectPage.runAction(Down)
         }
         buildSelectPage.runAction(SKAction.moveToX(-botArea.size.width * CGFloat(buildSelect), duration: 0.1))
@@ -466,19 +476,19 @@ class GameScene: SKScene {
     }
     
     // Update building select page
-//    func UpdateBuildingSelectPage() {
-//        buildSelectPage.removeAllChildren()
-//        let page1:[BuildType] = [.Wind, .Fire, .Office]
-//        for (count, buildType) in page1.enumerate() {
-//            let buildlevel = buildingMap.getBuildingLevel(buildType)
-//            let levelInfo = BuildingData(buildType: buildType, level: buildlevel).buildingLevelInfo(buildType)
-//            if buildlevel > 0 {
-//                let selectElement = addBuildingSelectElement(buildType, levelInfo: levelInfo)
-//                selectElement.position = CGPoint(x: 20, y: midArea.size.height - (20 + selectElement.size.height) * CGFloat(count + 1))
-//                buildSelectPage.addChild(selectElement)
-//            }
-//        }
-//    }
+    func UpdateBuildingSelectPage() {
+        buildSelectPage.removeAllChildren()
+        let page1:[BuildType] = [.Wind, .Fire, .Office]
+        for (count, buildType) in page1.enumerate() {
+            let buildlevel = buildingMap.getBuildingLevel(buildType)
+            let levelInfo = BuildingData(buildType: buildType, level: buildlevel).buildingLevelInfo(buildType)
+            if buildlevel > 0 {
+                let selectElement = addBuildingSelectElement(buildType, levelInfo: levelInfo)
+                selectElement.position = CGPoint(x: 20, y: midArea.size.height - (20 + selectElement.size.height) * CGFloat(count + 1))
+                buildSelectPage.addChild(selectElement)
+            }
+        }
+    }
 //    func save() {
 //        defaults.setInteger(money, forKey: "Money")
 //    }
