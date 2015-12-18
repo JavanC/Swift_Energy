@@ -24,21 +24,19 @@ class GameScene: SKScene {
     var framescale: CGFloat!
     
     var gameTimer: NSTimer!
+    var touchType: TouchType = .Energy
     var topLayer = TopLayer()
     var buildingSelectLayer = BuildingSelectLayer()
+    var buttonLayer = ButtonLayer()
     
     
-    
-    var midArea: SKSpriteNode!
     var botArea: SKSpriteNode!
-    var touchType: TouchType = .Energy
+
     
     // Top
     var money: Int = 10
     var reserch: Int = 0
 
-
-    
     // Bottom - button
     var buttonBuile: SKSpriteNode!
     var buttonEnergy: SKSpriteNode!
@@ -70,7 +68,6 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        
         framescale = frame.size.width / (midsize.width * 64)
         tilesScaleSize = CGSize(width: tilesize.width * framescale, height: tilesize.width * framescale)
         gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
@@ -82,6 +79,11 @@ class GameScene: SKScene {
         topLayer.configureAtPosition(topLayerPosition, size: topLayerSize)
         addChild(topLayer)
         
+        // Button Layer
+        let buttonLayerSize = CGSizeMake(frame.size.width, 100)
+        buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
+        addChild(buttonLayer)
+        
         // Building Map Layer
         let buildingMapLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
         buildingMapLayer.configureAtPosition(buildingMapLayerPosition, maplevel: .One)
@@ -90,7 +92,6 @@ class GameScene: SKScene {
         buildingMapLayer.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Office)
         buildingMapLayer.setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Fire)
         buildingMapLayer.setTileMapElement(coord: CGPoint(x: 2, y: 0), buildType: .Generator)
-        buildingMapLayer.setTileMapElement(coord: CGPoint(x: 3, y: 0), buildType: .Generator)
         
         // Building Select Layer
         let buildingSelectLayerSize = buildingMapLayer.size
@@ -100,6 +101,10 @@ class GameScene: SKScene {
         addChild(buildingSelectLayer)
         buildingSelectLayer.showPage(false, page: 1)
         
+
+        
+        
+        
         
         
     
@@ -108,24 +113,24 @@ class GameScene: SKScene {
         botArea.anchorPoint = CGPoint(x: 0, y: 0)
         botArea.position = CGPoint(x: 0, y: 0)
         botArea.zPosition = 2
-        addChild(botArea)
+//        addChild(botArea)
         
         // Bottom Area button
         buttonBuile = SKSpriteNode(color: SKColor.brownColor(), size: CGSize(width: botArea.size.width / 4, height: 100))
         buttonBuile.anchorPoint = CGPoint(x: 0, y: 0)
         buttonBuile.position = CGPoint(x: 0, y: 0)
         buttonBuile.zPosition = 100
-        botArea.addChild(buttonBuile)
+//        botArea.addChild(buttonBuile)
         buttonEnergy = SKSpriteNode(color: colorEnergy, size: CGSize(width: botArea.size.width / 2, height: 100))
         buttonEnergy.anchorPoint = CGPoint(x: 0, y: 0)
         buttonEnergy.position = CGPoint(x: botArea.size.width / 4, y: 0)
         buttonEnergy.zPosition = 100
-        botArea.addChild(buttonEnergy)
+//        botArea.addChild(buttonEnergy)
         buttonReserch = SKSpriteNode(color: colorReserch, size: CGSize(width: botArea.size.width / 4, height: 100))
         buttonReserch.anchorPoint = CGPoint(x: 0, y: 0)
         buttonReserch.position = CGPoint(x: botArea.size.width * 3 / 4, y: 0)
         buttonReserch.zPosition = 100
-        botArea.addChild(buttonReserch)
+//        botArea.addChild(buttonReserch)
         
         // Bottom Area 1 - Building information
         bottomPage_Info = SKSpriteNode(color: SKColor.redColor(), size: CGSize(width: botArea.size.width, height: botArea.size.height - 100))

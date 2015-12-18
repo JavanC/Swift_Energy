@@ -18,6 +18,7 @@
 		655DCCF51C23D8A000F9F6A0 /* BuildingMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DCCF31C23D8A000F9F6A0 /* BuildingMapLayer.swift */; };
 		655DCCF61C23D8A000F9F6A0 /* TopLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DCCF41C23D8A000F9F6A0 /* TopLayer.swift */; };
 		655DCCF81C23DE7F00F9F6A0 /* BuildingSelectLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DCCF71C23DE7F00F9F6A0 /* BuildingSelectLayer.swift */; };
+		655DCCFA1C240A5400F9F6A0 /* ButtonLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DCCF91C240A5400F9F6A0 /* ButtonLayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		655DCCF31C23D8A000F9F6A0 /* BuildingMapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingMapLayer.swift; sourceTree = "<group>"; };
 		655DCCF41C23D8A000F9F6A0 /* TopLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopLayer.swift; sourceTree = "<group>"; };
 		655DCCF71C23DE7F00F9F6A0 /* BuildingSelectLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingSelectLayer.swift; path = Energy/BuildingSelectLayer.swift; sourceTree = "<group>"; };
+		655DCCF91C240A5400F9F6A0 /* ButtonLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonLayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				6541D6A01C0D9C2A0034C292 /* AppDelegate.swift */,
 				655DCCF31C23D8A000F9F6A0 /* BuildingMapLayer.swift */,
 				655DCCF41C23D8A000F9F6A0 /* TopLayer.swift */,
+				655DCCF91C240A5400F9F6A0 /* ButtonLayer.swift */,
 				6541D6A21C0D9C2A0034C292 /* GameScene.sks */,
 				6541D6A41C0D9C2A0034C292 /* GameScene.swift */,
 				6541D6A61C0D9C2A0034C292 /* GameViewController.swift */,
@@ -169,6 +172,7 @@
 				655DCCF81C23DE7F00F9F6A0 /* BuildingSelectLayer.swift in Sources */,
 				655DCCF51C23D8A000F9F6A0 /* BuildingMapLayer.swift in Sources */,
 				655DCCF61C23D8A000F9F6A0 /* TopLayer.swift in Sources */,
+				655DCCFA1C240A5400F9F6A0 /* ButtonLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
