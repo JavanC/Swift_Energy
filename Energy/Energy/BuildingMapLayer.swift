@@ -114,6 +114,14 @@ class BuildingData {
         }
     }
     
+    func buildingImage(name: String, buildType: BuildType) -> SKSpriteNode {
+        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType).imageName)
+        buildingImage.name = name
+        buildingImage.size = tilesScaleSize
+        return buildingImage
+    }
+    
+    
     func buildingInfo(buildType: BuildType) -> [String] {
         var info = [String]()
         if buildType == .Wind {
@@ -235,7 +243,7 @@ class Building: SKNode {
     }
 }
 
-class BuildingMap: SKSpriteNode {
+class BuildingMapLayer: SKSpriteNode {
     
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 10)
