@@ -78,7 +78,7 @@ class PageBuild: SKSpriteNode {
             addChild(image)
         }
         let image = SKSpriteNode(color: SKColor.yellowColor(), size: tilesScaleSize)
-        image.name = "buildingSell"
+        image.name = "SelectImage5"
         image.position = imagePosition[4]
         addChild(image)
 
@@ -145,13 +145,23 @@ class PageEnergy: SKSpriteNode {
     }
 }
 
+class PageReserch: SKSpriteNode {
+    
+    func configureAtPosition(position: CGPoint, size: CGSize) {
+        self.position = position
+        self.size = size
+        self.color = colorReserch
+        self.name = "PageReserch"
+        self.anchorPoint = CGPoint(x: 0, y: 0)
+    }
+}
 
 class BottomLayer: SKSpriteNode {
 
     var pageInformation = PageInformation()
     var pageBuild = PageBuild()
     var pageEnergy = PageEnergy()
-    var pageReserch: SKSpriteNode!
+    var pageReserch = PageReserch()
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         
@@ -161,12 +171,44 @@ class BottomLayer: SKSpriteNode {
         self.name = "BottomLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        pageInformation.configureAtPosition(CGPoint(x: size.width, y: 0), size: size)
+        pageInformation.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageInformation)
-        pageBuild.configureAtPosition(CGPoint(x: size.width, y: 0), size: size)
+        pageBuild.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageBuild)
-        pageEnergy.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
+        pageEnergy.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageEnergy)
+        pageReserch.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
+        addChild(pageReserch)
         
+        showPageEnergy()
+    }
+    
+    func ShowPageInformation() {
+        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
+        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
+        pageReserch.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
+            self.pageInformation.runAction(SKAction.moveToY(0, duration: 0.1))
+        }
+    }
+    func ShowPageBuild() {
+        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
+        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
+        pageReserch.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
+            self.pageBuild.runAction(SKAction.moveToY(0, duration: 0.1))
+        }
+    }
+    func showPageEnergy() {
+        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
+        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
+        pageReserch.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
+            self.pageEnergy.runAction(SKAction.moveToY(0, duration: 0.1))
+        }
+    }
+    func showPageReserch() {
+        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
+        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
+        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
+            self.pageReserch.runAction(SKAction.moveToY(0, duration: 0.1))
+        }
     }
 }

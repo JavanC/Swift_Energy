@@ -10,6 +10,7 @@ import SpriteKit
 
 class ButtonLayer: SKSpriteNode {
 
+    var buttonStatus: String!
     var buttonBuild: SKSpriteNode!
     var buttonEnergy: SKSpriteNode!
     var buttonReserch: SKSpriteNode!
@@ -38,24 +39,30 @@ class ButtonLayer: SKSpriteNode {
         buttonReserch.anchorPoint = CGPoint(x: 0, y: 0)
         buttonReserch.position = CGPoint(x: size.width * 3 / 4, y: 0)
         addChild(buttonReserch)
+        
+        tapButtonNil()
     }
     
     func tapButtonNil() {
+        buttonStatus = "nil"
         buttonBuild.alpha = 1
         buttonReserch.alpha = 1
         buttonEnergy.alpha = 1
     }
     func tapButtonBuild() {
+        buttonStatus = "build"
         buttonBuild.alpha = 0.6
         buttonReserch.alpha = 1
         buttonEnergy.alpha = 1
     }
     func tapButtonEnergy() {
+        buttonStatus = "energy"
         buttonBuild.alpha = 1
         buttonReserch.alpha = 1
         buttonEnergy.alpha = 0.6
     }
     func tapButtonReserch() {
+        buttonStatus = "reserch"
         buttonBuild.alpha = 1
         buttonReserch.alpha = 0.6
         buttonEnergy.alpha = 1

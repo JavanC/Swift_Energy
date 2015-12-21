@@ -95,9 +95,11 @@ class BuildingSelectLayer: SKSpriteNode {
     }
     
     // Show page
-    func showPage(show: Bool, page: Int) {
+    func showPage(show: Bool) {
+        self.runAction(SKAction.moveToY(origin.y + (show ? 0 : -2 * self.size.height), duration: 0.2))
+    }
+    func changePage(page: Int) {
         let frameWidth = self.size.width / 4
-        self.runAction(SKAction.moveToX(origin.x + -CGFloat(page - 1) * frameWidth, duration: 0.1))
-        self.runAction(SKAction.moveToY(origin.y + (show ? 0 : -2 * self.size.height), duration: 0.1))
+        self.runAction(SKAction.moveToX(origin.x + -CGFloat(page - 1) * frameWidth, duration: 0.2))
     }
 }
