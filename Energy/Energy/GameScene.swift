@@ -373,8 +373,9 @@ class GameScene: SKScene {
 //            }
             
         case .Energy:
-            let persent = CGFloat(buildingMapLayer.energy) / CGFloat(buildingMapLayer.energyMax)
-            energy_ProgressFront.xScale = persent
+            let percent = CGFloat(buildingMapLayer.energy) / CGFloat(buildingMapLayer.energyMax)
+            energy_ProgressFront.xScale = percent
+            
             
         case .BuildSelect:
             break
@@ -395,10 +396,13 @@ class GameScene: SKScene {
         // 3. Updata imformation
         topLayer.moneyLabel.text = "Money: \(money) + \(buildingMapLayer.money_TickAdd)"
         topLayer.reserchLabel.text = "Reserch: \(reserch) + \(buildingMapLayer.reserch_TickAdd)"
-//        let persent = CGFloat(buildingMap.energy) / CGFloat(buildingMap.energyMax) * 100
+        let percent = CGFloat(buildingMapLayer.energy) / CGFloat(buildingMapLayer.energyMax)
+        bottomLayer.pageEnergy.progressPercent(percent)
+        bottomLayer.pageEnergy.energyLabel.text = "Energy: \(buildingMapLayer.energy) (Max:\(buildingMapLayer.energyMax))"
+        
 //        (topArea.childNodeWithName("energyLabel") as! SKLabelNode).text = "Energy: \(persent)%"
         
-        energy_maxLabel.text = "Energy: \(buildingMapLayer.energy) (Max:\(buildingMapLayer.energyMax))"
+//        energy_maxLabel.text = "Energy: \(buildingMapLayer.energy) (Max:\(buildingMapLayer.energyMax))"
         
         //        save()
     }

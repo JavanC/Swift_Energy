@@ -104,12 +104,53 @@ class PageBuild: SKSpriteNode {
     }
 }
 
+class PageEnergy: SKSpriteNode {
+    
+    var energyLabel: SKLabelNode!
+    var energy_ProgressBack: SKSpriteNode!
+    var energy_ProgressFront: SKSpriteNode!
+    
+    func configureAtPosition(position: CGPoint, size: CGSize) {
+        self.position = position
+        self.size = size
+        self.color = SKColor.blueColor()
+        self.name = "PageEnergy"
+        self.anchorPoint = CGPoint(x: 0, y: 0)
+        
+        let energy_ProgressSize = CGSize(width: size.width * 3 / 4, height: size.height / 2)
+        energy_ProgressBack = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
+        energy_ProgressBack.name = "Energy_ProgressBack"
+        energy_ProgressBack.alpha = 0.3
+        energy_ProgressBack.anchorPoint = CGPoint(x: 0, y: 0.5)
+        energy_ProgressBack.position = CGPoint(x: size.width / 8, y: size.height / 2)
+        addChild(energy_ProgressBack)
+        energy_ProgressFront = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
+        energy_ProgressFront.name = "Energy_ProgressFront"
+        energy_ProgressFront.alpha = 0.7
+        energy_ProgressFront.anchorPoint = CGPoint(x: 0, y: 0.5)
+        energy_ProgressFront.position = CGPoint(x: size.width / 8, y: size.height / 2)
+        addChild(energy_ProgressFront)
+        let labelsize = size.height / 8
+        energyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        energyLabel.name = "EnergyLabel"
+        energyLabel.fontColor = colorEnergy
+        energyLabel.fontSize = labelsize
+        energyLabel.horizontalAlignmentMode = .Left
+        energyLabel.position = CGPoint(x: size.width / 8, y: size.height * 3 / 4 + 10)
+        addChild(energyLabel)
+    }
+    
+    func progressPercent(percent: CGFloat) {
+        energy_ProgressFront.xScale = percent
+    }
+}
+
 
 class BottomLayer: SKSpriteNode {
 
     var pageInformation = PageInformation()
     var pageBuild = PageBuild()
-    var pageEnergy: SKSpriteNode!
+    var pageEnergy = PageEnergy()
     var pageReserch: SKSpriteNode!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
@@ -122,8 +163,10 @@ class BottomLayer: SKSpriteNode {
         
         pageInformation.configureAtPosition(CGPoint(x: size.width, y: 0), size: size)
         addChild(pageInformation)
-        pageBuild.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
+        pageBuild.configureAtPosition(CGPoint(x: size.width, y: 0), size: size)
         addChild(pageBuild)
+        pageEnergy.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
+        addChild(pageEnergy)
         
     }
 }
