@@ -20,7 +20,7 @@ class PageInformation: SKSpriteNode {
         self.name = "PageInformation"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        let infoImage = BuildingData(buildType: .Nil).buildingImage("infoImage", buildType: .Nil)
+        let infoImage = BuildingData(buildType: .Nil).buildingImage("infoImage")
         infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: size.height / 2)
         addChild(infoImage)
         
@@ -43,7 +43,7 @@ class PageInformation: SKSpriteNode {
         let infoImagePosition = childNodeWithName("infoImage")?.position
         childNodeWithName("infoImage")?.removeFromParent()
         let infobuildType = building.buildingData.buildType
-        let infoImage = BuildingData(buildType: infobuildType).buildingImage("infoImage", buildType: infobuildType)
+        let infoImage = BuildingData(buildType: infobuildType).buildingImage("infoImage")
         infoImage.position = infoImagePosition!
         addChild(infoImage)
         
@@ -56,7 +56,8 @@ class PageInformation: SKSpriteNode {
 
 class PageBuild: SKSpriteNode {
     
-    var selectPosition = [CGPoint]()
+    var selectNumber: Int = 1
+    var imagePosition = [CGPoint]()
     var buildMenu: [BuildType] = [.Wind, .Fire, .Generator, .Office]
     var selectBox: SKSpriteNode!
     
@@ -69,23 +70,37 @@ class PageBuild: SKSpriteNode {
         
         let gap = (size.width - 5 * tilesScaleSize.width) / 6
         for i in 1...5 {
-            selectPosition.append(CGPoint(x: gap * CGFloat(i) + tilesScaleSize.width * (0.5 + CGFloat(i - 1)), y: size.height / 2))
+            imagePosition.append(CGPoint(x: gap * CGFloat(i) + tilesScaleSize.width * (0.5 + CGFloat(i - 1)), y: size.height / 2))
         }
         for i in 1...4 {
-            let image = BuildingData(buildType: buildMenu[i - 1]).buildingImage("SelectImage\(i)", buildType: buildMenu[i - 1])
-            image.position = selectPosition[i - 1]
+            let image = BuildingData(buildType: buildMenu[i - 1]).buildingImage("SelectImage\(i)")
+            image.position = imagePosition[i - 1]
             addChild(image)
         }
         let image = SKSpriteNode(color: SKColor.yellowColor(), size: tilesScaleSize)
         image.name = "buildingSell"
-        image.position = selectPosition[4]
+        image.position = imagePosition[4]
         addChild(image)
 
         selectBox = SKSpriteNode(color: SKColor.redColor(), size: tilesScaleSize)
         selectBox.name = "selectBox"
         selectBox.setScale(1.1)
-        selectBox.position = selectPosition[0]
+        selectBox.position = imagePosition[0]
         addChild(selectBox)
+    }
+    
+    func changeSelectImage(buildType: BuildType) {
+        buildMenu[selectNumber - 1] = buildType
+        let imgPosition = childNodeWithName("SelectImage\(selectNumber)")?.position
+        childNodeWithName("SelectImage\(selectNumber)")?.removeFromParent()
+        let image = BuildingData(buildType: buildType).buildingImage("SelectImage\(selectNumber)")
+        image.position = imgPosition!
+        addChild(image)
+    }
+    
+    func changeSelectNumber(selectNumber: Int) {
+        self.selectNumber = selectNumber
+        selectBox.position = imagePosition[selectNumber - 1]
     }
 }
 

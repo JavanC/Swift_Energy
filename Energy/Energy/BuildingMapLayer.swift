@@ -21,7 +21,7 @@ enum ProgressType {
 class BuildingData {
     
     var imageName: String!
-    var buildType: BuildType!
+    var buildType: BuildType = .Nil
     var buildPrice: Int!
     var level: Int!
     var nextLevelPrice: Int!
@@ -114,7 +114,7 @@ class BuildingData {
         }
     }
     
-    func buildingImage(name: String, buildType: BuildType) -> SKSpriteNode {
+    func buildingImage(name: String) -> SKSpriteNode {
         let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType).imageName)
         buildingImage.name = name
         buildingImage.size = tilesScaleSize

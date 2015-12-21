@@ -234,6 +234,9 @@ class GameScene: SKScene {
                     print(buildingMapLayer.buildingForCoord(coord))
                     bottomLayer.pageInformation.changeInformation(buildingMapLayer.buildingForCoord(coord)!)
                     
+                case bottomLayer.pageBuild:
+                    print("Page Build")
+                    
                 case buttonLayer.buttonBuild:
                     print("Build Button")
                     buttonLayer.tapButtonBuild()
