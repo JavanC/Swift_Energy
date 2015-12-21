@@ -54,11 +54,46 @@ class PageInformation: SKSpriteNode {
     }
 }
 
+class PageBuild: SKSpriteNode {
+    
+    var selectPosition = [CGPoint]()
+    var buildMenu: [BuildType] = [.Wind, .Fire, .Generator, .Office]
+    var selectBox: SKSpriteNode!
+    
+    func configureAtPosition(position: CGPoint, size: CGSize) {
+        self.position = position
+        self.size = size
+        self.color = SKColor.brownColor()
+        self.name = "PageBuild"
+        self.anchorPoint = CGPoint(x: 0, y: 0)
+        
+        let gap = (size.width - 5 * tilesScaleSize.width) / 6
+        for i in 1...5 {
+            selectPosition.append(CGPoint(x: gap * CGFloat(i) + tilesScaleSize.width * (0.5 + CGFloat(i - 1)), y: size.height / 2))
+        }
+        for i in 1...4 {
+            let image = BuildingData(buildType: buildMenu[i - 1]).buildingImage("SelectImage\(i)", buildType: buildMenu[i - 1])
+            image.position = selectPosition[i - 1]
+            addChild(image)
+        }
+        let image = SKSpriteNode(color: SKColor.yellowColor(), size: tilesScaleSize)
+        image.name = "buildingSell"
+        image.position = selectPosition[4]
+        addChild(image)
+
+        selectBox = SKSpriteNode(color: SKColor.redColor(), size: tilesScaleSize)
+        selectBox.name = "selectBox"
+        selectBox.setScale(1.1)
+        selectBox.position = selectPosition[0]
+        addChild(selectBox)
+    }
+}
+
 
 class BottomLayer: SKSpriteNode {
 
     var pageInformation = PageInformation()
-    var pageBuild: SKSpriteNode!
+    var pageBuild = PageBuild()
     var pageEnergy: SKSpriteNode!
     var pageReserch: SKSpriteNode!
     
@@ -70,9 +105,10 @@ class BottomLayer: SKSpriteNode {
         self.name = "BottomLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        pageInformation.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
+        pageInformation.configureAtPosition(CGPoint(x: size.width, y: 0), size: size)
         addChild(pageInformation)
+        pageBuild.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
+        addChild(pageBuild)
         
-        
-            }
+    }
 }
