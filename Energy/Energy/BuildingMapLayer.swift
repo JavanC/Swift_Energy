@@ -257,6 +257,7 @@ class BuildingMapLayer: SKSpriteNode {
     
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, maplevel: MapLevel) {
+        self.color = SKColor.whiteColor()
         self.position = position
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
         self.anchorPoint = CGPoint(x: 0, y: 1)

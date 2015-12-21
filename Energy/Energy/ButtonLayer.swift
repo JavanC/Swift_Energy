@@ -46,18 +46,18 @@ class ButtonLayer: SKSpriteNode {
         buttonEnergy.alpha = 1
     }
     func tapButtonBuild() {
-        buttonBuild.alpha = 0.8
+        buttonBuild.alpha = 0.6
         buttonReserch.alpha = 1
         buttonEnergy.alpha = 1
     }
-    func tapNilEnergy() {
+    func tapButtonEnergy() {
         buttonBuild.alpha = 1
         buttonReserch.alpha = 1
-        buttonEnergy.alpha = 0.8
+        buttonEnergy.alpha = 0.6
     }
-    func tapNilReserch() {
+    func tapButtonReserch() {
         buttonBuild.alpha = 1
-        buttonReserch.alpha = 0.8
+        buttonReserch.alpha = 0.6
         buttonEnergy.alpha = 1
     }
 }

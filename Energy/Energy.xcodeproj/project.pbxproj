@@ -19,6 +19,7 @@
 		655DCCF61C23D8A000F9F6A0 /* TopLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DCCF41C23D8A000F9F6A0 /* TopLayer.swift */; };
 		655DCCF81C23DE7F00F9F6A0 /* BuildingSelectLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DCCF71C23DE7F00F9F6A0 /* BuildingSelectLayer.swift */; };
 		655DCCFA1C240A5400F9F6A0 /* ButtonLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655DCCF91C240A5400F9F6A0 /* ButtonLayer.swift */; };
+		65A579B11C278EB20063E5DB /* BottomLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A579B01C278EB20063E5DB /* BottomLayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +35,9 @@
 		6541D6BD1C0D9EEC0034C292 /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 		655DCCF31C23D8A000F9F6A0 /* BuildingMapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingMapLayer.swift; sourceTree = "<group>"; };
 		655DCCF41C23D8A000F9F6A0 /* TopLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopLayer.swift; sourceTree = "<group>"; };
-		655DCCF71C23DE7F00F9F6A0 /* BuildingSelectLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingSelectLayer.swift; path = Energy/BuildingSelectLayer.swift; sourceTree = "<group>"; };
+		655DCCF71C23DE7F00F9F6A0 /* BuildingSelectLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingSelectLayer.swift; sourceTree = "<group>"; };
 		655DCCF91C240A5400F9F6A0 /* ButtonLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonLayer.swift; sourceTree = "<group>"; };
+		65A579B01C278EB20063E5DB /* BottomLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomLayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +54,6 @@
 		6541D6941C0D9C2A0034C292 = {
 			isa = PBXGroup;
 			children = (
-				655DCCF71C23DE7F00F9F6A0 /* BuildingSelectLayer.swift */,
 				6541D69F1C0D9C2A0034C292 /* Energy */,
 				6541D69E1C0D9C2A0034C292 /* Products */,
 			);
@@ -72,8 +73,10 @@
 				6541D6B61C0D9EEC0034C292 /* Content */,
 				6541D6A01C0D9C2A0034C292 /* AppDelegate.swift */,
 				655DCCF31C23D8A000F9F6A0 /* BuildingMapLayer.swift */,
+				655DCCF71C23DE7F00F9F6A0 /* BuildingSelectLayer.swift */,
 				655DCCF41C23D8A000F9F6A0 /* TopLayer.swift */,
 				655DCCF91C240A5400F9F6A0 /* ButtonLayer.swift */,
+				65A579B01C278EB20063E5DB /* BottomLayer.swift */,
 				6541D6A21C0D9C2A0034C292 /* GameScene.sks */,
 				6541D6A41C0D9C2A0034C292 /* GameScene.swift */,
 				6541D6A61C0D9C2A0034C292 /* GameViewController.swift */,
@@ -172,6 +175,7 @@
 				655DCCF81C23DE7F00F9F6A0 /* BuildingSelectLayer.swift in Sources */,
 				655DCCF51C23D8A000F9F6A0 /* BuildingMapLayer.swift in Sources */,
 				655DCCF61C23D8A000F9F6A0 /* TopLayer.swift in Sources */,
+				65A579B11C278EB20063E5DB /* BottomLayer.swift in Sources */,
 				655DCCFA1C240A5400F9F6A0 /* ButtonLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

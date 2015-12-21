@@ -28,10 +28,11 @@ class GameScene: SKScene {
     var topLayer = TopLayer()
     var buildingSelectLayer = BuildingSelectLayer()
     var buttonLayer = ButtonLayer()
+    var bottomLayer = BottomLayer()
+    
     
     
     var botArea: SKSpriteNode!
-
     
     // Top
     var money: Int = 10
@@ -60,7 +61,6 @@ class GameScene: SKScene {
     var buildSelectBox: SKSpriteNode!
     
     var ShowBuildSelectPage: Bool = false
-//    var buildSelectPage: SKSpriteNode!
     
     // Bottom 4 - Reserch
     
@@ -79,11 +79,6 @@ class GameScene: SKScene {
         topLayer.configureAtPosition(topLayerPosition, size: topLayerSize)
         addChild(topLayer)
         
-        // Button Layer
-        let buttonLayerSize = CGSizeMake(frame.size.width, 100)
-        buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
-        addChild(buttonLayer)
-        
         // Building Map Layer
         let buildingMapLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
         buildingMapLayer.configureAtPosition(buildingMapLayerPosition, maplevel: .One)
@@ -92,6 +87,17 @@ class GameScene: SKScene {
         buildingMapLayer.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Office)
         buildingMapLayer.setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Fire)
         buildingMapLayer.setTileMapElement(coord: CGPoint(x: 2, y: 0), buildType: .Generator)
+        
+        // Button Layer
+        let buttonLayerSize = CGSizeMake(frame.size.width, 100)
+        buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
+        addChild(buttonLayer)
+        
+        // Bottom Layer
+        let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - buildingMapLayer.size.height - buttonLayer.size.height)
+        let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
+        bottomLayer.configureAtPosition(bottomLayerPosition, size: bottomLayerSize)
+        addChild(bottomLayer)
         
         // Building Select Layer
         let buildingSelectLayerSize = buildingMapLayer.size
@@ -209,6 +215,43 @@ class GameScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.locationInNode(self)
+            let nodes = nodesAtPoint(location)
+            for node in nodes {
+                
+                print(node)
+                
+                switch node {
+                case topLayer.buttonMenu:
+                    print("Menu Button")
+                    
+                case topLayer.buttonRebuild:
+                    print("Rebuild Button")
+                    
+                case buildingMapLayer:
+                    print("Building Map Layer")
+                    let buildingmaplocation = touch.locationInNode(buildingMapLayer)
+                    let coord = buildingMapLayer.position2Coord(buildingmaplocation)
+                    print(buildingMapLayer.buildingForCoord(coord))
+                    bottomLayer.pageInformation.changeInformation(buildingMapLayer.buildingForCoord(coord)!)
+                    
+                case buttonLayer.buttonBuild:
+                    print("Build Button")
+                    buttonLayer.tapButtonBuild()
+                    
+                case buttonLayer.buttonEnergy:
+                    print("Energy Button")
+                    buttonLayer.tapButtonEnergy()
+                    
+                case buttonLayer.buttonReserch:
+                    print("Reserch Button")
+                    buttonLayer.tapButtonReserch()
+                    
+                default:
+                    break
+                }
+            }
+            
+            
             
             // Touch Top Area
             if topLayer.containsPoint(location) {
@@ -232,7 +275,7 @@ class GameScene: SKScene {
                     if buildingMapLayer.buildingForCoord(coord)!.activate {
                         buttonBuile.alpha = 1
                         touchType = .Building
-                        info_Building = buildingMapLayer.buildingForCoord(coord)
+//                        info_Building = buildingMapLayer.buildingForCoord(coord)
                     }
                 }
                 
@@ -312,18 +355,19 @@ class GameScene: SKScene {
         
         switch touchType {
         case .Building:
-            bottomPage_Info.childNodeWithName("infoImage")!.removeFromParent()
-            let infobuildType = info_Building.buildingData.buildType
-            let infoImage = buildingImage("infoImage", buildType: infobuildType)
-            infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: bottomPage_Info.size.height / 2)
-            bottomPage_Info.addChild(infoImage)
-            let info = info_Building.buildingData.buildingInfo(infobuildType)
-            for i in 1 ... 4 {
-                (bottomPage_Info.childNodeWithName("info\(i)") as! SKLabelNode).text = ""
-            }
-            for i in 1...info.count {
-                (bottomPage_Info.childNodeWithName("info\(i)") as! SKLabelNode).text = info[i - 1]
-            }
+            break
+//            bottomPage_Info.childNodeWithName("infoImage")!.removeFromParent()
+//            let infobuildType = info_Building.buildingData.buildType
+//            let infoImage = buildingImage("infoImage", buildType: infobuildType)
+//            infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: bottomPage_Info.size.height / 2)
+//            bottomPage_Info.addChild(infoImage)
+//            let info = info_Building.buildingData.buildingInfo(infobuildType)
+//            for i in 1 ... 4 {
+//                (bottomPage_Info.childNodeWithName("info\(i)") as! SKLabelNode).text = ""
+//            }
+//            for i in 1...info.count {
+//                (bottomPage_Info.childNodeWithName("info\(i)") as! SKLabelNode).text = info[i - 1]
+//            }
             
         case .Energy:
             let persent = CGFloat(buildingMapLayer.energy) / CGFloat(buildingMapLayer.energyMax)

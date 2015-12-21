@@ -25,7 +25,6 @@ class BuildingSelectElement: SKSpriteNode {
         buildingImage.anchorPoint = CGPoint(x: 0, y: 0.5)
         buildingImage.position = CGPoint(x: gap, y: size.height / 2)
         addChild(buildingImage)
-
         
         let infoGap: CGFloat = 8
         let infoSize = (size.height - infoGap * 4) / 3
