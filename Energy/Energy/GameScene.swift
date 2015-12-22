@@ -13,7 +13,7 @@ var buildingMapLayer = BuildingMapLayer()
 var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
 var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
 enum TouchType: Int {
-    case Building, Energy, Reserch, BuildSelect, Sell
+    case BuildingInfo, Energy, Reserch, Builded, Sell
 }
 
 class GameScene: SKScene {
@@ -89,18 +89,20 @@ class GameScene: SKScene {
             let nodes = nodesAtPoint(location)
             for node in nodes {
                 
-//                print(node)
+                print(node)
                 
                 switch node {
                 case topLayer.buttonMenu:
                     print("Menu Button")
+                    bottomLayer.pageBuild.openSelectInformation()
                     
                 case topLayer.buttonRebuild:
                     print("Rebuild Button")
+                    bottomLayer.pageBuild.closeSelectInformation()
                     
                 case buttonLayer.buttonBuild:
                     print("Build Button")
-                    touchType = (buttonLayer.buttonStatus != "build" ? .BuildSelect : .Energy)
+                    touchType = (buttonLayer.buttonStatus != "build" ? .Builded : .Energy)
                     
                 case buttonLayer.buttonEnergy:
                     print("Energy Button")
@@ -115,13 +117,14 @@ class GameScene: SKScene {
                     let buildingmaplocation = touch.locationInNode(buildingMapLayer)
                     let coord = buildingMapLayer.position2Coord(buildingmaplocation)
                     switch touchType {
-                    case .Building, .Energy, .Reserch:
+                    case .BuildingInfo, .Energy, .Reserch:
                         if buildingMapLayer.buildingForCoord(coord)!.activate {
-                            touchType = .Building
+                            touchType = .BuildingInfo
                             info_Building = buildingMapLayer.buildingForCoord(coord)
                         }
                         
-                    case .BuildSelect:
+                    case .Builded:
+                        if ShowBuildSelectPage { break }
                         if !(buildingMapLayer.buildingForCoord(coord)!.activate) {
                             let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
                             let price = BuildingData.init(buildType: building).buildPrice
@@ -130,7 +133,7 @@ class GameScene: SKScene {
                                 money -= price
                             }
                         } else {
-                            touchType = .Building
+                            touchType = .BuildingInfo
                             info_Building = buildingMapLayer.buildingForCoord(coord)
                         }
                         
@@ -145,7 +148,7 @@ class GameScene: SKScene {
                     
                 case bottomLayer.pageBuild:
                     print("Page Build")
-                    touchType = .BuildSelect
+                    touchType = .Builded
                     let buildLocation = touch.locationInNode(bottomLayer)
                     for i in 1...5 {
                         if bottomLayer.pageBuild.childNodeWithName("SelectImage\(i)")!.containsPoint(buildLocation) {
@@ -160,6 +163,11 @@ class GameScene: SKScene {
                             }
                         }
                     }
+                    
+                case bottomLayer.pageEnergy.energy_ProgressBack:
+                    print("Energy Preogree")
+                    money += buildingMapLayer.energy
+                    buildingMapLayer.energy = 0
     
                 default:
                     break
@@ -171,12 +179,12 @@ class GameScene: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         switch touchType {
-        case .Building:
+        case .BuildingInfo:
             buttonLayer.tapButtonNil()
             bottomLayer.pageInformation.changeInformation(info_Building)
             bottomLayer.ShowPageInformation()
             
-        case .BuildSelect:
+        case .Builded:
             buttonLayer.tapButtonBuild()
             bottomLayer.ShowPageBuild()
             buildingSelectLayer.showPage(ShowBuildSelectPage)

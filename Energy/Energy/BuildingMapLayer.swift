@@ -245,6 +245,7 @@ class Building: SKNode {
 
 class BuildingMapLayer: SKSpriteNode {
     
+    var origin: CGPoint!
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 10)
     var buildings = Array< Array<Building?>>()
@@ -257,8 +258,9 @@ class BuildingMapLayer: SKSpriteNode {
     
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, maplevel: MapLevel) {
-        self.color = SKColor.whiteColor()
+        self.origin = position
         self.position = position
+        self.color = SKColor.whiteColor()
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
         self.anchorPoint = CGPoint(x: 0, y: 1)
         
@@ -479,6 +481,11 @@ class BuildingMapLayer: SKSpriteNode {
     func getBuildingLevel(building: BuildType) -> Int {
         let name = String(building.hashValue)
         return buildingsLevel[name]!
+    }
+    // Show page
+    func showPage(show: Bool) {
+        self.position = (show ? origin : CGPoint(x: origin.x + self.size.width, y: origin.y))
+//        self.runAction(SKAction.moveToY(origin.y + (show ? 0 : -2 * self.size.height), duration: 0))
     }
 
     // MARK: Load Tile Map by word array

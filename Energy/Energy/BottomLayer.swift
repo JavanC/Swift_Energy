@@ -52,14 +52,32 @@ class PageInformation: SKSpriteNode {
             info[i].text = (i < labels.count ? labels[i] : "")
         }
     }
+    
+    func nowLevelImformation(buildType: BuildType) {
+        
+        let infoImagePosition = childNodeWithName("infoImage")?.position
+        childNodeWithName("infoImage")?.removeFromParent()
+        let infoImage = BuildingData(buildType: buildType).buildingImage("infoImage")
+        infoImage.position = infoImagePosition!
+        addChild(infoImage)
+        
+        let nowLevel = buildingMapLayer.getBuildingLevel(buildType)
+        let data = BuildingData(buildType: buildType, level: nowLevel)
+        let labels = data.buildingInfo(buildType)
+        for i in 0..<5 {
+            info[i].text = (i < labels.count ? labels[i] : "")
+        }
+    }
 }
 
 class PageBuild: SKSpriteNode {
     
     var selectNumber: Int = 1
+    var didOpenPage: Bool = false
     var imagePosition = [CGPoint]()
     var buildMenu: [BuildType] = [.Wind, .Fire, .Generator, .Office]
     var selectBox: SKSpriteNode!
+    var selectInfo = PageInformation()
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
@@ -87,6 +105,10 @@ class PageBuild: SKSpriteNode {
         selectBox.setScale(1.1)
         selectBox.position = imagePosition[0]
         addChild(selectBox)
+        
+        selectInfo.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
+        addChild(selectInfo)
+        selectInfo.alpha = 0
     }
     
     func changeSelectImage(buildType: BuildType) {
@@ -101,6 +123,52 @@ class PageBuild: SKSpriteNode {
     func changeSelectNumber(selectNumber: Int) {
         self.selectNumber = selectNumber
         selectBox.position = imagePosition[selectNumber - 1]
+    }
+    
+    func openSelectInformation() {
+        
+        if selectNumber > 4 || selectNumber < 1 { return }
+        let pos = CGPoint(x: 40 + tilesScaleSize.width / 2, y: size.height / 2)
+        
+        let buildtype = buildMenu[selectNumber - 1]
+        selectInfo.nowLevelImformation(buildtype)
+
+        // Hide
+        childNodeWithName("selectBox")?.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
+        for i in 1...5 {
+            if i != selectNumber {
+                childNodeWithName("SelectImage\(i)")?.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
+            }
+        }
+        
+        // Move
+        let seq = SKAction.sequence([SKAction.moveTo(pos, duration: 0.2), SKAction.waitForDuration(0.2), SKAction.hide()])
+        childNodeWithName("SelectImage\(selectNumber)")?.runAction(seq)
+        
+        // Show
+        selectInfo.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.fadeAlphaTo(1, duration: 0.2)]))
+    }
+    
+    func closeSelectInformation() {
+        if selectNumber > 4 || selectNumber < 1 { return }
+        let pos = imagePosition[selectNumber - 1]
+        
+        // Hide info
+        selectInfo.childNodeWithName("infoImage")?.runAction(SKAction.sequence([SKAction.hide(), SKAction.waitForDuration(0.2), SKAction.unhide()]))
+        selectInfo.runAction(SKAction.fadeAlphaTo(0, duration: 0.2))
+        
+        // Move
+        childNodeWithName("SelectImage\(selectNumber)")?.runAction(SKAction.unhide())
+        childNodeWithName("SelectImage\(selectNumber)")?.runAction(SKAction.moveTo(pos, duration: 0.2))
+        
+        // Show
+        let seq = SKAction.sequence([SKAction.unhide(), SKAction.waitForDuration(0.2), SKAction.fadeAlphaTo(1, duration: 0.2)])
+        self.childNodeWithName("selectBox")?.runAction(seq)
+        for i in 1...5 {
+            if i != selectNumber {
+                self.childNodeWithName("SelectImage\(i)")?.runAction(seq)
+            }
+        }
     }
 }
 
