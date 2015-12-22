@@ -47,12 +47,14 @@ class GameScene: SKScene {
         let topLayerSize = CGSizeMake(frame.size.width, topsize.height * tilesScaleSize.height)
         let topLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayerSize.height)
         topLayer.configureAtPosition(topLayerPosition, size: topLayerSize)
+        topLayer.zPosition = 200
         addChild(topLayer)
         
         // Building Map Layer
         let buildingMapLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
         buildingMapLayer.configureAtPosition(buildingMapLayerPosition, maplevel: .One)
         buildingMapLayer.setScale(framescale)
+        buildingMapLayer.zPosition = 1
         addChild(buildingMapLayer)
         buildingMapLayer.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Office)
         buildingMapLayer.setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Fire)
@@ -61,19 +63,21 @@ class GameScene: SKScene {
         // Button Layer
         let buttonLayerSize = CGSizeMake(frame.size.width, 100)
         buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
+        buttonLayer.zPosition = 200
         addChild(buttonLayer)
         
         // Bottom Layer
         let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - buildingMapLayer.size.height - buttonLayer.size.height)
         let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
         bottomLayer.configureAtPosition(bottomLayerPosition, size: bottomLayerSize)
+        bottomLayer.zPosition = 100
         addChild(bottomLayer)
         
         // Building Select Layer
         let buildingSelectLayerSize = buildingMapLayer.size
         let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
         buildingSelectLayer.configureAtPosition(buildingSelectLayerPosition, midSize: buildingSelectLayerSize)
-        buildingSelectLayer.zPosition = 2
+        buildingSelectLayer.zPosition = 50
         addChild(buildingSelectLayer)
         buildingSelectLayer.showPage(false)
 
@@ -146,22 +150,56 @@ class GameScene: SKScene {
                         }
                     }
                     
-                case bottomLayer.pageBuild:
-                    print("Page Build")
-                    touchType = .Builded
-                    let buildLocation = touch.locationInNode(bottomLayer)
-                    for i in 1...5 {
-                        if bottomLayer.pageBuild.childNodeWithName("SelectImage\(i)")!.containsPoint(buildLocation) {
-                            if bottomLayer.pageBuild.selectNumber != i {
-                                bottomLayer.pageBuild.changeSelectNumber(i)
-                            } else {
-                                ShowBuildSelectPage = !ShowBuildSelectPage
-                            }
-                            if bottomLayer.pageBuild.selectNumber == 5 {
-                                ShowBuildSelectPage = false
-                                touchType = .Sell
-                            }
+                case bottomLayer.pageBuild.images[0]:
+                    if !bottomLayer.pageBuild.images[0].hidden {
+                        touchType = .Builded
+                        if bottomLayer.pageBuild.selectNumber != 1 {
+                            bottomLayer.pageBuild.changeSelectNumber(1)
+                        } else {
+                            ShowBuildSelectPage = true
+                            bottomLayer.pageBuild.openSelectInformation()
                         }
+                    }
+                case bottomLayer.pageBuild.images[1]:
+                    if !bottomLayer.pageBuild.images[1].hidden {
+                        touchType = .Builded
+                        if bottomLayer.pageBuild.selectNumber != 2 {
+                            bottomLayer.pageBuild.changeSelectNumber(2)
+                        } else {
+                            ShowBuildSelectPage = true
+                            bottomLayer.pageBuild.openSelectInformation()
+                        }
+                    }
+                case bottomLayer.pageBuild.images[2]:
+                    if !bottomLayer.pageBuild.images[2].hidden {
+                        touchType = .Builded
+                        if bottomLayer.pageBuild.selectNumber != 3 {
+                            bottomLayer.pageBuild.changeSelectNumber(3)
+                        } else {
+                            ShowBuildSelectPage = true
+                            bottomLayer.pageBuild.openSelectInformation()
+                        }
+                    }
+                case bottomLayer.pageBuild.images[3]:
+                    if !bottomLayer.pageBuild.images[3].hidden {
+                        touchType = .Builded
+                        if bottomLayer.pageBuild.selectNumber != 4 {
+                            bottomLayer.pageBuild.changeSelectNumber(4)
+                        } else {
+                            ShowBuildSelectPage = true
+                            bottomLayer.pageBuild.openSelectInformation()
+                        }
+                    }
+                case bottomLayer.pageBuild.images[4]:
+                    if !bottomLayer.pageBuild.images[4].hidden {
+                        touchType = .Sell
+                        bottomLayer.pageBuild.changeSelectNumber(5)
+                    }
+                    
+                case bottomLayer.pageBuild.selectInfo:
+                    if !bottomLayer.pageBuild.selectInfo.hidden {
+                        ShowBuildSelectPage = false
+                        bottomLayer.pageBuild.closeSelectInformation()
                     }
                     
                 case bottomLayer.pageEnergy.energy_ProgressBack:

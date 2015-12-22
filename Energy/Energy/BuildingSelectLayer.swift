@@ -92,6 +92,17 @@ class BuildingSelectLayer: SKSpriteNode {
                 addChild(sptireNode)
             }
         }
+        let page2:[BuildType] = [.Wind, .Wind, .Wind, .Fire, .Office]
+        for (count, buildType) in page2.enumerate() {
+            let buildlevel = buildingMapLayer.getBuildingLevel(buildType)
+            if buildlevel > 0 {
+                let position = CGPoint(x: gap + size.width / 4, y: self.size.height - (gap + selectElementSize.height) * CGFloat(count + 1))
+                let sptireNode = BuildingSelectElement()
+                sptireNode.configureAtPosition(buildType, level: buildlevel, position: position, size: selectElementSize)
+                elements.append(sptireNode)
+                addChild(sptireNode)
+            }
+        }
     }
     
     // Show page
