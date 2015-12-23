@@ -12,9 +12,11 @@ class BuildingSelectElement: SKSpriteNode {
 
     var buildingUpgrade = SKSpriteNode()
     var buildingDegrade = SKSpriteNode()
+    var buildType: BuildType!
     
     func configureAtPosition(buildType: BuildType, level: Int, position: CGPoint, size: CGSize) {
-        self.name = "BuildingSelectElement_\(String(buildType))"
+        self.name = "BuildingSelectElement"
+        self.buildType = buildType
         self.position = position
         self.size = size
         self.color = SKColor.grayColor()
@@ -40,14 +42,18 @@ class BuildingSelectElement: SKSpriteNode {
         }
         
         buildingUpgrade = SKSpriteNode(color: SKColor.greenColor(), size: buildingImage.size)
-        buildingUpgrade.name = "Upgrade_" + String(buildType)
+        buildingUpgrade.name = "Upgrade"
         buildingUpgrade.anchorPoint = CGPoint(x: 1, y: 0.5)
         buildingUpgrade.position = CGPoint(x: size.width - gap, y: size.height / 2)
         addChild(buildingUpgrade)
         
+        if money < buildingMapLayer.getNowLevelBuildingData(buildType).nextLevelPrice {
+            buildingUpgrade.color = SKColor.blackColor()
+        }
+        
         if buildingMapLayer.getBuildingLevel(buildType) > 1 {
             buildingDegrade = SKSpriteNode(color: SKColor.redColor(), size: buildingImage.size)
-            buildingDegrade.name = "Degrade_" + String(buildType)
+            buildingDegrade.name = "Degrade"
             buildingDegrade.anchorPoint = CGPoint(x: 1, y: 0.5)
             buildingDegrade.position = CGPoint(x: size.width - gap * 2 - buildingImage.size.width, y: size.height / 2)
             addChild(buildingDegrade)

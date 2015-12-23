@@ -8,18 +8,14 @@
 
 import SpriteKit
 
-enum MapLevel {
-    case One, Two
-}
 enum BuildType: Int {
     case Nil, Wind, Fire, Generator, Office, BuildMenuLength
 }
-enum ProgressType {
-    case Time, Hot, Water
-}
 
 class BuildingData {
-    
+    enum ProgressType {
+        case Time, Hot, Water
+    }
     var imageName: String!
     var buildType: BuildType = .Nil
     var buildPrice: Int!
@@ -245,6 +241,9 @@ class Building: SKNode {
 
 class BuildingMapLayer: SKSpriteNode {
     
+    enum MapLevel {
+        case One, Two
+    }
     var origin: CGPoint!
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 10)
@@ -482,10 +481,10 @@ class BuildingMapLayer: SKSpriteNode {
         let name = String(building.hashValue)
         return buildingsLevel[name]!
     }
-    // Show page
-    func showPage(show: Bool) {
-        self.position = (show ? origin : CGPoint(x: origin.x + self.size.width, y: origin.y))
-//        self.runAction(SKAction.moveToY(origin.y + (show ? 0 : -2 * self.size.height), duration: 0))
+    func getNowLevelBuildingData(buildType: BuildType) -> BuildingData {
+        let nowLevel = getBuildingLevel(buildType)
+        let data = BuildingData(buildType: buildType, level: nowLevel)
+        return data
     }
 
     // MARK: Load Tile Map by word array

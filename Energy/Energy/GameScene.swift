@@ -12,19 +12,20 @@ var tilesScaleSize: CGSize!
 var buildingMapLayer = BuildingMapLayer()
 var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
 var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
-enum TouchType: Int {
-    case BuildingInfo, Energy, Reserch, Builded, Sell
-}
+var money: Int = 10
+var reserch: Int = 0
 
 class GameScene: SKScene {
     
+    enum TouchType: Int {
+        case Information, Energy, Reserch, Builded, Sell
+    }
     let tilesize = CGSizeMake(64, 64)
     let topsize = CGSizeMake(9, 1.5)
     let midsize = CGSizeMake(9, 10)
     var framescale: CGFloat!
     var gameTimer: NSTimer!
-    var money: Int = 10
-    var reserch: Int = 0
+
     //    var defaults: NSUserDefaults!
     
     var touchType: TouchType = .Energy
@@ -90,21 +91,33 @@ class GameScene: SKScene {
     func changeTouchTypeAndShowPage(touchType: TouchType) {
         self.touchType = touchType
         switch touchType {
-        case .BuildingInfo:
+        case .Information:
             buttonLayer.tapButtonNil()
             bottomLayer.pageInformation.changeInformation(info_Building)
             bottomLayer.ShowPageInformation()
+            
+            buildingMapLayer.runAction(SKAction.unhide())
+            bottomLayer.pageBuild.closeSelectInformation()
             buildingSelectLayer.showPage(false)
+            ShowBuildSelectPage = false
             
         case .Energy:
             buttonLayer.tapButtonEnergy()
             bottomLayer.showPageEnergy()
+            
+            buildingMapLayer.runAction(SKAction.unhide())
+            bottomLayer.pageBuild.closeSelectInformation()
             buildingSelectLayer.showPage(false)
+            ShowBuildSelectPage = false
             
         case .Reserch:
             buttonLayer.tapButtonReserch()
             bottomLayer.showPageReserch()
+
+            buildingMapLayer.runAction(SKAction.unhide())
+            bottomLayer.pageBuild.closeSelectInformation()
             buildingSelectLayer.showPage(false)
+            ShowBuildSelectPage = false
             
         case .Builded:
             buttonLayer.tapButtonBuild()
@@ -114,16 +127,20 @@ class GameScene: SKScene {
             if ShowBuildSelectPage {
                 bottomLayer.pageBuild.openSelectInformation()
                 buildingSelectLayer.showPage(true)
+                buildingMapLayer.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.hide()]))
             } else {
                 bottomLayer.pageBuild.closeSelectInformation()
                 buildingSelectLayer.showPage(false)
+                buildingMapLayer.runAction(SKAction.unhide())
             }
             
         case .Sell:
             buttonLayer.tapButtonBuild()
             bottomLayer.ShowPageBuild()
+            buildingMapLayer.runAction(SKAction.unhide())
+            bottomLayer.pageBuild.closeSelectInformation()
             buildingSelectLayer.showPage(false)
-            buildingSelectLayer.changePage(bottomLayer.pageBuild.selectNumber)
+            ShowBuildSelectPage = false
         }
     }
     
@@ -133,9 +150,11 @@ class GameScene: SKScene {
             let nodes = nodesAtPoint(location)
             for node in nodes {
                 if node.hidden { return }
-                print(node)
+//                print(node)
 
                 switch node {
+                    
+                // Button
                 case topLayer.buttonMenu:
                     print("Menu Button")
                     
@@ -154,29 +173,29 @@ class GameScene: SKScene {
                     print("Reserch Button")
                     changeTouchTypeAndShowPage((buttonLayer.buttonStatus != "reserch" ? .Reserch : .Energy))
                     
+                // Building Map
                 case buildingMapLayer:
                     print("Building Map Layer")
                     let buildingmaplocation = touch.locationInNode(buildingMapLayer)
                     let coord = buildingMapLayer.position2Coord(buildingmaplocation)
                     switch touchType {
-                    case .BuildingInfo, .Energy, .Reserch:
+                    case .Information, .Energy, .Reserch:
                         if buildingMapLayer.buildingForCoord(coord)!.activate {
                             info_Building = buildingMapLayer.buildingForCoord(coord)
-                            changeTouchTypeAndShowPage(.BuildingInfo)
+                            changeTouchTypeAndShowPage(.Information)
                         }
                         
                     case .Builded:
-                        if ShowBuildSelectPage { break }
-                        if !(buildingMapLayer.buildingForCoord(coord)!.activate) {
+                        if buildingMapLayer.buildingForCoord(coord)!.activate {
+                            info_Building = buildingMapLayer.buildingForCoord(coord)
+                            changeTouchTypeAndShowPage(.Information)
+                        } else {
                             let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
                             let price = BuildingData.init(buildType: building).buildPrice
                             if money >= price {
                                 buildingMapLayer.setTileMapElement(coord: coord, buildType: building)
                                 money -= price
                             }
-                        } else {
-                            info_Building = buildingMapLayer.buildingForCoord(coord)
-                            changeTouchTypeAndShowPage(.BuildingInfo)
                         }
                         
                     case .Sell:
@@ -188,6 +207,34 @@ class GameScene: SKScene {
                         }
                     }
                     
+                // Build Select Page
+                case buildingSelectLayer:
+                    let nodes = nodesAtPoint(location)
+                    for node in nodes {
+                        if node.hidden { return }
+                        if node.name == "BuildingSelectElement" {
+                            let buildType = (node as! BuildingSelectElement).buildType
+                            bottomLayer.pageBuild.changeSelectBuildType(buildType)
+                        }
+                        if node.name == "Upgrade" {
+                            let buildType = (node.parent as! BuildingSelectElement).buildType
+                            let nowLevel = buildingMapLayer.getBuildingLevel(buildType)
+                            let upgradePrice = buildingMapLayer.getNowLevelBuildingData(buildType).nextLevelPrice
+                            if upgradePrice <= money {
+                                money -= upgradePrice
+                                buildingMapLayer.setBuildingLevel(buildType, level: nowLevel + 1)
+                            }
+                        }
+                        if node.name == "Degrade" {
+                            let buildType = (node.parent as! BuildingSelectElement).buildType
+                            let nowLevel = buildingMapLayer.getBuildingLevel(buildType)
+                            let degrradePrice = BuildingData(buildType: buildType, level: nowLevel - 1).nextLevelPrice
+                            money += degrradePrice
+                            buildingMapLayer.setBuildingLevel(buildType, level: nowLevel - 1)
+                        }
+                    }
+                    
+                // Builded Page
                 case bottomLayer.pageBuild.images[0]:
                     print("Builded image1")
                     if bottomLayer.pageBuild.selectNumber == 1 { ShowBuildSelectPage = true }
@@ -208,7 +255,7 @@ class GameScene: SKScene {
                     
                 case bottomLayer.pageBuild.images[3]:
                     print("Builded image4")
-                    if bottomLayer.pageBuild.selectNumber != 4 { ShowBuildSelectPage = true }
+                    if bottomLayer.pageBuild.selectNumber == 4 { ShowBuildSelectPage = true }
                     bottomLayer.pageBuild.changeSelectNumber(4)
                     changeTouchTypeAndShowPage(.Builded)
                     
@@ -222,6 +269,7 @@ class GameScene: SKScene {
                     ShowBuildSelectPage = false
                     changeTouchTypeAndShowPage(.Builded)
                     
+                // Energy Page
                 case bottomLayer.pageEnergy.energy_ProgressBack:
                     print("Energy Preogree")
                     money += buildingMapLayer.energy
@@ -235,6 +283,9 @@ class GameScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        
+        buildingSelectLayer.updateBuildingSelectPage()
+        
         // Updata imformation
         topLayer.moneyLabel.text = "Money: \(money) + \(buildingMapLayer.money_TickAdd)"
         topLayer.reserchLabel.text = "Reserch: \(reserch) + \(buildingMapLayer.reserch_TickAdd)"
