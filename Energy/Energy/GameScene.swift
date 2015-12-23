@@ -33,6 +33,7 @@ class GameScene: SKScene {
     var buildingSelectLayer = BuildingSelectLayer()
     var buttonLayer = ButtonLayer()
     var bottomLayer = BottomLayer()
+    var reserchLayer = ReserchLayer()
     
     var ShowBuildSelectPage: Bool = false
     var info_Building: Building!
@@ -85,8 +86,17 @@ class GameScene: SKScene {
         info_Building = buildingMapLayer.buildingForCoord(CGPoint(x: 0, y: 0))!
         
         //  Reserch upgrade
+
+        buildingMapLayer.setBuildingLevel(.Wind, level: 1)
+        
+        let reserchLayerSize = buildingMapLayer.size
+        let reserchLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
+        reserchLayer.configureAtPosition(reserchLayerPosition, midSize: reserchLayerSize)
+        reserchLayer.zPosition = 50
+        addChild(reserchLayer)
         
     }
+
     
     func changeTouchTypeAndShowPage(touchType: TouchType) {
         self.touchType = touchType
@@ -109,10 +119,12 @@ class GameScene: SKScene {
             bottomLayer.pageBuild.closeSelectInformation()
             buildingSelectLayer.showPage(false)
             ShowBuildSelectPage = false
+            reserchLayer.showPage(false)
             
         case .Reserch:
             buttonLayer.tapButtonReserch()
             bottomLayer.showPageReserch()
+            reserchLayer.showPage(true)
 
             buildingMapLayer.runAction(SKAction.unhide())
             bottomLayer.pageBuild.closeSelectInformation()

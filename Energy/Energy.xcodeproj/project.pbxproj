@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		651A18A61C2A7D8700E58EE8 /* ReserchLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A18A51C2A7D8700E58EE8 /* ReserchLayer.swift */; };
 		6541D6A11C0D9C2A0034C292 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6541D6A01C0D9C2A0034C292 /* AppDelegate.swift */; };
 		6541D6A31C0D9C2A0034C292 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6541D6A21C0D9C2A0034C292 /* GameScene.sks */; };
 		6541D6A51C0D9C2A0034C292 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6541D6A41C0D9C2A0034C292 /* GameScene.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		651A18A51C2A7D8700E58EE8 /* ReserchLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReserchLayer.swift; sourceTree = "<group>"; };
 		6541D69D1C0D9C2A0034C292 /* Energy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Energy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6541D6A01C0D9C2A0034C292 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6541D6A21C0D9C2A0034C292 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				655DCCF31C23D8A000F9F6A0 /* BuildingMapLayer.swift */,
 				655DCCF71C23DE7F00F9F6A0 /* BuildingSelectLayer.swift */,
 				655DCCF41C23D8A000F9F6A0 /* TopLayer.swift */,
+				651A18A51C2A7D8700E58EE8 /* ReserchLayer.swift */,
 				655DCCF91C240A5400F9F6A0 /* ButtonLayer.swift */,
 				65A579B01C278EB20063E5DB /* BottomLayer.swift */,
 				6541D6A21C0D9C2A0034C292 /* GameScene.sks */,
@@ -173,6 +176,7 @@
 				6541D6A71C0D9C2A0034C292 /* GameViewController.swift in Sources */,
 				6541D6A11C0D9C2A0034C292 /* AppDelegate.swift in Sources */,
 				655DCCF81C23DE7F00F9F6A0 /* BuildingSelectLayer.swift in Sources */,
+				651A18A61C2A7D8700E58EE8 /* ReserchLayer.swift in Sources */,
 				655DCCF51C23D8A000F9F6A0 /* BuildingMapLayer.swift in Sources */,
 				655DCCF61C23D8A000F9F6A0 /* TopLayer.swift in Sources */,
 				65A579B11C278EB20063E5DB /* BottomLayer.swift in Sources */,

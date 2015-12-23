@@ -21,6 +21,7 @@ class BuildingData {
     var buildPrice: Int!
     var level: Int!
     var nextLevelPrice: Int!
+    var reserchPrice: Int!
     var rebuild: Bool = true
     var progress: ProgressType!
     
@@ -55,7 +56,8 @@ class BuildingData {
         if buildType == .Wind {
             imageName = "風力"
             buildPrice = 1
-            nextLevelPrice = 100 * level
+            nextLevelPrice = 1 * level
+            reserchPrice = 1
             progress = .Time
             
             time_Max = 5
@@ -72,7 +74,8 @@ class BuildingData {
         if buildType == .Fire {
             imageName = "火力"
             buildPrice = 20
-            nextLevelPrice = 200 * level
+            nextLevelPrice = 2 * level
+            reserchPrice = 1
             progress = .Time
             hot_IsOutput = true
             
@@ -86,7 +89,8 @@ class BuildingData {
         if buildType == .Generator {
             imageName = "發電機1"
             buildPrice = 50
-            nextLevelPrice = 300 * level
+            nextLevelPrice = 3 * level
+            reserchPrice = 1
             progress = .Hot
             hot_IsInput = true
             isHot2Energy = true
@@ -100,7 +104,8 @@ class BuildingData {
         if buildType == .Office {
             imageName = "辦公室1"
             buildPrice = 10
-            nextLevelPrice = 400 * level
+            nextLevelPrice = 4 * level
+            reserchPrice = 1
             hot_IsInput = true
             
             hot_Max = 10
@@ -269,7 +274,6 @@ class BuildingMapLayer: SKSpriteNode {
         
         // Initialization map
         initBuildingLevel()
-        setBuildingLevel(.Wind, level: 2)
         for _ in 0 ..< Int(mapSize.height) {
             buildings.append(Array(count: Int(mapSize.width), repeatedValue: nil))
         }
@@ -470,7 +474,7 @@ class BuildingMapLayer: SKSpriteNode {
     func initBuildingLevel() {
         for count in 0..<BuildType.BuildMenuLength.hashValue {
             let name = String(count)
-            buildingsLevel[name] = 1
+            buildingsLevel[name] = 0
         }
     }
     func setBuildingLevel(building: BuildType, level: Int) {
