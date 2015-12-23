@@ -8,6 +8,8 @@
 
 import SpriteKit
 
+let topsize = CGSizeMake(9, 1.5)
+let midsize = CGSizeMake(9, 11)
 var tilesScaleSize: CGSize!
 var buildingMapLayer = BuildingMapLayer()
 var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
@@ -21,8 +23,6 @@ class GameScene: SKScene {
         case Information, Energy, Reserch, Builded, Sell
     }
     let tilesize = CGSizeMake(64, 64)
-    let topsize = CGSizeMake(9, 1.5)
-    let midsize = CGSizeMake(9, 10)
     var framescale: CGFloat!
     var gameTimer: NSTimer!
 
@@ -233,6 +233,15 @@ class GameScene: SKScene {
                             buildingMapLayer.setBuildingLevel(buildType, level: nowLevel - 1)
                         }
                     }
+                    
+                // Reserch Page
+                case bottomLayer.pageReserch.nextPage:
+                    let nowPage = bottomLayer.pageReserch.nowPage
+                    bottomLayer.pageReserch.changePage(nowPage + 1)
+                
+                case bottomLayer.pageReserch.prevPage:
+                    let nowPage = bottomLayer.pageReserch.nowPage
+                    bottomLayer.pageReserch.changePage(nowPage - 1)
                     
                 // Builded Page
                 case bottomLayer.pageBuild.images[0]:

@@ -22,19 +22,19 @@ class ButtonLayer: SKSpriteNode {
         self.name = "ButtonLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        buttonBuild = SKSpriteNode(color: SKColor.brownColor(), size: CGSize(width: size.width / 4, height: 100))
+        buttonBuild = SKSpriteNode(color: SKColor.brownColor(), size: CGSize(width: size.width / 4, height: size.height))
         buttonBuild.name = "ButtonBuild"
         buttonBuild.anchorPoint = CGPoint(x: 0, y: 0)
         buttonBuild.position = CGPoint(x: 0, y: 0)
         addChild(buttonBuild)
         
-        buttonEnergy = SKSpriteNode(color: colorEnergy, size: CGSize(width: size.width / 2, height: 100))
+        buttonEnergy = SKSpriteNode(color: colorEnergy, size: CGSize(width: size.width / 2, height: size.height))
         buttonBuild.name = "ButtonEnergy"
         buttonEnergy.anchorPoint = CGPoint(x: 0, y: 0)
         buttonEnergy.position = CGPoint(x: size.width / 4, y: 0)
         addChild(buttonEnergy)
         
-        buttonReserch = SKSpriteNode(color: colorReserch, size: CGSize(width: size.width / 4, height: 100))
+        buttonReserch = SKSpriteNode(color: colorReserch, size: CGSize(width: size.width / 4, height: size.height))
         buttonBuild.name = "ButtonReserch"
         buttonReserch.anchorPoint = CGPoint(x: 0, y: 0)
         buttonReserch.position = CGPoint(x: size.width * 3 / 4, y: 0)

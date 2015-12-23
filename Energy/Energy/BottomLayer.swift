@@ -24,7 +24,7 @@ class PageInformation: SKSpriteNode {
         infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: size.height / 2)
         addChild(infoImage)
         
-        let infogap: CGFloat = 13
+        let infogap: CGFloat = 5
         let infoSize = (size.height - 6 * infogap) / 5
         for i in 1...5 {
             let label = SKLabelNode(fontNamed: "Verdana-Bold")
@@ -223,12 +223,50 @@ class PageEnergy: SKSpriteNode {
 
 class PageReserch: SKSpriteNode {
     
+    var nowPage: Int = 1
+    var maxPage: Int = 3
+    var nextPage: SKSpriteNode!
+    var prevPage: SKSpriteNode!
+    var pageLabel: SKLabelNode!
+    
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
         self.size = size
         self.color = colorReserch
         self.name = "PageReserch"
         self.anchorPoint = CGPoint(x: 0, y: 0)
+        
+        nextPage = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(size.height, size.height))
+        nextPage.name = "NextPage"
+        nextPage.position = CGPoint(x: size.width - nextPage.size.width / 2, y: size.height / 2)
+        addChild(nextPage)
+        prevPage = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(size.height, size.height))
+        prevPage.name = "PrevPage"
+        prevPage.position = CGPoint(x: prevPage.size.width / 2, y: size.height / 2)
+        addChild(prevPage)
+        let labelSize = size.height / 6
+        let gap = (size.height - labelSize) / 2
+        pageLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        pageLabel.fontSize = labelSize
+        pageLabel.horizontalAlignmentMode = .Center
+        pageLabel.position = CGPoint(x: size.width / 2, y: gap)
+        addChild(pageLabel)
+        
+        changePage(1)
+    }
+    func changePage(pageNumber: Int) {
+        if pageNumber > maxPage || pageNumber < 1 { return }
+        nowPage = pageNumber
+        pageLabel.text = "\(nowPage) / \(maxPage)"
+        
+        if nowPage == 1 {
+            prevPage.hidden = true
+        } else if nowPage == maxPage {
+            nextPage.hidden = true
+        } else {
+            prevPage.hidden = false
+            nextPage.hidden = false
+        }
     }
 }
 
@@ -251,7 +289,7 @@ class BottomLayer: SKSpriteNode {
         addChild(pageInformation)
         pageBuild.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageBuild)
-        pageEnergy.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
+        pageEnergy.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
         addChild(pageEnergy)
         pageReserch.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageReserch)

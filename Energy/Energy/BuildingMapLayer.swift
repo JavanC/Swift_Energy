@@ -246,7 +246,7 @@ class BuildingMapLayer: SKSpriteNode {
     }
     var origin: CGPoint!
     var tileSize: CGSize = CGSizeMake(64, 64)
-    var mapSize: CGSize = CGSizeMake(9, 10)
+    var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array< Array<Building?>>()
     var buildingsLevel = [String: Int]()
     var money_TickAdd: Int = 0

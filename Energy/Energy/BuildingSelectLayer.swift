@@ -70,7 +70,7 @@ class BuildingSelectLayer: SKSpriteNode {
     
     func configureAtPosition(position: CGPoint, midSize: CGSize) {
         origin = position
-        self.position = position
+        self.position = CGPoint(x: origin.x, y: origin.y - 2 * midSize.height)
         self.size = CGSizeMake(midSize.width * 4, midSize.height)
         self.name = "BuildingSelectLayer"
         self.color = SKColor.blackColor()
