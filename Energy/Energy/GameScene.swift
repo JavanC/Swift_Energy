@@ -35,7 +35,7 @@ class GameScene: SKScene {
     
     var ShowBuildSelectPage: Bool = false
     var info_Building: Building!
-
+    
     override func didMoveToView(view: SKView) {
         
         framescale = frame.size.width / (midsize.width * 64)
@@ -87,34 +87,72 @@ class GameScene: SKScene {
         
     }
     
+    func changeTouchTypeAndShowPage(touchType: TouchType) {
+        self.touchType = touchType
+        switch touchType {
+        case .BuildingInfo:
+            buttonLayer.tapButtonNil()
+            bottomLayer.pageInformation.changeInformation(info_Building)
+            bottomLayer.ShowPageInformation()
+            buildingSelectLayer.showPage(false)
+            
+        case .Energy:
+            buttonLayer.tapButtonEnergy()
+            bottomLayer.showPageEnergy()
+            buildingSelectLayer.showPage(false)
+            
+        case .Reserch:
+            buttonLayer.tapButtonReserch()
+            bottomLayer.showPageReserch()
+            buildingSelectLayer.showPage(false)
+            
+        case .Builded:
+            buttonLayer.tapButtonBuild()
+            bottomLayer.ShowPageBuild()
+            buildingSelectLayer.changePage(bottomLayer.pageBuild.selectNumber)
+            
+            if ShowBuildSelectPage {
+                bottomLayer.pageBuild.openSelectInformation()
+                buildingSelectLayer.showPage(true)
+            } else {
+                bottomLayer.pageBuild.closeSelectInformation()
+                buildingSelectLayer.showPage(false)
+            }
+            
+        case .Sell:
+            buttonLayer.tapButtonBuild()
+            bottomLayer.ShowPageBuild()
+            buildingSelectLayer.showPage(false)
+            buildingSelectLayer.changePage(bottomLayer.pageBuild.selectNumber)
+        }
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
             let location = touch.locationInNode(self)
             let nodes = nodesAtPoint(location)
             for node in nodes {
-                
+                if node.hidden { return }
                 print(node)
-                
+
                 switch node {
                 case topLayer.buttonMenu:
                     print("Menu Button")
-                    bottomLayer.pageBuild.openSelectInformation()
                     
                 case topLayer.buttonRebuild:
                     print("Rebuild Button")
-                    bottomLayer.pageBuild.closeSelectInformation()
                     
                 case buttonLayer.buttonBuild:
                     print("Build Button")
-                    touchType = (buttonLayer.buttonStatus != "build" ? .Builded : .Energy)
+                    changeTouchTypeAndShowPage((buttonLayer.buttonStatus != "build" ? .Builded : .Energy))
                     
                 case buttonLayer.buttonEnergy:
                     print("Energy Button")
-                    touchType = .Energy
+                    changeTouchTypeAndShowPage(.Energy)
                     
                 case buttonLayer.buttonReserch:
                     print("Reserch Button")
-                    touchType = (buttonLayer.buttonStatus != "reserch" ? .Reserch : .Energy)
+                    changeTouchTypeAndShowPage((buttonLayer.buttonStatus != "reserch" ? .Reserch : .Energy))
                     
                 case buildingMapLayer:
                     print("Building Map Layer")
@@ -123,8 +161,8 @@ class GameScene: SKScene {
                     switch touchType {
                     case .BuildingInfo, .Energy, .Reserch:
                         if buildingMapLayer.buildingForCoord(coord)!.activate {
-                            touchType = .BuildingInfo
                             info_Building = buildingMapLayer.buildingForCoord(coord)
+                            changeTouchTypeAndShowPage(.BuildingInfo)
                         }
                         
                     case .Builded:
@@ -137,8 +175,8 @@ class GameScene: SKScene {
                                 money -= price
                             }
                         } else {
-                            touchType = .BuildingInfo
                             info_Building = buildingMapLayer.buildingForCoord(coord)
+                            changeTouchTypeAndShowPage(.BuildingInfo)
                         }
                         
                     case .Sell:
@@ -151,56 +189,38 @@ class GameScene: SKScene {
                     }
                     
                 case bottomLayer.pageBuild.images[0]:
-                    if !bottomLayer.pageBuild.images[0].hidden {
-                        touchType = .Builded
-                        if bottomLayer.pageBuild.selectNumber != 1 {
-                            bottomLayer.pageBuild.changeSelectNumber(1)
-                        } else {
-                            ShowBuildSelectPage = true
-                            bottomLayer.pageBuild.openSelectInformation()
-                        }
-                    }
+                    print("Builded image1")
+                    if bottomLayer.pageBuild.selectNumber == 1 { ShowBuildSelectPage = true }
+                    bottomLayer.pageBuild.changeSelectNumber(1)
+                    changeTouchTypeAndShowPage(.Builded)
+                    
                 case bottomLayer.pageBuild.images[1]:
-                    if !bottomLayer.pageBuild.images[1].hidden {
-                        touchType = .Builded
-                        if bottomLayer.pageBuild.selectNumber != 2 {
-                            bottomLayer.pageBuild.changeSelectNumber(2)
-                        } else {
-                            ShowBuildSelectPage = true
-                            bottomLayer.pageBuild.openSelectInformation()
-                        }
-                    }
+                    print("Builded image2")
+                    if bottomLayer.pageBuild.selectNumber == 2 { ShowBuildSelectPage = true }
+                    bottomLayer.pageBuild.changeSelectNumber(2)
+                    changeTouchTypeAndShowPage(.Builded)
+                    
                 case bottomLayer.pageBuild.images[2]:
-                    if !bottomLayer.pageBuild.images[2].hidden {
-                        touchType = .Builded
-                        if bottomLayer.pageBuild.selectNumber != 3 {
-                            bottomLayer.pageBuild.changeSelectNumber(3)
-                        } else {
-                            ShowBuildSelectPage = true
-                            bottomLayer.pageBuild.openSelectInformation()
-                        }
-                    }
+                    print("Builded image3")
+                    if bottomLayer.pageBuild.selectNumber == 3 { ShowBuildSelectPage = true }
+                    bottomLayer.pageBuild.changeSelectNumber(3)
+                    changeTouchTypeAndShowPage(.Builded)
+                    
                 case bottomLayer.pageBuild.images[3]:
-                    if !bottomLayer.pageBuild.images[3].hidden {
-                        touchType = .Builded
-                        if bottomLayer.pageBuild.selectNumber != 4 {
-                            bottomLayer.pageBuild.changeSelectNumber(4)
-                        } else {
-                            ShowBuildSelectPage = true
-                            bottomLayer.pageBuild.openSelectInformation()
-                        }
-                    }
+                    print("Builded image4")
+                    if bottomLayer.pageBuild.selectNumber != 4 { ShowBuildSelectPage = true }
+                    bottomLayer.pageBuild.changeSelectNumber(4)
+                    changeTouchTypeAndShowPage(.Builded)
+                    
                 case bottomLayer.pageBuild.images[4]:
-                    if !bottomLayer.pageBuild.images[4].hidden {
-                        touchType = .Sell
-                        bottomLayer.pageBuild.changeSelectNumber(5)
-                    }
+                    print("Sell image")
+                    bottomLayer.pageBuild.changeSelectNumber(5)
+                    changeTouchTypeAndShowPage(.Sell)
                     
                 case bottomLayer.pageBuild.selectInfo:
-                    if !bottomLayer.pageBuild.selectInfo.hidden {
-                        ShowBuildSelectPage = false
-                        bottomLayer.pageBuild.closeSelectInformation()
-                    }
+                    print("Builded select info")
+                    ShowBuildSelectPage = false
+                    changeTouchTypeAndShowPage(.Builded)
                     
                 case bottomLayer.pageEnergy.energy_ProgressBack:
                     print("Energy Preogree")
@@ -211,50 +231,26 @@ class GameScene: SKScene {
                     break
                 }
             }
-            print(touchType)
         }
     }
     
     override func update(currentTime: CFTimeInterval) {
-        switch touchType {
-        case .BuildingInfo:
-            buttonLayer.tapButtonNil()
-            bottomLayer.pageInformation.changeInformation(info_Building)
-            bottomLayer.ShowPageInformation()
-            
-        case .Builded:
-            buttonLayer.tapButtonBuild()
-            bottomLayer.ShowPageBuild()
-            buildingSelectLayer.showPage(ShowBuildSelectPage)
-            buildingSelectLayer.changePage(bottomLayer.pageBuild.selectNumber)
-            
-        case .Energy:
-            buttonLayer.tapButtonEnergy()
-            bottomLayer.showPageEnergy()
-            
-        case .Reserch:
-            buttonLayer.tapButtonReserch()
-            bottomLayer.showPageReserch()
-            
-        case .Sell:
-            buildingSelectLayer.showPage(ShowBuildSelectPage)
-        }
-    }
-   
-    func tickUpdata() {
-        // 1. Update map data
-        buildingMapLayer.Update()
-        
-        // 2. Calculate money and reserch
-        money += buildingMapLayer.money_TickAdd
-        reserch += buildingMapLayer.reserch_TickAdd
-
-        // 3. Updata imformation
+        // Updata imformation
         topLayer.moneyLabel.text = "Money: \(money) + \(buildingMapLayer.money_TickAdd)"
         topLayer.reserchLabel.text = "Reserch: \(reserch) + \(buildingMapLayer.reserch_TickAdd)"
         let percent = CGFloat(buildingMapLayer.energy) / CGFloat(buildingMapLayer.energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
         bottomLayer.pageEnergy.energyLabel.text = "Energy: \(buildingMapLayer.energy) (Max:\(buildingMapLayer.energyMax))"
+    }
+   
+    func tickUpdata() {
+        // Update map data
+        buildingMapLayer.Update()
+        
+        // Calculate money and reserch
+        money += buildingMapLayer.money_TickAdd
+        reserch += buildingMapLayer.reserch_TickAdd
+
 //        save()
     }
 //    func save() {

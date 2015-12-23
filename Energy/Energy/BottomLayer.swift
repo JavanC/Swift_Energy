@@ -140,6 +140,8 @@ class PageBuild: SKSpriteNode {
         if selectNumber > 4 || selectNumber < 1 { return }
         let pos = CGPoint(x: 40 + tilesScaleSize.width / 2, y: size.height / 2)
         
+        // Remove Action
+        childNodeWithName("SelectImage\(selectNumber)")?.removeAllActions()
         // Hide
         childNodeWithName("selectBox")?.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
         for i in 1...5 {
@@ -159,6 +161,8 @@ class PageBuild: SKSpriteNode {
         if selectNumber > 4 || selectNumber < 1 { return }
         let pos = imagePosition[selectNumber - 1]
         
+        // Remove Action
+        childNodeWithName("SelectImage\(selectNumber)")?.removeAllActions()
         // Hide
         selectInfo.childNodeWithName("infoImage")?.runAction(SKAction.sequence([SKAction.hide(), SKAction.waitForDuration(0.2), SKAction.unhide()]))
         selectInfo.runAction(SKAction.sequence([SKAction.fadeAlphaTo(0, duration: 0.2), SKAction.hide()]))
