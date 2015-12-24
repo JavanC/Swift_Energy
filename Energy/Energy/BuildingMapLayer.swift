@@ -19,7 +19,7 @@ class BuildingData {
     var imageName: String!
     var buildType: BuildType = .Nil
     var buildPrice: Int!
-    var level: Int!
+    var buildLevel: Int!
     var nextLevelPrice: Int!
     var reserchPrice: Int!
     var rebuild: Bool = true
@@ -48,34 +48,34 @@ class BuildingData {
     
     init(buildType: BuildType, level: Int = 0) {
         self.buildType = buildType
-        self.level = level
+        self.rebuild = (level / 1000 >= 1 ? true : false)
+        self.buildLevel = level % 1000
+        
         if buildType == .Nil {
             imageName = "block"
-            rebuild = false
         }
         if buildType == .Wind {
             imageName = "風力"
             buildPrice = 1
-            nextLevelPrice = 1 * level
+            nextLevelPrice = 1 * buildLevel
             reserchPrice = 1
             progress = .Time
             
             time_Max = 5
             time_Current = 5
          
-            hot_Produce = 1 * level
-            hot_Max = 10 * level
+            hot_Produce = 1 * buildLevel
+            hot_Max = 10 * buildLevel
             hot_Current = 0
             isHot2Energy = true
-            hot2Energy_Max = 1 * level
+            hot2Energy_Max = 1 * buildLevel
             
             energy_Current = 0
         }
         if buildType == .Fire {
             imageName = "火力"
-            rebuild = true
             buildPrice = 20
-            nextLevelPrice = 2 * level
+            nextLevelPrice = 2 * buildLevel
             reserchPrice = 1
             progress = .Time
             hot_IsOutput = true
@@ -83,36 +83,36 @@ class BuildingData {
             time_Max = 10
             time_Current = 10
             
-            hot_Produce = 20 * level
+            hot_Produce = 20 * buildLevel
             hot_Max = 1
             hot_Current = 0
         }
         if buildType == .Generator {
             imageName = "發電機1"
             buildPrice = 50
-            nextLevelPrice = 3 * level
+            nextLevelPrice = 3 * buildLevel
             reserchPrice = 1
             progress = .Hot
             hot_IsInput = true
             isHot2Energy = true
             
             energy_Current = 0
-            hot2Energy_Max = 10 * level
+            hot2Energy_Max = 10 * buildLevel
             
-            hot_Max = 400 * level
+            hot_Max = 400 * buildLevel
             hot_Current = 100
         }
         if buildType == .Office {
             imageName = "辦公室1"
             buildPrice = 10
-            nextLevelPrice = 4 * level
+            nextLevelPrice = 4 * buildLevel
             reserchPrice = 1
             hot_IsInput = true
             
             hot_Max = 10
             hot_Current = 0
             
-            money_Sales = 5 * level
+            money_Sales = 5 * buildLevel
         }
     }
     
@@ -151,7 +151,7 @@ class BuildingData {
     
     func buildingLevelInfo(buildMenu: BuildType) -> [String] {
         var info = [String]()
-        info.append("\(buildMenu)  Lv.\(level) ")
+        info.append("\(buildMenu)  Lv.\(buildLevel) ")
         info.append("Next:\(nextLevelPrice)$")
         if buildType == .Wind {
             info.append("123123123123123")

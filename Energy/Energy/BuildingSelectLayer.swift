@@ -47,12 +47,12 @@ class BuildingSelectElement: SKSpriteNode {
         buildingUpgrade.position = CGPoint(x: size.width - gap, y: size.height / 2)
         addChild(buildingUpgrade)
         
-        let nowLevel = getBuildLevel(buildType)
+        let nowLevel = getBuildLevel(buildType) % 1000
         if money < BuildingData(buildType: buildType, level: nowLevel).nextLevelPrice {
             buildingUpgrade.color = SKColor.blackColor()
         }
         
-        if getBuildLevel(buildType) > 1 {
+        if nowLevel > 1 {
             buildingDegrade = SKSpriteNode(color: SKColor.redColor(), size: buildingImage.size)
             buildingDegrade.name = "Degrade"
             buildingDegrade.anchorPoint = CGPoint(x: 1, y: 0.5)
@@ -64,6 +64,7 @@ class BuildingSelectElement: SKSpriteNode {
 
 class BuildingSelectLayer: SKSpriteNode {
     
+    var show: Bool = false
     var origin: CGPoint!
     let gap: CGFloat = 20
     var selectElementSize: CGSize!
@@ -114,6 +115,7 @@ class BuildingSelectLayer: SKSpriteNode {
     
     // Show page
     func showPage(show: Bool) {
+        self.show = show
         self.runAction(SKAction.moveToY(origin.y + (show ? 0 : -2 * self.size.height), duration: 0.2))
     }
     func changePage(page: Int) {

@@ -111,6 +111,8 @@ class ReserchLayer: SKSpriteNode {
     }
     // Update building select page
     func updateReserchPage() {
+        elements.removeAll()
+        removeAllChildren()
         
         if reserchLevel >= 1 {
             let element1 = ReserchElement()
