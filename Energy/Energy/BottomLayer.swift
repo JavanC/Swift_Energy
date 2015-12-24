@@ -61,7 +61,7 @@ class PageInformation: SKSpriteNode {
         infoImage.position = infoImagePosition!
         addChild(infoImage)
         
-        let nowLevel = buildingMapLayer.getBuildingLevel(buildType)
+        let nowLevel = getBuildLevel(buildType)
         let data = BuildingData(buildType: buildType, level: nowLevel)
         let labels = data.buildingInfo(buildType)
         for i in 0..<5 {

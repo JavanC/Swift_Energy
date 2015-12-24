@@ -47,11 +47,12 @@ class BuildingSelectElement: SKSpriteNode {
         buildingUpgrade.position = CGPoint(x: size.width - gap, y: size.height / 2)
         addChild(buildingUpgrade)
         
-        if money < buildingMapLayer.getNowLevelBuildingData(buildType).nextLevelPrice {
+        let nowLevel = getBuildLevel(buildType)
+        if money < BuildingData(buildType: buildType, level: nowLevel).nextLevelPrice {
             buildingUpgrade.color = SKColor.blackColor()
         }
         
-        if buildingMapLayer.getBuildingLevel(buildType) > 1 {
+        if getBuildLevel(buildType) > 1 {
             buildingDegrade = SKSpriteNode(color: SKColor.redColor(), size: buildingImage.size)
             buildingDegrade.name = "Degrade"
             buildingDegrade.anchorPoint = CGPoint(x: 1, y: 0.5)
@@ -89,7 +90,7 @@ class BuildingSelectLayer: SKSpriteNode {
         removeAllChildren()
         let page1:[BuildType] = [.Wind, .Fire, .Office]
         for (count, buildType) in page1.enumerate() {
-            let buildlevel = buildingMapLayer.getBuildingLevel(buildType)
+            let buildlevel = getBuildLevel(buildType)
             if buildlevel > 0 {
                 let position = CGPoint(x: gap, y: self.size.height - (gap + selectElementSize.height) * CGFloat(count + 1))
                 let sptireNode = BuildingSelectElement()
@@ -100,7 +101,7 @@ class BuildingSelectLayer: SKSpriteNode {
         }
         let page2:[BuildType] = [.Wind, .Wind, .Wind, .Fire, .Office]
         for (count, buildType) in page2.enumerate() {
-            let buildlevel = buildingMapLayer.getBuildingLevel(buildType)
+            let buildlevel = getBuildLevel(buildType)
             if buildlevel > 0 {
                 let position = CGPoint(x: gap + size.width / 4, y: self.size.height - (gap + selectElementSize.height) * CGFloat(count + 1))
                 let sptireNode = BuildingSelectElement()

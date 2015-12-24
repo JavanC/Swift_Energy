@@ -73,6 +73,7 @@ class BuildingData {
         }
         if buildType == .Fire {
             imageName = "火力"
+            rebuild = true
             buildPrice = 20
             nextLevelPrice = 2 * level
             reserchPrice = 1
@@ -171,7 +172,6 @@ class BuildingData {
 class Building: SKNode {
     
     var coord: CGPoint!
-    var level: Int!
     var buildingNode: SKSpriteNode!
     
     var buildingData: BuildingData!
@@ -180,12 +180,12 @@ class Building: SKNode {
     var progressBack: SKSpriteNode!
     var progress: SKSpriteNode!
 
-    func configureAtCoord(coord: CGPoint, buildType: BuildType, level: Int) {
+    func configureAtCoord(coord: CGPoint, buildType: BuildType) {
         self.coord = coord
-        self.level = level
         name = String(buildType.hashValue)
         
-        buildingData = BuildingData(buildType: buildType, level: level)
+        let nowLevel = getBuildLevel(buildType)
+        buildingData = BuildingData(buildType: buildType, level: nowLevel)
         buildingNode = SKSpriteNode(imageNamed: buildingData.imageName)
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(buildingNode)
@@ -253,7 +253,6 @@ class BuildingMapLayer: SKSpriteNode {
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array< Array<Building?>>()
-    var buildingsLevel = [String: Int]()
     var money_TickAdd: Int = 0
     var reserch_TickAdd: Int = 0
     var energy_TickAdd: Int = 0
@@ -273,7 +272,6 @@ class BuildingMapLayer: SKSpriteNode {
         }
         
         // Initialization map
-        initBuildingLevel()
         for _ in 0 ..< Int(mapSize.height) {
             buildings.append(Array(count: Int(mapSize.width), repeatedValue: nil))
         }
@@ -325,11 +323,22 @@ class BuildingMapLayer: SKSpriteNode {
         // if nil, build
         if (buildings[y][x] == nil) {
             let building = Building()
-            let level = getBuildingLevel(buildType)
             buildings[y][x] = building
-            building.configureAtCoord(coord, buildType: buildType, level: level)
+            building.configureAtCoord(coord, buildType: buildType)
             building.position = coord2Position(coord)
             addChild(building)
+        }
+    }
+    
+    // MARK: Reload building Map
+    func reloadBuildingMap() {
+        for (y, line) in buildings.enumerate() {
+            for (x, building) in line.enumerate() {
+                let buildType = building?.buildingData.buildType
+                let coord = CGPoint(x: x, y: y)
+                removeBuilding(coord)
+                setTileMapElement(coord: coord, buildType: buildType!)
+            }
         }
     }
     
@@ -470,26 +479,8 @@ class BuildingMapLayer: SKSpriteNode {
         }
     }
     
-    // Building level function
-    func initBuildingLevel() {
-        for count in 0..<BuildType.BuildMenuLength.hashValue {
-            let name = String(count)
-            buildingsLevel[name] = 0
-        }
-    }
-    func setBuildingLevel(building: BuildType, level: Int) {
-        let name = String(building.hashValue)
-        buildingsLevel[name] = level
-    }
-    func getBuildingLevel(building: BuildType) -> Int {
-        let name = String(building.hashValue)
-        return buildingsLevel[name]!
-    }
-    func getNowLevelBuildingData(buildType: BuildType) -> BuildingData {
-        let nowLevel = getBuildingLevel(buildType)
-        let data = BuildingData(buildType: buildType, level: nowLevel)
-        return data
-    }
+
+    
 
     // MARK: Load Tile Map by word array
 //    func LoadTileMap() {

@@ -14,8 +14,12 @@ var tilesScaleSize: CGSize!
 var buildingMapLayer = BuildingMapLayer()
 var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
 var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
+
 var money: Int = 10
 var reserch: Int = 0
+var buildLevel = [BuildType: Int]()
+func getBuildLevel(buildType: BuildType) -> Int { return buildLevel[buildType]! }
+func setBuildLevel(buildType: BuildType, level: Int){ buildLevel[buildType] = level }
 
 class GameScene: SKScene {
     
@@ -44,6 +48,8 @@ class GameScene: SKScene {
         tilesScaleSize = CGSize(width: tilesize.width * framescale, height: tilesize.width * framescale)
         gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
         //        defaults = NSUserDefaults.standardUserDefaults()
+        // initial Build and reserch Level
+        for count in 0..<BuildType.BuildMenuLength.hashValue { buildLevel[BuildType(rawValue: count)!] = 1 }
         
         // Top Layer
         let topLayerSize = CGSizeMake(frame.size.width, topsize.height * tilesScaleSize.height)
@@ -86,8 +92,6 @@ class GameScene: SKScene {
         info_Building = buildingMapLayer.buildingForCoord(CGPoint(x: 0, y: 0))!
         
         //  Reserch upgrade
-
-        buildingMapLayer.setBuildingLevel(.Wind, level: 1)
         
         let reserchLayerSize = buildingMapLayer.size
         let reserchLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
@@ -97,13 +101,12 @@ class GameScene: SKScene {
         
     }
 
-    
+
     func changeTouchTypeAndShowPage(touchType: TouchType) {
         self.touchType = touchType
         switch touchType {
         case .Information:
             buttonLayer.tapButtonNil()
-            bottomLayer.pageInformation.changeInformation(info_Building)
             bottomLayer.ShowPageInformation()
             
             buildingMapLayer.runAction(SKAction.unhide())
@@ -230,19 +233,23 @@ class GameScene: SKScene {
                         }
                         if node.name == "Upgrade" {
                             let buildType = (node.parent as! BuildingSelectElement).buildType
-                            let nowLevel = buildingMapLayer.getBuildingLevel(buildType)
-                            let upgradePrice = buildingMapLayer.getNowLevelBuildingData(buildType).nextLevelPrice
+                            let nowLevel = getBuildLevel(buildType)
+                            let upgradePrice = BuildingData(buildType: buildType, level: nowLevel).nextLevelPrice
                             if upgradePrice <= money {
                                 money -= upgradePrice
-                                buildingMapLayer.setBuildingLevel(buildType, level: nowLevel + 1)
+                                setBuildLevel(buildType, level: nowLevel + 1)
+                                bottomLayer.pageBuild.selectInfo.nowLevelImformation(buildType)
+                                buildingMapLayer.reloadBuildingMap()
                             }
                         }
                         if node.name == "Degrade" {
                             let buildType = (node.parent as! BuildingSelectElement).buildType
-                            let nowLevel = buildingMapLayer.getBuildingLevel(buildType)
+                            let nowLevel = getBuildLevel(buildType)
                             let degrradePrice = BuildingData(buildType: buildType, level: nowLevel - 1).nextLevelPrice
                             money += degrradePrice
-                            buildingMapLayer.setBuildingLevel(buildType, level: nowLevel - 1)
+                            setBuildLevel(buildType, level: nowLevel - 1)
+                            bottomLayer.pageBuild.selectInfo.nowLevelImformation(buildType)
+                            buildingMapLayer.reloadBuildingMap()
                         }
                     }
                     
@@ -254,6 +261,22 @@ class GameScene: SKScene {
                 case bottomLayer.pageReserch.prevPage:
                     let nowPage = bottomLayer.pageReserch.nowPage
                     bottomLayer.pageReserch.changePage(nowPage - 1)
+                    
+                case reserchLayer:
+                    let nodes = nodesAtPoint(location)
+                    for node in nodes {
+                        if node.hidden { return }
+                        if node.name == "ReserchButton" {
+                            let buildType = (node.parent as! ReserchElement).buildType
+                            let reserchType = (node.parent as! ReserchElement).reserchType
+                            if reserchType == .Develop {
+                                setBuildLevel(buildType, level: 1)
+                            } else if reserchType == .Rebuild {
+                                print("rebuild")
+                            }
+                        }
+                        
+                    }
                     
                 // Builded Page
                 case bottomLayer.pageBuild.images[0]:
@@ -306,6 +329,7 @@ class GameScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         
         buildingSelectLayer.updateBuildingSelectPage()
+        bottomLayer.pageInformation.changeInformation(info_Building)
         
         // Updata imformation
         topLayer.moneyLabel.text = "Money: \(money) + \(buildingMapLayer.money_TickAdd)"
