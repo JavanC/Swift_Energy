@@ -42,7 +42,6 @@ class ReserchElement: SKSpriteNode {
             print("error")
             return
         }
-        print("\(buildType), level: \(nowLevel), rebuild: \(nowRebuild)")
         
         // Add Image
         let gap: CGFloat = 20
@@ -130,6 +129,18 @@ class ReserchLayer: SKSpriteNode {
             }
         }
         if reserchLevel >= 2 {
+            let element1 = ReserchElement()
+            element1.configureAtPosition(CGPoint(x: 0, y: 0), size: selectElementSize, buildType: .Generator, reserchType: .Develop)
+            elements.append(element1)
+            let element2 = ReserchElement()
+            element2.configureAtPosition(CGPoint(x: 0, y: 0), size: selectElementSize, buildType: .Office, reserchType: .Develop)
+            elements.append(element2)
+            
+            if element1.reserchDone {
+                reserchLevel = 3
+            }
+        }
+        if reserchLevel >= 3 {
             let element1 = ReserchElement()
             element1.configureAtPosition(CGPoint(x: 0, y: 0), size: selectElementSize, buildType: .Generator, reserchType: .Develop)
             elements.append(element1)

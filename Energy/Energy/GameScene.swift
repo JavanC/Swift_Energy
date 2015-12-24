@@ -11,7 +11,8 @@ import SpriteKit
 let topsize = CGSizeMake(9, 1.5)
 let midsize = CGSizeMake(9, 11)
 var tilesScaleSize: CGSize!
-var buildingMapLayer = BuildingMapLayer()
+var nowMapNumber: Int = 0
+var buildingMapLayers = [BuildingMapLayer]()
 var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
 var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
 
@@ -49,6 +50,7 @@ class GameScene: SKScene {
         //        defaults = NSUserDefaults.standardUserDefaults()
         // initial Build Level
         for count in 0..<BuildType.BuildMenuLength.hashValue { buildLevel[BuildType(rawValue: count)!] = 0 }
+        setBuildLevel(.Wind, level: 1)
         
         // Top Layer
         let topLayerSize = CGSizeMake(frame.size.width, topsize.height * tilesScaleSize.height)
@@ -58,14 +60,17 @@ class GameScene: SKScene {
         addChild(topLayer)
         
         // Building Map Layer
+        let buildingMapLayer_1 = BuildingMapLayer()
         let buildingMapLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
-        buildingMapLayer.configureAtPosition(buildingMapLayerPosition, maplevel: .One)
-        buildingMapLayer.setScale(framescale)
-        buildingMapLayer.zPosition = 1
-        addChild(buildingMapLayer)
-        buildingMapLayer.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Office)
-        buildingMapLayer.setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Fire)
-        buildingMapLayer.setTileMapElement(coord: CGPoint(x: 2, y: 0), buildType: .Generator)
+        buildingMapLayer_1.configureAtPosition(buildingMapLayerPosition, maplevel: .One)
+        buildingMapLayer_1.setScale(framescale)
+        buildingMapLayer_1.zPosition = 1
+        addChild(buildingMapLayer_1)
+        buildingMapLayers.append(buildingMapLayer_1)
+        
+        buildingMapLayer_1.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Wind)
+        buildingMapLayer_1.setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Wind)
+        buildingMapLayer_1.setTileMapElement(coord: CGPoint(x: 2, y: 0), buildType: .Wind)
         
         // Button Layer
         let buttonLayerSize = CGSizeMake(frame.size.width, 100)
@@ -73,31 +78,32 @@ class GameScene: SKScene {
         buttonLayer.zPosition = 200
         addChild(buttonLayer)
         
-        // Bottom Layer
-        let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - buildingMapLayer.size.height - buttonLayer.size.height)
-        let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
-        bottomLayer.configureAtPosition(bottomLayerPosition, size: bottomLayerSize)
-        bottomLayer.zPosition = 100
-        addChild(bottomLayer)
-        
         // Building Select Layer
-        let buildingSelectLayerSize = buildingMapLayer.size
+        let buildingSelectLayerSize = buildingMapLayer_1.size
         let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
         buildingSelectLayer.configureAtPosition(buildingSelectLayerPosition, midSize: buildingSelectLayerSize)
         buildingSelectLayer.zPosition = 50
         addChild(buildingSelectLayer)
         buildingSelectLayer.showPage(false)
 
-        info_Building = buildingMapLayer.buildingForCoord(CGPoint(x: 0, y: 0))!
+        info_Building = buildingMapLayer_1.buildingForCoord(CGPoint(x: 0, y: 0))!
         
-        //  Reserch upgrade
-        
-        let reserchLayerSize = buildingMapLayer.size
+        //  Reserch Layer
+        let reserchLayerSize = buildingMapLayer_1.size
         let reserchLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
         reserchLayer.configureAtPosition(reserchLayerPosition, midSize: reserchLayerSize)
         reserchLayer.zPosition = 50
         addChild(reserchLayer)
         
+        // Bottom Layer
+        let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - buildingMapLayer_1.size.height - buttonLayer.size.height)
+        let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
+        bottomLayer.configureAtPosition(bottomLayerPosition, size: bottomLayerSize)
+        bottomLayer.zPosition = 100
+        addChild(bottomLayer)
+        let count = reserchLayer.elements.count
+        let maxPage = (count / 6) + 1
+        bottomLayer.pageReserch.changeMaxPage(maxPage)
     }
 
     func changeTouchTypeAndShowPage(touchType: TouchType) {
@@ -107,7 +113,7 @@ class GameScene: SKScene {
             // Show
             buttonLayer.tapButtonNil()
             bottomLayer.ShowPageInformation()
-            buildingMapLayer.runAction(SKAction.unhide())
+            buildingMapLayers[nowMapNumber].runAction(SKAction.unhide())
             // Hide
             bottomLayer.pageBuild.closeSelectInformation()
             buildingSelectLayer.showPage(false)
@@ -117,7 +123,7 @@ class GameScene: SKScene {
             // Show
             buttonLayer.tapButtonEnergy()
             bottomLayer.showPageEnergy()
-            buildingMapLayer.runAction(SKAction.unhide())
+            buildingMapLayers[nowMapNumber].runAction(SKAction.unhide())
             // Hide
             bottomLayer.pageBuild.closeSelectInformation()
             buildingSelectLayer.showPage(false)
@@ -129,7 +135,7 @@ class GameScene: SKScene {
             bottomLayer.showPageReserch()
             reserchLayer.showPage(true)
             // Hide
-            buildingMapLayer.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.hide()]))
+            buildingMapLayers[nowMapNumber].runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.hide()]))
             bottomLayer.pageBuild.closeSelectInformation()
             buildingSelectLayer.showPage(false)
             
@@ -143,10 +149,10 @@ class GameScene: SKScene {
                 bottomLayer.pageBuild.openSelectInformation()
                 buildingSelectLayer.showPage(true)
                 // Hide
-                buildingMapLayer.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.hide()]))
+                buildingMapLayers[nowMapNumber].runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.hide()]))
             } else {
                 // Show
-                buildingMapLayer.runAction(SKAction.unhide())
+                buildingMapLayers[nowMapNumber].runAction(SKAction.unhide())
                 // Hide
                 bottomLayer.pageBuild.closeSelectInformation()
                 buildingSelectLayer.showPage(false)
@@ -154,12 +160,11 @@ class GameScene: SKScene {
             // Hide
             reserchLayer.showPage(false)
             
-            
         case .Sell:
             // Show
             buttonLayer.tapButtonBuild()
             bottomLayer.ShowPageBuild()
-            buildingMapLayer.runAction(SKAction.unhide())
+            buildingMapLayers[nowMapNumber].runAction(SKAction.unhide())
             // Hide
             bottomLayer.pageBuild.closeSelectInformation()
             buildingSelectLayer.showPage(false)
@@ -200,36 +205,36 @@ class GameScene: SKScene {
                     changeTouchTypeAndShowPage((buttonLayer.buttonStatus != "reserch" ? .Reserch : .Energy))
                     
                 // Building Map
-                case buildingMapLayer:
+                case buildingMapLayers[nowMapNumber]:
                     print("Building Map Layer")
-                    let buildingmaplocation = touch.locationInNode(buildingMapLayer)
-                    let coord = buildingMapLayer.position2Coord(buildingmaplocation)
+                    let buildingmaplocation = touch.locationInNode(buildingMapLayers[nowMapNumber])
+                    let coord = buildingMapLayers[nowMapNumber].position2Coord(buildingmaplocation)
                     switch touchType {
                     case .Information, .Energy, .Reserch:
-                        if buildingMapLayer.buildingForCoord(coord)!.activate {
-                            info_Building = buildingMapLayer.buildingForCoord(coord)
+                        if buildingMapLayers[nowMapNumber].buildingForCoord(coord)!.activate {
+                            info_Building = buildingMapLayers[nowMapNumber].buildingForCoord(coord)
                             changeTouchTypeAndShowPage(.Information)
                         }
                         
                     case .Builded:
-                        if buildingMapLayer.buildingForCoord(coord)!.activate {
-                            info_Building = buildingMapLayer.buildingForCoord(coord)
+                        if buildingMapLayers[nowMapNumber].buildingForCoord(coord)!.activate {
+                            info_Building = buildingMapLayers[nowMapNumber].buildingForCoord(coord)
                             changeTouchTypeAndShowPage(.Information)
                         } else {
                             let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
                             let price = BuildingData.init(buildType: building).buildPrice
                             if money >= price {
-                                buildingMapLayer.setTileMapElement(coord: coord, buildType: building)
+                                buildingMapLayers[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                 money -= price
                             }
                         }
                         
                     case .Sell:
-                        if buildingMapLayer.buildingForCoord(coord)!.activate {
-                            let price = buildingMapLayer.buildingForCoord(coord)!.buildingData.buildPrice
+                        if buildingMapLayers[nowMapNumber].buildingForCoord(coord)!.activate {
+                            let price = buildingMapLayers[nowMapNumber].buildingForCoord(coord)!.buildingData.buildPrice
                             money += price
-                            buildingMapLayer.removeBuilding(coord)
-                            buildingMapLayer.setTileMapElement(coord: coord, buildType: .Nil)
+                            buildingMapLayers[nowMapNumber].removeBuilding(coord)
+                            buildingMapLayers[nowMapNumber].setTileMapElement(coord: coord, buildType: .Nil)
                         }
                     }
                     
@@ -250,7 +255,7 @@ class GameScene: SKScene {
                                 money -= upgradePrice
                                 setBuildLevel(buildType, level: nowLevel + 1)
                                 bottomLayer.pageBuild.selectInfo.nowLevelImformation(buildType)
-                                buildingMapLayer.reloadBuildingMap()
+                                buildingMapLayers[nowMapNumber].reloadBuildingMap()
                             }
                         }
                         if node.name == "Degrade" {
@@ -260,7 +265,7 @@ class GameScene: SKScene {
                             money += degrradePrice
                             setBuildLevel(buildType, level: nowLevel - 1)
                             bottomLayer.pageBuild.selectInfo.nowLevelImformation(buildType)
-                            buildingMapLayer.reloadBuildingMap()
+                            buildingMapLayers[nowMapNumber].reloadBuildingMap()
                         }
                     }
                     
@@ -268,10 +273,12 @@ class GameScene: SKScene {
                 case bottomLayer.pageReserch.nextPage:
                     let nowPage = bottomLayer.pageReserch.nowPage
                     bottomLayer.pageReserch.changePage(nowPage + 1)
+                    reserchLayer.changePage(nowPage + 1)
                 
                 case bottomLayer.pageReserch.prevPage:
                     let nowPage = bottomLayer.pageReserch.nowPage
                     bottomLayer.pageReserch.changePage(nowPage - 1)
+                    reserchLayer.changePage(nowPage - 1)
                     
                 case reserchLayer:
                     let nodes = nodesAtPoint(location)
@@ -291,7 +298,10 @@ class GameScene: SKScene {
                                 setBuildLevel(buildType, level: nowLevel + 1000)
                             }
                             reserchLayer.updateReserchPage()
-                            buildingMapLayer.reloadBuildingMap()
+                            buildingMapLayers[nowMapNumber].reloadBuildingMap()
+                            let count = reserchLayer.elements.count
+                            let maxPage = (count / 6) + 1
+                            bottomLayer.pageReserch.changeMaxPage(maxPage)
                         }
                     }
                     
@@ -333,8 +343,8 @@ class GameScene: SKScene {
                 // Energy Page
                 case bottomLayer.pageEnergy.energy_ProgressBack:
                     print("Energy Preogree")
-                    money += buildingMapLayer.energy
-                    buildingMapLayer.energy = 0
+                    money += buildingMapLayers[nowMapNumber].energy
+                    buildingMapLayers[nowMapNumber].energy = 0
     
                 default:
                     break
@@ -349,20 +359,20 @@ class GameScene: SKScene {
         bottomLayer.pageInformation.changeInformation(info_Building)
         
         // Updata imformation
-        topLayer.moneyLabel.text = "Money: \(money) + \(buildingMapLayer.money_TickAdd)"
-        topLayer.reserchLabel.text = "Reserch: \(reserch) + \(buildingMapLayer.reserch_TickAdd)"
-        let percent = CGFloat(buildingMapLayer.energy) / CGFloat(buildingMapLayer.energyMax)
+        topLayer.moneyLabel.text = "Money: \(money) + \(buildingMapLayers[nowMapNumber].money_TickAdd)"
+        topLayer.reserchLabel.text = "Reserch: \(reserch) + \(buildingMapLayers[nowMapNumber].reserch_TickAdd)"
+        let percent = CGFloat(buildingMapLayers[nowMapNumber].energy) / CGFloat(buildingMapLayers[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
-        bottomLayer.pageEnergy.energyLabel.text = "Energy: \(buildingMapLayer.energy) (Max:\(buildingMapLayer.energyMax))"
+        bottomLayer.pageEnergy.energyLabel.text = "Energy: \(buildingMapLayers[nowMapNumber].energy) (Max:\(buildingMapLayers[nowMapNumber].energyMax))"
     }
    
     func tickUpdata() {
         // Update map data
-        buildingMapLayer.Update()
+        buildingMapLayers[nowMapNumber].Update()
         
         // Calculate money and reserch
-        money += buildingMapLayer.money_TickAdd
-        reserch += buildingMapLayer.reserch_TickAdd
+        money += buildingMapLayers[nowMapNumber].money_TickAdd
+        reserch += buildingMapLayers[nowMapNumber].reserch_TickAdd
 
 //        save()
     }

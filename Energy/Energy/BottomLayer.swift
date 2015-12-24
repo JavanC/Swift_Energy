@@ -224,7 +224,7 @@ class PageEnergy: SKSpriteNode {
 class PageReserch: SKSpriteNode {
     
     var nowPage: Int = 1
-    var maxPage: Int = 3
+    var maxPage: Int = 1
     var nextPage: SKSpriteNode!
     var prevPage: SKSpriteNode!
     var pageLabel: SKLabelNode!
@@ -252,21 +252,18 @@ class PageReserch: SKSpriteNode {
         pageLabel.position = CGPoint(x: size.width / 2, y: gap)
         addChild(pageLabel)
         
-        changePage(1)
+        changeMaxPage(1)
     }
     func changePage(pageNumber: Int) {
         if pageNumber > maxPage || pageNumber < 1 { return }
         nowPage = pageNumber
         pageLabel.text = "\(nowPage) / \(maxPage)"
-        
-        if nowPage == 1 {
-            prevPage.hidden = true
-        } else if nowPage == maxPage {
-            nextPage.hidden = true
-        } else {
-            prevPage.hidden = false
-            nextPage.hidden = false
-        }
+        nextPage.hidden = (nowPage == maxPage ? true : false)
+        prevPage.hidden = (nowPage == 1 ? true : false)
+    }
+    func changeMaxPage(maxPageNumber: Int) {
+        maxPage = maxPageNumber
+        changePage(nowPage)
     }
 }
 
