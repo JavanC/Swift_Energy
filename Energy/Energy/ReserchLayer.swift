@@ -88,7 +88,6 @@ class ReserchLayer: SKSpriteNode {
     func configureAtPosition(position: CGPoint, midSize: CGSize) {
         origin = position
         self.position = CGPoint(x: origin.x, y: origin.y - 2 * midSize.height)
-        self.position = position
         self.size = CGSizeMake(midSize.width * 4, midSize.height)
         self.name = "ReserchLayer"
         self.color = colorReserch
@@ -106,7 +105,6 @@ class ReserchLayer: SKSpriteNode {
         }
         
         updateReserchPage()
-        showPage(false)
     }
     // Update building select page
     func updateReserchPage() {

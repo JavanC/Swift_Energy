@@ -269,10 +269,10 @@ class PageReserch: SKSpriteNode {
 
 class BottomLayer: SKSpriteNode {
 
-    var pageInformation = PageInformation()
-    var pageBuild = PageBuild()
-    var pageEnergy = PageEnergy()
-    var pageReserch = PageReserch()
+    var pageInformation: PageInformation!
+    var pageBuild: PageBuild!
+    var pageEnergy: PageEnergy!
+    var pageReserch: PageReserch!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         
@@ -282,12 +282,16 @@ class BottomLayer: SKSpriteNode {
         self.name = "BottomLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
+        pageInformation = PageInformation()
         pageInformation.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageInformation)
+        pageBuild = PageBuild()
         pageBuild.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageBuild)
+        pageEnergy = PageEnergy()
         pageEnergy.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
         addChild(pageEnergy)
+        pageReserch = PageReserch()
         pageReserch.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageReserch)
         

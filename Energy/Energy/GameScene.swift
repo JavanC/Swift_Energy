@@ -11,7 +11,7 @@ import SpriteKit
 let topsize = CGSizeMake(9, 1.5)
 let midsize = CGSizeMake(9, 11)
 var tilesScaleSize: CGSize!
-var nowMapNumber: Int = 0
+var nowMapNumber: Int = 1
 var buildingMapLayers = [BuildingMapLayer]()
 var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
 var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
@@ -30,15 +30,14 @@ class GameScene: SKScene {
     let tilesize = CGSizeMake(64, 64)
     var framescale: CGFloat!
     var gameTimer: NSTimer!
-
     //    var defaults: NSUserDefaults!
     
     var touchType: TouchType = .Energy
-    var topLayer = TopLayer()
-    var buildingSelectLayer = BuildingSelectLayer()
-    var buttonLayer = ButtonLayer()
-    var bottomLayer = BottomLayer()
-    var reserchLayer = ReserchLayer()
+    var topLayer: TopLayer!
+    var buildingSelectLayer: BuildingSelectLayer!
+    var buttonLayer: ButtonLayer!
+    var bottomLayer: BottomLayer!
+    var reserchLayer: ReserchLayer!
     
     var info_Building: Building!
     
@@ -51,53 +50,69 @@ class GameScene: SKScene {
         // initial Build Level
         for count in 0..<BuildType.BuildMenuLength.hashValue { buildLevel[BuildType(rawValue: count)!] = 0 }
         setBuildLevel(.Wind, level: 1)
+
+        // Building Map Layer
+        let buildingMapLayer = BuildingMapLayer()
+        buildingMapLayer.configureAtPosition(CGPoint(x: 0, y: 0), maplevel: .One)
+        buildingMapLayers.append(buildingMapLayer)
+        buildingMapLayer.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Wind)
+        
+        let buildingMapLayer2 = BuildingMapLayer()
+        buildingMapLayer2.configureAtPosition(CGPoint(x: 0, y: 0), maplevel: .Two)
+        buildingMapLayers.append(buildingMapLayer2)
+    
+        // Load thid Map Page
+        loadNowMapPlayPage()
+    }
+    
+    func loadNowMapPlayPage() {
+        // Remove All
+        removeAllChildren()
         
         // Top Layer
         let topLayerSize = CGSizeMake(frame.size.width, topsize.height * tilesScaleSize.height)
         let topLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayerSize.height)
+        topLayer = TopLayer()
         topLayer.configureAtPosition(topLayerPosition, size: topLayerSize)
         topLayer.zPosition = 200
         addChild(topLayer)
         
         // Building Map Layer
-        let buildingMapLayer_1 = BuildingMapLayer()
-        let buildingMapLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
-        buildingMapLayer_1.configureAtPosition(buildingMapLayerPosition, maplevel: .One)
-        buildingMapLayer_1.setScale(framescale)
-        buildingMapLayer_1.zPosition = 1
-        addChild(buildingMapLayer_1)
-        buildingMapLayers.append(buildingMapLayer_1)
-        
-        buildingMapLayer_1.setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Wind)
-        buildingMapLayer_1.setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Wind)
-        buildingMapLayer_1.setTileMapElement(coord: CGPoint(x: 2, y: 0), buildType: .Wind)
+        buildingMapLayers[nowMapNumber].position = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
+        buildingMapLayers[nowMapNumber].setScale(framescale)
+        buildingMapLayers[nowMapNumber].zPosition = 1
+        addChild(buildingMapLayers[nowMapNumber])
         
         // Button Layer
         let buttonLayerSize = CGSizeMake(frame.size.width, 100)
+        buttonLayer = ButtonLayer()
         buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
         buttonLayer.zPosition = 200
         addChild(buttonLayer)
         
         // Building Select Layer
-        let buildingSelectLayerSize = buildingMapLayer_1.size
+        let buildingSelectLayerSize = buildingMapLayers[nowMapNumber].size
         let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
+        buildingSelectLayer = BuildingSelectLayer()
         buildingSelectLayer.configureAtPosition(buildingSelectLayerPosition, midSize: buildingSelectLayerSize)
         buildingSelectLayer.zPosition = 50
         addChild(buildingSelectLayer)
         buildingSelectLayer.showPage(false)
-
-        info_Building = buildingMapLayer_1.buildingForCoord(CGPoint(x: 0, y: 0))!
+        
+        info_Building = buildingMapLayers[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
         
         //  Reserch Layer
-        let reserchLayerSize = buildingMapLayer_1.size
+        let reserchLayerSize = buildingMapLayers[nowMapNumber].size
         let reserchLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
+        reserchLayer = ReserchLayer()
         reserchLayer.configureAtPosition(reserchLayerPosition, midSize: reserchLayerSize)
         reserchLayer.zPosition = 50
         addChild(reserchLayer)
         
         // Bottom Layer
-        let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - buildingMapLayer_1.size.height - buttonLayer.size.height)
+        let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - buildingMapLayers[nowMapNumber].size.height - buttonLayer.size.height)
         let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
+        bottomLayer = BottomLayer()
         bottomLayer.configureAtPosition(bottomLayerPosition, size: bottomLayerSize)
         bottomLayer.zPosition = 100
         addChild(bottomLayer)
@@ -178,16 +193,20 @@ class GameScene: SKScene {
             let nodes = nodesAtPoint(location)
             for node in nodes {
                 if node.hidden { return }
-//                print(node)
+                print(node)
 
                 switch node {
                     
                 // Button
                 case topLayer.buttonMenu:
                     print("Menu Button")
+                    nowMapNumber = 0
+                    loadNowMapPlayPage()
                     
                 case topLayer.buttonRebuild:
                     print("Rebuild Button")
+                    nowMapNumber = 1
+                    loadNowMapPlayPage()
                     
                 case buttonLayer.buttonBuild:
                     print("Build Button")
@@ -367,13 +386,14 @@ class GameScene: SKScene {
     }
    
     func tickUpdata() {
-        // Update map data
-        buildingMapLayers[nowMapNumber].Update()
+        for i in 0...1 {
+            // Update map data
+            buildingMapLayers[i].Update()
+            // Calculate money and reserch
+            money += buildingMapLayers[i].money_TickAdd
+            reserch += buildingMapLayers[i].reserch_TickAdd
+        }
         
-        // Calculate money and reserch
-        money += buildingMapLayers[nowMapNumber].money_TickAdd
-        reserch += buildingMapLayers[nowMapNumber].reserch_TickAdd
-
 //        save()
     }
 //    func save() {
