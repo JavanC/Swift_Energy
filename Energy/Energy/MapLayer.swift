@@ -8,20 +8,13 @@
 
 import SpriteKit
 
-enum BuildType: Int {
-    case Nil, Wind, Fire, Generator, Office, BuildMenuLength
-}
-
 class BuildingData {
     enum ProgressType {
         case Time, Hot, Water
     }
     var imageName: String!
-    var buildType: BuildType = .Nil
+    var buildType: BuildingType = .Nil
     var buildPrice: Int!
-    var buildLevel: Int!
-    var nextLevelPrice: Int!
-    var reserchPrice: Int!
     var rebuild: Bool = true
     var progress: ProgressType!
     
@@ -46,85 +39,78 @@ class BuildingData {
     var isHot2Energy: Bool = false
     var hot2Energy_Max: Int!
     
-    init(buildType: BuildType, level: Int = 0) {
+    init(buildType: BuildingType) {
         self.buildType = buildType
-        self.rebuild = (level / 1000 >= 1 ? true : false)
-        self.buildLevel = level % 1000
-        
         if buildType == .Nil {
             imageName = "block"
+            rebuild = false
         }
         if buildType == .Wind {
             imageName = "風力"
             buildPrice = 1
-            nextLevelPrice = 1 * buildLevel
-            reserchPrice = 1
             progress = .Time
             
             time_Max = 5
             time_Current = 5
          
-            hot_Produce = 1 * buildLevel
-            hot_Max = 10 * buildLevel
+            hot_Produce = 1
+            hot_Max = 10
             hot_Current = 0
             isHot2Energy = true
-            hot2Energy_Max = 1 * buildLevel
+            hot2Energy_Max = 1
             
             energy_Current = 0
+
         }
         if buildType == .Fire {
             imageName = "火力"
             buildPrice = 20
-            nextLevelPrice = 2 * buildLevel
-            reserchPrice = 1
             progress = .Time
             hot_IsOutput = true
             
             time_Max = 10
             time_Current = 10
             
-            hot_Produce = 20 * buildLevel
+            hot_Produce = 20
             hot_Max = 1
             hot_Current = 0
+
         }
         if buildType == .Generator {
             imageName = "發電機1"
             buildPrice = 50
-            nextLevelPrice = 3 * buildLevel
-            reserchPrice = 1
             progress = .Hot
             hot_IsInput = true
             isHot2Energy = true
             
             energy_Current = 0
-            hot2Energy_Max = 10 * buildLevel
+            hot2Energy_Max = 10
             
-            hot_Max = 400 * buildLevel
+            hot_Max = 400
             hot_Current = 100
+
         }
         if buildType == .Office {
             imageName = "辦公室1"
             buildPrice = 10
-            nextLevelPrice = 4 * buildLevel
-            reserchPrice = 1
             hot_IsInput = true
             
             hot_Max = 10
             hot_Current = 0
             
-            money_Sales = 5 * buildLevel
+            money_Sales = 5
+
         }
     }
     
-    func buildingImage(name: String) -> SKSpriteNode {
-        let buildingImage = SKSpriteNode(imageNamed: BuildingData(buildType: buildType).imageName)
+    func image(name: String) -> SKSpriteNode {
+        let buildingImage = SKSpriteNode(imageNamed: imageName)
         buildingImage.name = name
         buildingImage.size = tilesScaleSize
         return buildingImage
     }
     
-    
-    func buildingInfo(buildType: BuildType) -> [String] {
+    func buildingInfo() -> [String] {
         var info = [String]()
         if buildType == .Wind {
             info.append("Time: \(time_Current) / \(time_Max)")
@@ -148,25 +134,6 @@ class BuildingData {
         }
         return info
     }
-    
-    func buildingLevelInfo(buildMenu: BuildType) -> [String] {
-        var info = [String]()
-        info.append("\(buildMenu)  Lv.\(buildLevel) ")
-        info.append("Next:\(nextLevelPrice)$")
-        if buildType == .Wind {
-            info.append("123123123123123")
-        }
-        if buildType == .Fire {
-            info.append("123123123123123")
-        }
-        if buildType == .Generator {
-            info.append("123123123123123")
-        }
-        if buildType == .Office {
-            info.append("123123123123123")
-        }
-        return info
-    }
 }
 
 class Building: SKNode {
@@ -180,12 +147,11 @@ class Building: SKNode {
     var progressBack: SKSpriteNode!
     var progress: SKSpriteNode!
 
-    func configureAtCoord(coord: CGPoint, buildType: BuildType) {
+    func configureAtCoord(coord: CGPoint, buildType: BuildingType) {
         self.coord = coord
         name = String(buildType.hashValue)
-        
-        let nowLevel = getBuildLevel(buildType)
-        buildingData = BuildingData(buildType: buildType, level: nowLevel)
+
+        buildingData = BuildingData(buildType: buildType)
         buildingNode = SKSpriteNode(imageNamed: buildingData.imageName)
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(buildingNode)
@@ -246,9 +212,6 @@ class Building: SKNode {
 
 class BuildingMapLayer: SKSpriteNode {
     
-    enum MapLevel {
-        case One, Two
-    }
     var origin: CGPoint!
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 11)
@@ -260,16 +223,13 @@ class BuildingMapLayer: SKSpriteNode {
     var energyMax: Int = 100
     
     // MARK: Configure At Position
-    func configureAtPosition(position: CGPoint, maplevel: MapLevel) {
+    func configureAtPosition(position: CGPoint) {
         self.origin = position
         self.position = position
         self.color = SKColor.whiteColor()
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
         self.anchorPoint = CGPoint(x: 0, y: 1)
-        
-        if maplevel == .One {
-            self.name = "level_One"
-        }
+        self.name = "MapLayer"
         
         // Initialization map
         for _ in 0 ..< Int(mapSize.height) {
@@ -312,7 +272,7 @@ class BuildingMapLayer: SKSpriteNode {
     }
     
     // MARK: Set tiles by word in coord
-    func setTileMapElement(coord coord: CGPoint, buildType: BuildType) {
+    func setTileMapElement(coord coord: CGPoint, buildType: BuildingType) {
         let x = Int(coord.x)
         let y = Int(coord.y)
         
@@ -388,7 +348,7 @@ class BuildingMapLayer: SKSpriteNode {
                 }
             }
         }
-        
+
         // 3. Hot Consume
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {

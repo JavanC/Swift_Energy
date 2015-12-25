@@ -2,7 +2,7 @@
 //  GameViewController.swift
 //  Energy
 //
-//  Created by javan.chen on 2015/12/1.
+//  Created by javan.chen on 2015/12/25.
 //  Copyright (c) 2015年 Javan chen. All rights reserved.
 //
 
@@ -19,20 +19,16 @@ class GameViewController: UIViewController {
         super.viewWillLayoutSubviews()
         
         let skView = self.view as! SKView
-        
-        let scale:CGFloat = UIScreen.mainScreen().scale
-        let size = CGSizeMake(skView.frame.width * scale, skView.frame.height * scale)
-        
         if (skView.scene == nil) {
-            if let scence = GameScene(fileNamed: "GameScene") {
-                // Configure the view
-                skView.showsFPS = true
-                skView.showsNodeCount = true
-                skView.ignoresSiblingOrder = true
-                scence.scaleMode = .AspectFill
-                scence.size = size
-                skView.presentScene(scence)
-            }
+            let scale:CGFloat = UIScreen.mainScreen().scale
+            let size = CGSizeMake(skView.frame.width * scale, skView.frame.height * scale)
+            let scence = MenuScene(size: size)
+            // Configure the view
+            skView.showsFPS = true
+            skView.showsNodeCount = true
+            skView.ignoresSiblingOrder = true
+            scence.scaleMode = .AspectFill
+            skView.presentScene(scence)
         }
     }
 

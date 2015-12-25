@@ -20,7 +20,7 @@ class PageInformation: SKSpriteNode {
         self.name = "PageInformation"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        let infoImage = BuildingData(buildType: .Nil).buildingImage("infoImage")
+        let infoImage = BuildingData(buildType: .Nil).image("infoImage")
         infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: size.height / 2)
         addChild(infoImage)
         
@@ -42,28 +42,26 @@ class PageInformation: SKSpriteNode {
         
         let infoImagePosition = childNodeWithName("infoImage")?.position
         childNodeWithName("infoImage")?.removeFromParent()
-        let infobuildType = building.buildingData.buildType
-        let infoImage = BuildingData(buildType: infobuildType).buildingImage("infoImage")
+        let infoImage = building.buildingData.image("infoImage")
         infoImage.position = infoImagePosition!
         addChild(infoImage)
         
-        let labels = building.buildingData.buildingInfo(infobuildType)
+        let labels = building.buildingData.buildingInfo()
+        
         for i in 0..<5 {
             info[i].text = (i < labels.count ? labels[i] : "")
         }
     }
     
-    func nowLevelImformation(buildType: BuildType) {
+    func nowLevelImformation(buildType: BuildingType) {
         
         let infoImagePosition = childNodeWithName("infoImage")?.position
         childNodeWithName("infoImage")?.removeFromParent()
-        let infoImage = BuildingData(buildType: buildType).buildingImage("infoImage")
+        let infoImage = BuildingData(buildType: buildType).image("infoImage")
         infoImage.position = infoImagePosition!
         addChild(infoImage)
         
-        let nowLevel = getBuildLevel(buildType)
-        let data = BuildingData(buildType: buildType, level: nowLevel)
-        let labels = data.buildingInfo(buildType)
+        let labels = BuildingData(buildType: buildType).buildingInfo()
         for i in 0..<5 {
             info[i].text = (i < labels.count ? labels[i] : "")
         }
@@ -74,7 +72,7 @@ class PageBuild: SKSpriteNode {
     
     var selectNumber: Int = 1
     var imagePosition = [CGPoint]()
-    var buildMenu: [BuildType] = [.Wind, .Fire, .Generator, .Office]
+    var buildMenu: [BuildingType] = [.Wind, .Fire, .Generator, .Office]
     var images = [SKSpriteNode]()
     var selectBox: SKSpriteNode!
     var selectInfo = PageInformation()
@@ -91,7 +89,7 @@ class PageBuild: SKSpriteNode {
             imagePosition.append(CGPoint(x: gap * CGFloat(i) + tilesScaleSize.width * (0.5 + CGFloat(i - 1)), y: size.height / 2))
         }
         for i in 1...4 {
-            let image = BuildingData(buildType: buildMenu[i - 1]).buildingImage("SelectImage\(i)")
+            let image = BuildingData(buildType: buildMenu[i - 1]).image("SelectImage\(i)")
             image.position = imagePosition[i - 1]
             images.append(image)
             addChild(image)
@@ -111,18 +109,18 @@ class PageBuild: SKSpriteNode {
         selectInfo.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
         selectInfo.name = "SelectInformation"
         selectInfo.nowLevelImformation(buildMenu[selectNumber - 1])
-        selectInfo.alpha = 0
+        selectInfo.alpha = 1
         selectInfo.hidden = true
         addChild(selectInfo)
     }
     
-    func changeSelectBuildType(buildType: BuildType) {
+    func changeSelectBuildType(buildType: BuildingType) {
         buildMenu[selectNumber - 1] = buildType
         selectInfo.nowLevelImformation(buildType)
         
         let imgPosition = childNodeWithName("SelectImage\(selectNumber)")?.position
         childNodeWithName("SelectImage\(selectNumber)")?.removeFromParent()
-        let image = BuildingData(buildType: buildType).buildingImage("SelectImage\(selectNumber)")
+        let image = BuildingData(buildType: buildType).image("SelectImage\(selectNumber)")
         image.position = imgPosition!
         images[selectNumber - 1] = image
         addChild(image)
