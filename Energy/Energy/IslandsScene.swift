@@ -35,7 +35,7 @@ class IslandsScene: SKScene {
             if map1Button.containsPoint(location) {
                 print("tap Map1")
                 let nextScene = IslandScene(size: self.size)
-                let doors = SKTransition.doorsOpenVerticalWithDuration(1)
+                let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(nextScene, transition: doors)
             }
         }

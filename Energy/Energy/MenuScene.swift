@@ -64,7 +64,7 @@ class MenuScene: SKScene {
             if stertGameButton.containsPoint(location) {
                 print("tap")
                 let nextScene = IslandsScene(size: self.size)
-                let doors = SKTransition.doorsOpenVerticalWithDuration(1)
+                let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(nextScene, transition: doors)
             }
         }

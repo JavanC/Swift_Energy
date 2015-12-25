@@ -31,6 +31,7 @@ class IslandScene: SKScene {
     var info_Building: Building!
     
     override func didMoveToView(view: SKView) {
+        
         framescale = frame.size.width / (midTileSize.width * 64)
         tilesScaleSize = CGSize(width: tilesize.width * framescale, height: tilesize.width * framescale)
         gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
@@ -126,12 +127,12 @@ class IslandScene: SKScene {
                 // Button
                 case topLayer.buttonMenu:
                     print("Menu Button")
+                    let prevScene = IslandsScene(size: self.size)
+                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
+                    self.view?.presentScene(prevScene, transition: doors)
                     
                 case topLayer.buttonRebuild:
                     print("Rebuild Button")
-                    maps[nowMapNumber].Update()
-                    print(maps[0].buildingForCoord(CGPoint(x: 1, y: 1))?.buildingData.hot_Current)
-                    
                     
                 case buttonLayer.buttonBuild:
                     print("Build Button")
