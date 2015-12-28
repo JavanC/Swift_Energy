@@ -100,7 +100,6 @@ class UpgradeElement: SKNode {
     }
 }
 
-
 class UpgradeScene: SKScene {
     
     var contentCreated: Bool = false
@@ -180,12 +179,10 @@ class UpgradeScene: SKScene {
                 if nextPage.containsPoint(location) {
                     nowPage++
                     upgradeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
-                    print(nowPage)
                 }
                 if prevPage.containsPoint(location) {
                     nowPage--
                     upgradeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
-                    print(nowPage)
                 }
                 if node.name == "Upgrade" {
                     let element = (node.parent as! UpgradeElement)
@@ -193,8 +190,6 @@ class UpgradeScene: SKScene {
                     let type = element.upgradeType
                     money -= price
                     upgradeLevel[type]!++
-                    
-                    print(upgradeLevel[type])
                 }
                 if node.name == "Degrade" {
                     let element = (node.parent as! UpgradeElement)
@@ -202,7 +197,6 @@ class UpgradeScene: SKScene {
                     let type = element.upgradeType
                     money += price
                     upgradeLevel[type]!--
-                    print(upgradeLevel[type])
                 }
             }
         }

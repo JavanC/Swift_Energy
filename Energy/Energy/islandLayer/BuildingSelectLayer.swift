@@ -8,107 +8,88 @@
 
 import SpriteKit
 
-class BuildingSelectElement: SKSpriteNode {
+class BuildingSelectElement: SKNode {
 
-    var buildingUpgrade = SKSpriteNode()
-    var buildingDegrade = SKSpriteNode()
+    var background: SKSpriteNode!
     var buildType: BuildingType!
     
-    func configureAtPosition(buildType: BuildingType, position: CGPoint, size: CGSize) {
-        self.name = "BuildingSelectElement"
+    init(buildType: BuildingType, size: CGSize) {
         self.buildType = buildType
-        self.position = position
-        self.size = size
-        self.color = SKColor.grayColor()
-        self.anchorPoint = CGPoint(x: 0, y: 0)
+        super.init()
         
-        let gap: CGFloat = 20
-        let buildingImage = BuildingData(buildType: buildType).image("\(self.name)_Image")
-        buildingImage.anchorPoint = CGPoint(x: 0, y: 0.5)
-        buildingImage.position = CGPoint(x: gap, y: size.height / 2)
-        addChild(buildingImage)
-        
-        let infoGap: CGFloat = 8
-        let infoSize = (size.height - infoGap * 4) / 3
-        let levelInfo = ["123123", "12312312", "123123123123"]
-        for i in 1...3 {
-            let label = SKLabelNode(fontNamed: "Verdana-Bold")
-            label.name = "info\(CGFloat(i))"
-            label.text = levelInfo[i - 1]
-            label.fontSize = infoSize
-            label.horizontalAlignmentMode = .Left
-            label.position = CGPoint(x: tilesScaleSize.width + gap * 2, y: infoGap * (4 - CGFloat(i)) + infoSize * (3 - CGFloat(i)))
-            addChild(label)
-        }
-        
-        buildingUpgrade = SKSpriteNode(color: SKColor.greenColor(), size: buildingImage.size)
-        buildingUpgrade.name = "Upgrade"
-        buildingUpgrade.anchorPoint = CGPoint(x: 1, y: 0.5)
-        buildingUpgrade.position = CGPoint(x: size.width - gap, y: size.height / 2)
-        addChild(buildingUpgrade)
-        
-//        if money < BuildingData(buildType: buildType).nextLevelPrice {
-//            buildingUpgrade.color = SKColor.blackColor()
-//        }
-        
-//        if nowLevel > 1 {
-//            buildingDegrade = SKSpriteNode(color: SKColor.redColor(), size: buildingImage.size)
-//            buildingDegrade.name = "Degrade"
-//            buildingDegrade.anchorPoint = CGPoint(x: 1, y: 0.5)
-//            buildingDegrade.position = CGPoint(x: size.width - gap * 2 - buildingImage.size.width, y: size.height / 2)
-//            addChild(buildingDegrade)
-//        }
+        // background
+        background = SKSpriteNode(color: SKColor.grayColor(), size: size)
+        background.name = "BuildingSelectElement"
+        background.size = size
+        background.anchorPoint = CGPoint(x: 0, y: 0)
+        addChild(background)
+        // image
+        let gap = (size.height - tilesScaleSize.height) / 2
+        let image = BuildingData(buildType: buildType).image("image")
+        image.position = CGPoint(x: gap + image.size.width / 2, y: size.height / 2)
+        addChild(image)
+        // label 1
+        let text = ["ewrer", "12312312312"]
+        let labelgap: CGFloat = 10
+        let labelsize = (image.size.height - labelgap) / 2
+        let label1 = SKLabelNode(fontNamed: "Verdana-Bold")
+        label1.name = "label1"
+        label1.text = text[0]
+        label1.horizontalAlignmentMode = .Left
+        label1.position = CGPoint(x: gap * 2 + image.size.width, y: gap + labelsize + labelgap)
+        addChild(label1)
+        // label 2
+        let label2 = SKLabelNode(fontNamed: "Verdana-Bold")
+        label2.name = "label2"
+        label2.text = text[1]
+        label2.horizontalAlignmentMode = .Left
+        label2.position = CGPoint(x: gap * 2 + image.size.width, y: gap)
+        addChild(label2)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
 class BuildingSelectLayer: SKSpriteNode {
     
-    var show: Bool = false
     var origin: CGPoint!
-    let gap: CGFloat = 20
-    var selectElementSize: CGSize!
-    var elements = [BuildingSelectElement]()
+    var show: Bool = false
+    var selectLayer: SKSpriteNode!
     
     func configureAtPosition(position: CGPoint, midSize: CGSize) {
-        origin = position
-        self.position = CGPoint(x: origin.x, y: origin.y - 2 * midSize.height)
+        self.origin = position
+        self.position = CGPoint(x: origin.x, y: origin.y - midSize.height * 2)
         self.size = CGSizeMake(midSize.width * 4, midSize.height)
         self.name = "BuildingSelectLayer"
         self.color = SKColor.blackColor()
         self.anchorPoint = CGPoint(x: 0, y: 0)
-        
-        let selectElementNumber: CGFloat = 6
-        let selectElementHeight = (self.size.height - gap * (selectElementNumber + 1)) / selectElementNumber
-        selectElementSize = CGSizeMake(self.size.width / 4 - 2 * gap, selectElementHeight)
         
         updateBuildingSelectPage()
     }
     
     // Update building select page
     func updateBuildingSelectPage() {
-        elements.removeAll()
         removeAllChildren()
-        let page1:[BuildingType] = [.Wind, .Fire, .Office]
-        for (count, buildType) in page1.enumerate() {
-//            let buildlevel = getBuildLevel(buildType)
-//            if buildlevel > 0 {
-                let position = CGPoint(x: gap, y: self.size.height - (gap + selectElementSize.height) * CGFloat(count + 1))
-                let sptireNode = BuildingSelectElement()
-                sptireNode.configureAtPosition(buildType, position: position, size: selectElementSize)
-                elements.append(sptireNode)
-                addChild(sptireNode)
-//            }
+        // Caculae Position
+        var positions = [CGPoint]()
+        let gap:CGFloat = 20
+        let num:CGFloat = 6
+        let elementsize = CGSizeMake(frame.size.width - gap * 2, (self.size.height - gap) / num - gap)
+        for x in 0..<4 {
+            for y in 0..<Int(num) {
+                positions.append(CGPoint(x: gap + frame.size.width * CGFloat(x), y: self.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
+            }
         }
-        let page2:[BuildingType] = [.Wind, .Wind, .Wind, .Fire, .Office]
-        for (count, buildType) in page2.enumerate() {
-//            let buildlevel = getBuildLevel(buildType)
-//            if buildlevel > 0 {
-                let position = CGPoint(x: gap + size.width / 4, y: self.size.height - (gap + selectElementSize.height) * CGFloat(count + 1))
-                let sptireNode = BuildingSelectElement()
-                sptireNode.configureAtPosition(buildType, position: position, size: selectElementSize)
-                elements.append(sptireNode)
-                addChild(sptireNode)
-//            }
+
+        let selects:[BuildingType] = [.Wind, .Fire, .Office]
+        
+        // page 1
+        for count in 0...2 {
+            let sptireNode = BuildingSelectElement(buildType: .Fire, size: elementsize)
+            sptireNode.position = positions[count]
+            addChild(sptireNode)
         }
     }
     

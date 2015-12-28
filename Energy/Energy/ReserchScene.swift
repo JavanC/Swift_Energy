@@ -8,12 +8,10 @@
 
 import SpriteKit
 
-
 class ReserchElement: SKNode {
     
     var background: SKSpriteNode!
     var buttonUpgrade: SKSpriteNode!
-    var buttonDegrade: SKSpriteNode!
     var reserchType: ReserchType!
     var reserchPrice: Int!
     var reserchDone: Bool = false
@@ -182,21 +180,17 @@ class ReserchScene: SKScene {
                 if nextPage.containsPoint(location) {
                     nowPage++
                     reserchdeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
-                    print(nowPage)
                 }
                 if prevPage.containsPoint(location) {
                     nowPage--
                     reserchdeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
-                    print(nowPage)
                 }
                 if node.name == "Upgrade" {
                     let element = (node.parent as! ReserchElement)
                     let price = element.reserchPrice
                     let type = element.reserchType
-                    money -= price
+                    reserch -= price
                     reserchLevel[type]!++
-                    
-                    print(reserchLevel[type])
                 }
             }
         }

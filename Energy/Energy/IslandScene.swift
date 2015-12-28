@@ -252,8 +252,10 @@ class IslandScene: SKScene {
                     for node in nodes {
                         if node.hidden { return }
                         if node.name == "BuildingSelectElement" {
+                            print("1234123412341234")
                             let buildType = (node as! BuildingSelectElement).buildType
-                            bottomLayer.pageBuild.changeSelectBuildType(buildType)
+                            print(buildType)
+//                            bottomLayer.pageBuild.changeSelectBuildType(buildType)
                         }
 //                        if node.name == "Upgrade" {
 //                            let buildType = (node.parent as! BuildingSelectElement).buildType
