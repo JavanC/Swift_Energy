@@ -124,13 +124,12 @@ class IslandScene: SKScene {
             bottomLayer.showPageEnergy()
             
         case .Builded:
-            buildingSelectLayer.changePage(bottomLayer.pageBuild.selectNumber)
             buttonLayer.tapButtonBuild()
             bottomLayer.ShowPageBuild()
             
         case .Sell:
-            buttonLayer.tapButtonBuild()
-            bottomLayer.ShowPageBuild()
+            buttonLayer.tapButtonSell()
+            bottomLayer.showPageSell()
         }
     }
     
@@ -153,10 +152,7 @@ class IslandScene: SKScene {
                     
                 case buttonLayer.buttonBuild:
                     print("Build Button")
-                    changeTouchTypeAndShowPage((buttonLayer.buttonStatus != "build" ? .Builded : .Energy))
-                    if touchType == .Builded && bottomLayer.pageBuild.selectNumber == 5{
-                        changeTouchTypeAndShowPage(.Sell)
-                    }
+                    changeTouchTypeAndShowPage(.Builded)
                     
                 case buttonLayer.buttonEnergy:
                     print("Energy Button")
@@ -164,6 +160,10 @@ class IslandScene: SKScene {
                     
                 case buttonLayer.buttonReserch:
                     print("Reserch Button")
+                    
+                case buttonLayer.buttonSell:
+                    print("Sell Button")
+                    changeTouchTypeAndShowPage(.Sell)
                 
                 // Energy Page
                 case bottomLayer.pageEnergy.energy_ProgressBack:
@@ -176,30 +176,25 @@ class IslandScene: SKScene {
                     print("Builded image1")
                     if bottomLayer.pageBuild.selectNumber == 1 { showBuildSelectPage(); break }
                     bottomLayer.pageBuild.changeSelectNumber(1)
-                    changeTouchTypeAndShowPage(.Builded)
                     
                 case bottomLayer.pageBuild.images[1]:
                     print("Builded image2")
                     if bottomLayer.pageBuild.selectNumber == 2 { showBuildSelectPage(); break }
                     bottomLayer.pageBuild.changeSelectNumber(2)
-                    changeTouchTypeAndShowPage(.Builded)
                     
                 case bottomLayer.pageBuild.images[2]:
                     print("Builded image3")
                     if bottomLayer.pageBuild.selectNumber == 3 { showBuildSelectPage(); break }
                     bottomLayer.pageBuild.changeSelectNumber(3)
-                    changeTouchTypeAndShowPage(.Builded)
                     
                 case bottomLayer.pageBuild.images[3]:
                     print("Builded image4")
                     if bottomLayer.pageBuild.selectNumber == 4 { showBuildSelectPage(); break }
                     bottomLayer.pageBuild.changeSelectNumber(4)
-                    changeTouchTypeAndShowPage(.Builded)
                     
                 case bottomLayer.pageBuild.images[4]:
                     print("Sell image")
-                    bottomLayer.pageBuild.changeSelectNumber(5)
-                    changeTouchTypeAndShowPage(.Sell)
+                    // rebuild switch
                     
                 case bottomLayer.pageBuild.selectInfo:
                     print("Builded select info")

@@ -10,7 +10,6 @@ import SpriteKit
 
 class ButtonLayer: SKSpriteNode {
 
-    var buttonStatus: String!
     var buttonBuild: SKSpriteNode!
     var buttonSell: SKSpriteNode!
     var buttonEnergy: SKSpriteNode!
@@ -58,27 +57,23 @@ class ButtonLayer: SKSpriteNode {
     }
     
     func tapButtonNil() {
-        buttonStatus = "nil"
         buttonBuild.alpha = 1
-        buttonReserch.alpha = 1
+        buttonSell.alpha = 1
         buttonEnergy.alpha = 1
     }
     func tapButtonBuild() {
-        buttonStatus = "build"
         buttonBuild.alpha = 0.6
-        buttonReserch.alpha = 1
+        buttonSell.alpha = 1
+        buttonEnergy.alpha = 1
+    }
+    func tapButtonSell() {
+        buttonBuild.alpha = 1
+        buttonSell.alpha = 0.6
         buttonEnergy.alpha = 1
     }
     func tapButtonEnergy() {
-        buttonStatus = "energy"
         buttonBuild.alpha = 1
-        buttonReserch.alpha = 1
+        buttonSell.alpha = 1
         buttonEnergy.alpha = 0.6
-    }
-    func tapButtonReserch() {
-        buttonStatus = "reserch"
-        buttonBuild.alpha = 1
-        buttonReserch.alpha = 0.6
-        buttonEnergy.alpha = 1
     }
 }

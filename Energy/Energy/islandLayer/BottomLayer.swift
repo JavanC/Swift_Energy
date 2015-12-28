@@ -219,58 +219,78 @@ class PageEnergy: SKSpriteNode {
     }
 }
 
-class PageReserch: SKSpriteNode {
+class PageSell: SKSpriteNode {
     
-    var nowPage: Int = 1
-    var maxPage: Int = 1
-    var nextPage: SKSpriteNode!
-    var prevPage: SKSpriteNode!
-    var pageLabel: SKLabelNode!
+    var sellLabel: SKLabelNode!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
         self.size = size
-        self.color = colorReserch
-        self.name = "PageReserch"
+        self.color = SKColor.yellowColor()
+        self.name = "PageSell"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        nextPage = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(size.height, size.height))
-        nextPage.name = "NextPage"
-        nextPage.position = CGPoint(x: size.width - nextPage.size.width / 2, y: size.height / 2)
-        addChild(nextPage)
-        prevPage = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(size.height, size.height))
-        prevPage.name = "PrevPage"
-        prevPage.position = CGPoint(x: prevPage.size.width / 2, y: size.height / 2)
-        addChild(prevPage)
-        let labelSize = size.height / 6
-        let gap = (size.height - labelSize) / 2
-        pageLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-        pageLabel.fontSize = labelSize
-        pageLabel.horizontalAlignmentMode = .Center
-        pageLabel.position = CGPoint(x: size.width / 2, y: gap)
-        addChild(pageLabel)
-        
-        changeMaxPage(1)
-    }
-    func changePage(pageNumber: Int) {
-        if pageNumber > maxPage || pageNumber < 1 { return }
-        nowPage = pageNumber
-        pageLabel.text = "\(nowPage) / \(maxPage)"
-        nextPage.hidden = (nowPage == maxPage ? true : false)
-        prevPage.hidden = (nowPage == 1 ? true : false)
-    }
-    func changeMaxPage(maxPageNumber: Int) {
-        maxPage = maxPageNumber
-        changePage(nowPage)
+        sellLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        sellLabel.name = "SellLabel"
+        sellLabel.fontSize = size.height / 6
+        sellLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        sellLabel.text = "Touch building to sell."
+        addChild(sellLabel)
     }
 }
+
+//class PageReserch: SKSpriteNode {
+//    
+//    var nowPage: Int = 1
+//    var maxPage: Int = 1
+//    var nextPage: SKSpriteNode!
+//    var prevPage: SKSpriteNode!
+//    var pageLabel: SKLabelNode!
+//    
+//    func configureAtPosition(position: CGPoint, size: CGSize) {
+//        self.position = position
+//        self.size = size
+//        self.color = colorReserch
+//        self.name = "PageReserch"
+//        self.anchorPoint = CGPoint(x: 0, y: 0)
+//        
+//        nextPage = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(size.height, size.height))
+//        nextPage.name = "NextPage"
+//        nextPage.position = CGPoint(x: size.width - nextPage.size.width / 2, y: size.height / 2)
+//        addChild(nextPage)
+//        prevPage = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(size.height, size.height))
+//        prevPage.name = "PrevPage"
+//        prevPage.position = CGPoint(x: prevPage.size.width / 2, y: size.height / 2)
+//        addChild(prevPage)
+//        let labelSize = size.height / 6
+//        let gap = (size.height - labelSize) / 2
+//        pageLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+//        pageLabel.fontSize = labelSize
+//        pageLabel.horizontalAlignmentMode = .Center
+//        pageLabel.position = CGPoint(x: size.width / 2, y: gap)
+//        addChild(pageLabel)
+//        
+//        changeMaxPage(1)
+//    }
+//    func changePage(pageNumber: Int) {
+//        if pageNumber > maxPage || pageNumber < 1 { return }
+//        nowPage = pageNumber
+//        pageLabel.text = "\(nowPage) / \(maxPage)"
+//        nextPage.hidden = (nowPage == maxPage ? true : false)
+//        prevPage.hidden = (nowPage == 1 ? true : false)
+//    }
+//    func changeMaxPage(maxPageNumber: Int) {
+//        maxPage = maxPageNumber
+//        changePage(nowPage)
+//    }
+//}
 
 class BottomLayer: SKSpriteNode {
 
     var pageInformation: PageInformation!
     var pageBuild: PageBuild!
     var pageEnergy: PageEnergy!
-    var pageReserch: PageReserch!
+    var pageSell: PageSell!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         
@@ -289,9 +309,9 @@ class BottomLayer: SKSpriteNode {
         pageEnergy = PageEnergy()
         pageEnergy.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
         addChild(pageEnergy)
-        pageReserch = PageReserch()
-        pageReserch.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
-        addChild(pageReserch)
+        pageSell = PageSell()
+        pageSell.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
+        addChild(pageSell)
         
         showPageEnergy()
     }
@@ -299,29 +319,29 @@ class BottomLayer: SKSpriteNode {
     func ShowPageInformation() {
         pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
         pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageReserch.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
+        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
             self.pageInformation.runAction(SKAction.moveToY(0, duration: 0.1))
         }
     }
     func ShowPageBuild() {
         pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
         pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageReserch.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
+        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
             self.pageBuild.runAction(SKAction.moveToY(0, duration: 0.1))
         }
     }
     func showPageEnergy() {
         pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
         pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageReserch.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
+        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
             self.pageEnergy.runAction(SKAction.moveToY(0, duration: 0.1))
         }
     }
-    func showPageReserch() {
+    func showPageSell() {
         pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
         pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
         pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
-            self.pageReserch.runAction(SKAction.moveToY(0, duration: 0.1))
+            self.pageSell.runAction(SKAction.moveToY(0, duration: 0.1))
         }
     }
 }
