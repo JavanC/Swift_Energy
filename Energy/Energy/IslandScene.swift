@@ -34,7 +34,7 @@ class IslandScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        // first initial
+        // First initial
         if !contentCreated {
             framescale = frame.size.width / (midTileSize.width * 64)
             tilesScaleSize = CGSize(width: tilesize.width * framescale, height: tilesize.width * framescale)
@@ -93,10 +93,8 @@ class IslandScene: SKScene {
             contentCreated = true
         }
         
-        // Show now map
-        for count in 0..<8 {
-            maps[count].hidden = true
-        }
+        // Only show now map
+        for count in 0..<8 { maps[count].hidden = true }
         maps[nowMapNumber].hidden = false
     }
     
@@ -192,8 +190,8 @@ class IslandScene: SKScene {
                     if bottomLayer.pageBuild.selectNumber == 4 { showBuildSelectPage(); break }
                     bottomLayer.pageBuild.changeSelectNumber(4)
                     
-                case bottomLayer.pageBuild.images[4]:
-                    print("Sell image")
+                case bottomLayer.pageBuild.rebuildButton:
+                    print("rebuild button")
                     // rebuild switch
                     
                 case bottomLayer.pageBuild.selectInfo:

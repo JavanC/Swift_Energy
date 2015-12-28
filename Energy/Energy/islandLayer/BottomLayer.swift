@@ -76,6 +76,7 @@ class PageBuild: SKSpriteNode {
     var images = [SKSpriteNode]()
     var selectBox: SKSpriteNode!
     var selectInfo = PageInformation()
+    var rebuildButton: SKSpriteNode!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
@@ -94,11 +95,10 @@ class PageBuild: SKSpriteNode {
             images.append(image)
             addChild(image)
         }
-        let image = SKSpriteNode(color: SKColor.yellowColor(), size: tilesScaleSize)
-        image.name = "SelectImage5"
-        image.position = imagePosition[4]
-        images.append(image)
-        addChild(image)
+        rebuildButton = SKSpriteNode(color: SKColor.greenColor(), size: tilesScaleSize)
+        rebuildButton.name = "SelectImage5"
+        rebuildButton.position = imagePosition[4]
+        addChild(rebuildButton)
 
         selectBox = SKSpriteNode(color: SKColor.redColor(), size: tilesScaleSize)
         selectBox.name = "selectBox"
@@ -129,9 +129,7 @@ class PageBuild: SKSpriteNode {
     func changeSelectNumber(selectNumber: Int) {
         self.selectNumber = selectNumber
         selectBox.position = imagePosition[selectNumber - 1]
-        if selectNumber != 5 {
-            selectInfo.nowLevelImformation(buildMenu[selectNumber - 1])
-        }
+        selectInfo.nowLevelImformation(buildMenu[selectNumber - 1])
     }
     
     func openSelectInformation() {
@@ -233,6 +231,7 @@ class PageSell: SKSpriteNode {
         sellLabel = SKLabelNode(fontNamed: "Verdana-Bold")
         sellLabel.name = "SellLabel"
         sellLabel.fontSize = size.height / 6
+        sellLabel.fontColor = SKColor.blackColor()
         sellLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
         sellLabel.text = "Touch building to sell."
         addChild(sellLabel)

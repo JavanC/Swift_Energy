@@ -221,6 +221,7 @@ class BuildingMapLayer: SKSpriteNode {
     var energy_TickAdd: Int = 0
     var energy: Int = 0
     var energyMax: Int = 100
+    var autoRebuild: Bool = true
     
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint) {
@@ -392,10 +393,14 @@ class BuildingMapLayer: SKSpriteNode {
                     }
                 } else {
                     // C. Rebuild
-                    if buildingData.rebuild {
-                        buildingData.time_Current = buildingData.time_Max
-                        building!.activate = true
-                        building!.alpha = 1
+                    if buildingData.rebuild && autoRebuild {
+                        let price = building!.buildingData.buildPrice!
+                        if price <= money {
+                            money -= price
+                            buildingData.time_Current = buildingData.time_Max
+                            building!.activate = true
+                            building!.alpha = 1
+                        }
                     }
                 }
                 // D. Update progress
