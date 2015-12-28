@@ -9,7 +9,12 @@
 import UIKit
 import SpriteKit
 
+var menuScene: SKScene!
+var islandsScene: SKScene!
+var islandScene: SKScene!
+
 class GameViewController: UIViewController {
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +27,17 @@ class GameViewController: UIViewController {
         if (skView.scene == nil) {
             let scale:CGFloat = UIScreen.mainScreen().scale
             let size = CGSizeMake(skView.frame.width * scale, skView.frame.height * scale)
-            let scence = MenuScene(size: size)
+            menuScene = MenuScene(size: size)
+            islandsScene = IslandsScene(size: size)
+            islandScene = IslandScene(size: size)
             // Configure the view
             skView.showsFPS = true
             skView.showsNodeCount = true
             skView.ignoresSiblingOrder = true
-            scence.scaleMode = .AspectFill
-            skView.presentScene(scence)
+            menuScene.scaleMode = .AspectFill
+            islandsScene.scaleMode = .AspectFill
+            islandScene.scaleMode = .AspectFill
+            skView.presentScene(menuScene)
         }
     }
 

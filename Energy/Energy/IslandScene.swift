@@ -12,6 +12,8 @@ var tilesScaleSize: CGSize!
 
 class IslandScene: SKScene {
     
+    var contentCreated: Bool = false
+    
     enum TouchType: Int {
         case Information, Energy, Builded, Sell
     }
@@ -32,54 +34,70 @@ class IslandScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        framescale = frame.size.width / (midTileSize.width * 64)
-        tilesScaleSize = CGSize(width: tilesize.width * framescale, height: tilesize.width * framescale)
-        gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
-        //        defaults = NSUserDefaults.standardUserDefaults()
+        // first initial
+        if !contentCreated {
+            framescale = frame.size.width / (midTileSize.width * 64)
+            tilesScaleSize = CGSize(width: tilesize.width * framescale, height: tilesize.width * framescale)
+            gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
+            //        defaults = NSUserDefaults.standardUserDefaults()
+            
+            // Top Layer
+            let topLayerSize = CGSizeMake(frame.size.width, topTileSize.height * tilesScaleSize.height)
+            let topLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayerSize.height)
+            topLayer = TopLayer()
+            topLayer.configureAtPosition(topLayerPosition, size: topLayerSize)
+            topLayer.zPosition = 200
+            addChild(topLayer)
+            
+            // Map Layer
+            let mapLayerSize = CGSizeMake(tilesScaleSize.width * midTileSize.width, tilesScaleSize.height * midTileSize.height)
+            for count in 0..<8 {
+                maps[count].position = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
+                maps[count].setScale(framescale)
+                maps[count].zPosition = 1
+                addChild(maps[count])
+            }
+            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Wind)
+            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: .Generator)
+            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: .Fire)
+            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 1), buildType: .Generator)
+            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Office)
+            maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Wind)
+            maps[1].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: .Generator)
+            maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: .Fire)
+            info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
+            
+            // Button Layer
+            let buttonLayerSize = CGSizeMake(frame.size.width, 100)
+            buttonLayer = ButtonLayer()
+            buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
+            buttonLayer.zPosition = 200
+            addChild(buttonLayer)
+            
+            // Bottom Layer
+            let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - mapLayerSize.height - buttonLayer.size.height)
+            let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
+            bottomLayer = BottomLayer()
+            bottomLayer.configureAtPosition(bottomLayerPosition, size: bottomLayerSize)
+            bottomLayer.zPosition = 100
+            addChild(bottomLayer)
+            
+            // Building Select Layer
+            let buildingSelectLayerSize = mapLayerSize
+            let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
+            buildingSelectLayer = BuildingSelectLayer()
+            buildingSelectLayer.configureAtPosition(buildingSelectLayerPosition, midSize: buildingSelectLayerSize)
+            buildingSelectLayer.zPosition = 50
+            addChild(buildingSelectLayer)
+            
+            contentCreated = true
+        }
         
-        // Top Layer
-        let topLayerSize = CGSizeMake(frame.size.width, topTileSize.height * tilesScaleSize.height)
-        let topLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayerSize.height)
-        topLayer = TopLayer()
-        topLayer.configureAtPosition(topLayerPosition, size: topLayerSize)
-        topLayer.zPosition = 200
-        addChild(topLayer)
-        
-        // Map Layer
-        maps[nowMapNumber].position = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
-        maps[nowMapNumber].setScale(framescale)
-        maps[nowMapNumber].zPosition = 1
-        addChild(maps[nowMapNumber])
-        maps[nowMapNumber].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Wind)
-        maps[nowMapNumber].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: .Generator)
-        maps[nowMapNumber].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: .Fire)
-        maps[nowMapNumber].setTileMapElement(coord: CGPoint(x: 2, y: 1), buildType: .Generator)
-        maps[nowMapNumber].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Office)
-        
-        // Button Layer
-        let buttonLayerSize = CGSizeMake(frame.size.width, 100)
-        buttonLayer = ButtonLayer()
-        buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
-        buttonLayer.zPosition = 200
-        addChild(buttonLayer)
-        
-        // Bottom Layer
-        let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - maps[nowMapNumber].size.height - buttonLayer.size.height)
-        let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
-        bottomLayer = BottomLayer()
-        bottomLayer.configureAtPosition(bottomLayerPosition, size: bottomLayerSize)
-        bottomLayer.zPosition = 100
-        addChild(bottomLayer)
-        
-        // Building Select Layer
-        let buildingSelectLayerSize = maps[nowMapNumber].size
-        let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
-        buildingSelectLayer = BuildingSelectLayer()
-        buildingSelectLayer.configureAtPosition(buildingSelectLayerPosition, midSize: buildingSelectLayerSize)
-        buildingSelectLayer.zPosition = 50
-        addChild(buildingSelectLayer)
-        
-        info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
+        // Show now map
+        for count in 0..<8 {
+            maps[count].hidden = true
+        }
+        maps[nowMapNumber].hidden = false
     }
     
     func showBuildSelectPage() {
@@ -127,9 +145,8 @@ class IslandScene: SKScene {
                 // Button
                 case topLayer.buttonMenu:
                     print("Menu Button")
-                    let prevScene = IslandsScene(size: self.size)
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                    self.view?.presentScene(prevScene, transition: doors)
+                    self.view?.presentScene(islandsScene, transition: doors)
                     
                 case topLayer.buttonRebuild:
                     print("Rebuild Button")
@@ -197,7 +214,6 @@ class IslandScene: SKScene {
                     case .Information, .Energy:
                         if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                             info_Building = maps[nowMapNumber].buildingForCoord(coord)
-                            print(info_Building.buildingData.buildType)
                             changeTouchTypeAndShowPage(.Information)
                         }
                         

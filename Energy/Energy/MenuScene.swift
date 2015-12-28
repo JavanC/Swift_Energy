@@ -30,18 +30,21 @@ var nowMapNumber: Int = 0
 
 class MenuScene: SKScene {
     
+    var contentCreated: Bool = false
     var stertGameButton: SKLabelNode!
-    
+
     override func didMoveToView(view: SKView) {
-        self.backgroundColor = SKColor.whiteColor()
-        stertGameButton = SKLabelNode(fontNamed:"Verdana-Bold")
-        stertGameButton.text = "Stert Game"
-        stertGameButton.fontSize = 45
-        stertGameButton.fontColor = SKColor.blackColor()
-        stertGameButton.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
-        self.addChild(stertGameButton)
-        
-        initialLevelData()
+        if !contentCreated {
+            self.backgroundColor = SKColor.whiteColor()
+            stertGameButton = SKLabelNode(fontNamed:"Verdana-Bold")
+            stertGameButton.text = "Stert Game"
+            stertGameButton.fontSize = 45
+            stertGameButton.fontColor = SKColor.blackColor()
+            stertGameButton.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
+            self.addChild(stertGameButton)
+            initialLevelData()
+            contentCreated = true
+        }
     }
     
     func initialLevelData() {
@@ -63,9 +66,8 @@ class MenuScene: SKScene {
             let location = touch.locationInNode(self)
             if stertGameButton.containsPoint(location) {
                 print("tap")
-                let nextScene = IslandsScene(size: self.size)
                 let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                self.view?.presentScene(nextScene, transition: doors)
+                self.view?.presentScene(islandsScene, transition: doors)
             }
         }
     }
