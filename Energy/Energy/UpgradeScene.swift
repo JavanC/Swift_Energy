@@ -15,6 +15,7 @@ class UpgradeElement: SKNode {
     var buttonUpgrade: SKSpriteNode!
     var buttonDegrade: SKSpriteNode!
     var upgradeType: UpgradeType!
+    var upgradePrice: Int!
     
     init(upgradeType: UpgradeType, size: CGSize) {
         super.init()
@@ -30,32 +31,31 @@ class UpgradeElement: SKNode {
         var imageType: BuildingType!
         var text1: String!
         var text2: String!
-        var price: Int!
         let level = Int(upgradeLevel[upgradeType]!)
         switch upgradeType {
         case .Wind_Heat_Max:
             imageType = .Wind
             text1 = "Wind Lv.\(level)"
             text2 = "test123123"
-            price = 1
+            upgradePrice = 1
             
         case .Fire_Heat_Max:
             imageType = .Fire
             text1 = "Fire Lv.\(level)"
             text2 = "test123123"
-            price = 10
+            upgradePrice = 10
             
         case .Fire_Heat_Produce:
             imageType = .Fire
             text1 = "Fire Lv.\(level)"
             text2 = "test123123"
-            price = 100
+            upgradePrice = 100
             
         case .Office_Sell:
             imageType = .Office
             text1 = "Office Lv.\(level)"
             text2 = "test123123"
-            price = 1000
+            upgradePrice = 1000
             
         default: break
         }
@@ -81,11 +81,12 @@ class UpgradeElement: SKNode {
         label2.horizontalAlignmentMode = .Left
         label2.position = CGPoint(x: gap * 2 + image.size.width, y: gap)
         addChild(label2)
-        // Upgrade and Degrade button
-        buttonUpgrade = SKSpriteNode(color: (money > price ? SKColor.greenColor() : SKColor.blackColor()), size: tilesScaleSize)
-        buttonUpgrade.name = (money > price ? "Upgrade" : "")
+        // Upgrade Button
+        buttonUpgrade = SKSpriteNode(color: (money > upgradePrice ? SKColor.greenColor() : SKColor.blackColor()), size: tilesScaleSize)
+        buttonUpgrade.name = (money > upgradePrice ? "Upgrade" : "NoMoney")
         buttonUpgrade.position = CGPoint(x: size.width - gap - tilesScaleSize.width / 2, y: size.height / 2)
         addChild(buttonUpgrade)
+        // Degrade Button
         if level > 1 {
             buttonDegrade = SKSpriteNode(color: SKColor.redColor(), size: tilesScaleSize)
             buttonDegrade.name = "Degrade"
@@ -99,117 +100,27 @@ class UpgradeElement: SKNode {
     }
 }
 
-//        
-//        let gap: CGFloat = 20
-//        let buildingImage = BuildingData(buildType: buildType).image("\(self.name)_Image")
-//        buildingImage.anchorPoint = CGPoint(x: 0, y: 0.5)
-//        buildingImage.position = CGPoint(x: gap, y: size.height / 2)
-//        addChild(buildingImage)
-//        
-//        let infoGap: CGFloat = 8
-//        let infoSize = (size.height - infoGap * 4) / 3
-//        let levelInfo = ["123123", "12312312", "123123123123"]
-//        for i in 1...3 {
-//            let label = SKLabelNode(fontNamed: "Verdana-Bold")
-//            label.name = "info\(CGFloat(i))"
-//            label.text = levelInfo[i - 1]
-//            label.fontSize = infoSize
-//            label.horizontalAlignmentMode = .Left
-//            label.position = CGPoint(x: tilesScaleSize.width + gap * 2, y: infoGap * (4 - CGFloat(i)) + infoSize * (3 - CGFloat(i)))
-//            addChild(label)
-//        }
-//        
-//        buildingUpgrade = SKSpriteNode(color: SKColor.greenColor(), size: buildingImage.size)
-//        buildingUpgrade.name = "Upgrade"
-//        buildingUpgrade.anchorPoint = CGPoint(x: 1, y: 0.5)
-//        buildingUpgrade.position = CGPoint(x: size.width - gap, y: size.height / 2)
-//        addChild(buildingUpgrade)
-    
-        //        if money < BuildingData(buildType: buildType).nextLevelPrice {
-        //            buildingUpgrade.color = SKColor.blackColor()
-        //        }
-        
-        //        if nowLevel > 1 {
-        //            buildingDegrade = SKSpriteNode(color: SKColor.redColor(), size: buildingImage.size)
-        //            buildingDegrade.name = "Degrade"
-        //            buildingDegrade.anchorPoint = CGPoint(x: 1, y: 0.5)
-        //            buildingDegrade.position = CGPoint(x: size.width - gap * 2 - buildingImage.size.width, y: size.height / 2)
-        //            addChild(buildingDegrade)
-        //        }
-    
-//}
-//
-//class BuildingSelectLayer: SKSpriteNode {
-//    
-//    var show: Bool = false
-//    var origin: CGPoint!
-//    let gap: CGFloat = 20
-//    var selectElementSize: CGSize!
-//    var elements = [BuildingSelectElement]()
-//    
-//    func configureAtPosition(position: CGPoint, midSize: CGSize) {
-//        origin = position
-//        self.position = CGPoint(x: origin.x, y: origin.y - 2 * midSize.height)
-//        self.size = CGSizeMake(midSize.width * 4, midSize.height)
-//        self.name = "BuildingSelectLayer"
-//        self.color = SKColor.blackColor()
-//        self.anchorPoint = CGPoint(x: 0, y: 0)
-//        
-//        let selectElementNumber: CGFloat = 6
-//        let selectElementHeight = (self.size.height - gap * (selectElementNumber + 1)) / selectElementNumber
-//        selectElementSize = CGSizeMake(self.size.width / 4 - 2 * gap, selectElementHeight)
-//        
-//        updateBuildingSelectPage()
-//    }
-//    
-//    // Update building select page
-//    func updateBuildingSelectPage() {
-//        elements.removeAll()
-//        removeAllChildren()
-//        let page1:[BuildingType] = [.Wind, .Fire, .Office]
-//        for (count, buildType) in page1.enumerate() {
-//            //            let buildlevel = getBuildLevel(buildType)
-//            //            if buildlevel > 0 {
-//            let position = CGPoint(x: gap, y: self.size.height - (gap + selectElementSize.height) * CGFloat(count + 1))
-//            let sptireNode = BuildingSelectElement()
-//            sptireNode.configureAtPosition(buildType, position: position, size: selectElementSize)
-//            elements.append(sptireNode)
-//            addChild(sptireNode)
-//            //            }
-//        }
-//        let page2:[BuildingType] = [.Wind, .Wind, .Wind, .Fire, .Office]
-//        for (count, buildType) in page2.enumerate() {
-//            //            let buildlevel = getBuildLevel(buildType)
-//            //            if buildlevel > 0 {
-//            let position = CGPoint(x: gap + size.width / 4, y: self.size.height - (gap + selectElementSize.height) * CGFloat(count + 1))
-//            let sptireNode = BuildingSelectElement()
-//            sptireNode.configureAtPosition(buildType, position: position, size: selectElementSize)
-//            elements.append(sptireNode)
-//            addChild(sptireNode)
-//            //            }
-//        }
-//    }
 
 class UpgradeScene: SKScene {
     
     var contentCreated: Bool = false
     var backButton: SKLabelNode!
-    var elements = [UpgradeElement]()
-    var positions = [CGPoint]()
-    var upgradeLayer: SKSpriteNode!
-
     var nowPage: Int = 1
     var maxPage: Int = 1
     var nextPage: SKSpriteNode!
     var prevPage: SKSpriteNode!
+    var topLabel: SKLabelNode!
+    
+    var upgradeLayer: SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
         if !contentCreated {
-            let label = SKLabelNode(fontNamed: "Verdana-Bold")
-            label.fontSize = 30
-            label.text = "You have \(money)$ can be used!"
-            label.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - 50)
-            addChild(label)
+            
+            topLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+            topLabel.fontSize = 30
+            topLabel.text = "You have \(money)$ can be used!"
+            topLabel.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - 50)
+            addChild(topLabel)
             backButton = SKLabelNode(fontNamed: "Verdana-Bold")
             backButton.fontSize = 50
             backButton.text = "<Back>"
@@ -223,30 +134,37 @@ class UpgradeScene: SKScene {
             prevPage.name = "PrevPage"
             prevPage.position = CGPoint(x: prevPage.size.width / 2, y: 20 + prevPage.size.height / 2)
             addChild(prevPage)
-
             upgradeLayer = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(frame.size.width * 4, frame.size.height - 200))
             upgradeLayer.name = "UpgradeLayer"
             upgradeLayer.anchorPoint = CGPoint(x: 0, y: 0)
             upgradeLayer.position = CGPoint(x: 0, y: 100)
             addChild(upgradeLayer)
-            let gap:CGFloat = 20
-            let num:CGFloat = 8
-            let elementsize = CGSizeMake(frame.size.width - gap * 2, (upgradeLayer.size.height - gap) / num - gap)
-            for x in 0..<4 {
-                for y in 0..<Int(num) {
-                    positions.append(CGPoint(x: gap + frame.size.width * CGFloat(x), y: upgradeLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
-                }
-            }
-            for count in 0...17 {
-                let element = UpgradeElement(upgradeType: .Wind_Heat_Max, size: elementsize)
-                element.position = positions[count]
-                upgradeLayer.addChild(element)
-            }
-            
-            maxPage = 17 / 8 + 1
+            updateElement()
             
             contentCreated = true
         }
+    }
+    
+    func updateElement() {
+        upgradeLayer.removeAllChildren()
+        // Caculae Position
+        var positions = [CGPoint]()
+        let gap:CGFloat = 20
+        let num:CGFloat = 8
+        let elementsize = CGSizeMake(frame.size.width - gap * 2, (upgradeLayer.size.height - gap) / num - gap)
+        for x in 0..<4 {
+            for y in 0..<Int(num) {
+                positions.append(CGPoint(x: gap + frame.size.width * CGFloat(x), y: upgradeLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
+            }
+        }
+        // Add Element
+        for count in 0...17 {
+            let element = UpgradeElement(upgradeType: .Wind_Heat_Max, size: elementsize)
+            element.position = positions[count]
+            upgradeLayer.addChild(element)
+        }
+        // Caculate MaxPage
+        maxPage = 17 / 8 + 1
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -269,6 +187,23 @@ class UpgradeScene: SKScene {
                     upgradeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
                     print(nowPage)
                 }
+                if node.name == "Upgrade" {
+                    let element = (node.parent as! UpgradeElement)
+                    let price = element.upgradePrice
+                    let type = element.upgradeType
+                    money -= price
+                    upgradeLevel[type]!++
+                    
+                    print(upgradeLevel[type])
+                }
+                if node.name == "Degrade" {
+                    let element = (node.parent as! UpgradeElement)
+                    let price = element.upgradePrice
+                    let type = element.upgradeType
+                    money += price
+                    upgradeLevel[type]!--
+                    print(upgradeLevel[type])
+                }
             }
         }
     }
@@ -276,5 +211,7 @@ class UpgradeScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
+        topLabel.text = "You have \(money)$ can be used!"
+        updateElement()
     }
 }
