@@ -22,6 +22,7 @@
 		65386E3F1C2D1B0300D08B41 /* BuildingSelectLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E3E1C2D1B0300D08B41 /* BuildingSelectLayer.swift */; };
 		65572A861C30DFC200461802 /* MapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A851C30DFC200461802 /* MapLayer.swift */; };
 		65572A881C31058C00461802 /* UpgradeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A871C31058C00461802 /* UpgradeScene.swift */; };
+		65572A8A1C31318E00461802 /* ReserchScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A891C31318E00461802 /* ReserchScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		65386E3E1C2D1B0300D08B41 /* BuildingSelectLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingSelectLayer.swift; sourceTree = "<group>"; };
 		65572A851C30DFC200461802 /* MapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLayer.swift; sourceTree = "<group>"; };
 		65572A871C31058C00461802 /* UpgradeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeScene.swift; sourceTree = "<group>"; };
+		65572A891C31318E00461802 /* ReserchScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReserchScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				65386E311C2D0F8A00D08B41 /* islandLayer */,
 				65386E2C1C2CF4A100D08B41 /* Content */,
 				65386E0E1C2CD8A500D08B41 /* AppDelegate.swift */,
+				65572A891C31318E00461802 /* ReserchScene.swift */,
 				65572A871C31058C00461802 /* UpgradeScene.swift */,
 				65386E281C2CEC7F00D08B41 /* IslandScene.swift */,
 				65386E241C2CE1A400D08B41 /* IslandsScene.swift */,
@@ -193,6 +196,7 @@
 				65386E0F1C2CD8A500D08B41 /* AppDelegate.swift in Sources */,
 				65386E331C2D0F8A00D08B41 /* TopLayer.swift in Sources */,
 				65386E3D1C2D1A0400D08B41 /* BottomLayer.swift in Sources */,
+				65572A8A1C31318E00461802 /* ReserchScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

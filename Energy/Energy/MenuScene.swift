@@ -18,7 +18,7 @@ enum UpgradeType: Int {
     case Wind_Heat_Max, Fire_Heat_Max, Fire_Heat_Produce, Office_Sell, UpgradeTypeLength
 }
 enum ReserchType: Int {
-    case Wind_Develope, Wind_Rebuild, Fire_Develope, Fire_Rebuild, ReserchTypeLength
+    case Wind_Rebuild, Fire_Develope, Fire_Rebuild, Office_Develope, ReserchTypeLength
 }
 // User Data
 var money: Int = 100

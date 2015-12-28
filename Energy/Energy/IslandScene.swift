@@ -152,21 +152,23 @@ class IslandScene: SKScene {
                     print("Build Button")
                     changeTouchTypeAndShowPage(.Builded)
                     
-                case buttonLayer.buttonEnergy:
-                    print("Energy Button")
-                    changeTouchTypeAndShowPage(.Energy)
-                    
-                case buttonLayer.buttonReserch:
-                    print("Reserch Button")
-                    
                 case buttonLayer.buttonSell:
                     print("Sell Button")
                     changeTouchTypeAndShowPage(.Sell)
+                    
+                case buttonLayer.buttonEnergy:
+                    print("Energy Button")
+                    changeTouchTypeAndShowPage(.Energy)
                     
                 case buttonLayer.buttonUpgrade:
                     print("Upgrade Button")
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
                     self.view?.presentScene(upgradeScene, transition: doors)
+                    
+                case buttonLayer.buttonReserch:
+                    print("Reserch Button")
+                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
+                    self.view?.presentScene(reserchScene, transition: doors)
                 
                 // Energy Page
                 case bottomLayer.pageEnergy.energy_ProgressBack:
