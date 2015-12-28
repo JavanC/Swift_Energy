@@ -12,6 +12,7 @@ import SpriteKit
 var menuScene: SKScene!
 var islandsScene: SKScene!
 var islandScene: SKScene!
+var upgradeScene: SKScene!
 
 class GameViewController: UIViewController {
     
@@ -30,13 +31,15 @@ class GameViewController: UIViewController {
             menuScene = MenuScene(size: size)
             islandsScene = IslandsScene(size: size)
             islandScene = IslandScene(size: size)
+            upgradeScene = UpgradeScene(size: size)
             // Configure the view
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            skView.ignoresSiblingOrder = true
             menuScene.scaleMode = .AspectFill
             islandsScene.scaleMode = .AspectFill
             islandScene.scaleMode = .AspectFill
+            upgradeScene.scaleMode = .AspectFill
+            skView.showsFPS = true
+            skView.showsNodeCount = true
+            skView.ignoresSiblingOrder = true
             skView.presentScene(menuScene)
         }
     }

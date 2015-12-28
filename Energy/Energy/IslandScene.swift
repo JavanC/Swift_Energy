@@ -162,6 +162,11 @@ class IslandScene: SKScene {
                 case buttonLayer.buttonSell:
                     print("Sell Button")
                     changeTouchTypeAndShowPage(.Sell)
+                    
+                case buttonLayer.buttonUpgrade:
+                    print("Upgrade Button")
+                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
+                    self.view?.presentScene(upgradeScene, transition: doors)
                 
                 // Energy Page
                 case bottomLayer.pageEnergy.energy_ProgressBack:
@@ -192,7 +197,14 @@ class IslandScene: SKScene {
                     
                 case bottomLayer.pageBuild.rebuildButton:
                     print("rebuild button")
-                    // rebuild switch
+                    for count in 0..<8 {
+                        maps[count].autoRebuild = !maps[count].autoRebuild
+                        if maps[count].autoRebuild {
+                            bottomLayer.pageBuild.rebuildButton.color = SKColor.greenColor()
+                        } else {
+                            bottomLayer.pageBuild.rebuildButton.color = SKColor.redColor()
+                        }
+                    }
                     
                 case bottomLayer.pageBuild.selectInfo:
                     print("Builded select info")
@@ -302,7 +314,6 @@ class IslandScene: SKScene {
                 }
             }
         }
-
     }
     
     override func update(currentTime: CFTimeInterval) {
