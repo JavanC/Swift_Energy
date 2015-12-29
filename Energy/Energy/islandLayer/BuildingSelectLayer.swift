@@ -19,8 +19,7 @@ class BuildingSelectElement: SKNode {
         
         // background
         background = SKSpriteNode(color: SKColor.grayColor(), size: size)
-        background.name = "BuildingSelectElement"
-        background.size = size
+        background.name = "BuildingSelectElementBackground"
         background.anchorPoint = CGPoint(x: 0, y: 0)
         addChild(background)
         // image
@@ -52,54 +51,58 @@ class BuildingSelectElement: SKNode {
     }
 }
 
-class BuildingSelectLayer: SKSpriteNode {
+class BuildingSelectLayer: SKNode {
     
-    var origin: CGPoint!
     var show: Bool = false
     var selectLayer: SKSpriteNode!
     
-    func configureAtPosition(position: CGPoint, midSize: CGSize) {
-        self.origin = position
-        self.position = CGPoint(x: origin.x, y: origin.y - midSize.height * 2)
-        self.size = CGSizeMake(midSize.width * 4, midSize.height)
-        self.name = "BuildingSelectLayer"
-        self.color = SKColor.blackColor()
-        self.anchorPoint = CGPoint(x: 0, y: 0)
+    init(position: CGPoint, midSize: CGSize) {
+        super.init()
+        self.position = position
+        selectLayer = SKSpriteNode(color: SKColor.brownColor(), size: CGSizeMake(midSize.width * 4, midSize.height))
+        selectLayer.name = "buildingSelectLayer"
+        selectLayer.anchorPoint = CGPoint(x: 0, y: 0)
+        selectLayer.position = CGPoint(x: 0, y: -2 * selectLayer.size.height)
+        addChild(selectLayer)
         
-        updateBuildingSelectPage()
+        updateSelectLayer()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // Update building select page
-    func updateBuildingSelectPage() {
-        removeAllChildren()
+    func updateSelectLayer() {
+        selectLayer.removeAllChildren()
         // Caculae Position
         var positions = [CGPoint]()
-        let gap:CGFloat = 20
-        let num:CGFloat = 6
-        let elementsize = CGSizeMake(frame.size.width - gap * 2, (self.size.height - gap) / num - gap)
+        let gap: CGFloat = 20
+        let num: CGFloat = 7
+        let elementsize = CGSizeMake(selectLayer.size.width / 4 - gap * 2, (selectLayer.size.height - gap) / num - gap)
         for x in 0..<4 {
             for y in 0..<Int(num) {
-                positions.append(CGPoint(x: gap + frame.size.width * CGFloat(x), y: self.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
+                positions.append(CGPoint(x: gap + selectLayer.size.width / 4 * CGFloat(x), y: selectLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
             }
         }
-
-        let selects:[BuildingType] = [.Wind, .Fire, .Office]
         
+        let selects:[BuildingType] = [.Wind, .Fire, .Office, .Wind, .Fire, .Office, .Wind, .Fire, .Office]
+
         // page 1
-        for count in 0...2 {
-            let sptireNode = BuildingSelectElement(buildType: .Fire, size: elementsize)
+        for count in 0..<selects.count {
+            let sptireNode = BuildingSelectElement(buildType: selects[count], size: elementsize)
             sptireNode.position = positions[count]
-            addChild(sptireNode)
+            selectLayer.addChild(sptireNode)
         }
     }
     
     // Show page
     func showPage(show: Bool) {
         self.show = show
-        self.runAction(SKAction.moveToY(origin.y + (show ? 0 : -2 * self.size.height), duration: 0.2))
+        selectLayer.runAction(SKAction.moveToY((show ? 0 : -2 * selectLayer.size.height), duration: 0.2))
     }
     func changePage(page: Int) {
-        let frameWidth = self.size.width / 4
-        self.runAction(SKAction.moveToX(origin.x + -CGFloat(page - 1) * frameWidth, duration: 0.2))
+        let frameWidth = selectLayer.size.width / 4
+        selectLayer.runAction(SKAction.moveToX(-CGFloat(page - 1) * frameWidth, duration: 0))
     }
 }

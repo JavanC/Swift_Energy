@@ -13,7 +13,6 @@ var tilesScaleSize: CGSize!
 class IslandScene: SKScene {
     
     var contentCreated: Bool = false
-    
     enum TouchType: Int {
         case Information, Energy, Builded, Sell
     }
@@ -63,8 +62,6 @@ class IslandScene: SKScene {
             maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 1), buildType: .Generator)
             maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Office)
             maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Wind)
-            maps[1].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: .Generator)
-            maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: .Fire)
             info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
             
             // Button Layer
@@ -85,8 +82,7 @@ class IslandScene: SKScene {
             // Building Select Layer
             let buildingSelectLayerSize = mapLayerSize
             let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
-            buildingSelectLayer = BuildingSelectLayer()
-            buildingSelectLayer.configureAtPosition(buildingSelectLayerPosition, midSize: buildingSelectLayerSize)
+            buildingSelectLayer = BuildingSelectLayer(position: buildingSelectLayerPosition, midSize: buildingSelectLayerSize)
             buildingSelectLayer.zPosition = 50
             addChild(buildingSelectLayer)
             
@@ -145,8 +141,11 @@ class IslandScene: SKScene {
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
                     self.view?.presentScene(islandsScene, transition: doors)
                     
-                case topLayer.buttonRebuild:
-                    print("Rebuild Button")
+                case topLayer.buttonPause:
+                    print("Pause: \(isPause)")
+                    isPause = !isPause
+                    if isPause { gameTimer.invalidate() }
+                    else { gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true) }
                     
                 case buttonLayer.buttonBuild:
                     print("Build Button")
@@ -179,34 +178,28 @@ class IslandScene: SKScene {
                 // Builded Page
                 case bottomLayer.pageBuild.images[0]:
                     print("Builded image1")
-                    if bottomLayer.pageBuild.selectNumber == 1 { showBuildSelectPage(); break }
+                    if bottomLayer.pageBuild.selectNumber == 1 { showBuildSelectPage() }
                     bottomLayer.pageBuild.changeSelectNumber(1)
                     
                 case bottomLayer.pageBuild.images[1]:
                     print("Builded image2")
-                    if bottomLayer.pageBuild.selectNumber == 2 { showBuildSelectPage(); break }
+                    if bottomLayer.pageBuild.selectNumber == 2 { showBuildSelectPage() }
                     bottomLayer.pageBuild.changeSelectNumber(2)
                     
                 case bottomLayer.pageBuild.images[2]:
                     print("Builded image3")
-                    if bottomLayer.pageBuild.selectNumber == 3 { showBuildSelectPage(); break }
+                    if bottomLayer.pageBuild.selectNumber == 3 { showBuildSelectPage() }
                     bottomLayer.pageBuild.changeSelectNumber(3)
                     
                 case bottomLayer.pageBuild.images[3]:
                     print("Builded image4")
-                    if bottomLayer.pageBuild.selectNumber == 4 { showBuildSelectPage(); break }
+                    if bottomLayer.pageBuild.selectNumber == 4 { showBuildSelectPage() }
                     bottomLayer.pageBuild.changeSelectNumber(4)
                     
                 case bottomLayer.pageBuild.rebuildButton:
                     print("rebuild button")
-                    for count in 0..<8 {
-                        maps[count].autoRebuild = !maps[count].autoRebuild
-                        if maps[count].autoRebuild {
-                            bottomLayer.pageBuild.rebuildButton.color = SKColor.greenColor()
-                        } else {
-                            bottomLayer.pageBuild.rebuildButton.color = SKColor.redColor()
-                        }
-                    }
+                    for count in 0..<8 { maps[count].autoRebuild = !maps[count].autoRebuild }
+                    bottomLayer.pageBuild.rebuildButton.color = (maps[nowMapNumber].autoRebuild ? SKColor.greenColor() : SKColor.redColor())
                     
                 case bottomLayer.pageBuild.selectInfo:
                     print("Builded select info")
@@ -251,68 +244,12 @@ class IslandScene: SKScene {
                     let nodes = nodesAtPoint(location)
                     for node in nodes {
                         if node.hidden { return }
-                        if node.name == "BuildingSelectElement" {
-                            print("1234123412341234")
-                            let buildType = (node as! BuildingSelectElement).buildType
-                            print(buildType)
-//                            bottomLayer.pageBuild.changeSelectBuildType(buildType)
+                        if node.name == "BuildingSelectElementBackground" {
+                            let buildType = (node.parent as! BuildingSelectElement).buildType
+                            bottomLayer.pageBuild.changeSelectBuildType(buildType)
                         }
-//                        if node.name == "Upgrade" {
-//                            let buildType = (node.parent as! BuildingSelectElement).buildType
-////                            let upgradePrice = BuildingData(buildType: buildType).nextLevelPrice
-//                            if upgradePrice <= money {
-//                                money -= upgradePrice
-//                                setBuildLevel(buildType, level: nowLevel + 1)
-//                                bottomLayer.pageBuild.selectInfo.nowLevelImformation(buildType)
-//                                buildingMapLayers[nowMapNumber].reloadBuildingMap()
-//                            }
-//                        }
-//                        if node.name == "Degrade" {
-//                            let buildType = (node.parent as! BuildingSelectElement).buildType
-//                            let nowLevel = getBuildLevel(buildType)
-//                            let degrradePrice = BuildingData(buildType: buildType, level: nowLevel - 1).nextLevelPrice
-//                            money += degrradePrice
-//                            setBuildLevel(buildType, level: nowLevel - 1)
-//                            bottomLayer.pageBuild.selectInfo.nowLevelImformation(buildType)
-//                            buildingMapLayers[nowMapNumber].reloadBuildingMap()
-//                        }
                     }
-//
-//                    // Reserch Page
-//                case bottomLayer.pageReserch.nextPage:
-//                    let nowPage = bottomLayer.pageReserch.nowPage
-//                    bottomLayer.pageReserch.changePage(nowPage + 1)
-//                    reserchLayer.changePage(nowPage + 1)
-//                    
-//                case bottomLayer.pageReserch.prevPage:
-//                    let nowPage = bottomLayer.pageReserch.nowPage
-//                    bottomLayer.pageReserch.changePage(nowPage - 1)
-//                    reserchLayer.changePage(nowPage - 1)
-//                    
-//                case reserchLayer:
-//                    let nodes = nodesAtPoint(location)
-//                    for node in nodes {
-//                        if node.hidden { return }
-//                        if node.name == "ReserchButton" {
-//                            let reserchElement = (node.parent as! ReserchElement)
-//                            let reserchPrice = reserchElement.reserchPrice
-//                            if reserchPrice > reserch { return }
-//                            reserch -= reserchPrice
-//                            let buildType = reserchElement.buildType
-//                            let reserchType = reserchElement.reserchType
-//                            if reserchType == .Develop {
-//                                setBuildLevel(buildType, level: 1)
-//                            } else if reserchType == .Rebuild {
-//                                let nowLevel = getBuildLevel(buildType)
-//                                setBuildLevel(buildType, level: nowLevel + 1000)
-//                            }
-//                            reserchLayer.updateReserchPage()
-//                            buildingMapLayers[nowMapNumber].reloadBuildingMap()
-//                            let count = reserchLayer.elements.count
-//                            let maxPage = (count / 6) + 1
-//                            bottomLayer.pageReserch.changeMaxPage(maxPage)
-//                        }
-//                    }
+                    
                 default:
                     break
                 }
@@ -322,7 +259,7 @@ class IslandScene: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         
-        buildingSelectLayer.updateBuildingSelectPage()
+        buildingSelectLayer.updateSelectLayer()
         bottomLayer.pageInformation.changeInformation(info_Building)
         
         // Updata imformation

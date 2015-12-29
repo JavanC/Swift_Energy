@@ -27,6 +27,7 @@ var upgradeLevel = [UpgradeType: Int]()
 var reserchLevel = [ReserchType: Int]()
 var maps = [BuildingMapLayer]()
 var nowMapNumber: Int = 0
+var isPause: Bool = false
 
 class MenuScene: SKScene {
     
@@ -35,6 +36,7 @@ class MenuScene: SKScene {
 
     override func didMoveToView(view: SKView) {
         if !contentCreated {
+            
             self.backgroundColor = SKColor.whiteColor()
             stertGameButton = SKLabelNode(fontNamed:"Verdana-Bold")
             stertGameButton.text = "Stert Game"
@@ -43,6 +45,7 @@ class MenuScene: SKScene {
             stertGameButton.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
             self.addChild(stertGameButton)
             initialLevelData()
+
             contentCreated = true
         }
     }
@@ -73,5 +76,6 @@ class MenuScene: SKScene {
     }
    
     override func update(currentTime: CFTimeInterval) {
+        
     }
 }

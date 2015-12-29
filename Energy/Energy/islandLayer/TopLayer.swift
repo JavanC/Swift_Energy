@@ -11,7 +11,7 @@ import SpriteKit
 class TopLayer: SKSpriteNode {
     
     var buttonMenu: SKSpriteNode!
-    var buttonRebuild: SKSpriteNode!
+    var buttonPause: SKSpriteNode!
     var moneyLabel: SKLabelNode!
     var reserchLabel: SKLabelNode!
 
@@ -29,11 +29,11 @@ class TopLayer: SKSpriteNode {
         buttonMenu.position = CGPoint(x: 0, y: 0)
         addChild(buttonMenu)
         
-        buttonRebuild = SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: 64, height: 64))
-        buttonRebuild.name = "ButtonRebuild"
-        buttonRebuild.anchorPoint = CGPoint(x: 1, y: 1)
-        buttonRebuild.position = CGPoint(x: self.size.width, y: self.size.height)
-        addChild(buttonRebuild)
+        buttonPause = SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: 64, height: 64))
+        buttonPause.name = "ButtonRebuild"
+        buttonPause.anchorPoint = CGPoint(x: 1, y: 1)
+        buttonPause.position = CGPoint(x: self.size.width, y: self.size.height)
+        addChild(buttonPause)
         
         let labelgap: CGFloat = 18
         let labelsize = (self.size.height - labelgap * 3) / 2

@@ -22,7 +22,7 @@ class ReserchElement: SKNode {
         
         // background
         background = SKSpriteNode(color: SKColor.grayColor(), size: size)
-        background.name = "UpgradeElement"
+        background.name = "UpgradeElementBackground"
         background.anchorPoint = CGPoint(x: 0, y: 0)
         addChild(background)
         
