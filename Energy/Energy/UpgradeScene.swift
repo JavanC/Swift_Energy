@@ -56,7 +56,11 @@ class UpgradeElement: SKNode {
             text2 = "test123123"
             upgradePrice = 1000
             
-        default: break
+        default:
+            imageType = BuildingType.WindTurbine
+            text1 = "\(upgradeType) Lv.\(level)"
+            text2 = "test123123"
+            upgradePrice = 1000
         }
         
         // image
@@ -155,14 +159,39 @@ class UpgradeScene: SKScene {
                 positions.append(CGPoint(x: gap + frame.size.width * CGFloat(x), y: upgradeLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
             }
         }
+        
+        // Check element
+        var elements = [UpgradeType]()
+        if reserchLevel[.SmallOfficeResearch] > 0       { elements += [.OfficeSellEnergy] }
+        if reserchLevel[.BankResearch] > 0              { elements += [.BankEffectiveness] }
+        if reserchLevel[.ResearchCenterResearch] > 0    { elements += [.ResearchCenter] }
+        if reserchLevel[.LibraryResearch] > 0           { elements += [.LibraryEffectiveness] }
+        if reserchLevel[.BoilerHouseResearch] > 0       { elements += [.BoilerHouseMaxHeat, .BoilerHouseSellAmount] }
+        if reserchLevel[.SmallGeneratorResearch] > 0    { elements += [.GeneratorMaxHeat, .GeneratorEffectiveness] }
+        if reserchLevel[.HeatExchangerResearch] > 0     { elements += [.HeatExchangerMaxHeat] }
+        if reserchLevel[.HeatSinkResearch] > 0          { elements += [.HeatSinkMaxHeat] }
+        if reserchLevel[.BatteryResearch] > 0           { elements += [.EnergyBatterySize] }
+        if reserchLevel[.IsolationResearch] > 0         { elements += [.IsolationEffectiveness] }
+        if reserchLevel[.WaterPumpResearch] > 0         { elements += [.WaterPumpProduction, .WaterElementMaxWater, .GeneratorMaxWater] }
+        if reserchLevel[.GroundwaterPumpResearch] > 0   { elements += [.GroundwaterPumpProduction] }
+        if reserchLevel[.HeatInletResearch] > 0         { elements += [.HeatInletOutletMaxHeat, .HeatInletOutletMaxHeat] }
+        if reserchLevel[.FusionCellResearch] > 0        { elements += [.FusionCellEffectiveness, .FusionCellLifetime] }
+        if reserchLevel[.NuclearCellResearch] > 0       { elements += [.NuclearCellEffectiveness, .NuclearCellLifetime] }
+        if reserchLevel[.GasBurnerResearch] > 0         { elements += [.GasBurnerEffectiveness, .GasBurnerLifetime] }
+        if reserchLevel[.WaveCellResearch] > 0          { elements += [.WaveCellEffectiveness, .WaveCellLifetime] }
+        if reserchLevel[.CoalBurnerResearch] > 0        { elements += [.CoalBurnerEffectiveness, .CoalBurnerLifetime] }
+        if reserchLevel[.SolarCellResearch] > 0         { elements += [.SolarCellEffectiveness, .SolarCellLifetime] }
+        if reserchLevel[.WindTurbineResearch] > 0       { elements += [.WindTurbineEffectiveness, .WindTurbineLifetime] }
+        
         // Add Element
-        for count in 0...17 {
-            let element = UpgradeElement(upgradeType: UpgradeType.WindTurbineEffectiveness, size: elementsize)
+        for count in 0..<elements.count {
+            let element = UpgradeElement(upgradeType: elements[count], size: elementsize)
             element.position = positions[count]
             upgradeLayer.addChild(element)
         }
+        
         // Caculate MaxPage
-        maxPage = 17 / 8 + 1
+        maxPage = (elements.count - 1) / 8 + 1
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

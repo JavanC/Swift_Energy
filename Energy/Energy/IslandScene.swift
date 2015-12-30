@@ -161,11 +161,13 @@ class IslandScene: SKScene {
                     
                 case buttonLayer.buttonUpgrade:
                     print("Upgrade Button")
+                    changeTouchTypeAndShowPage(.Energy)
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
                     self.view?.presentScene(upgradeScene, transition: doors)
                     
                 case buttonLayer.buttonReserch:
                     print("Reserch Button")
+                    changeTouchTypeAndShowPage(.Energy)
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
                     self.view?.presentScene(reserchScene, transition: doors)
                 

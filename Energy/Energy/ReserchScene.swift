@@ -9,7 +9,6 @@
 import SpriteKit
 
 class ReserchElement: SKNode {
-    
     var background: SKSpriteNode!
     var buttonUpgrade: SKSpriteNode!
     var reserchType: ReserchType!
@@ -54,8 +53,15 @@ class ReserchElement: SKNode {
             if level >= 1 { reserchDone = true }
             
         case .SmallGeneratorResearch:
-            imageType = BuildingType.SmallOffice
+            imageType = BuildingType.SmallGenerator
             text1 = "Small Generator Lv.\(level)"
+            text2 = "test123123"
+            reserchPrice = 1
+            if level >= 1 { reserchDone = true }
+            
+        case .SmallOfficeResearch:
+            imageType = BuildingType.SmallOffice
+            text1 = "Small Office Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 1
             if level >= 1 { reserchDone = true }
@@ -114,7 +120,6 @@ class ReserchElement: SKNode {
     }
 }
 
-
 class ReserchScene: SKScene {
     
     var contentCreated: Bool = false
@@ -171,6 +176,7 @@ class ReserchScene: SKScene {
                 positions.append(CGPoint(x: gap + frame.size.width * CGFloat(x), y: reserchdeLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
             }
         }
+        
         // Add Element
         var number = 0
         for count in 0..<ReserchType.ReserchTypeLength.hashValue {
