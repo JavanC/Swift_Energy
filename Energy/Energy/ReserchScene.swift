@@ -33,28 +33,28 @@ class ReserchElement: SKNode {
         let level = Int(reserchLevel[reserchType]!)
         switch reserchType {
         case .Wind_Rebuild:
-            imageType = .Wind
+            imageType = BuildingType.WindTurbine
             text1 = "Wind_Rebuild Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 1
             if level == 1 { reserchDone = true }
             
         case .Fire_Develope:
-            imageType = .Fire
+            imageType = BuildingType.CoalBurner
             text1 = "Fire_Develope Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 10
             if level == 1 { reserchDone = true }
             
         case .Fire_Rebuild:
-            imageType = .Fire
+            imageType = BuildingType.CoalBurner
             text1 = "Fire_Rebuild Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 100
             if level == 2 { reserchDone = true }
             
         case .Office_Develope:
-            imageType = .Wind
+            imageType = BuildingType.SmallOffice
             text1 = "Office_Develope Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 1000

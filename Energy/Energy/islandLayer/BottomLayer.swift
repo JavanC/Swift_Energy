@@ -20,7 +20,7 @@ class PageInformation: SKSpriteNode {
         self.name = "PageInformation"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        let infoImage = BuildingData(buildType: .Nil).image("infoImage")
+        let infoImage = BuildingData(buildType: .Land).image("infoImage")
         infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: size.height / 2)
         addChild(infoImage)
         
@@ -72,7 +72,7 @@ class PageBuild: SKSpriteNode {
     
     var selectNumber: Int = 1
     var imagePosition = [CGPoint]()
-    var buildMenu: [BuildingType] = [.Wind, .Fire, .Generator, .Office]
+    var buildMenu: [BuildingType] = [BuildingType.WindTurbine, BuildingType.CoalBurner, BuildingType.SmallGenerator, BuildingType.SmallOffice]
     var images = [SKSpriteNode]()
     var selectBox: SKSpriteNode!
     var selectInfo = PageInformation()

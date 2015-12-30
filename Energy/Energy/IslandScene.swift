@@ -56,12 +56,12 @@ class IslandScene: SKScene {
                 maps[count].zPosition = 1
                 addChild(maps[count])
             }
-            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Wind)
-            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: .Generator)
-            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: .Fire)
-            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 1), buildType: .Generator)
-            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: .Office)
-            maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: .Wind)
+            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: BuildingType.WindTurbine)
+            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: BuildingType.SmallGenerator)
+            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: BuildingType.CoalBurner)
+            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 1), buildType: BuildingType.SmallGenerator)
+            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: BuildingType.SmallOffice)
+            maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: BuildingType.WindTurbine)
             info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
             
             // Button Layer
@@ -235,7 +235,7 @@ class IslandScene: SKScene {
                             let price = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildPrice
                             money += price
                             maps[nowMapNumber].removeBuilding(coord)
-                            maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Nil)
+                            maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
                         }
                     }
                     

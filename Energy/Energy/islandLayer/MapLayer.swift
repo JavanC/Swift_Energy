@@ -13,7 +13,7 @@ class BuildingData {
         case Time, Hot, Water
     }
     var imageName: String!
-    var buildType: BuildingType = .Nil
+    var buildType: BuildingType = .Land
     var buildPrice: Int!
     var rebuild: Bool = true
     var progress: ProgressType!
@@ -41,11 +41,11 @@ class BuildingData {
     
     init(buildType: BuildingType) {
         self.buildType = buildType
-        if buildType == .Nil {
+        if buildType == .Land {
             imageName = "block"
             rebuild = false
         }
-        if buildType == .Wind {
+        if buildType == .WindTurbine {
             imageName = "風力"
             buildPrice = 1
             progress = .Time
@@ -62,7 +62,7 @@ class BuildingData {
             energy_Current = 0
 
         }
-        if buildType == .Fire {
+        if buildType == .CoalBurner {
             imageName = "火力"
             buildPrice = 20
             progress = .Time
@@ -76,7 +76,7 @@ class BuildingData {
             hot_Current = 0
 
         }
-        if buildType == .Generator {
+        if buildType == .SmallGenerator {
             imageName = "發電機1"
             buildPrice = 50
             progress = .Hot
@@ -90,7 +90,7 @@ class BuildingData {
             hot_Current = 100
 
         }
-        if buildType == .Office {
+        if buildType == .SmallOffice {
             imageName = "辦公室1"
             buildPrice = 10
             hot_IsInput = true
@@ -112,22 +112,22 @@ class BuildingData {
     
     func buildingInfo() -> [String] {
         var info = [String]()
-        if buildType == .Wind {
+        if buildType == .WindTurbine {
             info.append("Time: \(time_Current) / \(time_Max)")
             info.append("Produce Energy: \(hot2Energy_Max)")
             info.append("Sell Money: \(buildPrice)")
         }
-        if buildType == .Fire {
+        if buildType == .CoalBurner {
             info.append("Time: \(time_Current) / \(time_Max)")
             info.append("Produce Hot: \(hot_Produce)")
             info.append("Sell Money: \(buildPrice)")
         }
-        if buildType == .Generator {
+        if buildType == .SmallGenerator {
             info.append("Hot: \(hot_Current) / \(hot_Max)")
             info.append("Converted Energy: \(hot2Energy_Max)")
             info.append("Sell Money: \(buildPrice)")
         }
-        if buildType == .Office {
+        if buildType == .SmallOffice {
             info.append("Hot: \(hot_Current) / \(hot_Max)")
             info.append("Produce Money: \(money_Sales)")
             info.append("Sell Money: \(buildPrice)")
@@ -156,7 +156,7 @@ class Building: SKNode {
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(buildingNode)
         
-        if buildType == .Nil {
+        if buildType == .Land {
             buildingNode.alpha = 0.2
             activate = false
         }
@@ -239,7 +239,7 @@ class BuildingMapLayer: SKSpriteNode {
         for y in 0 ..< Int(mapSize.height) {
             for x in 0 ..< Int(mapSize.width) {
                 let coord = CGPoint(x: x, y: y)
-                setTileMapElement(coord: coord, buildType: .Nil)
+                setTileMapElement(coord: coord, buildType: .Land)
             }
         }
     }
@@ -376,7 +376,7 @@ class BuildingMapLayer: SKSpriteNode {
                         if buildingData.hot_Current > buildingData.hot_Max {
                             let coord = CGPoint(x: x, y: y)
                             removeBuilding(coord)
-                            setTileMapElement(coord: coord, buildType: .Nil)
+                            setTileMapElement(coord: coord, buildType: .Land)
                         }
                     }
                     // B. Activate

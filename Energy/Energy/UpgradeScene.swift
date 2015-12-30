@@ -34,25 +34,25 @@ class UpgradeElement: SKNode {
         let level = Int(upgradeLevel[upgradeType]!)
         switch upgradeType {
         case .Wind_Heat_Max:
-            imageType = .Wind
+            imageType = BuildingType.WindTurbine
             text1 = "Wind Lv.\(level)"
             text2 = "test123123"
             upgradePrice = 1
             
         case .Fire_Heat_Max:
-            imageType = .Fire
+            imageType = BuildingType.CoalBurner
             text1 = "Fire Lv.\(level)"
             text2 = "test123123"
             upgradePrice = 10
             
         case .Fire_Heat_Produce:
-            imageType = .Fire
+            imageType = BuildingType.CoalBurner
             text1 = "Fire Lv.\(level)"
             text2 = "test123123"
             upgradePrice = 100
             
         case .Office_Sell:
-            imageType = .Office
+            imageType = BuildingType.SmallOffice
             text1 = "Office Lv.\(level)"
             text2 = "test123123"
             upgradePrice = 1000

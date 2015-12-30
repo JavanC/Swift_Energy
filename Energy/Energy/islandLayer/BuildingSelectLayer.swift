@@ -86,7 +86,7 @@ class BuildingSelectLayer: SKNode {
             }
         }
         
-        let selects:[BuildingType] = [.Wind, .Fire, .Office, .Wind, .Fire, .Office, .Wind, .Fire, .Office]
+        let selects:[BuildingType] = [BuildingType.WindTurbine, BuildingType.CoalBurner, BuildingType.SmallOffice]
 
         // page 1
         for count in 0..<selects.count {

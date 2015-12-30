@@ -12,7 +12,7 @@ var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
 var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
 // Game Data
 enum BuildingType: Int {
-    case Nil, Wind, Fire, Generator, Office, BuildingTypeLength
+    case Ocean, Land, WindTurbine, SolarCell, CoalBurner, WaveCell, GasBurner, NuclearCell, FusionCell, SmallGenerator, MediumGenerator, LargeGenerator, BoilerHouse, LargeBoilerHouse, Isolation, Battery, HeatExchanger, HeatSink, HeatInlet, HeatOutlet, WaterPump, GroundwaterPump, WaterPipe, SmallOffice, MediumOffice, LargeOffice, Bank, ResearchCenter, AdvancedResearchCenter, Library, BuildingTypeLength
 }
 enum UpgradeType: Int {
     case Wind_Heat_Max, Fire_Heat_Max, Fire_Heat_Produce, Office_Sell, UpgradeTypeLength
