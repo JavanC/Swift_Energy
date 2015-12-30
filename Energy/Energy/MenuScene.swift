@@ -55,10 +55,9 @@ class MenuScene: SKScene {
             upgradeLevel[UpgradeType(rawValue: count)!] = 0
         }
         for count in 0..<ReserchType.ReserchTypeLength.hashValue {
-            reserchLevel[ReserchType(rawValue: count)!] = -1
+            reserchLevel[ReserchType(rawValue: count)!] = 0
         }
         reserchLevel[ReserchType.WindTurbineResearch] = 1
-        reserchLevel[ReserchType.ResearchCenterResearch] = 0
         for _ in 0..<8 {
             let buildingMapLayer = BuildingMapLayer()
             buildingMapLayer.configureAtPosition(CGPoint(x: 0, y: 0))

@@ -177,26 +177,34 @@ class ReserchScene: SKScene {
             }
         }
         
+        // Check Eleents
+        var elements = [ReserchType]()
+        elements += [.WindTurbineResearch, .ResearchCenterResearch]
+        if reserchLevel[.ResearchCenterResearch] == 1   { elements += [.WindTurbineRebuild, .SmallOfficeResearch] }
+        if reserchLevel[.SmallOfficeResearch] == 1      { elements += [.BatteryResearch, .SolarCellResearch] }
+        if reserchLevel[.SolarCellResearch] == 1        { elements += [.SolarCellRebuild, .SmallGeneratorResearch] }
+        if reserchLevel[.SmallGeneratorResearch] == 1   { elements += [.IsolationResearch, .CoalBurnerResearch] }
+        if reserchLevel[.CoalBurnerResearch] == 1       { elements += [.CoalBurnerRebuild, .HeatExchangerResearch, .BoilerHouseResearch] }
+        if reserchLevel[.BoilerHouseResearch] == 1      { elements += [.WaveCellResearch] }
+        if reserchLevel[.WaveCellResearch] == 1         { elements += [.WaveCellRebuild, .AdvancedResearchCenterResearch,
+                                                                       .MediumOfficeResearch, .GasBurnerResearch] }
+        if reserchLevel[.GasBurnerResearch] == 1        { elements += [.GasBurnerRebuild, .HeatSinkResearch,
+                                                                       .MediumGeneratorResearch, .LargeBoilerHouseResearch] }
+        if reserchLevel[.LargeBoilerHouseResearch] == 1 { elements += [.NuclearCellResearch] }
+        if reserchLevel[.NuclearCellResearch] == 1      { elements += [.NuclearCellRebuild, .WaterPumpResearch, .WaterPipeResearch, .LargeOfficeResearch] }
+        if reserchLevel[.LargeOfficeResearch] == 1      { elements += [.LibraryResearch, .GroundwaterPumpResearch, .FusionCellResearch] }
+        if reserchLevel[.FusionCellResearch] == 1       { elements += [.FusionCellRebuild, .LargeGeneratorResearch] }
+        if reserchLevel[.LargeGeneratorResearch] == 1   { elements += [.BankResearch, .HeatInletResearch, .HeatOutletResearch] }
+        
         // Add Element
-        var number = 0
-        for count in 0..<ReserchType.ReserchTypeLength.hashValue {
-            if reserchLevel[ReserchType(rawValue: count)!] == 0 {
-                let element = ReserchElement(reserchType: ReserchType(rawValue: count)!, size: elementsize)
-                element.position = positions[number]
-                reserchdeLayer.addChild(element)
-                number++
-            }
+        for count in 0..<elements.count {
+            let element = ReserchElement(reserchType: elements[count], size: elementsize)
+            element.position = positions[count]
+            reserchdeLayer.addChild(element)
         }
-        for count in 0..<ReserchType.ReserchTypeLength.hashValue {
-            if reserchLevel[ReserchType(rawValue: count)!] > 0 {
-                let element = ReserchElement(reserchType: ReserchType(rawValue: count)!, size: elementsize)
-                element.position = positions[number]
-                reserchdeLayer.addChild(element)
-                number++
-            }
-        }
+
         // Caculate MaxPage
-        maxPage = (number - 1) / 8 + 1
+        maxPage = (elements.count - 1) / 8 + 1
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -233,82 +241,6 @@ class ReserchScene: SKScene {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
         topLabel.text = "You have \(reserch) reserch can be used!"
-        checkResearchLevel()
         updateElement()
-    }
-    
-    func checkResearchLevel() {
-        if reserchLevel[ReserchType.ResearchCenterResearch] == 1 {
-            reserchLevel[ReserchType.ResearchCenterResearch] = 2
-            reserchLevel[ReserchType.WindTurbineRebuild] = 0
-            reserchLevel[ReserchType.SmallOfficeResearch] = 0
-        }
-        if reserchLevel[ReserchType.SmallOfficeResearch] == 1 {
-            reserchLevel[ReserchType.SmallOfficeResearch] = 2
-            reserchLevel[ReserchType.BatteryResearch] = 0
-            reserchLevel[ReserchType.SolarCellResearch] = 0
-        }
-        if reserchLevel[ReserchType.SolarCellResearch] == 1 {
-            reserchLevel[ReserchType.SolarCellResearch] = 2
-            reserchLevel[ReserchType.SolarCellRebuild] = 0
-            reserchLevel[ReserchType.SmallGeneratorResearch] = 0
-        }
-        if reserchLevel[ReserchType.SmallGeneratorResearch] == 1 {
-            reserchLevel[ReserchType.SmallGeneratorResearch] = 2
-            reserchLevel[ReserchType.IsolationResearch] = 0
-            reserchLevel[ReserchType.CoalBurnerResearch] = 0
-        }
-        if reserchLevel[ReserchType.CoalBurnerResearch] == 1 {
-            reserchLevel[ReserchType.CoalBurnerResearch] = 2
-            reserchLevel[ReserchType.CoalBurnerRebuild] = 0
-            reserchLevel[ReserchType.HeatExchangerResearch] = 0
-            reserchLevel[ReserchType.BoilerHouseResearch] = 0
-        }
-        if reserchLevel[ReserchType.BoilerHouseResearch] == 1 {
-            reserchLevel[ReserchType.BoilerHouseResearch] = 2
-            reserchLevel[ReserchType.WaveCellResearch] = 0
-        }
-        if reserchLevel[ReserchType.WaveCellResearch] == 1 {
-            reserchLevel[ReserchType.WaveCellResearch] = 2
-            reserchLevel[ReserchType.WaveCellRebuild] = 0
-            reserchLevel[ReserchType.AdvancedResearchCenterResearch] = 0
-            reserchLevel[ReserchType.MediumOfficeResearch] = 0
-            reserchLevel[ReserchType.GasBurnerResearch] = 0
-        }
-        if reserchLevel[ReserchType.GasBurnerResearch] == 1 {
-            reserchLevel[ReserchType.GasBurnerResearch] = 2
-            reserchLevel[ReserchType.GasBurnerRebuild] = 0
-            reserchLevel[ReserchType.HeatSinkResearch] = 0
-            reserchLevel[ReserchType.MediumGeneratorResearch] = 0
-            reserchLevel[ReserchType.LargeBoilerHouseResearch] = 0
-        }
-        if reserchLevel[ReserchType.LargeBoilerHouseResearch] == 1 {
-            reserchLevel[ReserchType.LargeBoilerHouseResearch] = 2
-            reserchLevel[ReserchType.NuclearCellResearch] = 0
-        }
-        if reserchLevel[ReserchType.NuclearCellResearch] == 1 {
-            reserchLevel[ReserchType.NuclearCellResearch] = 2
-            reserchLevel[ReserchType.NuclearCellRebuild] = 0
-            reserchLevel[ReserchType.WaterPumpResearch] = 0
-            reserchLevel[ReserchType.WaterPipeResearch] = 0
-            reserchLevel[ReserchType.LargeOfficeResearch] = 0
-        }
-        if reserchLevel[ReserchType.WaterPumpResearch] == 1 {
-            reserchLevel[ReserchType.WaterPumpResearch] = 2
-            reserchLevel[ReserchType.LibraryResearch] = 0
-            reserchLevel[ReserchType.GroundwaterPumpResearch] = 0
-            reserchLevel[ReserchType.FusionCellResearch] = 0
-        }
-        if reserchLevel[ReserchType.FusionCellResearch] == 1 {
-            reserchLevel[ReserchType.FusionCellResearch] = 2
-            reserchLevel[ReserchType.FusionCellRebuild] = 0
-            reserchLevel[ReserchType.LargeGeneratorResearch] = 0
-        }
-        if reserchLevel[ReserchType.LargeGeneratorResearch] == 1 {
-            reserchLevel[ReserchType.LargeGeneratorResearch] = 2
-            reserchLevel[ReserchType.BankResearch] = 0
-            reserchLevel[ReserchType.HeatInletResearch] = 0
-            reserchLevel[ReserchType.HeatOutletResearch] = 0
-        }
     }
 }

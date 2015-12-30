@@ -69,21 +69,31 @@ class UpgradeElement: SKNode {
         image.position = CGPoint(x: size.height / 2, y: gap + image.size.width / 2)
         addChild(image)
         // label 1
-        let labelgap: CGFloat = 10
-        let labelsize = (image.size.height - labelgap) / 2
+        let labelgap: CGFloat = 5
+        let labelsize = (image.size.height - labelgap * 2) / 3
         let label1 = SKLabelNode(fontNamed: "Verdana-Bold")
         label1.name = "label1"
         label1.text = text1
+        label1.fontSize = labelsize
         label1.horizontalAlignmentMode = .Left
-        label1.position = CGPoint(x: gap * 2 + image.size.width, y: gap + labelsize + labelgap)
+        label1.position = CGPoint(x: gap * 2 + image.size.width, y: gap + (labelsize + labelgap) * 2)
         addChild(label1)
         // label 2
         let label2 = SKLabelNode(fontNamed: "Verdana-Bold")
         label2.name = "label2"
         label2.text = text2
+        label2.fontSize = labelsize
         label2.horizontalAlignmentMode = .Left
-        label2.position = CGPoint(x: gap * 2 + image.size.width, y: gap)
+        label2.position = CGPoint(x: gap * 2 + image.size.width, y: gap + (labelsize + labelgap) * 1)
         addChild(label2)
+        // label 3
+        let label3 = SKLabelNode(fontNamed: "Verdana-Bold")
+        label3.name = "label3"
+        label3.text = "Need : \(upgradePrice)"
+        label3.fontSize = labelsize
+        label3.horizontalAlignmentMode = .Left
+        label3.position = CGPoint(x: gap * 2 + image.size.width, y: gap)
+        addChild(label3)
         // Upgrade Button
         buttonUpgrade = SKSpriteNode(color: (money > upgradePrice ? SKColor.greenColor() : SKColor.blackColor()), size: tilesScaleSize)
         buttonUpgrade.name = (money > upgradePrice ? "Upgrade" : "NoMoney")
