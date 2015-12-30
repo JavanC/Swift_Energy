@@ -32,28 +32,28 @@ class ReserchElement: SKNode {
         var text2: String!
         let level = Int(reserchLevel[reserchType]!)
         switch reserchType {
-        case .Wind_Rebuild:
+        case .WindTurbineRebuild:
             imageType = BuildingType.WindTurbine
             text1 = "Wind_Rebuild Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 1
             if level == 1 { reserchDone = true }
             
-        case .Fire_Develope:
+        case .CoalBurnerResearch:
             imageType = BuildingType.CoalBurner
             text1 = "Fire_Develope Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 10
             if level == 1 { reserchDone = true }
             
-        case .Fire_Rebuild:
+        case .CoalBurnerRebuild:
             imageType = BuildingType.CoalBurner
             text1 = "Fire_Rebuild Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 100
             if level == 2 { reserchDone = true }
             
-        case .Office_Develope:
+        case .SmallGeneratorResearch:
             imageType = BuildingType.SmallOffice
             text1 = "Office_Develope Lv.\(level)"
             text2 = "test123123"
@@ -159,7 +159,7 @@ class ReserchScene: SKScene {
         }
         // Add Element
         for count in 0...17 {
-            let element = ReserchElement(reserchType: .Wind_Rebuild, size: elementsize)
+            let element = ReserchElement(reserchType: .WindTurbineRebuild, size: elementsize)
             element.position = positions[count]
             reserchdeLayer.addChild(element)
         }

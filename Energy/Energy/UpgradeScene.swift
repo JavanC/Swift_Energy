@@ -33,25 +33,25 @@ class UpgradeElement: SKNode {
         var text2: String!
         let level = Int(upgradeLevel[upgradeType]!)
         switch upgradeType {
-        case .Wind_Heat_Max:
+        case .WindTurbineEffectiveness:
             imageType = BuildingType.WindTurbine
             text1 = "Wind Lv.\(level)"
             text2 = "test123123"
             upgradePrice = 1
             
-        case .Fire_Heat_Max:
+        case .CoalBurnerEffectiveness:
             imageType = BuildingType.CoalBurner
             text1 = "Fire Lv.\(level)"
             text2 = "test123123"
             upgradePrice = 10
             
-        case .Fire_Heat_Produce:
+        case .CoalBurnerLifetime:
             imageType = BuildingType.CoalBurner
             text1 = "Fire Lv.\(level)"
             text2 = "test123123"
             upgradePrice = 100
             
-        case .Office_Sell:
+        case .OfficeSellEnergy:
             imageType = BuildingType.SmallOffice
             text1 = "Office Lv.\(level)"
             text2 = "test123123"
@@ -158,7 +158,7 @@ class UpgradeScene: SKScene {
         }
         // Add Element
         for count in 0...17 {
-            let element = UpgradeElement(upgradeType: .Wind_Heat_Max, size: elementsize)
+            let element = UpgradeElement(upgradeType: UpgradeType.WindTurbineEffectiveness, size: elementsize)
             element.position = positions[count]
             upgradeLayer.addChild(element)
         }

@@ -9,97 +9,93 @@
 import SpriteKit
 
 class BuildingData {
-    enum ProgressType {
-        case Time, Hot, Water
-    }
+
+    // all
     var imageName: String!
     var buildType: BuildingType = .Land
     var buildPrice: Int!
-    var rebuild: Bool = true
+    enum ProgressType { case Time, Hot, Water }
     var progress: ProgressType!
-    
-    var time_Max: Int!
-    var time_Current: Int!
-    var reserch_Produce: Int!
-    var money_Sales: Int!
     var energy_Current: Int = 0
     
-    var hot_IsOutput: Bool = false
-    var hot_IsInput: Bool = false
-    var hot_Produce: Int!
-    var hot_Current: Int!
-    var hot_Max: Int!
-
+    // Time
+    var rebuild: Bool = true
+    var time_Max: Int!
+    var time_Current: Int!
+    
+    // Heat
+    var heat_Max: Int!
+    var heat_Current: Int!
+    var heat_Produce: Int!
+    var heat_IsOutput: Bool = false
+    var heat_IsInput: Bool = false
+    var isHeat2Energy: Bool = false
+    var heat2Energy_Max: Int!
+    
+    // Water
+    var water_Max: Int!
+    var water_Current: Int!
+    var water_Produce: Int!
     var water_IsOutput: Bool = false
     var water_IsInput: Bool = false
-    var water_Produce: Int!
-    var water_Current: Int!
-    var water_Max: Int!
     
-    var isHot2Energy: Bool = false
-    var hot2Energy_Max: Int!
+    // Other
+    var reserch_Produce: Int!
+    var money_Sales: Int!
     
     init(buildType: BuildingType) {
         self.buildType = buildType
         if buildType == .Land {
-            imageName = "block"
+            imageName = "Land"
             rebuild = false
         }
         if buildType == .WindTurbine {
-            imageName = "風力"
+            imageName = "WindTurbine"
             buildPrice = 1
             progress = .Time
             
             time_Max = 5
             time_Current = 5
          
-            hot_Produce = 1
-            hot_Max = 10
-            hot_Current = 0
-            isHot2Energy = true
-            hot2Energy_Max = 1
-            
-            energy_Current = 0
-
+            heat_Produce = 1
+            heat_Max = 10
+            heat_Current = 0
+            isHeat2Energy = true
+            heat2Energy_Max = 1
         }
         if buildType == .CoalBurner {
-            imageName = "火力"
+            imageName = "CoalBurner"
             buildPrice = 20
             progress = .Time
-            hot_IsOutput = true
             
             time_Max = 10
             time_Current = 10
             
-            hot_Produce = 20
-            hot_Max = 1
-            hot_Current = 0
-
+            heat_IsOutput = true
+            heat_Produce = 20
+            heat_Max = 1
+            heat_Current = 0
         }
         if buildType == .SmallGenerator {
-            imageName = "發電機1"
+            imageName = "SmallGenerator"
             buildPrice = 50
             progress = .Hot
-            hot_IsInput = true
-            isHot2Energy = true
-            
-            energy_Current = 0
-            hot2Energy_Max = 10
-            
-            hot_Max = 400
-            hot_Current = 100
 
+            heat_Max = 400
+            heat_Current = 100
+            heat_IsInput = true
+            isHeat2Energy = true
+            heat2Energy_Max = 10
         }
         if buildType == .SmallOffice {
-            imageName = "辦公室1"
+            imageName = "SmallOffice"
             buildPrice = 10
-            hot_IsInput = true
             
-            hot_Max = 10
-            hot_Current = 0
+            heat_Max = 10
+            heat_Current = 0
+            heat_IsInput = true
             
             money_Sales = 5
-
         }
     }
     
@@ -114,21 +110,21 @@ class BuildingData {
         var info = [String]()
         if buildType == .WindTurbine {
             info.append("Time: \(time_Current) / \(time_Max)")
-            info.append("Produce Energy: \(hot2Energy_Max)")
+            info.append("Produce Energy: \(heat2Energy_Max)")
             info.append("Sell Money: \(buildPrice)")
         }
         if buildType == .CoalBurner {
             info.append("Time: \(time_Current) / \(time_Max)")
-            info.append("Produce Hot: \(hot_Produce)")
+            info.append("Produce Hot: \(heat_Produce)")
             info.append("Sell Money: \(buildPrice)")
         }
         if buildType == .SmallGenerator {
-            info.append("Hot: \(hot_Current) / \(hot_Max)")
-            info.append("Converted Energy: \(hot2Energy_Max)")
+            info.append("Hot: \(heat_Current) / \(heat_Max)")
+            info.append("Converted Energy: \(heat2Energy_Max)")
             info.append("Sell Money: \(buildPrice)")
         }
         if buildType == .SmallOffice {
-            info.append("Hot: \(hot_Current) / \(hot_Max)")
+            info.append("Hot: \(heat_Current) / \(heat_Max)")
             info.append("Produce Money: \(money_Sales)")
             info.append("Sell Money: \(buildPrice)")
         }
@@ -201,7 +197,7 @@ class Building: SKNode {
                 let persent = CGFloat(buildingData.time_Current) / CGFloat(buildingData.time_Max)
                 progress.xScale = persent
             case .Hot:
-                let persent = CGFloat(buildingData.hot_Current) / CGFloat(buildingData.hot_Max)
+                let persent = CGFloat(buildingData.heat_Current) / CGFloat(buildingData.heat_Max)
                 progress.xScale = persent
             case .Water:
                 break
@@ -312,8 +308,8 @@ class BuildingMapLayer: SKSpriteNode {
                 if building!.activate {
                     let buildingData = building!.buildingData
                     // produce hot
-                    if buildingData.hot_Produce != nil {
-                        buildingData.hot_Current! += buildingData.hot_Produce
+                    if buildingData.heat_Produce != nil {
+                        buildingData.heat_Current! += buildingData.heat_Produce
                     }
                 }
             }
@@ -323,28 +319,28 @@ class BuildingMapLayer: SKSpriteNode {
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
                 // if building was hot output
-                if (building!.activate && building!.buildingData.hot_IsOutput) {
+                if (building!.activate && building!.buildingData.heat_IsOutput) {
                     // get around coord
                     var aroundCoords = [CGPoint]()
-                    if (y - 1 >= 0 && buildings[y-1][x]!.activate && buildings[y-1][x]!.buildingData.hot_IsInput) {
+                    if (y - 1 >= 0 && buildings[y-1][x]!.activate && buildings[y-1][x]!.buildingData.heat_IsInput) {
                         aroundCoords.append(CGPoint(x: x, y: y - 1))
                     }
-                    if (y + 1 <= 11 && buildings[y+1][x]!.activate && buildings[y+1][x]!.buildingData.hot_IsInput ) {
+                    if (y + 1 <= 11 && buildings[y+1][x]!.activate && buildings[y+1][x]!.buildingData.heat_IsInput ) {
                         aroundCoords.append(CGPoint(x: x, y: y + 1))
                     }
-                    if (x - 1 >= 0 && buildings[y][x-1]!.activate && buildings[y][x-1]!.buildingData.hot_IsInput ) {
+                    if (x - 1 >= 0 && buildings[y][x-1]!.activate && buildings[y][x-1]!.buildingData.heat_IsInput ) {
                         aroundCoords.append(CGPoint(x: x - 1, y: y))
                     }
-                    if (x + 1 <= 9 && buildings[y][x+1]!.activate && buildings[y][x+1]!.buildingData.hot_IsInput ) {
+                    if (x + 1 <= 9 && buildings[y][x+1]!.activate && buildings[y][x+1]!.buildingData.heat_IsInput ) {
                         aroundCoords.append(CGPoint(x: x + 1, y: y))
                     }
                     // according coord number, calculate hot balance
                     if aroundCoords.count > 0 {
-                        let balancehot = building!.buildingData.hot_Current / aroundCoords.count
+                        let balancehot = building!.buildingData.heat_Current / aroundCoords.count
                         for coord in aroundCoords {
-                            buildings[Int(coord.y)][Int(coord.x)]!.buildingData.hot_Current! += balancehot
+                            buildings[Int(coord.y)][Int(coord.x)]!.buildingData.heat_Current! += balancehot
                         }
-                        building!.buildingData.hot_Current = 0
+                        building!.buildingData.heat_Current = 0
                     }
                 }
             }
@@ -353,14 +349,14 @@ class BuildingMapLayer: SKSpriteNode {
         // 3. Hot Consume
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {
-                if (building!.activate && building!.buildingData.isHot2Energy) {
+                if (building!.activate && building!.buildingData.isHeat2Energy) {
                     let buildingData = building!.buildingData
-                    if buildingData.hot_Current >= buildingData.hot2Energy_Max {
-                        buildingData.energy_Current += buildingData.hot2Energy_Max
-                        buildingData.hot_Current! -= buildingData.hot2Energy_Max
+                    if buildingData.heat_Current >= buildingData.heat2Energy_Max {
+                        buildingData.energy_Current += buildingData.heat2Energy_Max
+                        buildingData.heat_Current! -= buildingData.heat2Energy_Max
                     } else {
-                        buildingData.energy_Current += buildingData.hot_Current
-                        buildingData.hot_Current = 0
+                        buildingData.energy_Current += buildingData.heat_Current
+                        buildingData.heat_Current = 0
                     }
                 }
             }
@@ -372,8 +368,8 @@ class BuildingMapLayer: SKSpriteNode {
                 let buildingData = building!.buildingData
                 if building!.activate {
                     // A. Destroy
-                    if buildingData.hot_Max != nil {
-                        if buildingData.hot_Current > buildingData.hot_Max {
+                    if buildingData.heat_Max != nil {
+                        if buildingData.heat_Current > buildingData.heat_Max {
                             let coord = CGPoint(x: x, y: y)
                             removeBuilding(coord)
                             setTileMapElement(coord: coord, buildType: .Land)
@@ -386,7 +382,7 @@ class BuildingMapLayer: SKSpriteNode {
                             building!.activate = false
                             building!.alpha = 0.5
                             buildingData.time_Current = 0
-                            buildingData.hot_Current = 0
+                            buildingData.heat_Current = 0
                             buildingData.water_Current = 0
                             buildingData.energy_Current = 0
                         }
