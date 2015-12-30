@@ -85,14 +85,45 @@ class BuildingSelectLayer: SKNode {
                 positions.append(CGPoint(x: gap + selectLayer.size.width / 4 * CGFloat(x), y: selectLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
             }
         }
-        
-        let selects:[BuildingType] = [BuildingType.WindTurbine, BuildingType.CoalBurner, BuildingType.SmallOffice]
-
         // page 1
-        for count in 0..<selects.count {
-            let sptireNode = BuildingSelectElement(buildType: selects[count], size: elementsize)
-            sptireNode.position = positions[count]
-            selectLayer.addChild(sptireNode)
+        let page1Types: [ReserchType] = [.WindTurbineResearch, .CoalBurnerResearch]
+        let page1images: [BuildingType] = [.WindTurbine, .CoalBurner]
+        for count in 0..<page1Types.count {
+            if reserchLevel[page1Types[count]] > 0 {
+                let sptireNode = BuildingSelectElement(buildType: page1images[count], size: elementsize)
+                sptireNode.position = positions[count]
+                selectLayer.addChild(sptireNode)
+            }
+        }
+        // page 2
+        let page2Types: [ReserchType] = [.SmallGeneratorResearch]
+        let page2images: [BuildingType] = [.SmallGenerator]
+        for count in 0..<page2Types.count {
+            if reserchLevel[page2Types[count]] > 0 {
+                let sptireNode = BuildingSelectElement(buildType: page2images[count], size: elementsize)
+                sptireNode.position = positions[count + 7]
+                selectLayer.addChild(sptireNode)
+            }
+        }
+        // page 3
+        let page3Types: [ReserchType] = [.SmallGeneratorResearch]
+        let page3images: [BuildingType] = [.SmallGenerator]
+        for count in 0..<page3Types.count {
+            if reserchLevel[page3Types[count]] > 0 {
+                let sptireNode = BuildingSelectElement(buildType: page3images[count], size: elementsize)
+                sptireNode.position = positions[count + 14]
+                selectLayer.addChild(sptireNode)
+            }
+        }
+        // page 4
+        let page4Types: [ReserchType] = [.SmallOfficeResearch]
+        let page4images: [BuildingType] = [.SmallOffice]
+        for count in 0..<page4Types.count {
+            if reserchLevel[page4Types[count]] > 0 {
+                let sptireNode = BuildingSelectElement(buildType: page4images[count], size: elementsize)
+                sptireNode.position = positions[count + 21]
+                selectLayer.addChild(sptireNode)
+            }
         }
     }
     

@@ -34,33 +34,38 @@ class ReserchElement: SKNode {
         switch reserchType {
         case .WindTurbineRebuild:
             imageType = BuildingType.WindTurbine
-            text1 = "Wind_Rebuild Lv.\(level)"
+            text1 = "Wind Turbine Rebuild Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 1
-            if level == 1 { reserchDone = true }
+            if level >= 1 { reserchDone = true }
             
         case .CoalBurnerResearch:
             imageType = BuildingType.CoalBurner
-            text1 = "Fire_Develope Lv.\(level)"
+            text1 = "Coal Burner Lv.\(level)"
             text2 = "test123123"
             reserchPrice = 10
-            if level == 1 { reserchDone = true }
+            if level >= 1 { reserchDone = true }
             
         case .CoalBurnerRebuild:
             imageType = BuildingType.CoalBurner
-            text1 = "Fire_Rebuild Lv.\(level)"
+            text1 = "Coal Burner Rebuild Lv.\(level)"
             text2 = "test123123"
-            reserchPrice = 100
-            if level == 2 { reserchDone = true }
+            reserchPrice = 1
+            if level >= 1 { reserchDone = true }
             
         case .SmallGeneratorResearch:
             imageType = BuildingType.SmallOffice
-            text1 = "Office_Develope Lv.\(level)"
+            text1 = "Small Generator Lv.\(level)"
             text2 = "test123123"
-            reserchPrice = 1000
-            if level == 1 { reserchDone = true }
+            reserchPrice = 1
+            if level >= 1 { reserchDone = true }
             
-        default: break
+        default:
+            imageType = BuildingType.WindTurbine
+            text1 = "\(reserchType) Lv.\(level)"
+            text2 = "test123123"
+            reserchPrice = 1
+            if level >= 1 { reserchDone = true }
         }
         
         // image
@@ -69,30 +74,39 @@ class ReserchElement: SKNode {
         image.position = CGPoint(x: size.height / 2, y: gap + image.size.width / 2)
         addChild(image)
         // label 1
-        let labelgap: CGFloat = 10
-        let labelsize = (image.size.height - labelgap) / 2
+        let labelgap: CGFloat = 5
+        let labelsize = (image.size.height - labelgap * 2) / 3
         let label1 = SKLabelNode(fontNamed: "Verdana-Bold")
         label1.name = "label1"
         label1.text = text1
+        label1.fontSize = labelsize
         label1.horizontalAlignmentMode = .Left
-        label1.position = CGPoint(x: gap * 2 + image.size.width, y: gap + labelsize + labelgap)
+        label1.position = CGPoint(x: gap * 2 + image.size.width, y: gap + (labelsize + labelgap) * 2)
         addChild(label1)
         // label 2
         let label2 = SKLabelNode(fontNamed: "Verdana-Bold")
         label2.name = "label2"
         label2.text = text2
+        label2.fontSize = labelsize
         label2.horizontalAlignmentMode = .Left
-        label2.position = CGPoint(x: gap * 2 + image.size.width, y: gap)
+        label2.position = CGPoint(x: gap * 2 + image.size.width, y: gap + (labelsize + labelgap) * 1)
         addChild(label2)
+        // label 3
+        let label3 = SKLabelNode(fontNamed: "Verdana-Bold")
+        label3.name = "label3"
+        label3.text = "Need Research : \(reserchPrice)"
+        label3.fontSize = labelsize
+        label3.horizontalAlignmentMode = .Left
+        label3.position = CGPoint(x: gap * 2 + image.size.width, y: gap)
+        addChild(label3)
         // Upgrade Button
-        if reserchDone {
-            buttonUpgrade = SKSpriteNode(color: SKColor.blueColor(), size: tilesScaleSize)
-        } else {
-            buttonUpgrade = SKSpriteNode(color: (money > reserchPrice ? SKColor.greenColor() : SKColor.redColor()), size: tilesScaleSize)
+        if !reserchDone {
+            let color = (money > reserchPrice ? SKColor.greenColor() : SKColor.redColor())
+            buttonUpgrade = SKSpriteNode(color: color, size: tilesScaleSize)
             buttonUpgrade.name = (money > reserchPrice ? "Upgrade" : "NoMoney")
+            buttonUpgrade.position = CGPoint(x: size.width - gap - tilesScaleSize.width / 2, y: size.height / 2)
+            addChild(buttonUpgrade)
         }
-        buttonUpgrade.position = CGPoint(x: size.width - gap - tilesScaleSize.width / 2, y: size.height / 2)
-        addChild(buttonUpgrade)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -152,19 +166,31 @@ class ReserchScene: SKScene {
         let gap:CGFloat = 20
         let num:CGFloat = 8
         let elementsize = CGSizeMake(frame.size.width - gap * 2, (reserchdeLayer.size.height - gap) / num - gap)
-        for x in 0..<4 {
+        for x in 0..<5 {
             for y in 0..<Int(num) {
                 positions.append(CGPoint(x: gap + frame.size.width * CGFloat(x), y: reserchdeLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
             }
         }
         // Add Element
-        for count in 0...17 {
-            let element = ReserchElement(reserchType: .WindTurbineRebuild, size: elementsize)
-            element.position = positions[count]
-            reserchdeLayer.addChild(element)
+        var number = 0
+        for count in 0..<ReserchType.ReserchTypeLength.hashValue {
+            if reserchLevel[ReserchType(rawValue: count)!] == 0 {
+                let element = ReserchElement(reserchType: ReserchType(rawValue: count)!, size: elementsize)
+                element.position = positions[number]
+                reserchdeLayer.addChild(element)
+                number++
+            }
+        }
+        for count in 0..<ReserchType.ReserchTypeLength.hashValue {
+            if reserchLevel[ReserchType(rawValue: count)!] > 0 {
+                let element = ReserchElement(reserchType: ReserchType(rawValue: count)!, size: elementsize)
+                element.position = positions[number]
+                reserchdeLayer.addChild(element)
+                number++
+            }
         }
         // Caculate MaxPage
-        maxPage = 17 / 8 + 1
+        maxPage = (number - 1) / 8 + 1
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -189,6 +215,7 @@ class ReserchScene: SKScene {
                     let element = (node.parent as! ReserchElement)
                     let price = element.reserchPrice
                     let type = element.reserchType
+                    print(type)
                     reserch -= price
                     reserchLevel[type]!++
                 }
@@ -200,6 +227,82 @@ class ReserchScene: SKScene {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
         topLabel.text = "You have \(reserch) reserch can be used!"
+        checkResearchLevel()
         updateElement()
+    }
+    
+    func checkResearchLevel() {
+        if reserchLevel[ReserchType.ResearchCenterResearch] == 1 {
+            reserchLevel[ReserchType.ResearchCenterResearch] = 2
+            reserchLevel[ReserchType.WindTurbineRebuild] = 0
+            reserchLevel[ReserchType.SmallOfficeResearch] = 0
+        }
+        if reserchLevel[ReserchType.SmallOfficeResearch] == 1 {
+            reserchLevel[ReserchType.SmallOfficeResearch] = 2
+            reserchLevel[ReserchType.BatteryResearch] = 0
+            reserchLevel[ReserchType.SolarCellResearch] = 0
+        }
+        if reserchLevel[ReserchType.SolarCellResearch] == 1 {
+            reserchLevel[ReserchType.SolarCellResearch] = 2
+            reserchLevel[ReserchType.SolarCellRebuild] = 0
+            reserchLevel[ReserchType.SmallGeneratorResearch] = 0
+        }
+        if reserchLevel[ReserchType.SmallGeneratorResearch] == 1 {
+            reserchLevel[ReserchType.SmallGeneratorResearch] = 2
+            reserchLevel[ReserchType.IsolationResearch] = 0
+            reserchLevel[ReserchType.CoalBurnerResearch] = 0
+        }
+        if reserchLevel[ReserchType.CoalBurnerResearch] == 1 {
+            reserchLevel[ReserchType.CoalBurnerResearch] = 2
+            reserchLevel[ReserchType.CoalBurnerRebuild] = 0
+            reserchLevel[ReserchType.HeatExchangerResearch] = 0
+            reserchLevel[ReserchType.BoilerHouseResearch] = 0
+        }
+        if reserchLevel[ReserchType.BoilerHouseResearch] == 1 {
+            reserchLevel[ReserchType.BoilerHouseResearch] = 2
+            reserchLevel[ReserchType.WaveCellResearch] = 0
+        }
+        if reserchLevel[ReserchType.WaveCellResearch] == 1 {
+            reserchLevel[ReserchType.WaveCellResearch] = 2
+            reserchLevel[ReserchType.WaveCellRebuild] = 0
+            reserchLevel[ReserchType.AdvancedResearchCenterResearch] = 0
+            reserchLevel[ReserchType.MediumOfficeResearch] = 0
+            reserchLevel[ReserchType.GasBurnerResearch] = 0
+        }
+        if reserchLevel[ReserchType.GasBurnerResearch] == 1 {
+            reserchLevel[ReserchType.GasBurnerResearch] = 2
+            reserchLevel[ReserchType.GasBurnerRebuild] = 0
+            reserchLevel[ReserchType.HeatSinkResearch] = 0
+            reserchLevel[ReserchType.MediumGeneratorResearch] = 0
+            reserchLevel[ReserchType.LargeBoilerHouseResearch] = 0
+        }
+        if reserchLevel[ReserchType.LargeBoilerHouseResearch] == 1 {
+            reserchLevel[ReserchType.LargeBoilerHouseResearch] = 2
+            reserchLevel[ReserchType.NuclearCellResearch] = 0
+        }
+        if reserchLevel[ReserchType.NuclearCellResearch] == 1 {
+            reserchLevel[ReserchType.NuclearCellResearch] = 2
+            reserchLevel[ReserchType.NuclearCellRebuild] = 0
+            reserchLevel[ReserchType.WaterPumpResearch] = 0
+            reserchLevel[ReserchType.WaterPipeResearch] = 0
+            reserchLevel[ReserchType.LargeOfficeResearch] = 0
+        }
+        if reserchLevel[ReserchType.WaterPumpResearch] == 1 {
+            reserchLevel[ReserchType.WaterPumpResearch] = 2
+            reserchLevel[ReserchType.LibraryResearch] = 0
+            reserchLevel[ReserchType.GroundwaterPumpResearch] = 0
+            reserchLevel[ReserchType.FusionCellResearch] = 0
+        }
+        if reserchLevel[ReserchType.FusionCellResearch] == 1 {
+            reserchLevel[ReserchType.FusionCellResearch] = 2
+            reserchLevel[ReserchType.FusionCellRebuild] = 0
+            reserchLevel[ReserchType.LargeGeneratorResearch] = 0
+        }
+        if reserchLevel[ReserchType.LargeGeneratorResearch] == 1 {
+            reserchLevel[ReserchType.LargeGeneratorResearch] = 2
+            reserchLevel[ReserchType.BankResearch] = 0
+            reserchLevel[ReserchType.HeatInletResearch] = 0
+            reserchLevel[ReserchType.HeatOutletResearch] = 0
+        }
     }
 }

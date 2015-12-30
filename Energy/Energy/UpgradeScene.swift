@@ -8,7 +8,6 @@
 
 import SpriteKit
 
-
 class UpgradeElement: SKNode {
     
     var background: SKSpriteNode!
