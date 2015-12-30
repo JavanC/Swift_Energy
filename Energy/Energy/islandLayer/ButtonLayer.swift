@@ -14,7 +14,7 @@ class ButtonLayer: SKSpriteNode {
     var buttonSell: SKSpriteNode!
     var buttonEnergy: SKSpriteNode!
     var buttonUpgrade: SKSpriteNode!
-    var buttonReserch: SKSpriteNode!
+    var buttonResearch: SKSpriteNode!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
@@ -47,11 +47,11 @@ class ButtonLayer: SKSpriteNode {
         buttonUpgrade.position = CGPoint(x: size.width * 7 / 11, y: 0)
         addChild(buttonUpgrade)
         
-        buttonReserch = SKSpriteNode(color: colorReserch, size: CGSize(width: size.width * 2 / 11, height: size.height))
-        buttonReserch.name = "ButtonReserch"
-        buttonReserch.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonReserch.position = CGPoint(x: size.width * 9 / 11, y: 0)
-        addChild(buttonReserch)
+        buttonResearch = SKSpriteNode(color: colorResearch, size: CGSize(width: size.width * 2 / 11, height: size.height))
+        buttonResearch.name = "ButtonResearch"
+        buttonResearch.anchorPoint = CGPoint(x: 0, y: 0)
+        buttonResearch.position = CGPoint(x: size.width * 9 / 11, y: 0)
+        addChild(buttonResearch)
         
         tapButtonNil()
     }

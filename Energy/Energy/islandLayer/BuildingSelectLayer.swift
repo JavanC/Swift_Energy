@@ -86,40 +86,40 @@ class BuildingSelectLayer: SKNode {
             }
         }
         // page 1
-        let page1Types: [ReserchType] = [.WindTurbineResearch, .CoalBurnerResearch]
+        let page1Types: [ResearchType] = [.WindTurbineResearch, .CoalBurnerResearch]
         let page1images: [BuildingType] = [.WindTurbine, .CoalBurner]
         for count in 0..<page1Types.count {
-            if reserchLevel[page1Types[count]] > 0 {
+            if researchLevel[page1Types[count]] > 0 {
                 let sptireNode = BuildingSelectElement(buildType: page1images[count], size: elementsize)
                 sptireNode.position = positions[count]
                 selectLayer.addChild(sptireNode)
             }
         }
         // page 2
-        let page2Types: [ReserchType] = [.SmallGeneratorResearch]
+        let page2Types: [ResearchType] = [.SmallGeneratorResearch]
         let page2images: [BuildingType] = [.SmallGenerator]
         for count in 0..<page2Types.count {
-            if reserchLevel[page2Types[count]] > 0 {
+            if researchLevel[page2Types[count]] > 0 {
                 let sptireNode = BuildingSelectElement(buildType: page2images[count], size: elementsize)
                 sptireNode.position = positions[count + 7]
                 selectLayer.addChild(sptireNode)
             }
         }
         // page 3
-        let page3Types: [ReserchType] = [.SmallGeneratorResearch]
+        let page3Types: [ResearchType] = [.SmallGeneratorResearch]
         let page3images: [BuildingType] = [.SmallGenerator]
         for count in 0..<page3Types.count {
-            if reserchLevel[page3Types[count]] > 0 {
+            if researchLevel[page3Types[count]] > 0 {
                 let sptireNode = BuildingSelectElement(buildType: page3images[count], size: elementsize)
                 sptireNode.position = positions[count + 14]
                 selectLayer.addChild(sptireNode)
             }
         }
         // page 4
-        let page4Types: [ReserchType] = [.SmallOfficeResearch]
+        let page4Types: [ResearchType] = [.SmallOfficeResearch]
         let page4images: [BuildingType] = [.SmallOffice]
         for count in 0..<page4Types.count {
-            if reserchLevel[page4Types[count]] > 0 {
+            if researchLevel[page4Types[count]] > 0 {
                 let sptireNode = BuildingSelectElement(buildType: page4images[count], size: elementsize)
                 sptireNode.position = positions[count + 21]
                 selectLayer.addChild(sptireNode)

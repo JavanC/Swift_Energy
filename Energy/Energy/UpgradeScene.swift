@@ -172,26 +172,26 @@ class UpgradeScene: SKScene {
         
         // Check element
         var elements = [UpgradeType]()
-        if reserchLevel[.SmallOfficeResearch] > 0       { elements += [.OfficeSellEnergy] }
-        if reserchLevel[.BankResearch] > 0              { elements += [.BankEffectiveness] }
-        if reserchLevel[.ResearchCenterResearch] > 0    { elements += [.ResearchCenter] }
-        if reserchLevel[.LibraryResearch] > 0           { elements += [.LibraryEffectiveness] }
-        if reserchLevel[.BoilerHouseResearch] > 0       { elements += [.BoilerHouseMaxHeat, .BoilerHouseSellAmount] }
-        if reserchLevel[.SmallGeneratorResearch] > 0    { elements += [.GeneratorMaxHeat, .GeneratorEffectiveness] }
-        if reserchLevel[.HeatExchangerResearch] > 0     { elements += [.HeatExchangerMaxHeat] }
-        if reserchLevel[.HeatSinkResearch] > 0          { elements += [.HeatSinkMaxHeat] }
-        if reserchLevel[.BatteryResearch] > 0           { elements += [.EnergyBatterySize] }
-        if reserchLevel[.IsolationResearch] > 0         { elements += [.IsolationEffectiveness] }
-        if reserchLevel[.WaterPumpResearch] > 0         { elements += [.WaterPumpProduction, .WaterElementMaxWater, .GeneratorMaxWater] }
-        if reserchLevel[.GroundwaterPumpResearch] > 0   { elements += [.GroundwaterPumpProduction] }
-        if reserchLevel[.HeatInletResearch] > 0         { elements += [.HeatInletOutletMaxHeat, .HeatInletOutletMaxHeat] }
-        if reserchLevel[.FusionCellResearch] > 0        { elements += [.FusionCellEffectiveness, .FusionCellLifetime] }
-        if reserchLevel[.NuclearCellResearch] > 0       { elements += [.NuclearCellEffectiveness, .NuclearCellLifetime] }
-        if reserchLevel[.GasBurnerResearch] > 0         { elements += [.GasBurnerEffectiveness, .GasBurnerLifetime] }
-        if reserchLevel[.WaveCellResearch] > 0          { elements += [.WaveCellEffectiveness, .WaveCellLifetime] }
-        if reserchLevel[.CoalBurnerResearch] > 0        { elements += [.CoalBurnerEffectiveness, .CoalBurnerLifetime] }
-        if reserchLevel[.SolarCellResearch] > 0         { elements += [.SolarCellEffectiveness, .SolarCellLifetime] }
-        if reserchLevel[.WindTurbineResearch] > 0       { elements += [.WindTurbineEffectiveness, .WindTurbineLifetime] }
+        if researchLevel[.SmallOfficeResearch] > 0       { elements += [.OfficeSellEnergy] }
+        if researchLevel[.BankResearch] > 0              { elements += [.BankEffectiveness] }
+        if researchLevel[.ResearchCenterResearch] > 0    { elements += [.ResearchCenter] }
+        if researchLevel[.LibraryResearch] > 0           { elements += [.LibraryEffectiveness] }
+        if researchLevel[.BoilerHouseResearch] > 0       { elements += [.BoilerHouseMaxHeat, .BoilerHouseSellAmount] }
+        if researchLevel[.SmallGeneratorResearch] > 0    { elements += [.GeneratorMaxHeat, .GeneratorEffectiveness] }
+        if researchLevel[.HeatExchangerResearch] > 0     { elements += [.HeatExchangerMaxHeat] }
+        if researchLevel[.HeatSinkResearch] > 0          { elements += [.HeatSinkMaxHeat] }
+        if researchLevel[.BatteryResearch] > 0           { elements += [.EnergyBatterySize] }
+        if researchLevel[.IsolationResearch] > 0         { elements += [.IsolationEffectiveness] }
+        if researchLevel[.WaterPumpResearch] > 0         { elements += [.WaterPumpProduction, .WaterElementMaxWater, .GeneratorMaxWater] }
+        if researchLevel[.GroundwaterPumpResearch] > 0   { elements += [.GroundwaterPumpProduction] }
+        if researchLevel[.HeatInletResearch] > 0         { elements += [.HeatInletOutletMaxHeat, .HeatInletOutletMaxHeat] }
+        if researchLevel[.FusionCellResearch] > 0        { elements += [.FusionCellEffectiveness, .FusionCellLifetime] }
+        if researchLevel[.NuclearCellResearch] > 0       { elements += [.NuclearCellEffectiveness, .NuclearCellLifetime] }
+        if researchLevel[.GasBurnerResearch] > 0         { elements += [.GasBurnerEffectiveness, .GasBurnerLifetime] }
+        if researchLevel[.WaveCellResearch] > 0          { elements += [.WaveCellEffectiveness, .WaveCellLifetime] }
+        if researchLevel[.CoalBurnerResearch] > 0        { elements += [.CoalBurnerEffectiveness, .CoalBurnerLifetime] }
+        if researchLevel[.SolarCellResearch] > 0         { elements += [.SolarCellEffectiveness, .SolarCellLifetime] }
+        if researchLevel[.WindTurbineResearch] > 0       { elements += [.WindTurbineEffectiveness, .WindTurbineLifetime] }
         
         // Add Element
         for count in 0..<elements.count {

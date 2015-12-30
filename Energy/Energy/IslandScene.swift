@@ -161,15 +161,15 @@ class IslandScene: SKScene {
                     
                 case buttonLayer.buttonUpgrade:
                     print("Upgrade Button")
-                    changeTouchTypeAndShowPage(.Energy)
+                    changeTouchTypeAndShowPage(touchType)
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
                     self.view?.presentScene(upgradeScene, transition: doors)
                     
-                case buttonLayer.buttonReserch:
-                    print("Reserch Button")
+                case buttonLayer.buttonResearch:
+                    print("Research Button")
                     changeTouchTypeAndShowPage(.Energy)
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
-                    self.view?.presentScene(reserchScene, transition: doors)
+                    self.view?.presentScene(researchScene, transition: doors)
                 
                 // Energy Page
                 case bottomLayer.pageEnergy.energy_ProgressBack:
@@ -266,7 +266,7 @@ class IslandScene: SKScene {
         
         // Updata imformation
         topLayer.moneyLabel.text = "Money: \(money) + \(maps[nowMapNumber].money_TickAdd)"
-        topLayer.reserchLabel.text = "Reserch: \(reserch) + \(maps[nowMapNumber].reserch_TickAdd)"
+        topLayer.researchLabel.text = "Research: \(research) + \(maps[nowMapNumber].research_TickAdd)"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
         bottomLayer.pageEnergy.energyLabel.text = "Energy: \(maps[nowMapNumber].energy) (Max:\(maps[nowMapNumber].energyMax))"
@@ -277,9 +277,9 @@ class IslandScene: SKScene {
         for i in 0...1 {
             // Update map data
             maps[i].Update()
-            // Calculate money and reserch
+            // Calculate money and research
             money += maps[i].money_TickAdd
-            reserch += maps[i].reserch_TickAdd
+            research += maps[i].research_TickAdd
         }
         //        save()
     }

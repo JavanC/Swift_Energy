@@ -13,11 +13,10 @@ var menuScene: SKScene!
 var islandsScene: SKScene!
 var islandScene: SKScene!
 var upgradeScene: SKScene!
-var reserchScene: SKScene!
+var researchScene: SKScene!
 
 class GameViewController: UIViewController {
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -33,13 +32,13 @@ class GameViewController: UIViewController {
             islandsScene = IslandsScene(size: size)
             islandScene = IslandScene(size: size)
             upgradeScene = UpgradeScene(size: size)
-            reserchScene = ReserchScene(size: size)
+            researchScene = ResearchScene(size: size)
             // Configure the view
             menuScene.scaleMode = .AspectFill
             islandsScene.scaleMode = .AspectFill
             islandScene.scaleMode = .AspectFill
             upgradeScene.scaleMode = .AspectFill
-            reserchScene.scaleMode = .AspectFill
+            researchScene.scaleMode = .AspectFill
             skView.showsFPS = true
             skView.showsNodeCount = true
             skView.ignoresSiblingOrder = true

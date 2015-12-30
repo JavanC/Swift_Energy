@@ -40,7 +40,7 @@ class BuildingData {
     var water_IsInput: Bool = false
     
     // Other
-    var reserch_Produce: Int!
+    var research_Produce: Int!
     var money_Sales: Int!
     
     init(buildType: BuildingType) {
@@ -213,7 +213,7 @@ class BuildingMapLayer: SKSpriteNode {
     var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array<Array<Building?>>()
     var money_TickAdd: Int = 0
-    var reserch_TickAdd: Int = 0
+    var research_TickAdd: Int = 0
     var energy_TickAdd: Int = 0
     var energy: Int = 0
     var energyMax: Int = 100
@@ -404,16 +404,16 @@ class BuildingMapLayer: SKSpriteNode {
             }
         }
         
-        // 5. Calculate reserch, energy, money tick add
-        reserch_TickAdd = 0
+        // 5. Calculate research, energy, money tick add
+        research_TickAdd = 0
         energy_TickAdd = 0
         money_TickAdd = 0
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {
                 if building!.activate == true {
-                    // reserch
-                    if building!.buildingData.reserch_Produce != nil {
-                        reserch_TickAdd += (building?.buildingData.reserch_Produce)!
+                    // research
+                    if building!.buildingData.research_Produce != nil {
+                        research_TickAdd += (building?.buildingData.research_Produce)!
                     }
                     // energy
                     if building?.buildingData.energy_Current != nil {

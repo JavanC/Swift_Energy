@@ -13,7 +13,7 @@ class TopLayer: SKSpriteNode {
     var buttonMenu: SKSpriteNode!
     var buttonPause: SKSpriteNode!
     var moneyLabel: SKLabelNode!
-    var reserchLabel: SKLabelNode!
+    var researchLabel: SKLabelNode!
 
     func configureAtPosition(position: CGPoint, size: CGSize) {
         
@@ -45,12 +45,12 @@ class TopLayer: SKSpriteNode {
         moneyLabel.position = CGPoint(x: buttonMenu.size.width + 20, y: labelgap * 2 + labelsize * 1)
         addChild(moneyLabel)
 
-        reserchLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-        reserchLabel.name = "ReserchLabel"
-        reserchLabel.fontColor = colorReserch
-        reserchLabel.fontSize = labelsize
-        reserchLabel.horizontalAlignmentMode = .Left
-        reserchLabel.position = CGPoint(x: buttonMenu.size.width + 20, y: labelgap * 1 + labelsize * 0)
-        addChild(reserchLabel)
+        researchLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        researchLabel.name = "ResearchLabel"
+        researchLabel.fontColor = colorResearch
+        researchLabel.fontSize = labelsize
+        researchLabel.horizontalAlignmentMode = .Left
+        researchLabel.position = CGPoint(x: buttonMenu.size.width + 20, y: labelgap * 1 + labelsize * 0)
+        addChild(researchLabel)
     }
 }

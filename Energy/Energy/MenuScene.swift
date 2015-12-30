@@ -9,7 +9,7 @@
 import SpriteKit
 // Game UI Data
 var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
-var colorReserch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
+var colorResearch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
 // Game Data
 enum BuildingType: Int {
     case Ocean, Land, WindTurbine, SolarCell, CoalBurner, WaveCell, GasBurner, NuclearCell, FusionCell, SmallGenerator, MediumGenerator, LargeGenerator, BoilerHouse, LargeBoilerHouse, Isolation, Battery, HeatExchanger, HeatSink, HeatInlet, HeatOutlet, WaterPump, GroundwaterPump, WaterPipe, SmallOffice, MediumOffice, LargeOffice, Bank, ResearchCenter, AdvancedResearchCenter, Library, BuildingTypeLength
@@ -17,14 +17,14 @@ enum BuildingType: Int {
 enum UpgradeType: Int {
     case OfficeSellEnergy, BankEffectiveness, ResearchCenter, LibraryEffectiveness, BoilerHouseMaxHeat, BoilerHouseSellAmount, GeneratorMaxHeat, GeneratorEffectiveness, HeatExchangerMaxHeat, HeatSinkMaxHeat, EnergyBatterySize, IsolationEffectiveness, WaterPumpProduction, GroundwaterPumpProduction, WaterElementMaxWater, GeneratorMaxWater, HeatInletOutletMaxHeat, HeatInletMaxTransfer, FusionCellEffectiveness, FusionCellLifetime, NuclearCellEffectiveness, NuclearCellLifetime, GasBurnerEffectiveness, GasBurnerLifetime, WaveCellEffectiveness, WaveCellLifetime, CoalBurnerEffectiveness, CoalBurnerLifetime, SolarCellEffectiveness, SolarCellLifetime, WindTurbineEffectiveness, WindTurbineLifetime, UpgradeTypeLength
 }
-enum ReserchType: Int {
-    case ResearchCenterResearch, AdvancedResearchCenterResearch, LibraryResearch, SmallOfficeResearch, MediumOfficeResearch, LargeOfficeResearch, BankResearch, ChronometerUpdateResearch, SmallGeneratorResearch, MediumGeneratorResearch, LargeGeneratorResearch, BoilerHouseResearch, LargeBoilerHouseResearch, WaterPumpResearch, GroundwaterPumpResearch, WaterPipeResearch, BatteryResearch, IsolationResearch, HeatExchangerResearch, HeatSinkResearch, HeatInletResearch, HeatOutletResearch, FusionCellResearch, FusionCellRebuild, NuclearCellResearch, NuclearCellRebuild, GasBurnerResearch, GasBurnerRebuild, WaveCellResearch, WaveCellRebuild, CoalBurnerResearch, CoalBurnerRebuild, SolarCellResearch, SolarCellRebuild, WindTurbineResearch, WindTurbineRebuild, ReserchTypeLength
+enum ResearchType: Int {
+    case ResearchCenterResearch, AdvancedResearchCenterResearch, LibraryResearch, SmallOfficeResearch, MediumOfficeResearch, LargeOfficeResearch, BankResearch, ChronometerUpdateResearch, SmallGeneratorResearch, MediumGeneratorResearch, LargeGeneratorResearch, BoilerHouseResearch, LargeBoilerHouseResearch, WaterPumpResearch, GroundwaterPumpResearch, WaterPipeResearch, BatteryResearch, IsolationResearch, HeatExchangerResearch, HeatSinkResearch, HeatInletResearch, HeatOutletResearch, FusionCellResearch, FusionCellRebuild, NuclearCellResearch, NuclearCellRebuild, GasBurnerResearch, GasBurnerRebuild, WaveCellResearch, WaveCellRebuild, CoalBurnerResearch, CoalBurnerRebuild, SolarCellResearch, SolarCellRebuild, WindTurbineResearch, WindTurbineRebuild, ResearchTypeLength
 }
 // User Data
 var money: Int = 100
-var reserch: Int = 100
+var research: Int = 100
 var upgradeLevel = [UpgradeType: Int]()
-var reserchLevel = [ReserchType: Int]()
+var researchLevel = [ResearchType: Int]()
 var maps = [BuildingMapLayer]()
 var nowMapNumber: Int = 0
 var isPause: Bool = false
@@ -54,10 +54,10 @@ class MenuScene: SKScene {
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
             upgradeLevel[UpgradeType(rawValue: count)!] = 0
         }
-        for count in 0..<ReserchType.ReserchTypeLength.hashValue {
-            reserchLevel[ReserchType(rawValue: count)!] = 0
+        for count in 0..<ResearchType.ResearchTypeLength.hashValue {
+            researchLevel[ResearchType(rawValue: count)!] = 0
         }
-        reserchLevel[ReserchType.WindTurbineResearch] = 1
+        researchLevel[ResearchType.WindTurbineResearch] = 1
         for _ in 0..<8 {
             let buildingMapLayer = BuildingMapLayer()
             buildingMapLayer.configureAtPosition(CGPoint(x: 0, y: 0))
