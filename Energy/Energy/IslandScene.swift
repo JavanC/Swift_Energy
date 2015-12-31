@@ -56,12 +56,12 @@ class IslandScene: SKScene {
                 maps[count].zPosition = 1
                 addChild(maps[count])
             }
-//            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: BuildingType.WindTurbine)
-//            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: BuildingType.SmallGenerator)
+            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: BuildingType.WaterPump)
+            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: BuildingType.SmallGenerator)
 //            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: BuildingType.CoalBurner)
 //            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 1), buildType: BuildingType.SmallGenerator)
 //            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: BuildingType.SmallOffice)
-//            maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: BuildingType.WindTurbine)
+            maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: BuildingType.SmallGenerator)
             info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
             
             // Button Layer
