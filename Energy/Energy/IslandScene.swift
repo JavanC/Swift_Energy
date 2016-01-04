@@ -58,6 +58,8 @@ class IslandScene: SKScene {
             }
             
             maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 2), buildType: BuildingType.WaterPump)
+            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 3), buildType: BuildingType.SmallGenerator)
+            
             
 //            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 2), buildType: BuildingType.SmallGenerator)
 //            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: BuildingType.SmallGenerator)
