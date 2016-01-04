@@ -8,6 +8,51 @@
 
 import SpriteKit
 
+class WaterSystem {
+    var size: Int
+    var inAmount: Int = 0
+    var produce: Int
+    var output: Bool
+
+    init(size: Int, initAmount: Int, produce: Int, output: Bool = true){
+        self.size = size
+        self.inAmount = initAmount
+        self.produce = produce
+        self.output = output
+    }
+    func produceWater() {
+        inAmount += produce
+    }
+    func overflow() {
+        if inAmount > size {
+            inAmount = size
+        }
+    }
+    func add(amount:Int) -> Bool {
+        if inAmount + amount <= size{
+            inAmount += amount
+            return true
+        }
+        return false
+    }
+    func balanceWithOtherWaterSystem(var waterSystems:[WaterSystem]){
+        
+        while waterSystems.count > 0 && inAmount > 0{
+            
+            var index = 0
+            for waterSystem in waterSystems {
+                if !waterSystem.add(1) {
+                    waterSystems.removeAtIndex(index)
+                    break
+                } else {
+                    --self.inAmount
+                }
+                index++
+            }
+        }
+    }
+}
+
 class BuildingData {
 
     // all
@@ -33,6 +78,7 @@ class BuildingData {
     var heat2Energy_Max: Int!
     
     // Water
+    var waterSystem: WaterSystem!
     var water_Max: Int!
     var water_Current: Int!
     var water_Produce: Int!
@@ -87,9 +133,11 @@ class BuildingData {
             isHeat2Energy = true
             heat2Energy_Max = 10
             
-            water_Current = 0
-            water_Max = 500
-            water_IsInput = true
+            waterSystem = WaterSystem(size: 100, initAmount: 0, produce: 0, output: false)
+//            
+//            water_Current = 0
+//            water_Max = 500
+//            water_IsInput = true
         }
         if buildType == .SmallOffice {
             imageName = "SmallOffice"
@@ -106,10 +154,11 @@ class BuildingData {
             buildPrice = 10
             progress = .Water
             
-            water_Max = 1000
-            water_Current = 0
-            water_Produce = 100
-            water_IsOutput = true
+            waterSystem = WaterSystem(size: 100, initAmount: 0, produce: 10)
+//            water_Max = 1000
+//            water_Current = 0
+//            water_Produce = 100
+//            water_IsOutput = true
         }
     }
     
@@ -134,7 +183,7 @@ class BuildingData {
         }
         if buildType == .SmallGenerator {
             info.append("Hot: \(heat_Current) / \(heat_Max)")
-            info.append("Water: \(water_Current) / \(water_Max)")
+            info.append("Water: \(waterSystem.inAmount) / \(waterSystem.size)")
             info.append("Converted Energy: \(heat2Energy_Max)")
             info.append("Sell Money: \(buildPrice)")
         }
@@ -144,7 +193,7 @@ class BuildingData {
             info.append("Sell Money: \(buildPrice)")
         }
         if buildType == .WaterPump {
-            info.append("Water: \(water_Current) / \(water_Max)")
+            info.append("Water: \(waterSystem.inAmount) / \(waterSystem.size)")
             info.append("Sell Money: \(buildPrice)")
         }
         return info
@@ -219,7 +268,7 @@ class Building: SKNode {
                 let persent = CGFloat(buildingData.heat_Current) / CGFloat(buildingData.heat_Max)
                 progress.xScale = persent
             case .Water:
-                let persent = CGFloat(buildingData.water_Current) / CGFloat(buildingData.water_Max)
+                let persent = CGFloat(buildingData.waterSystem.inAmount) / CGFloat(buildingData.waterSystem.size)
                 progress.xScale = persent
             }
         }
@@ -322,6 +371,9 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: BuildingMap Update
     func Update() {
         
+        
+        
+        
         // 1. Production
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {
@@ -331,9 +383,9 @@ class BuildingMapLayer: SKSpriteNode {
                     if buildingData.heat_Produce != nil {
                         buildingData.heat_Current! += buildingData.heat_Produce
                     }
-                    // production water
-                    if buildingData.water_Produce != nil {
-                        buildingData.water_Current! += buildingData.water_Produce
+                    // Produce Water
+                    if buildingData.waterSystem != nil {
+                        buildingData.waterSystem.produceWater()
                     }
                 }
             }
@@ -373,51 +425,31 @@ class BuildingMapLayer: SKSpriteNode {
         // 3. Water transport
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
-                // if building was hot output
-                if (building!.activate && building!.buildingData.water_IsOutput) {
-                    // get around coord
-                    var aroundCoords = [CGPoint]()
-                    if (y - 1 >= 0 && buildings[y-1][x]!.activate && buildings[y-1][x]!.buildingData.water_IsInput) {
-                        aroundCoords.append(CGPoint(x: x, y: y - 1))
-                    }
-                    if (y + 1 <= 11 && buildings[y+1][x]!.activate && buildings[y+1][x]!.buildingData.water_IsInput ) {
-                        aroundCoords.append(CGPoint(x: x, y: y + 1))
-                    }
-                    if (x - 1 >= 0 && buildings[y][x-1]!.activate && buildings[y][x-1]!.buildingData.water_IsInput ) {
-                        aroundCoords.append(CGPoint(x: x - 1, y: y))
-                    }
-                    if (x + 1 <= 9 && buildings[y][x+1]!.activate && buildings[y][x+1]!.buildingData.water_IsInput ) {
-                        aroundCoords.append(CGPoint(x: x + 1, y: y))
-                    }
-                    // according coord number, calculate water balance
-                    for (count, coord) in aroundCoords.enumerate() {
-                        if buildings[Int(coord.y)][Int(coord.x)]!.buildingData.water_Current == buildings[Int(coord.y)][Int(coord.x)]!.buildingData.water_Max {
-                            aroundCoords.removeAtIndex(count)
-                        }
-                    }
-                    while(true) {
-                        for (count, coord) in aroundCoords.enumerate() {
-                            building!.buildingData.water_Current! -= 1
-                            buildings[Int(coord.y)][Int(coord.x)]!.buildingData.water_Current! += 1
-                            if buildings[Int(coord.y)][Int(coord.x)]!.buildingData.water_Current == buildings[Int(coord.y)][Int(coord.x)]!.buildingData.water_Max {
-                                aroundCoords.removeAtIndex(count)
-                            }
-                        }
-                        if aroundCoords.count == 0 { break }
-                        if building!.buildingData.water_Current == 0 { break }
-                    }
+                if !building!.activate { break }
+                if building!.buildingData.waterSystem == nil { break }
+                if !building!.buildingData.waterSystem.output { break }
+                var waterSystems = [WaterSystem]()
+                if (y - 1 >= 0 && buildings[y-1][x]!.activate && buildings[y-1][x]!.buildingData.waterSystem != nil) {
+                    waterSystems.append(buildings[y-1][x]!.buildingData.waterSystem)
                 }
+                if (y + 1 <= 11 && buildings[y+1][x]!.activate && buildings[y+1][x]!.buildingData.waterSystem != nil ) {
+                    waterSystems.append(buildings[y+1][x]!.buildingData.waterSystem)
+                }
+                if (x - 1 >= 0 && buildings[y][x-1]!.activate && buildings[y][x-1]!.buildingData.waterSystem != nil ) {
+                    waterSystems.append(buildings[y][x-1]!.buildingData.waterSystem)
+                }
+                if (x + 1 <= 9 && buildings[y][x+1]!.activate && buildings[y][x+1]!.buildingData.waterSystem != nil ) {
+                    waterSystems.append(buildings[y][x+1]!.buildingData.waterSystem)
+                }
+                building!.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
             }
         }
-        
-        // 4. Caculate water current
+        // 4. Caculate water overflow
         for (_, line) in buildings.enumerate() {
             for (_, building) in line.enumerate() {
-                if (building!.activate && building!.buildingData.water_Current != nil) {
-                    if building!.buildingData.water_Current > building!.buildingData.water_Max {
-                        building!.buildingData.water_Current = building!.buildingData.water_Max
-                    }
-                }
+                if !building!.activate { break }
+                if building!.buildingData.waterSystem == nil { break }
+                building!.buildingData.waterSystem.overflow()
             }
         }
 
@@ -435,16 +467,16 @@ class BuildingMapLayer: SKSpriteNode {
                         buildingData.heat_Current = 0
                     }
                     // water to energy
-                    let water2energy = buildingData.water_Current * 100
-                    if buildingData.heat_Current >= water2energy {
-                        buildingData.energy_Current += water2energy
-                        buildingData.heat_Current! -= water2energy
-                        buildingData.water_Current = 0
-                    } else {
-                        buildingData.energy_Current += buildingData.heat_Current
-                        buildingData.water_Current! -= (buildingData.heat_Current) / 100
-                        buildingData.heat_Current = 0
-                    }
+//                    let water2energy = buildingData.water_Current * 100
+//                    if buildingData.heat_Current >= water2energy {
+//                        buildingData.energy_Current += water2energy
+//                        buildingData.heat_Current! -= water2energy
+//                        buildingData.water_Current = 0
+//                    } else {
+//                        buildingData.energy_Current += buildingData.heat_Current
+//                        buildingData.water_Current! -= (buildingData.heat_Current) / 100
+//                        buildingData.heat_Current = 0
+//                    }
                 }
             }
         }
