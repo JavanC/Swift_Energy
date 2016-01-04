@@ -56,11 +56,13 @@ class IslandScene: SKScene {
                 maps[count].zPosition = 1
                 addChild(maps[count])
             }
-            maps[0].setTileMapElement(coord: CGPoint(x: 8, y: 10), buildType: BuildingType.WaterPump)
-            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 2), buildType: BuildingType.SmallGenerator)
-            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: BuildingType.WaterPump)
-            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: BuildingType.SmallGenerator)
-            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: BuildingType.CoalBurner)
+            
+            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 2), buildType: BuildingType.WaterPump)
+            
+//            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 2), buildType: BuildingType.SmallGenerator)
+//            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: BuildingType.SmallGenerator)
+//            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: BuildingType.SmallGenerator)
+//            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: BuildingType.CoalBurner)
 //            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 1), buildType: BuildingType.SmallGenerator)
 //            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: BuildingType.SmallOffice)
             maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: BuildingType.SmallGenerator)
@@ -229,6 +231,7 @@ class IslandScene: SKScene {
                             let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
                             let price = BuildingData.init(buildType: building).buildPrice
                             if money >= price {
+                                maps[nowMapNumber].removeBuilding(coord)
                                 maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                 money -= price
                             }
@@ -283,6 +286,7 @@ class IslandScene: SKScene {
             money += maps[i].money_TickAdd
             research += maps[i].research_TickAdd
         }
+//        print(maps[0].buildings[1][1])
         //        save()
     }
     //    func save() {
