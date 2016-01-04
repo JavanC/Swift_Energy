@@ -371,6 +371,48 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: BuildingMap Update
     func Update() {
         
+        // Water System
+        
+        // 1. Production
+        for (_, line) in buildings.enumerate() {
+            for (_, building) in line.enumerate() {
+                if !building!.activate { break }
+                if building!.buildingData.waterSystem == nil { break }
+                building!.buildingData.waterSystem.produceWater()
+            }
+        }
+        // 2. transport
+        for (y, line) in buildings.enumerate() {
+            for (x, building) in line.enumerate() {
+                if !building!.activate { break }
+                if building!.buildingData.waterSystem == nil { break }
+                if !building!.buildingData.waterSystem.output { break }
+                var waterSystems = [WaterSystem]()
+                if (y - 1 >= 0 && buildings[y-1][x]!.activate && buildings[y-1][x]!.buildingData.waterSystem != nil) {
+                    waterSystems.append(buildings[y-1][x]!.buildingData.waterSystem)
+                }
+                if (y + 1 <= 10 && buildings[y+1][x]!.activate && buildings[y+1][x]!.buildingData.waterSystem != nil ) {
+                    waterSystems.append(buildings[y+1][x]!.buildingData.waterSystem)
+                }
+                if (x - 1 >= 0 && buildings[y][x-1]!.activate && buildings[y][x-1]!.buildingData.waterSystem != nil ) {
+                    waterSystems.append(buildings[y][x-1]!.buildingData.waterSystem)
+                }
+                if (x + 1 <= 8 && buildings[y][x+1]!.activate && buildings[y][x+1]!.buildingData.waterSystem != nil ) {
+                    waterSystems.append(buildings[y][x+1]!.buildingData.waterSystem)
+                }
+                building!.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
+            }
+        }
+        // 3. Caculate water overflow
+        for (_, line) in buildings.enumerate() {
+            for (_, building) in line.enumerate() {
+                if !building!.activate { break }
+                if building!.buildingData.waterSystem == nil { break }
+                building!.buildingData.waterSystem.overflow()
+            }
+        }
+        
+        
         
         
         
@@ -382,10 +424,6 @@ class BuildingMapLayer: SKSpriteNode {
                     // produce hot
                     if buildingData.heat_Produce != nil {
                         buildingData.heat_Current! += buildingData.heat_Produce
-                    }
-                    // Produce Water
-                    if buildingData.waterSystem != nil {
-                        buildingData.waterSystem.produceWater()
                     }
                 }
             }
@@ -422,36 +460,6 @@ class BuildingMapLayer: SKSpriteNode {
             }
         }
         
-        // 3. Water transport
-        for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                if !building!.activate { break }
-                if building!.buildingData.waterSystem == nil { break }
-                if !building!.buildingData.waterSystem.output { break }
-                var waterSystems = [WaterSystem]()
-                if (y - 1 >= 0 && buildings[y-1][x]!.activate && buildings[y-1][x]!.buildingData.waterSystem != nil) {
-                    waterSystems.append(buildings[y-1][x]!.buildingData.waterSystem)
-                }
-                if (y + 1 <= 11 && buildings[y+1][x]!.activate && buildings[y+1][x]!.buildingData.waterSystem != nil ) {
-                    waterSystems.append(buildings[y+1][x]!.buildingData.waterSystem)
-                }
-                if (x - 1 >= 0 && buildings[y][x-1]!.activate && buildings[y][x-1]!.buildingData.waterSystem != nil ) {
-                    waterSystems.append(buildings[y][x-1]!.buildingData.waterSystem)
-                }
-                if (x + 1 <= 9 && buildings[y][x+1]!.activate && buildings[y][x+1]!.buildingData.waterSystem != nil ) {
-                    waterSystems.append(buildings[y][x+1]!.buildingData.waterSystem)
-                }
-                building!.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
-            }
-        }
-        // 4. Caculate water overflow
-        for (_, line) in buildings.enumerate() {
-            for (_, building) in line.enumerate() {
-                if !building!.activate { break }
-                if building!.buildingData.waterSystem == nil { break }
-                building!.buildingData.waterSystem.overflow()
-            }
-        }
 
         // 5. Heat Consume
         for (_, line) in buildings.enumerate() {
