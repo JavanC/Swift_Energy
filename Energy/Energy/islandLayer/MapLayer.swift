@@ -85,9 +85,7 @@ class WaterSystem {
         return false
     }
     func balanceWithOtherWaterSystem(var waterSystems:[WaterSystem]){
-        
         while waterSystems.count > 0 && inAmount > 0{
-            
             var index = 0
             for waterSystem in waterSystems {
                 if inAmount == 0 { break }
@@ -466,7 +464,6 @@ class BuildingMapLayer: SKSpriteNode {
                 }
             }
         }}
-        
         // 3. Heat transform energy
         for (_, line) in buildings.enumerate() {
         for (_, building) in line.enumerate() {
@@ -475,68 +472,65 @@ class BuildingMapLayer: SKSpriteNode {
             }
         }}
         
-        // 4. Destroy & Activate & Rebuild & Update Progress
+        // Destroy & Activate & Rebuild & Update Progress
         for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                let buildingData = building!.buildingData
-                if building!.activate {
-                    // A. Destroy
-                    if buildingData.heatSystem != nil {
-                        if buildingData.heatSystem.inAmount > buildingData.heatSystem.size {
-                            let coord = CGPoint(x: x, y: y)
-                            removeBuilding(coord)
-                            setTileMapElement(coord: coord, buildType: .Land)
-                        }
-                    }
-                    // B. Activate
-                    if buildingData.time_Max != nil {
-                        buildingData.time_Current!--
-                        if buildingData.time_Current < 0 {
-                            building!.activate = false
-                            building!.alpha = 0.5
-                            buildingData.time_Current = 0
-                        }
-                    }
-                } else {
-                    // C. Rebuild
-                    if buildingData.rebuild && autoRebuild {
-                        let price = building!.buildingData.buildPrice!
-                        if price <= money {
-                            money -= price
-                            buildingData.time_Current = buildingData.time_Max
-                            building!.activate = true
-                            building!.alpha = 1
-                        }
+        for (x, building) in line.enumerate() {
+            let buildingData = building!.buildingData
+            if building!.activate {
+                // A. Destroy
+                if buildingData.heatSystem != nil {
+                    if buildingData.heatSystem.inAmount > buildingData.heatSystem.size {
+                        let coord = CGPoint(x: x, y: y)
+                        removeBuilding(coord)
+                        setTileMapElement(coord: coord, buildType: .Land)
                     }
                 }
-                // D. Update progress
-                building!.progressUpdate()
+                // B. Activate
+                if buildingData.time_Max != nil {
+                    buildingData.time_Current!--
+                    if buildingData.time_Current < 0 {
+                        building!.activate = false
+                        building!.alpha = 0.5
+                        buildingData.time_Current = 0
+                    }
+                }
+            } else {
+                // C. Rebuild
+                if buildingData.rebuild && autoRebuild {
+                    let price = building!.buildingData.buildPrice!
+                    if price <= money {
+                        money -= price
+                        buildingData.time_Current = buildingData.time_Max
+                        building!.activate = true
+                        building!.alpha = 1
+                    }
+                }
             }
-        }
+            // D. Update progress
+            building!.progressUpdate()
+        }}
         
         // 5. Calculate research, energy, money tick add
         research_TickAdd = 0
         energy_TickAdd = 0
         money_TickAdd = 0
         for (_, line) in buildings.enumerate() {
-            for (_, building) in line.enumerate() {
-                if building!.activate {
-                    // research
-                    if building!.buildingData.research_Produce != nil {
-                        research_TickAdd += (building?.buildingData.research_Produce)!
-                    }
-                    // energy
-                    if building!.buildingData.energySystem != nil {
-                        energy_TickAdd += building!.buildingData.energySystem.inAmount
-                        building!.buildingData.energySystem.inAmount = 0
-                    }
-                    // money
-                    if building?.buildingData.money_Sales != nil {
-                        money_TickAdd += (building?.buildingData.money_Sales)!
-                    }
-                }
+        for (_, building) in line.enumerate() {
+        if building!.activate {
+            // research
+            if building!.buildingData.research_Produce != nil {
+                research_TickAdd += (building?.buildingData.research_Produce)!
             }
-        }
+            // energy
+            if building!.buildingData.energySystem != nil {
+                energy_TickAdd += building!.buildingData.energySystem.inAmount
+                building!.buildingData.energySystem.inAmount = 0
+            }
+            // money
+            if building?.buildingData.money_Sales != nil {
+                money_TickAdd += (building?.buildingData.money_Sales)!
+            }
+        }}}
         // 6. Calculate energy
         energy += energy_TickAdd
         
