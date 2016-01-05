@@ -160,16 +160,16 @@ class BuildingData {
             
             progress = .Time
             timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: true)
-            heatSystem = HeatSystem(size: 150, produce: 20, output: true)
+            heatSystem = HeatSystem(size: 150, produce: 200, output: true)
         }
         if buildType == .SmallGenerator {
             imageName = "SmallGenerator"
             buildPrice = 50
             
             progress = .Hot
-            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 8)
+            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 8, water2EnergyAmount: 10)
             heatSystem = HeatSystem(size: 400, initAmount: 100)
-            waterSystem = WaterSystem(size: 100)
+            waterSystem = WaterSystem(size: 100, initAmount: 10)
         }
         if buildType == .SmallOffice {
             imageName = "SmallOffice"
@@ -183,7 +183,7 @@ class BuildingData {
             buildPrice = 10
             
             progress = .Water
-            waterSystem = WaterSystem(size: 100, produce: 10, output: true)
+            waterSystem = WaterSystem(size: 100, produce: 3, output: true)
         }
     }
     
@@ -194,6 +194,22 @@ class BuildingData {
                 heatSystem.inAmount -= energySystem.heat2EnergyAmount
             } else {
                 energySystem.inAmount += heatSystem.inAmount
+                heatSystem.inAmount = 0
+            }
+        }
+    }
+    
+    func waterTransformEnergy() {
+        if waterSystem != nil && energySystem != nil && energySystem.isWater2Energy() {
+            if heatSystem.inAmount >= waterSystem.inAmount * 100 {
+                energySystem.inAmount += waterSystem.inAmount * 100
+                heatSystem.inAmount -= waterSystem.inAmount * 100
+                waterSystem.inAmount = 0
+            } else {
+                energySystem.inAmount += heatSystem.inAmount
+                if heatSystem.inAmount > 0 {
+                    waterSystem.inAmount -= heatSystem.inAmount / 100 + 1
+                }
                 heatSystem.inAmount = 0
             }
         }

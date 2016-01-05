@@ -86,8 +86,8 @@ class BuildingSelectLayer: SKNode {
             }
         }
         // page 1
-        let page1Types: [ResearchType] = [.WindTurbineResearch, .CoalBurnerResearch]
-        let page1images: [BuildingType] = [.WindTurbine, .CoalBurner]
+        let page1Types: [ResearchType] = [.WindTurbineResearch, .CoalBurnerResearch, .WaterPumpResearch]
+        let page1images: [BuildingType] = [.WindTurbine, .CoalBurner, .WaterPump]
         for count in 0..<page1Types.count {
             if researchLevel[page1Types[count]] > 0 {
                 let sptireNode = BuildingSelectElement(buildType: page1images[count], size: elementsize)

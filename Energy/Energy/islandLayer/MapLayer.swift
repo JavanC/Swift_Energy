@@ -85,7 +85,6 @@ class Building: SKNode {
 
 class BuildingMapLayer: SKSpriteNode {
     
-    var origin: CGPoint!
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array<Array<Building?>>()
@@ -98,7 +97,6 @@ class BuildingMapLayer: SKSpriteNode {
     
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint) {
-        self.origin = position
         self.position = position
         self.color = SKColor.whiteColor()
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
@@ -161,18 +159,6 @@ class BuildingMapLayer: SKSpriteNode {
             building.configureAtCoord(coord, buildType: buildType)
             building.position = coord2Position(coord)
             addChild(building)
-        }
-    }
-    
-    // MARK: Reload building Map
-    func reloadBuildingMap() {
-        for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                let buildType = building?.buildingData.buildType
-                let coord = CGPoint(x: x, y: y)
-                removeBuilding(coord)
-                setTileMapElement(coord: coord, buildType: buildType!)
-            }
         }
     }
     
@@ -260,6 +246,10 @@ class BuildingMapLayer: SKSpriteNode {
                     building!.buildingData.heatTransformEnergy()
                 }
                 // 3. Water transform energy
+                if building!.buildingData.energySystem.isWater2Energy() {
+                    building!.buildingData.waterTransformEnergy()
+                }
+                
             }
         }}
         
