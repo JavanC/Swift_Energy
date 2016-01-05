@@ -32,23 +32,19 @@ class EnergySystem {
     var inAmount: Int = 0
     var produce: Int
     var heat2EnergyAmount: Int
-    var water2EnergyAmount: Int
+    var water2Energy: Bool
     
-    init(initAmount: Int, produce: Int = 0, heat2EnergyAmount: Int = 0, water2EnergyAmount: Int = 0) {
+    init(initAmount: Int, produce: Int = 0, heat2EnergyAmount: Int = 0, water2Energy: Bool = false) {
         self.inAmount = initAmount
         self.produce = produce
         self.heat2EnergyAmount = heat2EnergyAmount
-        self.water2EnergyAmount = water2EnergyAmount
+        self.water2Energy = water2Energy
     }
     func produceEnergy() {
         inAmount += produce
     }
     func isHeat2Energy() -> Bool {
         if heat2EnergyAmount > 0 { return true }
-        return false
-    }
-    func isWater2Energy() -> Bool {
-        if water2EnergyAmount > 0 { return true}
         return false
     }
 }
@@ -158,6 +154,7 @@ class BuildingData {
         case .Land:
             imageName = "Land"
             
+
         case .WindTurbine:
             imageName = "WindTurbine"
             buildPrice = 1
@@ -179,13 +176,66 @@ class BuildingData {
             timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: true)
             heatSystem = HeatSystem(size: 150, produce: 100, output: true)
             
+        case .WaveCell:
+            imageName = "WaveCell"
+            buildPrice = 10
+            progress = .Time
+            timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: true)
+            energySystem = EnergySystem(initAmount: 0, produce: 5)
+            
+        case .GasBurner:
+            imageName = "GasBurner"
+            buildPrice = 10
+            progress = .Time
+            timeSystem = TimeSystem(size: 20, initAmount: 20, rebuild: true)
+            heatSystem = HeatSystem(size: 200, initAmount: 50, output: true)
+            
+        case .NuclearCell:
+            imageName = "NuclearCell"
+            buildPrice = 10
+            progress = .Time
+            timeSystem = TimeSystem(size: 30, initAmount: 30, rebuild: true)
+            heatSystem = HeatSystem(size: 300, initAmount: 30, output: true)
+            
+        case .FusionCell:
+            imageName = "FusionCell"
+            buildPrice = 10
+            progress = .Time
+            timeSystem = TimeSystem(size: 40, initAmount: 40, rebuild: true)
+            heatSystem = HeatSystem(size: 400, initAmount: 40, output: true)
+            
         case .SmallGenerator:
             imageName = "SmallGenerator"
             buildPrice = 50
             progress = .Heat
-            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2EnergyAmount: 10)
+            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2Energy: true)
             heatSystem = HeatSystem(size: 400, initAmount: 100)
             waterSystem = WaterSystem(size: 100, initAmount: 10)
+            
+        case .MediumGenerator:
+            imageName = "MediumGenerator"
+            buildPrice = 50
+            progress = .Heat
+            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2Energy: true)
+            heatSystem = HeatSystem(size: 400, initAmount: 100)
+            waterSystem = WaterSystem(size: 100, initAmount: 10)
+            
+        case .LargeGenerator:
+            imageName = "LargeGenerator"
+            buildPrice = 50
+            progress = .Heat
+            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2Energy: true)
+            heatSystem = HeatSystem(size: 400, initAmount: 100)
+            waterSystem = WaterSystem(size: 100, initAmount: 10)
+            
+        case .BoilerHouse:
+            imageName = "BoilerHouse"
+            buildPrice = 50
+            progress = .Heat
+            heatSystem = HeatSystem(size: 400, initAmount: 100)
+            
+            //  BoilerHouse, LargeBoilerHouse, Isolation, Battery, HeatExchanger, HeatSink, HeatInlet, HeatOutlet, WaterPump, GroundwaterPump, WaterPipe, SmallOffice, MediumOffice, LargeOffice, Bank, ResearchCenter, AdvancedResearchCenter, Library,
+
             
         case .SmallOffice:
             imageName = "SmallOffice"
@@ -235,7 +285,7 @@ class BuildingData {
     }
     
     func waterTransformEnergy() {
-        if waterSystem != nil && energySystem != nil && energySystem.isWater2Energy() {
+        if waterSystem != nil && energySystem != nil && energySystem.water2Energy {
             if heatSystem.inAmount >= waterSystem.inAmount * 100 {
                 energySystem.inAmount += waterSystem.inAmount * 100
                 heatSystem.inAmount -= waterSystem.inAmount * 100

@@ -280,7 +280,7 @@ class BuildingMapLayer: SKSpriteNode {
                     building!.buildingData.heatTransformEnergy()
                 }
                 // 3. Water transform energy
-                if building!.buildingData.energySystem.isWater2Energy() {
+                if building!.buildingData.energySystem.water2Energy {
                     building!.buildingData.waterTransformEnergy()
                 }
             }
