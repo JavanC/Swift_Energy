@@ -130,7 +130,7 @@ class BuildingData {
     var imageName: String!
     var buildType: BuildingType = .Land
     var buildPrice: Int!
-    enum ProgressType { case Time, Hot, Water }
+    enum ProgressType { case Time, Heat, Water }
     var progress: ProgressType!
     var timeSystem: TimeSystem!
     var heatSystem: HeatSystem!
@@ -166,7 +166,7 @@ class BuildingData {
             imageName = "SmallGenerator"
             buildPrice = 50
             
-            progress = .Hot
+            progress = .Heat
             energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 8, water2EnergyAmount: 10)
             heatSystem = HeatSystem(size: 400, initAmount: 100)
             waterSystem = WaterSystem(size: 100, initAmount: 10)
@@ -184,6 +184,16 @@ class BuildingData {
             
             progress = .Water
             waterSystem = WaterSystem(size: 100, produce: 3, output: true)
+        }
+        
+        reloadUpgradeData()
+    }
+    
+    func reloadUpgradeData() {
+        switch buildType {
+        case .WindTurbine:
+            energySystem.produce = upgradeLevel[UpgradeType.WindTurbineEffectiveness]! * 2
+        default: break
         }
     }
     
@@ -232,7 +242,7 @@ class BuildingData {
         if buildType == .CoalBurner {
             info.append("Time: \(timeSystem.inAmount) / \(timeSystem.size)")
             info.append("Heat: \(heatSystem.inAmount) / \(heatSystem.size)")
-            info.append("Produce Hot: \(heatSystem.produce)")
+            info.append("Produce Heat: \(heatSystem.produce)")
             info.append("Sell Money: \(buildPrice)")
         }
         if buildType == .SmallGenerator {

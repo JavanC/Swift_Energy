@@ -19,7 +19,6 @@ class UpgradeElement: SKNode {
     init(upgradeType: UpgradeType, size: CGSize) {
         super.init()
         self.upgradeType = upgradeType
-        
         // background
         background = SKSpriteNode(color: SKColor.grayColor(), size: size)
         background.name = "UpgradeElementBackground"
@@ -228,6 +227,9 @@ class UpgradeScene: SKScene {
                     let type = element.upgradeType
                     money -= price
                     upgradeLevel[type]!++
+                    for count in 0..<maps.count {
+                        maps[count].reloadMap()
+                    }
                 }
                 if node.name == "Degrade" {
                     let element = (node.parent as! UpgradeElement)
@@ -235,6 +237,9 @@ class UpgradeScene: SKScene {
                     let type = element.upgradeType
                     money += price
                     upgradeLevel[type]!--
+                    for count in 0..<maps.count {
+                        maps[count].reloadMap()
+                    }
                 }
             }
         }

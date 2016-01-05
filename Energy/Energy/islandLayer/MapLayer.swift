@@ -54,7 +54,7 @@ class Building: SKNode {
             case .Time:
                 progressBack.color = SKColor.yellowColor()
                 progress.color = SKColor.yellowColor()
-            case .Hot:
+            case .Heat:
                 progressBack.color = SKColor.redColor()
                 progress.color = SKColor.redColor()
             case .Water:
@@ -72,7 +72,7 @@ class Building: SKNode {
             case .Time:
                 let persent = CGFloat(buildingData.timeSystem.inAmount) / CGFloat(buildingData.timeSystem.size)
                 progress.xScale = persent
-            case .Hot:
+            case .Heat:
                 let persent = CGFloat(buildingData.heatSystem.inAmount) / CGFloat(buildingData.heatSystem.size)
                 progress.xScale = persent
             case .Water:
@@ -160,6 +160,14 @@ class BuildingMapLayer: SKSpriteNode {
             building.position = coord2Position(coord)
             addChild(building)
         }
+    }
+    
+    // MARK: Reload Map Upgrade Data
+    func reloadMap() {
+        for (_, line) in buildings.enumerate() {
+        for (_, building) in line.enumerate() {
+            building?.buildingData.reloadUpgradeData()
+        }}
     }
     
     // MARK: BuildingMap Update
