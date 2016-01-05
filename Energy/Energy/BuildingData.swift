@@ -234,8 +234,23 @@ class BuildingData {
             progress = .Heat
             heatSystem = HeatSystem(size: 400, initAmount: 100)
             
-            //  BoilerHouse, LargeBoilerHouse, Isolation, Battery, HeatExchanger, HeatSink, HeatInlet, HeatOutlet, WaterPump, GroundwaterPump, WaterPipe, SmallOffice, MediumOffice, LargeOffice, Bank, ResearchCenter, AdvancedResearchCenter, Library,
+            //   LargeBoilerHouse, Isolation, Battery
 
+        case .HeatExchanger:
+            imageName = "HeatExchanger"
+            buildPrice = 10
+            progress = .Heat
+            heatSystem = HeatSystem(size: 1000, initAmount: 0)
+            
+            // HeatSink, HeatInlet, HeatOutlet,
+            
+        case .WaterPump:
+            imageName = "電池"
+            buildPrice = 10
+            progress = .Water
+            waterSystem = WaterSystem(size: 100, produce: 3, output: true)
+            
+            // GroundwaterPump, WaterPipe,
             
         case .SmallOffice:
             imageName = "SmallOffice"
@@ -243,17 +258,33 @@ class BuildingData {
             heatSystem = HeatSystem(size: 10)
             money_Sales = 5
             
-        case .WaterPump:
-            imageName = "電池"
+        case .MediumOffice:
+            imageName = "MediumOffice"
             buildPrice = 10
-            progress = .Water
-            waterSystem = WaterSystem(size: 100, produce: 3, output: true)
-
-        case .HeatExchanger:
-            imageName = "HeatExchanger"
+            heatSystem = HeatSystem(size: 10)
+            money_Sales = 50
+            
+        case .LargeOffice:
+            imageName = "LargeOffice"
             buildPrice = 10
-            progress = .Heat
-            heatSystem = HeatSystem(size: 1000, initAmount: 0)
+            heatSystem = HeatSystem(size: 10)
+            money_Sales = 500
+            
+            //Bank
+            
+        case .ResearchCenter:
+            imageName = "ResearchCenter"
+            buildPrice = 10
+            heatSystem = HeatSystem(size: 10)
+            research_Produce = 10
+            
+        case .AdvancedResearchCenter:
+            imageName = "AdvancedResearchCenter"
+            buildPrice = 10
+            heatSystem = HeatSystem(size: 10)
+            research_Produce = 100
+            
+            // library
             
         default:
             imageName = "WindTurbine"
