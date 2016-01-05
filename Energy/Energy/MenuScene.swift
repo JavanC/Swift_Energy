@@ -55,7 +55,7 @@ class MenuScene: SKScene {
             upgradeLevel[UpgradeType(rawValue: count)!] = 0
         }
         for count in 0..<ResearchType.ResearchTypeLength.hashValue {
-            researchLevel[ResearchType(rawValue: count)!] = 0
+            researchLevel[ResearchType(rawValue: count)!] = 1
         }
         researchLevel[ResearchType.WindTurbineResearch] = 1
         for _ in 0..<8 {

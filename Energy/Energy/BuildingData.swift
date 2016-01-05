@@ -72,7 +72,7 @@ class HeatSystem {
         if inAmount > size { return true }
         else { return false }
     }
-    func outputHeatToOtherHeatSystem(heatSystems:[HeatSystem]){
+    func outputHeatToOtherHeatSystem(heatSystems:[HeatSystem]) {
         while inAmount > 0 {
             for heatSystem in heatSystems {
                 if inAmount == 0 { break }
@@ -80,6 +80,17 @@ class HeatSystem {
                 --inAmount
             }
         }
+    }
+    func exchangerHeatToOtherHeatSystem(heatSystems:[HeatSystem]) {
+        var allHeat = inAmount
+        for heatSystem in heatSystems {
+            allHeat += heatSystem.inAmount
+        }
+        let balanceHeat = allHeat / (heatSystems.count + 1)
+        for heatSystem in heatSystems {
+            heatSystem.inAmount = balanceHeat
+        }
+        inAmount = balanceHeat
     }
 }
 
@@ -108,7 +119,7 @@ class WaterSystem {
         }
         return false
     }
-    func balanceWithOtherWaterSystem(var waterSystems:[WaterSystem]){
+    func balanceWithOtherWaterSystem(var waterSystems:[WaterSystem]) {
         while waterSystems.count > 0 && inAmount > 0{
             var index = 0
             for waterSystem in waterSystems {
@@ -143,47 +154,60 @@ class BuildingData {
     
     init(buildType: BuildingType) {
         self.buildType = buildType
-        if buildType == .Land {
+        switch buildType {
+        case .Land:
             imageName = "Land"
-        }
-        if buildType == .WindTurbine {
+            
+        case .WindTurbine:
             imageName = "WindTurbine"
             buildPrice = 1
-            
             progress = .Time
             timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: true)
             energySystem = EnergySystem(initAmount: 0, produce: 1)
-        }
-        if buildType == .CoalBurner {
+            
+        case .SolarCell:
+            imageName = "SolarCell"
+            buildPrice = 1
+            progress = .Time
+            timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: true)
+            heatSystem = HeatSystem(size: 150, initAmount: 3, output: true)
+            
+        case .CoalBurner:
             imageName = "CoalBurner"
             buildPrice = 20
-            
             progress = .Time
             timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: true)
-            heatSystem = HeatSystem(size: 150, produce: 200, output: true)
-        }
-        if buildType == .SmallGenerator {
+            heatSystem = HeatSystem(size: 150, produce: 100, output: true)
+            
+        case .SmallGenerator:
             imageName = "SmallGenerator"
             buildPrice = 50
-            
             progress = .Heat
-            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 8, water2EnergyAmount: 10)
+            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2EnergyAmount: 10)
             heatSystem = HeatSystem(size: 400, initAmount: 100)
             waterSystem = WaterSystem(size: 100, initAmount: 10)
-        }
-        if buildType == .SmallOffice {
+            
+        case .SmallOffice:
             imageName = "SmallOffice"
             buildPrice = 10
-            
             heatSystem = HeatSystem(size: 10)
             money_Sales = 5
-        }
-        if buildType == .WaterPump {
+            
+        case .WaterPump:
             imageName = "電池"
             buildPrice = 10
-            
             progress = .Water
             waterSystem = WaterSystem(size: 100, produce: 3, output: true)
+
+        case .HeatExchanger:
+            imageName = "HeatExchanger"
+            buildPrice = 10
+            progress = .Heat
+            heatSystem = HeatSystem(size: 1000, initAmount: 0)
+            
+        default:
+            imageName = "WindTurbine"
+            buildPrice = 1
         }
         
         reloadUpgradeAndResearchData()
@@ -235,32 +259,29 @@ class BuildingData {
     
     func buildingInfo() -> [String] {
         var info = [String]()
-        if buildType == .WindTurbine {
+        if timeSystem != nil {
             info.append("Time: \(timeSystem.inAmount) / \(timeSystem.size)")
+        }
+        if heatSystem != nil {
+            info.append("Heat: \(heatSystem.inAmount) / \(heatSystem.size)")
+        }
+        if waterSystem != nil {
+            info.append("Water: \(waterSystem.inAmount) / \(waterSystem.size)")
+        }
+        
+        switch buildType {
+        case .WindTurbine:
             info.append("Produce Energy: \(energySystem.produce)")
-            info.append("Sell Money: \(buildPrice)")
-        }
-        if buildType == .CoalBurner {
-            info.append("Time: \(timeSystem.inAmount) / \(timeSystem.size)")
-            info.append("Heat: \(heatSystem.inAmount) / \(heatSystem.size)")
-            info.append("Produce Heat: \(heatSystem.produce)")
-            info.append("Sell Money: \(buildPrice)")
-        }
-        if buildType == .SmallGenerator {
-            info.append("Heat: \(heatSystem.inAmount) / \(heatSystem.size)")
-            info.append("Water: \(waterSystem.inAmount) / \(waterSystem.size)")
+            
+        case .SmallGenerator:
             info.append("Converted Energy: \(energySystem.heat2EnergyAmount)")
-            info.append("Sell Money: \(buildPrice)")
-        }
-        if buildType == .SmallOffice {
-            info.append("Heat: \(heatSystem.inAmount) / \(heatSystem.size)")
+            
+        case .SmallOffice:
             info.append("Produce Money: \(money_Sales)")
-            info.append("Sell Money: \(buildPrice)")
+            
+        default: break
         }
-        if buildType == .WaterPump {
-            info.append("Water: \(waterSystem.inAmount) / \(waterSystem.size)")
-            info.append("Sell Money: \(buildPrice)")
-        }
+        info.append("Sell Money: \(buildPrice)")
         return info
     }
 }

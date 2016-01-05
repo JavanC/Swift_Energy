@@ -241,6 +241,32 @@ class BuildingMapLayer: SKSpriteNode {
                 }
             }
         }}
+        // 3. Heat exchanger
+        for (y, line) in buildings.enumerate() {
+        for (x, building) in line.enumerate() {
+            if building!.buildingData.buildType == .HeatExchanger {
+                var heatSystems = [HeatSystem]()
+                if (y - 1 >= 0 && buildings[y-1][x]!.buildingData.heatSystem != nil && !buildings[y-1][x]!.buildingData.heatSystem.output) {
+                    heatSystems.append(buildings[y-1][x]!.buildingData.heatSystem)
+                }
+                if (y + 1 <= 10 && buildings[y+1][x]!.buildingData.heatSystem != nil && !buildings[y+1][x]!.buildingData.heatSystem.output) {
+                    heatSystems.append(buildings[y+1][x]!.buildingData.heatSystem)
+                }
+                if (x - 1 >= 0 && buildings[y][x-1]!.buildingData.heatSystem != nil && !buildings[y][x-1]!.buildingData.heatSystem.output) {
+                    heatSystems.append(buildings[y][x-1]!.buildingData.heatSystem)
+                }
+                if (x + 1 <= 8 && buildings[y][x+1]!.buildingData.heatSystem != nil && !buildings[y][x+1]!.buildingData.heatSystem.output) {
+                    heatSystems.append(buildings[y][x+1]!.buildingData.heatSystem)
+                }
+                if heatSystems.count > 0 {
+                    building!.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
+                }
+            }
+        }}
+        
+        
+        
+        
         
         // Energy System
         
@@ -257,7 +283,6 @@ class BuildingMapLayer: SKSpriteNode {
                 if building!.buildingData.energySystem.isWater2Energy() {
                     building!.buildingData.waterTransformEnergy()
                 }
-                
             }
         }}
         

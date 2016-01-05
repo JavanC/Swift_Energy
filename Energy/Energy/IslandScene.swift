@@ -50,7 +50,7 @@ class IslandScene: SKScene {
             
             // Map Layer
             let mapLayerSize = CGSizeMake(tilesScaleSize.width * midTileSize.width, tilesScaleSize.height * midTileSize.height)
-            for count in 0..<8 {
+            for count in 0..<maps.count {
                 maps[count].position = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
                 maps[count].setScale(framescale)
                 maps[count].zPosition = 1
@@ -59,6 +59,9 @@ class IslandScene: SKScene {
             
 //            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 2), buildType: BuildingType.WaterPump)
             maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 3), buildType: BuildingType.SmallGenerator)
+            maps[0].setTileMapElement(coord: CGPoint(x: 3, y: 3), buildType: BuildingType.HeatExchanger)
+            maps[0].setTileMapElement(coord: CGPoint(x: 4, y: 3), buildType: BuildingType.CoalBurner)
+            
             
             
 //            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 2), buildType: BuildingType.SmallGenerator)
@@ -109,11 +112,9 @@ class IslandScene: SKScene {
     
     func changeTouchTypeAndShowPage(touchType: TouchType) {
         self.touchType = touchType
-        
         maps[nowMapNumber].runAction(SKAction.unhide())
         bottomLayer.pageBuild.closeSelectInformation()
         buildingSelectLayer.showPage(false)
-        
         switch touchType {
         case .Information:
             buttonLayer.tapButtonNil()

@@ -28,7 +28,7 @@ class BuildingSelectElement: SKNode {
         image.position = CGPoint(x: gap + image.size.width / 2, y: size.height / 2)
         addChild(image)
         // label 1
-        let text = ["ewrer", "12312312312"]
+        let text = [String(buildType), "12312312312"]
         let labelgap: CGFloat = 10
         let labelsize = (image.size.height - labelgap) / 2
         let label1 = SKLabelNode(fontNamed: "Verdana-Bold")
@@ -85,9 +85,10 @@ class BuildingSelectLayer: SKNode {
                 positions.append(CGPoint(x: gap + selectLayer.size.width / 4 * CGFloat(x), y: selectLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
             }
         }
+        
         // page 1
-        let page1Types: [ResearchType] = [.WindTurbineResearch, .CoalBurnerResearch, .WaterPumpResearch]
-        let page1images: [BuildingType] = [.WindTurbine, .CoalBurner, .WaterPump]
+        let page1Types: [ResearchType] = [.WindTurbineResearch, .SolarCellResearch, .CoalBurnerResearch, .WaveCellResearch, .GasBurnerResearch, .NuclearCellResearch, .FusionCellResearch]
+        let page1images: [BuildingType] = [.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]
         for count in 0..<page1Types.count {
             if researchLevel[page1Types[count]] > 0 {
                 let sptireNode = BuildingSelectElement(buildType: page1images[count], size: elementsize)
@@ -96,8 +97,8 @@ class BuildingSelectLayer: SKNode {
             }
         }
         // page 2
-        let page2Types: [ResearchType] = [.SmallGeneratorResearch]
-        let page2images: [BuildingType] = [.SmallGenerator]
+        let page2Types: [ResearchType] = [.SmallGeneratorResearch, .MediumGeneratorResearch, .LargeGeneratorResearch, .BoilerHouseResearch, .LargeBoilerHouseResearch, .IsolationResearch, .BatteryResearch]
+        let page2images: [BuildingType] = [.SmallGenerator, .MediumGenerator, .LargeGenerator, .BoilerHouse, .LargeBoilerHouse, .Isolation, .Battery]
         for count in 0..<page2Types.count {
             if researchLevel[page2Types[count]] > 0 {
                 let sptireNode = BuildingSelectElement(buildType: page2images[count], size: elementsize)
@@ -106,8 +107,8 @@ class BuildingSelectLayer: SKNode {
             }
         }
         // page 3
-        let page3Types: [ResearchType] = [.SmallGeneratorResearch]
-        let page3images: [BuildingType] = [.SmallGenerator]
+        let page3Types: [ResearchType] = [.HeatExchangerResearch, .HeatSinkResearch, .HeatInletResearch, .HeatOutletResearch, .WaterPumpResearch, .GroundwaterPumpResearch, .WaterPipeResearch]
+        let page3images: [BuildingType] = [.HeatExchanger, .HeatSink, .HeatInlet, .HeatOutlet, .WaterPump, .GroundwaterPump, .WaterPipe]
         for count in 0..<page3Types.count {
             if researchLevel[page3Types[count]] > 0 {
                 let sptireNode = BuildingSelectElement(buildType: page3images[count], size: elementsize)
@@ -116,8 +117,8 @@ class BuildingSelectLayer: SKNode {
             }
         }
         // page 4
-        let page4Types: [ResearchType] = [.SmallOfficeResearch]
-        let page4images: [BuildingType] = [.SmallOffice]
+        let page4Types: [ResearchType] = [.SmallOfficeResearch, .MediumOfficeResearch, .LargeOfficeResearch, .BankResearch, .ResearchCenterResearch, .AdvancedResearchCenterResearch, .LibraryResearch]
+        let page4images: [BuildingType] = [.SmallOffice, .MediumOffice, .LargeOffice, .Bank, .ResearchCenter, .AdvancedResearchCenter, .Library]
         for count in 0..<page4Types.count {
             if researchLevel[page4Types[count]] > 0 {
                 let sptireNode = BuildingSelectElement(buildType: page4images[count], size: elementsize)
