@@ -288,7 +288,7 @@ class IslandScene: SKScene {
             money += maps[i].money_TickAdd
             research += maps[i].research_TickAdd
         }
-//        print(maps[0].buildings[1][1])
+//        print((maps[0].buildings[0][0]! as Building).buildingData.timeSystem?.rebuild)
         //        save()
     }
     //    func save() {

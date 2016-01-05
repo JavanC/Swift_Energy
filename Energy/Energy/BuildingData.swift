@@ -186,13 +186,14 @@ class BuildingData {
             waterSystem = WaterSystem(size: 100, produce: 3, output: true)
         }
         
-        reloadUpgradeData()
+        reloadUpgradeAndResearchData()
     }
     
-    func reloadUpgradeData() {
+    func reloadUpgradeAndResearchData() {
         switch buildType {
         case .WindTurbine:
             energySystem.produce = upgradeLevel[UpgradeType.WindTurbineEffectiveness]! * 2
+            timeSystem.rebuild = (researchLevel[ResearchType.WindTurbineRebuild] > 0 ? true : false)
         default: break
         }
     }

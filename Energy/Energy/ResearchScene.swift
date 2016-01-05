@@ -229,9 +229,11 @@ class ResearchScene: SKScene {
                     let element = (node.parent as! ResearchElement)
                     let price = element.researchPrice
                     let type = element.researchType
-                    print(type)
                     research -= price
                     researchLevel[type]!++
+                    for count in 0..<maps.count {
+                        maps[count].reloadMap()
+                    }
                 }
             }
         }

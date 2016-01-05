@@ -166,7 +166,7 @@ class BuildingMapLayer: SKSpriteNode {
     func reloadMap() {
         for (_, line) in buildings.enumerate() {
         for (_, building) in line.enumerate() {
-            building?.buildingData.reloadUpgradeData()
+            building?.buildingData.reloadUpgradeAndResearchData()
         }}
     }
     
