@@ -28,10 +28,24 @@ class TimeSystem {
     }
 }
 
+class ResearchSystem {
+    var addAmount: Int = 0
+    var multiply: CGFloat = 1
+    
+    init(amount: Int, multiply: CGFloat = 1) {
+        self.addAmount = amount
+        self.multiply = multiply
+    }
+    func researchMultiplyAmount() -> Int {
+        return (addAmount * Int(multiply * 100)) / 100
+    }
+}
+
 class MoneySystem {
     var inAmount: Int = 0
     var energy2MoneyAmount: Int
     var heat2MoneyAmount: Int
+    var multiply: CGFloat = 1
     
     init(initAmount: Int, energy2MoneyAmount: Int = 0, heat2MoneyAmount: Int = 0) {
         self.inAmount = initAmount
@@ -41,6 +55,9 @@ class MoneySystem {
     func isHeat2Money() -> Bool {
         if heat2MoneyAmount > 0 { return true }
         return false
+    }
+    func energy2MoneyMultiplyAmount() -> Int {
+        return (energy2MoneyAmount * Int(multiply * 100)) / 100
     }
 }
 
@@ -71,12 +88,14 @@ class HeatSystem {
     var produce: Int
     var produceMultiply: CGFloat = 1.0
     var output: Bool
+    var coolingRate: CGFloat
     
-    init(size: Int, initAmount: Int = 0, produce: Int = 0, output: Bool = false) {
+    init(size: Int, initAmount: Int = 0, produce: Int = 0, output: Bool = false, coolingRate: CGFloat = 0) {
         self.size = size
         self.inAmount = initAmount
         self.produce = produce
         self.output = output
+        self.coolingRate = coolingRate
     }
     func produceHeatValue() -> Int {
         return (produce * Int(produceMultiply * 100)) / 100
@@ -107,6 +126,16 @@ class HeatSystem {
             heatSystem.inAmount = balanceHeat
         }
         inAmount = balanceHeat
+    }
+    func coolingHeatToHeatSink(heatSystems:[HeatSystem]) {
+        let outputHeat = inAmount / (heatSystems.count + 1)
+        for HeatSystem in heatSystems {
+            HeatSystem.inAmount += outputHeat
+        }
+        inAmount = outputHeat
+    }
+    func coolingHeat() {
+        inAmount = (inAmount * Int((1 - coolingRate) * 100)) / 100
     }
 }
 
@@ -164,12 +193,13 @@ class BuildingData {
     var waterSystem: WaterSystem!
     var moneySystem: MoneySystem!
     var energySystem: EnergySystem!
+    var researchSystem: ResearchSystem!
     
     // Other
-    var researchProduceAmount: Int!
     var batteryEnergySize: Int!
     var isolationPercent: CGFloat!
-    
+    var bankAddPercent: CGFloat!
+    var libraryAddPercent: CGFloat!
     
     init(buildType: BuildingType) {
         self.buildType = buildType
@@ -267,7 +297,7 @@ class BuildingData {
         case .Isolation:
             imageName = "Isolation"
             buildPrice = 10
-            isolationPercent = 1.5
+            isolationPercent = 0.5
             
         case .Battery:
             imageName = "Battery"
@@ -280,15 +310,32 @@ class BuildingData {
             progress = .Heat
             heatSystem = HeatSystem(size: 1000, initAmount: 0)
             
-            // HeatSink, HeatInlet, HeatOutlet,
+        case .HeatSink:
+            imageName = "HeatSink"
+            buildPrice = 10
+            progress = .Heat
+            heatSystem = HeatSystem(size: 1000, coolingRate: 0.1)
+            
+            
+            // HeatInlet, HeatOutlet,
             
         case .WaterPump:
             imageName = "WaterPump"
             buildPrice = 10
             progress = .Water
             waterSystem = WaterSystem(size: 100, produce: 3, output: true)
-            
-            // GroundwaterPump, WaterPipe,
+ 
+        case .GroundwaterPump:
+            imageName = "GroundwaterPump"
+            buildPrice = 10
+            progress = .Water
+            waterSystem = WaterSystem(size: 100, produce: 3, output: true)
+
+        case .WaterPipe:
+            imageName = "WaterPipe"
+            buildPrice = 10
+            progress = .Water
+            waterSystem = WaterSystem(size: 100, output: true)
             
         case .SmallOffice:
             imageName = "SmallOffice"
@@ -308,21 +355,29 @@ class BuildingData {
             heatSystem = HeatSystem(size: 10)
             moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 500)
             
-            //Bank
+        case .Bank:
+            imageName = "Bank"
+            buildPrice = 10
+            heatSystem = HeatSystem(size: 10)
+            bankAddPercent = 0.5
             
         case .ResearchCenter:
             imageName = "ResearchCenter"
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
-            researchProduceAmount = 10
+            researchSystem = ResearchSystem(amount: 10)
             
         case .AdvancedResearchCenter:
             imageName = "AdvancedResearchCenter"
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
-            researchProduceAmount = 100
+            researchSystem = ResearchSystem(amount: 100)
             
-            // library
+        case .Library:
+            imageName = "Library"
+            buildPrice = 10
+            heatSystem = HeatSystem(size: 10)
+            libraryAddPercent = 0.5
             
         default:
             imageName = "WindTurbine"
