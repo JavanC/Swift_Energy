@@ -362,32 +362,32 @@ class BottomLayer: SKSpriteNode {
         showPageEnergy()
     }
     
-    func ShowPageInformation() {
-        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
-            self.pageInformation.runAction(SKAction.moveToY(0, duration: 0.1))
+    func ShowPageInformation(duration: Double = 0.0) {
+        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
+        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
+        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: duration)) { [unowned self] in
+            self.pageInformation.runAction(SKAction.moveToY(0, duration: duration))
         }
     }
-    func ShowPageBuild() {
-        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
-            self.pageBuild.runAction(SKAction.moveToY(0, duration: 0.1))
+    func ShowPageBuild(duration: Double = 0.0) {
+        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
+        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
+        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: duration)) { [unowned self] in
+            self.pageBuild.runAction(SKAction.moveToY(0, duration: duration))
         }
     }
-    func showPageEnergy() {
-        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
-            self.pageEnergy.runAction(SKAction.moveToY(0, duration: 0.1))
+    func showPageEnergy(duration: Double = 0.0) {
+        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
+        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
+        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: duration)) { [unowned self] in
+            self.pageEnergy.runAction(SKAction.moveToY(0, duration: duration))
         }
     }
-    func showPageSell() {
-        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1))
-        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: 0.1)) { [unowned self] in
-            self.pageSell.runAction(SKAction.moveToY(0, duration: 0.1))
+    func showPageSell(duration: Double = 0.0) {
+        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
+        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
+        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: duration)) { [unowned self] in
+            self.pageSell.runAction(SKAction.moveToY(0, duration: duration))
         }
     }
 }

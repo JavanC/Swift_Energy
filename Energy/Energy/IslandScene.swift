@@ -113,7 +113,7 @@ class IslandScene: SKScene {
         buildingSelectLayer.showPage(true)
     }
     
-    func changeTouchTypeAndShowPage(touchType: TouchType) {
+    func changeTouchTypeAndShowPage(touchType: TouchType, duration: Double = 0.0) {
         self.touchType = touchType
         maps[nowMapNumber].runAction(SKAction.unhide())
         bottomLayer.pageBuild.closeSelectInformation()
@@ -121,19 +121,19 @@ class IslandScene: SKScene {
         switch touchType {
         case .Information:
             buttonLayer.tapButtonNil()
-            bottomLayer.ShowPageInformation()
+            bottomLayer.ShowPageInformation(duration)
             
         case .Energy:
             buttonLayer.tapButtonEnergy()
-            bottomLayer.showPageEnergy()
+            bottomLayer.showPageEnergy(duration)
             
         case .Builded:
             buttonLayer.tapButtonBuild()
-            bottomLayer.ShowPageBuild()
+            bottomLayer.ShowPageBuild(duration)
             
         case .Sell:
             buttonLayer.tapButtonSell()
-            bottomLayer.showPageSell()
+            bottomLayer.showPageSell(duration)
         }
     }
     
@@ -148,6 +148,7 @@ class IslandScene: SKScene {
                 // Button
                 case topLayer.buttonMenu:
                     print("Menu Button")
+                    changeTouchTypeAndShowPage(touchType)
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
                     self.view?.presentScene(islandsScene, transition: doors)
                     
@@ -159,15 +160,15 @@ class IslandScene: SKScene {
                     
                 case buttonLayer.buttonBuild:
                     print("Build Button")
-                    changeTouchTypeAndShowPage(.Builded)
+                    changeTouchTypeAndShowPage(.Builded, duration: 0.1)
                     
                 case buttonLayer.buttonSell:
                     print("Sell Button")
-                    changeTouchTypeAndShowPage(.Sell)
+                    changeTouchTypeAndShowPage(.Sell, duration: 0.1)
                     
                 case buttonLayer.buttonEnergy:
                     print("Energy Button")
-                    changeTouchTypeAndShowPage(.Energy)
+                    changeTouchTypeAndShowPage(.Energy, duration: 0.1)
                     
                 case buttonLayer.buttonUpgrade:
                     print("Upgrade Button")
@@ -177,7 +178,7 @@ class IslandScene: SKScene {
                     
                 case buttonLayer.buttonResearch:
                     print("Research Button")
-                    changeTouchTypeAndShowPage(.Energy)
+                    changeTouchTypeAndShowPage(touchType)
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
                     self.view?.presentScene(researchScene, transition: doors)
                 
