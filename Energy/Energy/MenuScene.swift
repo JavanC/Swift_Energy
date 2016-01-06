@@ -53,6 +53,8 @@ class MenuScene: SKScene {
             
             initialLevelData()
 
+            print(frame.size)
+            
             contentCreated = true
         }
     }
