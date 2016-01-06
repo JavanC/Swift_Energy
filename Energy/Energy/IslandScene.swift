@@ -245,7 +245,10 @@ class IslandScene: SKScene {
                     case .Sell:
                         if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                             let price = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildPrice
-                            money += price
+                            let canotSellBuildings: [BuildingType] = [.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]
+                            if !canotSellBuildings.contains(maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildType) {
+                                money += price
+                            }
                             maps[nowMapNumber].removeBuilding(coord)
                             maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
                         }

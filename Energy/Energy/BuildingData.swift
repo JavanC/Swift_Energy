@@ -117,15 +117,18 @@ class HeatSystem {
         }
     }
     func exchangerHeatToOtherHeatSystem(heatSystems:[HeatSystem]) {
-        var allHeat = inAmount
+        var allHeat = 0
         for heatSystem in heatSystems {
             allHeat += heatSystem.inAmount
+            heatSystem.inAmount = 0
         }
-        let balanceHeat = allHeat / (heatSystems.count + 1)
-        for heatSystem in heatSystems {
-            heatSystem.inAmount = balanceHeat
+        while allHeat > 0{
+            for heatSystem in heatSystems {
+                if allHeat == 0 { break }
+                ++heatSystem.inAmount
+                --allHeat
+            }
         }
-        inAmount = balanceHeat
     }
     func coolingHeatToHeatSink(heatSystems:[HeatSystem]) {
         let outputHeat = inAmount / (heatSystems.count + 1)
@@ -316,7 +319,6 @@ class BuildingData {
             progress = .Heat
             heatSystem = HeatSystem(size: 1000, coolingRate: 0.1)
             
-            
             // HeatInlet, HeatOutlet,
             
         case .WaterPump:
@@ -454,24 +456,23 @@ class BuildingData {
         if waterSystem != nil {
             info.append("Water: \(waterSystem.inAmount) / \(waterSystem.size)")
         }
-        
-        switch buildType {
-        case .WindTurbine:
+        if ([.WindTurbine, .WaveCell]).contains(buildType) {
             info.append("Produce Energy: \(energySystem.produce)")
-            
-        case .SolarCell:
-            info.append("Produce Heat: \(heatSystem.produceHeatValue())")
-            info.append("multiply: \(heatSystem.produceMultiply)")
-            
-        case .SmallGenerator:
-            info.append("Converted Energy: \(energySystem.heat2EnergyAmount)")
-            
-        case .SmallOffice:
-            info.append("Produce Money: \(moneySystem.heat2MoneyAmount)")
-            
-        default: break
         }
-        info.append("Sell Money: \(buildPrice)")
+        if ([.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]).contains(buildType) {
+            info.append("Produce Heat: \(heatSystem.produceHeatValue())")
+        }
+        if ([.SmallGenerator, .MediumGenerator, .LargeGenerator]).contains(buildType) {
+            info.append("Converted Energy: \(energySystem.heat2EnergyAmount)")
+        }
+        if ([.SmallOffice, .MediumOffice, .LargeOffice]).contains(buildType) {
+            info.append("Produce Money: \(moneySystem.heat2MoneyAmount)")
+        }
+        if !([.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]).contains(buildType) {
+            info.append("Sell Money: 0")
+        } else {
+            info.append("Sell Money: \(buildPrice)")
+        }
         return info
     }
 }

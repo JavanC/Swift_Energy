@@ -174,9 +174,9 @@ class BuildingMapLayer: SKSpriteNode {
     func aroundCoordBuildingData(x x: Int, y: Int) -> [BuildingData] {
         var data: [BuildingData] = []
         if y - 1 >= 0 { data.append(buildings[y-1][x]!.buildingData) }
-        if y + 1 <= 10 { data.append(buildings[y+1][x]!.buildingData) }
+        if y + 1 < Int(mapSize.height) { data.append(buildings[y+1][x]!.buildingData) }
         if x - 1 >= 0 { data.append(buildings[y][x-1]!.buildingData) }
-        if x + 1 <= 8 { data.append(buildings[y][x+1]!.buildingData) }
+        if x + 1 < Int(mapSize.width) { data.append(buildings[y][x+1]!.buildingData) }
         return data
     }
     
@@ -264,15 +264,13 @@ class BuildingMapLayer: SKSpriteNode {
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
                 if building!.buildingData.buildType == .HeatExchanger {
-                    var heatSystems = [HeatSystem]()
+                    var heatSystems: [HeatSystem] = [building!.buildingData.heatSystem]
                     for buildingData in aroundCoordBuildingData(x: x, y: y) {
                         if buildingData.heatSystem != nil && !buildingData.heatSystem.output {
                             heatSystems.append(buildingData.heatSystem)
                         }
                     }
-                    if heatSystems.count > 0 {
-                        building!.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
-                    }
+                    building!.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
                 }
             }
         }
