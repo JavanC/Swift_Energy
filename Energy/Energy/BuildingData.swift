@@ -28,6 +28,22 @@ class TimeSystem {
     }
 }
 
+class MoneySystem {
+    var inAmount: Int = 0
+    var energy2MoneyAmount: Int
+    var heat2MoneyAmount: Int
+    
+    init(initAmount: Int, energy2MoneyAmount: Int = 0, heat2MoneyAmount: Int = 0) {
+        self.inAmount = initAmount
+        self.energy2MoneyAmount = energy2MoneyAmount
+        self.heat2MoneyAmount = heat2MoneyAmount
+    }
+    func isHeat2Money() -> Bool {
+        if heat2MoneyAmount > 0 { return true }
+        return false
+    }
+}
+
 class EnergySystem {
     var inAmount: Int = 0
     var produce: Int
@@ -53,6 +69,7 @@ class HeatSystem {
     var size: Int
     var inAmount: Int
     var produce: Int
+    var produceMultiply: CGFloat = 1.0
     var output: Bool
     
     init(size: Int, initAmount: Int = 0, produce: Int = 0, output: Bool = false) {
@@ -61,8 +78,11 @@ class HeatSystem {
         self.produce = produce
         self.output = output
     }
+    func produceHeatValue() -> Int {
+        return (produce * Int(produceMultiply * 100)) / 100
+    }
     func produceHeat() {
-        inAmount += produce
+        inAmount += (produce * Int(produceMultiply * 100)) / 100
     }
     func overflow() -> Bool {
         if inAmount > size { return true }
@@ -142,11 +162,12 @@ class BuildingData {
     var timeSystem: TimeSystem!
     var heatSystem: HeatSystem!
     var waterSystem: WaterSystem!
+    var moneySystem: MoneySystem!
     var energySystem: EnergySystem!
+    var researchProduceAmount: Int!
+    var isolationPercent: CGFloat!
     
     // Other
-    var research_Produce: Int!
-    var money_Sales: Int!
     
     init(buildType: BuildingType) {
         self.buildType = buildType
@@ -167,7 +188,7 @@ class BuildingData {
             buildPrice = 1
             progress = .Time
             timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: true)
-            heatSystem = HeatSystem(size: 150, initAmount: 3, output: true)
+            heatSystem = HeatSystem(size: 150, produce: 3, output: true)
             
         case .CoalBurner:
             imageName = "CoalBurner"
@@ -188,21 +209,21 @@ class BuildingData {
             buildPrice = 10
             progress = .Time
             timeSystem = TimeSystem(size: 20, initAmount: 20, rebuild: true)
-            heatSystem = HeatSystem(size: 200, initAmount: 50, output: true)
+            heatSystem = HeatSystem(size: 200, produce: 50, output: true)
             
         case .NuclearCell:
             imageName = "NuclearCell"
             buildPrice = 10
             progress = .Time
             timeSystem = TimeSystem(size: 30, initAmount: 30, rebuild: true)
-            heatSystem = HeatSystem(size: 300, initAmount: 30, output: true)
+            heatSystem = HeatSystem(size: 300, produce: 30, output: true)
             
         case .FusionCell:
             imageName = "FusionCell"
             buildPrice = 10
             progress = .Time
             timeSystem = TimeSystem(size: 40, initAmount: 40, rebuild: true)
-            heatSystem = HeatSystem(size: 400, initAmount: 40, output: true)
+            heatSystem = HeatSystem(size: 400, produce: 40, output: true)
             
         case .SmallGenerator:
             imageName = "SmallGenerator"
@@ -233,8 +254,21 @@ class BuildingData {
             buildPrice = 50
             progress = .Heat
             heatSystem = HeatSystem(size: 400, initAmount: 100)
+            moneySystem = MoneySystem(initAmount: 0, heat2MoneyAmount: 10)
             
-            //   LargeBoilerHouse, Isolation, Battery
+        case .LargeBoilerHouse:
+            imageName = "LargeBoilerHouse"
+            buildPrice = 50
+            progress = .Heat
+            heatSystem = HeatSystem(size: 400, initAmount: 100)
+            moneySystem = MoneySystem(initAmount: 0, heat2MoneyAmount: 100)
+            
+        case .Isolation:
+            imageName = "Isolation"
+            buildPrice = 10
+            isolationPercent = 2.0
+            
+            // Battery
 
         case .HeatExchanger:
             imageName = "HeatExchanger"
@@ -245,7 +279,7 @@ class BuildingData {
             // HeatSink, HeatInlet, HeatOutlet,
             
         case .WaterPump:
-            imageName = "電池"
+            imageName = "WaterPump"
             buildPrice = 10
             progress = .Water
             waterSystem = WaterSystem(size: 100, produce: 3, output: true)
@@ -256,19 +290,19 @@ class BuildingData {
             imageName = "SmallOffice"
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
-            money_Sales = 5
+            moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 5)
             
         case .MediumOffice:
             imageName = "MediumOffice"
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
-            money_Sales = 50
+            moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 50)
             
         case .LargeOffice:
             imageName = "LargeOffice"
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
-            money_Sales = 500
+            moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 500)
             
             //Bank
             
@@ -276,13 +310,13 @@ class BuildingData {
             imageName = "ResearchCenter"
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
-            research_Produce = 10
+            researchProduceAmount = 10
             
         case .AdvancedResearchCenter:
             imageName = "AdvancedResearchCenter"
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
-            research_Produce = 100
+            researchProduceAmount = 100
             
             // library
             
@@ -331,6 +365,18 @@ class BuildingData {
         }
     }
     
+    func heatTransformMoney() {
+        if heatSystem != nil && moneySystem != nil && moneySystem.isHeat2Money() {
+            if heatSystem.inAmount >= moneySystem.heat2MoneyAmount {
+                moneySystem.inAmount += moneySystem.heat2MoneyAmount
+                heatSystem.inAmount -= moneySystem.heat2MoneyAmount
+            } else {
+                moneySystem.inAmount += heatSystem.inAmount
+                heatSystem.inAmount = 0
+            }
+        }
+    }
+    
     func image(name: String) -> SKSpriteNode {
         let buildingImage = SKSpriteNode(imageNamed: imageName)
         buildingImage.name = name
@@ -354,11 +400,15 @@ class BuildingData {
         case .WindTurbine:
             info.append("Produce Energy: \(energySystem.produce)")
             
+        case .SolarCell:
+            info.append("Produce Heat: \(heatSystem.produceHeatValue())")
+            info.append("multiply: \(heatSystem.produceMultiply)")
+            
         case .SmallGenerator:
             info.append("Converted Energy: \(energySystem.heat2EnergyAmount)")
             
         case .SmallOffice:
-            info.append("Produce Money: \(money_Sales)")
+            info.append("Produce Money: \(moneySystem.heat2MoneyAmount)")
             
         default: break
         }

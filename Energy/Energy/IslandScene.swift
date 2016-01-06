@@ -104,6 +104,7 @@ class IslandScene: SKScene {
     }
     
     func showBuildSelectPage() {
+        buildingSelectLayer.updateSelectLayer()
         buildingSelectLayer.changePage(bottomLayer.pageBuild.selectNumber)
         maps[nowMapNumber].runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.hide()]))
         bottomLayer.pageBuild.openSelectInformation()
@@ -223,6 +224,7 @@ class IslandScene: SKScene {
                     case .Information, .Energy:
                         if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                             info_Building = maps[nowMapNumber].buildingForCoord(coord)
+                            bottomLayer.pageInformation.changeInformation(info_Building)
                             changeTouchTypeAndShowPage(.Information)
                         }
                         
@@ -268,11 +270,7 @@ class IslandScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        
-        buildingSelectLayer.updateSelectLayer()
-        bottomLayer.pageInformation.changeInformation(info_Building)
-        
-        // Updata imformation
+        // Updata text imformation
         topLayer.moneyLabel.text = "Money: \(money) + \(maps[nowMapNumber].money_TickAdd)"
         topLayer.researchLabel.text = "Research: \(research) + \(maps[nowMapNumber].research_TickAdd)"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
@@ -282,6 +280,7 @@ class IslandScene: SKScene {
     }
     
     func tickUpdata() {
+        
         for i in 0...1 {
             // Update map data
             maps[i].Update()
@@ -289,6 +288,12 @@ class IslandScene: SKScene {
             money += maps[i].money_TickAdd
             research += maps[i].research_TickAdd
         }
+        
+        // Update information
+        bottomLayer.pageInformation.changeInformation(info_Building)
+        buildingSelectLayer.updateSelectLayer()
+        
+        
 //        print((maps[0].buildings[0][0]! as Building).buildingData.timeSystem?.rebuild)
         //        save()
     }

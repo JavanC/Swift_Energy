@@ -172,7 +172,7 @@ class BuildingMapLayer: SKSpriteNode {
     
     // MARK: BuildingMap Update
     func Update() {
-        
+
         // Water System
         
         // 1. Production
@@ -213,8 +213,24 @@ class BuildingMapLayer: SKSpriteNode {
         // Heat System
         
         // 1. Production
-        for (_, line) in buildings.enumerate() {
-        for (_, building) in line.enumerate() {
+        for (y, line) in buildings.enumerate() {
+        for (x, building) in line.enumerate() {
+            // Isolation Multiply
+            if building!.buildingData.buildType == .Isolation {
+                if (y - 1 >= 0 && buildings[y-1][x]!.buildingData.heatSystem != nil && buildings[y-1][x]!.buildingData.heatSystem.output) {
+                    buildings[y-1][x]!.buildingData.heatSystem.produceMultiply = building!.buildingData.isolationPercent
+                }
+                if (y + 1 <= 10 && buildings[y+1][x]!.buildingData.heatSystem != nil && buildings[y+1][x]!.buildingData.heatSystem.output) {
+                    buildings[y+1][x]!.buildingData.heatSystem.produceMultiply = building!.buildingData.isolationPercent
+                }
+                if (x - 1 >= 0 && buildings[y][x-1]!.buildingData.heatSystem != nil && buildings[y][x-1]!.buildingData.heatSystem.output) {
+                    buildings[y][x-1]!.buildingData.heatSystem.produceMultiply = building!.buildingData.isolationPercent
+                }
+                if (x + 1 <= 8 && buildings[y][x+1]!.buildingData.heatSystem != nil && buildings[y][x+1]!.buildingData.heatSystem.output) {
+                    buildings[y][x+1]!.buildingData.heatSystem.produceMultiply = building!.buildingData.isolationPercent
+                }
+            }
+            // Production
             if building!.activate && building!.buildingData.heatSystem != nil {
                 building!.buildingData.heatSystem.produceHeat()
             }
@@ -264,15 +280,14 @@ class BuildingMapLayer: SKSpriteNode {
             }
         }}
         
-        
-        
-        
-        
-        // Energy System
+        // Energy && Money System
         
         for (_, line) in buildings.enumerate() {
         for (_, building) in line.enumerate() {
-            if building!.activate && building!.buildingData.energySystem != nil {
+        if building!.activate {
+            
+            // Energy
+            if building!.buildingData.energySystem != nil {
                 // 1. Production
                 building!.buildingData.energySystem.produceEnergy()
                 // 2. Heat transform energy
@@ -284,7 +299,15 @@ class BuildingMapLayer: SKSpriteNode {
                     building!.buildingData.waterTransformEnergy()
                 }
             }
-        }}
+            
+            // Money
+            if building!.buildingData.moneySystem != nil {
+                // 1. Heat transform money
+                if building!.buildingData.moneySystem.isHeat2Money() {
+                    building!.buildingData.heatTransformMoney()
+                }
+            }
+        }}}
         
         // Destroy & Activate & Rebuild & Update Progress
         for (y, line) in buildings.enumerate() {
@@ -292,25 +315,21 @@ class BuildingMapLayer: SKSpriteNode {
             let buildingData = building!.buildingData
             if building!.activate {
                 // A. Destroy
-                if buildingData.heatSystem != nil {
-                    if buildingData.heatSystem.overflow() {
-                        let coord = CGPoint(x: x, y: y)
-                        removeBuilding(coord)
-                        setTileMapElement(coord: coord, buildType: .Land)
-                    }
+                if buildingData.heatSystem != nil && buildingData.heatSystem.overflow() {
+                    let coord = CGPoint(x: x, y: y)
+                    removeBuilding(coord)
+                    setTileMapElement(coord: coord, buildType: .Land)
                 }
                 // B. Activate
-                if buildingData.timeSystem != nil {
-                    if !buildingData.timeSystem.tick() {
-                        building!.activate = false
-                        building!.alpha = 0.5
-                    }
+                if buildingData.timeSystem != nil && !buildingData.timeSystem.tick(){
+                    building!.activate = false
+                    building!.alpha = 0.5
                 }
             } else {
                 // C. Rebuild
                 if autoRebuild && buildingData.timeSystem != nil && buildingData.timeSystem.rebuild {
                     let price = building!.buildingData.buildPrice!
-                    if price <= money {
+                    if money >= price {
                         money -= price
                         building!.buildingData.timeSystem.resetTime()
                         building!.activate = true
@@ -326,11 +345,12 @@ class BuildingMapLayer: SKSpriteNode {
         research_TickAdd = 0
         energy_TickAdd = 0
         money_TickAdd = 0
+        var energy2MoneyAmount = 0
         for (_, line) in buildings.enumerate() {
         for (_, building) in line.enumerate() {
             // research
-            if building!.buildingData.research_Produce != nil {
-                research_TickAdd += (building?.buildingData.research_Produce)!
+            if building!.buildingData.researchProduceAmount != nil {
+                research_TickAdd += building!.buildingData.researchProduceAmount
             }
             // energy
             if building!.buildingData.energySystem != nil {
@@ -338,19 +358,23 @@ class BuildingMapLayer: SKSpriteNode {
                 building!.buildingData.energySystem.inAmount = 0
             }
             // money
-            if building?.buildingData.money_Sales != nil {
-                money_TickAdd += (building?.buildingData.money_Sales)!
+            if building!.buildingData.moneySystem != nil {
+                money_TickAdd += building!.buildingData.moneySystem.inAmount
+                building!.buildingData.moneySystem.inAmount = 0
+                energy2MoneyAmount += building!.buildingData.moneySystem.energy2MoneyAmount
             }
         }}
+        
         // 6. Calculate energy
         energy += energy_TickAdd
         
         // 7. Calculate real money tick add and energy left
-        if energy >= money_TickAdd {
-            energy -= money_TickAdd
+        if energy >= energy2MoneyAmount {
+            energy -= energy2MoneyAmount
+            money_TickAdd += energy2MoneyAmount
             if energy > energyMax { energy = energyMax }
         } else {
-            money_TickAdd = energy
+            money_TickAdd += energy
             energy = 0
         }
     }
