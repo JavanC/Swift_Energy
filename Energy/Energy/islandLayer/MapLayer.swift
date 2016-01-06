@@ -170,253 +170,236 @@ class BuildingMapLayer: SKSpriteNode {
         }}
     }
     
+    // MARK: Return Around Coord BuildingData
+    func aroundCoordBuildingData(x x: Int, y: Int) -> [BuildingData] {
+        var data: [BuildingData] = []
+        if y - 1 >= 0 { data.append(buildings[y-1][x]!.buildingData) }
+        if y + 1 <= 10 { data.append(buildings[y+1][x]!.buildingData) }
+        if x - 1 >= 0 { data.append(buildings[y][x-1]!.buildingData) }
+        if x + 1 <= 8 { data.append(buildings[y][x+1]!.buildingData) }
+        return data
+    }
+    
     // MARK: BuildingMap Update
     func Update() {
 
-        // Water System
+        /**
+        *  Water System
+        */
         
         // 1. Production
         for line in buildings {
-        for building in line {
-            if building!.buildingData.waterSystem != nil {
-                building!.buildingData.waterSystem.produceWater()
+            for building in line {
+                if building!.buildingData.waterSystem != nil {
+                    building!.buildingData.waterSystem.produceWater()
+                }
             }
-        }}
+        }
         // 2. transport
         for (y, line) in buildings.enumerate() {
-        for (x, building) in line.enumerate() {
-            if building!.buildingData.waterSystem != nil && building!.buildingData.waterSystem.output {
-                var waterSystems = [WaterSystem]()
-                if (y - 1 >= 0 && buildings[y-1][x]!.buildingData.waterSystem != nil) {
-                    waterSystems.append(buildings[y-1][x]!.buildingData.waterSystem)
+            for (x, building) in line.enumerate() {
+                if building!.buildingData.waterSystem != nil && building!.buildingData.waterSystem.output {
+                    var waterSystems = [WaterSystem]()
+                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                        if buildingData.waterSystem != nil {
+                            waterSystems.append(buildingData.waterSystem)
+                        }
+                    }
+                    building!.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
                 }
-                if (y + 1 <= 10 && buildings[y+1][x]!.buildingData.waterSystem != nil ) {
-                    waterSystems.append(buildings[y+1][x]!.buildingData.waterSystem)
-                }
-                if (x - 1 >= 0 && buildings[y][x-1]!.buildingData.waterSystem != nil ) {
-                    waterSystems.append(buildings[y][x-1]!.buildingData.waterSystem)
-                }
-                if (x + 1 <= 8 && buildings[y][x+1]!.buildingData.waterSystem != nil ) {
-                    waterSystems.append(buildings[y][x+1]!.buildingData.waterSystem)
-                }
-                building!.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
             }
-        }}
+        }
         // 3. Caculate water overflow
         for line in buildings {
-        for building in line {
-            if building!.buildingData.waterSystem != nil {
-                building!.buildingData.waterSystem.overflow()
+            for building in line {
+                if building!.buildingData.waterSystem != nil {
+                    building!.buildingData.waterSystem.overflow()
+                }
             }
-        }}
+        }
     
-        // Heat System
+        /**
+        *  Heat System
+        */
         
         // 1. Isolation Multiply
         for (y, line) in buildings.enumerate() {
-        for (x, building) in line.enumerate() {
-            let isolationArray: [BuildingType] = [.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]
-            if isolationArray.contains(building!.buildingData.buildType) {
-                building!.buildingData.heatSystem.produceMultiply = 1
-                if y - 1 >= 0 && buildings[y-1][x]!.buildingData.buildType == .Isolation {
-                    building!.buildingData.heatSystem.produceMultiply += buildings[y-1][x]!.buildingData.isolationPercent
-                }
-                if y + 1 <= 10 && buildings[y+1][x]!.buildingData.buildType == .Isolation {
-                    building!.buildingData.heatSystem.produceMultiply += buildings[y+1][x]!.buildingData.isolationPercent
-                }
-                if x - 1 >= 0 && buildings[y][x-1]!.buildingData.buildType == .Isolation {
-                    building!.buildingData.heatSystem.produceMultiply += buildings[y][x-1]!.buildingData.isolationPercent
-                }
-                if x + 1 <= 8 && buildings[y][x+1]!.buildingData.buildType == .Isolation {
-                    building!.buildingData.heatSystem.produceMultiply += buildings[y][x+1]!.buildingData.isolationPercent
-                }
-            }
-        }}
-        // 2. Production
-        for line in buildings {
-        for building in line {
-            if building!.activate && building!.buildingData.heatSystem != nil {
-                building!.buildingData.heatSystem.produceHeat()
-            }
-        }}
-        // 3. output transport
-        for (y, line) in buildings.enumerate() {
-        for (x, building) in line.enumerate() {
-            if building!.buildingData.heatSystem != nil && building!.buildingData.heatSystem.output {
-                var heatSystems = [HeatSystem]()
-                if (y - 1 >= 0 && buildings[y-1][x]!.buildingData.heatSystem != nil) {
-                    heatSystems.append(buildings[y-1][x]!.buildingData.heatSystem)
-                }
-                if (y + 1 <= 10 && buildings[y+1][x]!.buildingData.heatSystem != nil ) {
-                    heatSystems.append(buildings[y+1][x]!.buildingData.heatSystem)
-                }
-                if (x - 1 >= 0 && buildings[y][x-1]!.buildingData.heatSystem != nil ) {
-                    heatSystems.append(buildings[y][x-1]!.buildingData.heatSystem)
-                }
-                if (x + 1 <= 8 && buildings[y][x+1]!.buildingData.heatSystem != nil ) {
-                    heatSystems.append(buildings[y][x+1]!.buildingData.heatSystem)
-                }
-                if heatSystems.count > 0 {
-                    building!.buildingData.heatSystem.outputHeatToOtherHeatSystem(heatSystems)
-                }
-            }
-        }}
-        // 4. Heat exchanger
-        for (y, line) in buildings.enumerate() {
-        for (x, building) in line.enumerate() {
-            if building!.buildingData.buildType == .HeatExchanger {
-                var heatSystems = [HeatSystem]()
-                if (y - 1 >= 0 && buildings[y-1][x]!.buildingData.heatSystem != nil && !buildings[y-1][x]!.buildingData.heatSystem.output) {
-                    heatSystems.append(buildings[y-1][x]!.buildingData.heatSystem)
-                }
-                if (y + 1 <= 10 && buildings[y+1][x]!.buildingData.heatSystem != nil && !buildings[y+1][x]!.buildingData.heatSystem.output) {
-                    heatSystems.append(buildings[y+1][x]!.buildingData.heatSystem)
-                }
-                if (x - 1 >= 0 && buildings[y][x-1]!.buildingData.heatSystem != nil && !buildings[y][x-1]!.buildingData.heatSystem.output) {
-                    heatSystems.append(buildings[y][x-1]!.buildingData.heatSystem)
-                }
-                if (x + 1 <= 8 && buildings[y][x+1]!.buildingData.heatSystem != nil && !buildings[y][x+1]!.buildingData.heatSystem.output) {
-                    heatSystems.append(buildings[y][x+1]!.buildingData.heatSystem)
-                }
-                if heatSystems.count > 0 {
-                    building!.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
-                }
-            }
-        }}
-        // 5. Heat Cooling transport
-        for (y, line) in buildings.enumerate() {
-        for (x, building) in line.enumerate() {
-            let coolingArray:[BuildingType] = [.SmallGenerator, .MediumGenerator, .LargeGenerator, .BoilerHouse, .LargeBoilerHouse]
-            if coolingArray.contains(building!.buildingData.buildType){
-                var heatSystems = [HeatSystem]()
-                if y - 1 >= 0 && buildings[y-1][x]!.buildingData.buildType == .HeatSink {
-                    heatSystems.append(buildings[y-1][x]!.buildingData.heatSystem)
-                }
-                if y + 1 <= 10 && buildings[y+1][x]!.buildingData.buildType == .HeatSink {
-                    heatSystems.append(buildings[y+1][x]!.buildingData.heatSystem)
-                }
-                if x - 1 >= 0 && buildings[y][x-1]!.buildingData.buildType == .HeatSink {
-                    heatSystems.append(buildings[y][x-1]!.buildingData.heatSystem)
-                }
-                if x + 1 <= 8 && buildings[y][x+1]!.buildingData.buildType == .HeatSink {
-                    heatSystems.append(buildings[y][x+1]!.buildingData.heatSystem)
-                }
-                if heatSystems.count > 0 {
-                    building!.buildingData.heatSystem.coolingHeatToHeatSink(heatSystems)
-                }
-            }
-        }}
-        // 6. Heat Cooling
-        for line in buildings {
-        for building in line {
-            if building!.buildingData.buildType == .HeatSink {
-                building!.buildingData.heatSystem.coolingHeat()
-            }
-        }}
-        
-        // Energy && Money System
-        
-        for line in buildings {
-        for building in line {
-        if building!.activate {
-            
-            // Energy
-            if building!.buildingData.energySystem != nil {
-                // 1. Production
-                building!.buildingData.energySystem.produceEnergy()
-                // 2. Heat transform energy
-                if building!.buildingData.energySystem.isHeat2Energy() {
-                    building!.buildingData.heatTransformEnergy()
-                }
-                // 3. Water transform energy
-                if building!.buildingData.energySystem.water2Energy {
-                    building!.buildingData.waterTransformEnergy()
-                }
-            }
-            
-            // Money
-            if building!.buildingData.moneySystem != nil {
-                // 1. Heat transform money
-                if building!.buildingData.moneySystem.isHeat2Money() {
-                    building!.buildingData.heatTransformMoney()
-                }
-            }
-        }}}
-        
-        // Destroy & Activate & Rebuild & Update Progress
-        
-        for (y, line) in buildings.enumerate() {
-        for (x, building) in line.enumerate() {
-            let buildingData = building!.buildingData
-            if building!.activate {
-                // 1. Destroy
-                if buildingData.heatSystem != nil && buildingData.heatSystem.overflow() {
-                    let coord = CGPoint(x: x, y: y)
-                    removeBuilding(coord)
-                    setTileMapElement(coord: coord, buildType: .Land)
-                }
-                // 2. Activate
-                if buildingData.timeSystem != nil && !buildingData.timeSystem.tick(){
-                    building!.activate = false
-                    building!.alpha = 0.5
-                }
-            } else {
-                // 3. Rebuild
-                if autoRebuild && buildingData.timeSystem != nil && buildingData.timeSystem.rebuild {
-                    let price = building!.buildingData.buildPrice!
-                    if money >= price {
-                        money -= price
-                        building!.buildingData.timeSystem.resetTime()
-                        building!.activate = true
-                        building!.alpha = 1
+            for (x, building) in line.enumerate() {
+                let isolationArray: [BuildingType] = [.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]
+                if isolationArray.contains(building!.buildingData.buildType) {
+                    building!.buildingData.heatSystem.produceMultiply = 1
+                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                        if buildingData.buildType == .Isolation {
+                            building!.buildingData.heatSystem.produceMultiply += buildingData.isolationPercent
+                        }
                     }
                 }
             }
-            // 4. Update progress
-            building!.progressUpdate()
-        }}
+        }
+        // 2. Production
+        for line in buildings {
+            for building in line {
+                if building!.activate && building!.buildingData.heatSystem != nil {
+                    building!.buildingData.heatSystem.produceHeat()
+                }
+            }
+        }
+        // 3. output transport
+        for (y, line) in buildings.enumerate() {
+            for (x, building) in line.enumerate() {
+                if building!.buildingData.heatSystem != nil && building!.buildingData.heatSystem.output {
+                    var heatSystems = [HeatSystem]()
+                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                        if buildingData.heatSystem != nil {
+                            heatSystems.append(buildingData.heatSystem)
+                        }
+                    }
+                    if heatSystems.count > 0 {
+                        building!.buildingData.heatSystem.outputHeatToOtherHeatSystem(heatSystems)
+                    }
+                }
+            }
+        }
+        // 4. Heat exchanger
+        for (y, line) in buildings.enumerate() {
+            for (x, building) in line.enumerate() {
+                if building!.buildingData.buildType == .HeatExchanger {
+                    var heatSystems = [HeatSystem]()
+                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                        if buildingData.heatSystem != nil && !buildingData.heatSystem.output {
+                            heatSystems.append(buildingData.heatSystem)
+                        }
+                    }
+                    if heatSystems.count > 0 {
+                        building!.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
+                    }
+                }
+            }
+        }
+        // 5. Heat Cooling transport
+        for (y, line) in buildings.enumerate() {
+            for (x, building) in line.enumerate() {
+                let coolingArray:[BuildingType] = [.SmallGenerator, .MediumGenerator, .LargeGenerator, .BoilerHouse, .LargeBoilerHouse]
+                if coolingArray.contains(building!.buildingData.buildType){
+                    var heatSystems = [HeatSystem]()
+                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                        if buildingData.buildType == .HeatSink {
+                            heatSystems.append(buildingData.heatSystem)
+                        }
+                    }
+                    if heatSystems.count > 0 {
+                        building!.buildingData.heatSystem.coolingHeatToHeatSink(heatSystems)
+                    }
+                }
+            }
+        }
+        // 6. Heat Cooling
+        for line in buildings {
+            for building in line {
+                if building!.buildingData.buildType == .HeatSink {
+                    building!.buildingData.heatSystem.coolingHeat()
+                }
+            }
+        }
         
-        // Bank && Library multiply
+        /**
+        *  Energy && Money System
+        */
+        
+        for line in buildings {
+            for building in line {
+                // Energy
+                if building!.buildingData.energySystem != nil {
+                    // 1. Production
+                    building!.buildingData.energySystem.produceEnergy()
+                    // 2. Heat transform energy
+                    if building!.buildingData.energySystem.isHeat2Energy() {
+                        building!.buildingData.heatTransformEnergy()
+                    }
+                    // 3. Water transform energy
+                    if building!.buildingData.energySystem.water2Energy {
+                        building!.buildingData.waterTransformEnergy()
+                    }
+                }
+                // Money
+                if building!.buildingData.moneySystem != nil {
+                    // 1. Heat transform money
+                    if building!.buildingData.moneySystem.isHeat2Money() {
+                        building!.buildingData.heatTransformMoney()
+                    }
+                }
+            }
+        }
+        
+        /**
+        *  EDestroy & Activate & Rebuild & Update Progress
+        */
         
         for (y, line) in buildings.enumerate() {
-        for (x, building) in line.enumerate() {
-            // Bank
-            let bankArray:[BuildingType] = [.SmallOffice, .MediumOffice, .LargeOffice]
-            if bankArray.contains(building!.buildingData.buildType){
-                building!.buildingData.moneySystem.multiply = 1
-                if y - 1 >= 0 && buildings[y-1][x]!.buildingData.buildType == .Bank {
-                    building!.buildingData.moneySystem.multiply += buildings[y-1][x]!.buildingData.bankAddPercent
+            for (x, building) in line.enumerate() {
+                let buildingData = building!.buildingData
+                if building!.activate {
+                    // 1. Destroy
+                    if buildingData.heatSystem != nil && buildingData.heatSystem.overflow() {
+                        let coord = CGPoint(x: x, y: y)
+                        removeBuilding(coord)
+                        setTileMapElement(coord: coord, buildType: .Land)
+                    }
+                    // 2. Activate
+                    if buildingData.timeSystem != nil && !buildingData.timeSystem.tick(){
+                        building!.activate = false
+                        building!.alpha = 0.5
+                    }
+                } else {
+                    // 3. Rebuild
+                    if autoRebuild && buildingData.timeSystem != nil && buildingData.timeSystem.rebuild {
+                        let price = building!.buildingData.buildPrice!
+                        if money >= price {
+                            money -= price
+                            building!.buildingData.timeSystem.resetTime()
+                            building!.activate = true
+                            building!.alpha = 1
+                        }
+                    }
                 }
-                if y + 1 <= 10 && buildings[y+1][x]!.buildingData.buildType == .Bank {
-                    building!.buildingData.moneySystem.multiply += buildings[y+1][x]!.buildingData.bankAddPercent
-                }
-                if x - 1 >= 0 && buildings[y][x-1]!.buildingData.buildType == .Bank {
-                    building!.buildingData.moneySystem.multiply += buildings[y][x-1]!.buildingData.bankAddPercent
-                }
-                if x + 1 <= 8 && buildings[y][x+1]!.buildingData.buildType == .Bank {
-                    building!.buildingData.moneySystem.multiply += buildings[y][x+1]!.buildingData.bankAddPercent
-                }
+                // 4. Update progress
+                building!.progressUpdate()
             }
-            // Library
-            let libraryArray:[BuildingType] = [.ResearchCenter, .AdvancedResearchCenter]
-            if libraryArray.contains(building!.buildingData.buildType){
-                building!.buildingData.researchSystem.multiply = 1
-                if y - 1 >= 0 && buildings[y-1][x]!.buildingData.buildType == .Library {
-                    building!.buildingData.researchSystem.multiply += buildings[y-1][x]!.buildingData.libraryAddPercent
-                }
-                if y + 1 <= 10 && buildings[y+1][x]!.buildingData.buildType == .Library {
-                    building!.buildingData.researchSystem.multiply += buildings[y+1][x]!.buildingData.libraryAddPercent
-                }
-                if x - 1 >= 0 && buildings[y][x-1]!.buildingData.buildType == .Library {
-                    building!.buildingData.researchSystem.multiply += buildings[y][x-1]!.buildingData.libraryAddPercent
-                }
-                if x + 1 <= 8 && buildings[y][x+1]!.buildingData.buildType == .Library {
-                    building!.buildingData.researchSystem.multiply += buildings[y][x+1]!.buildingData.libraryAddPercent
-                }
-            }
-        }}
+        }
         
-        // Calculate research, energy, money tick add
+        /**
+        *  Bank && Library multiply
+        */
+        
+        for (y, line) in buildings.enumerate() {
+            for (x, building) in line.enumerate() {
+                // Bank
+                let bankArray:[BuildingType] = [.SmallOffice, .MediumOffice, .LargeOffice]
+                if bankArray.contains(building!.buildingData.buildType){
+                    building!.buildingData.moneySystem.multiply = 1
+                    
+                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                        if buildingData.buildType == .Bank {
+                            building!.buildingData.moneySystem.multiply += buildingData.bankAddPercent
+                        }
+                    }
+                }
+                // Library
+                let libraryArray:[BuildingType] = [.ResearchCenter, .AdvancedResearchCenter]
+                if libraryArray.contains(building!.buildingData.buildType){
+                    building!.buildingData.researchSystem.multiply = 1
+                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                        if buildingData.buildType == .Library {
+                            building!.buildingData.moneySystem.multiply += buildingData.libraryAddPercent
+                        }
+                    }
+                }
+            }
+        }
+        
+        /**
+         *  Calculate research, energy, money tick add
+         */
         
         var energy2MoneyAmount = 0
         research_TickAdd = 0
