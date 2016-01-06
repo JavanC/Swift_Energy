@@ -345,6 +345,7 @@ class BuildingMapLayer: SKSpriteNode {
         research_TickAdd = 0
         energy_TickAdd = 0
         money_TickAdd = 0
+        energyMax = 100
         var energy2MoneyAmount = 0
         for (_, line) in buildings.enumerate() {
         for (_, building) in line.enumerate() {
@@ -362,6 +363,10 @@ class BuildingMapLayer: SKSpriteNode {
                 money_TickAdd += building!.buildingData.moneySystem.inAmount
                 building!.buildingData.moneySystem.inAmount = 0
                 energy2MoneyAmount += building!.buildingData.moneySystem.energy2MoneyAmount
+            }
+            // battery
+            if building!.buildingData.buildType == .Battery {
+                energyMax += building!.buildingData.batteryEnergySize
             }
         }}
         

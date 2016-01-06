@@ -164,17 +164,18 @@ class BuildingData {
     var waterSystem: WaterSystem!
     var moneySystem: MoneySystem!
     var energySystem: EnergySystem!
-    var researchProduceAmount: Int!
-    var isolationPercent: CGFloat!
     
     // Other
+    var researchProduceAmount: Int!
+    var batteryEnergySize: Int!
+    var isolationPercent: CGFloat!
+    
     
     init(buildType: BuildingType) {
         self.buildType = buildType
         switch buildType {
         case .Land:
             imageName = "Land"
-            
 
         case .WindTurbine:
             imageName = "WindTurbine"
@@ -266,9 +267,12 @@ class BuildingData {
         case .Isolation:
             imageName = "Isolation"
             buildPrice = 10
-            isolationPercent = 2.0
+            isolationPercent = 1.5
             
-            // Battery
+        case .Battery:
+            imageName = "Battery"
+            buildPrice = 10
+            batteryEnergySize = 1000
 
         case .HeatExchanger:
             imageName = "HeatExchanger"
