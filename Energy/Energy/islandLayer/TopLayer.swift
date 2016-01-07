@@ -39,7 +39,7 @@ class TopLayer: SKSpriteNode {
         let labelsize = (self.size.height - labelgap * 3) / 2
         moneyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
         moneyLabel.name = "MoneyLabel"
-        moneyLabel.fontColor = SKColor.yellowColor()
+        moneyLabel.fontColor = colorMoney
         moneyLabel.fontSize = labelsize
         moneyLabel.horizontalAlignmentMode = .Left
         moneyLabel.position = CGPoint(x: buttonMenu.size.width + 20, y: labelgap * 2 + labelsize * 1)

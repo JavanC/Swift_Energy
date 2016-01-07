@@ -8,8 +8,9 @@
 
 import SpriteKit
 // Game UI Data
+var colorMoney = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000)
+var colorResearch = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
 var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
-var colorResearch = UIColor(red: 0.231, green: 0.705, blue: 0.275, alpha: 1.000)
 // Game Data
 enum BuildingType: Int {
     case Ocean, Land, WindTurbine, SolarCell, CoalBurner, WaveCell, GasBurner, NuclearCell, FusionCell, SmallGenerator, MediumGenerator, LargeGenerator, BoilerHouse, LargeBoilerHouse, Isolation, Battery, HeatExchanger, HeatSink, HeatInlet, HeatOutlet, WaterPump, GroundwaterPump, WaterPipe, SmallOffice, MediumOffice, LargeOffice, Bank, ResearchCenter, AdvancedResearchCenter, Library, BuildingTypeLength
@@ -32,18 +33,21 @@ var isPause: Bool = false
 class MenuScene: SKScene {
     
     var contentCreated: Bool = false
-    var stertGameButton: SKLabelNode!
+//    var startGameButton: SKMultilineLabel!
+    var startGameButton: SKLabelNode!
 
     override func didMoveToView(view: SKView) {
         if !contentCreated {
             
             self.backgroundColor = SKColor.whiteColor()
-            stertGameButton = SKLabelNode(fontNamed:"Verdana-Bold")
-            stertGameButton.text = "Stert Game"
-            stertGameButton.fontSize = 45
-            stertGameButton.fontColor = SKColor.blackColor()
-            stertGameButton.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
-            self.addChild(stertGameButton)
+        
+            startGameButton = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            startGameButton.text = "Play"
+            startGameButton.fontSize = 50
+            startGameButton.fontColor = SKColor.blackColor()
+            startGameButton.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
+            self.addChild(startGameButton)
+            
             initialLevelData()
 
             contentCreated = true
@@ -68,7 +72,7 @@ class MenuScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
             let location = touch.locationInNode(self)
-            if stertGameButton.containsPoint(location) {
+            if startGameButton.containsPoint(location) {
                 print("tap")
                 let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(islandsScene, transition: doors)
