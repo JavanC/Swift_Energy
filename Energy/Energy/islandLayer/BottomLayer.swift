@@ -8,63 +8,156 @@
 
 import SpriteKit
 
-class PageInformation: SKSpriteNode {
+class InformationLabel: SKNode {
+    var titleLabel: SKLabelNode!
+    var valueLabel: SKLabelNode!
     
+    init(title: String, fontSize: CGFloat, valueColor: SKColor) {
+        super.init()
+        titleLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        titleLabel.name = "title"
+        titleLabel.text = "\(title) :"
+        titleLabel.fontSize = fontSize
+        titleLabel.fontColor = SKColor.whiteColor()
+        titleLabel.horizontalAlignmentMode = .Left
+        addChild(titleLabel)
+        valueLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        valueLabel.name = "value"
+        valueLabel.text = ""
+        valueLabel.fontSize = fontSize
+        valueLabel.fontColor = valueColor
+        valueLabel.horizontalAlignmentMode = .Left
+        valueLabel.position = CGPoint(x: titleLabel.frame.size.width + 5, y: 0)
+        addChild(valueLabel)
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class PageInformation: SKSpriteNode {
+
     var info = [SKLabelNode]()
+    
+    var positions = [CGPoint]()
+    
+    var infoTicksNode: InformationLabel!
+    var infoHeatNode: InformationLabel!
+    var infoWaterNode: InformationLabel!
+    var infoProduceEnergyNode: InformationLabel!
+    var infoProduceHeatNode: InformationLabel!
+    var infoSellsMoneyNode: InformationLabel!
+    var infoConvertedEnergyNode: InformationLabel!
+    var infoPriceNode: InformationLabel!
+    var allLabels = [InformationLabel]()
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         
         self.position = position
         self.size = size
-        self.color = SKColor.redColor()
+        self.color = SKColor.blackColor()
         self.name = "PageInformation"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
         let infoImage = BuildingData(buildType: .Land).image("infoImage")
         infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: size.height / 2)
         addChild(infoImage)
-        
+    
         let infogap: CGFloat = 5
         let infoSize = (size.height - 6 * infogap) / 5
         for i in 1...5 {
-            let label = SKLabelNode(fontNamed: "Verdana-Bold")
-            label.name = "info\(i)"
-            label.fontSize = infoSize
-            label.horizontalAlignmentMode = .Left
-            label.position = CGPoint(x: infoImage.size.width + 80, y: infogap * CGFloat(6 - i) + infoSize * CGFloat(5 - i))
-            label.text = "123"
-            addChild(label)
-            info.append(label)
+            positions.append(CGPoint(x: infoImage.size.width + 80, y: infogap * CGFloat(6 - i) + infoSize * CGFloat(5 - i)))
         }
+
+        infoTicksNode = InformationLabel(title: "Ticks", fontSize: infoSize, valueColor: SKColor.whiteColor())
+        addChild(infoTicksNode)
+        infoHeatNode = InformationLabel(title: "Heat", fontSize: infoSize, valueColor: SKColor.redColor())
+        addChild(infoHeatNode)
+        infoWaterNode = InformationLabel(title: "Water", fontSize: infoSize, valueColor: colorEnergy)
+        addChild(infoWaterNode)
+        infoProduceEnergyNode = InformationLabel(title: "Produce Energy", fontSize: infoSize, valueColor: colorEnergy)
+        addChild(infoProduceEnergyNode)
+        infoProduceHeatNode = InformationLabel(title: "Produce Heat", fontSize: infoSize, valueColor: SKColor.redColor())
+        addChild(infoProduceHeatNode)
+        infoSellsMoneyNode = InformationLabel(title: "Sells Money", fontSize: infoSize, valueColor: colorMoney)
+        addChild(infoSellsMoneyNode)
+        infoConvertedEnergyNode = InformationLabel(title: "Converted Energy", fontSize: infoSize, valueColor: SKColor.redColor())
+        addChild(infoConvertedEnergyNode)
+        infoPriceNode = InformationLabel(title: "Price", fontSize: infoSize, valueColor: colorMoney)
+        addChild(infoPriceNode)
+        
+        allLabels = [infoTicksNode, infoHeatNode, infoWaterNode, infoProduceEnergyNode, infoProduceHeatNode, infoSellsMoneyNode, infoConvertedEnergyNode, infoPriceNode]
     }
     
-    func changeInformation(building: Building) {
+    func changeInformation(buildingData: BuildingData) {
+        
+        // Image
         
         let infoImagePosition = childNodeWithName("infoImage")?.position
         childNodeWithName("infoImage")?.removeFromParent()
-        let infoImage = building.buildingData.image("infoImage")
+        let infoImage = buildingData.image("infoImage")
         infoImage.position = infoImagePosition!
         addChild(infoImage)
         
-        let labels = building.buildingData.buildingInfo()
+        // Label
         
-        for i in 0..<5 {
-            info[i].text = (i < labels.count ? labels[i] : "")
+        for label in allLabels {
+            label.hidden = true
         }
+        var informationLabels = [InformationLabel]()
+        if buildingData.timeSystem != nil {
+            infoTicksNode.hidden = false
+            infoTicksNode.valueLabel.text = "\(buildingData.timeSystem.inAmount) / \(buildingData.timeSystem.size)"
+            informationLabels.append(infoTicksNode)
+        }
+        if buildingData.heatSystem != nil {
+            infoHeatNode.hidden = false
+            infoHeatNode.valueLabel.text = "\(buildingData.heatSystem.inAmount) / \(buildingData.heatSystem.size)"
+            informationLabels.append(infoHeatNode)
+        }
+        if buildingData.waterSystem != nil {
+            infoWaterNode.hidden = false
+            infoWaterNode.valueLabel.text = "\(buildingData.waterSystem.inAmount) / \(buildingData.waterSystem.size)"
+            informationLabels.append(infoWaterNode)
+        }
+        if ([.WindTurbine, .WaveCell]).contains(buildingData.buildType) {
+            infoProduceEnergyNode.hidden = false
+            infoProduceEnergyNode.valueLabel.text = "\(buildingData.energySystem.produce)"
+            informationLabels.append(infoProduceEnergyNode)
+        }
+        if ([.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]).contains(buildingData.buildType) {
+            infoProduceHeatNode.hidden = false
+            infoProduceHeatNode.valueLabel.text = "\(buildingData.heatSystem.produceHeatValue())"
+            informationLabels.append(infoProduceHeatNode)
+        }
+        if ([.SmallGenerator, .MediumGenerator, .LargeGenerator]).contains(buildingData.buildType) {
+            infoConvertedEnergyNode.hidden = false
+            infoConvertedEnergyNode.valueLabel.text = "\(buildingData.energySystem.heat2EnergyAmount)"
+            informationLabels.append(infoConvertedEnergyNode)
+        }
+        if ([.SmallOffice, .MediumOffice, .LargeOffice]).contains(buildingData.buildType) {
+            infoSellsMoneyNode.hidden = false
+            infoSellsMoneyNode.valueLabel.text = "\(buildingData.moneySystem.heat2MoneyAmount)"
+            informationLabels.append(infoSellsMoneyNode)
+        }
+        if ([.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]).contains(buildingData.buildType) {
+            infoPriceNode.hidden = false
+            infoPriceNode.valueLabel.text = "0"
+            informationLabels.append(infoPriceNode)
+        } else {
+            infoPriceNode.hidden = false
+            infoPriceNode.valueLabel.text = "\(buildingData.buildPrice)"
+            informationLabels.append(infoPriceNode)
+        }
+        
+        for count in 0..<informationLabels.count {
+            informationLabels[count].position = positions[count]
+        }
+        
     }
-    
+
     func nowLevelImformation(buildType: BuildingType) {
-        
-        let infoImagePosition = childNodeWithName("infoImage")?.position
-        childNodeWithName("infoImage")?.removeFromParent()
-        let infoImage = BuildingData(buildType: buildType).image("infoImage")
-        infoImage.position = infoImagePosition!
-        addChild(infoImage)
-        
-        let labels = BuildingData(buildType: buildType).buildingInfo()
-        for i in 0..<5 {
-            info[i].text = (i < labels.count ? labels[i] : "")
-        }
+
     }
 }
 

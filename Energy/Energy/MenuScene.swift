@@ -33,8 +33,8 @@ var isPause: Bool = false
 class MenuScene: SKScene {
     
     var contentCreated: Bool = false
-//    var startGameButton: SKMultilineLabel!
     var startGameButton: SKLabelNode!
+    var testbutton: SKMultilineLabel!
 
     override func didMoveToView(view: SKView) {
         if !contentCreated {
@@ -47,6 +47,9 @@ class MenuScene: SKScene {
             startGameButton.fontColor = SKColor.blackColor()
             startGameButton.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
             self.addChild(startGameButton)
+            
+            testbutton = SKMultilineLabel(text: "abc ccdd aher. \n asdf", labelWidth: Int(frame.size.width), pos: CGPoint(x: CGRectGetMidX(frame), y: frame.size.height / 3), fontSize: 50, fontColor: SKColor.redColor(), leading: 60,  shouldShowBorder: true)
+            self.addChild(testbutton)
             
             initialLevelData()
 

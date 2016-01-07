@@ -95,6 +95,8 @@ class IslandScene: SKScene {
             buildingSelectLayer.zPosition = 50
             addChild(buildingSelectLayer)
             
+            changeTouchTypeAndShowPage(.Energy)
+            
             contentCreated = true
         }
         
@@ -224,7 +226,7 @@ class IslandScene: SKScene {
                     case .Information, .Energy:
                         if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                             info_Building = maps[nowMapNumber].buildingForCoord(coord)
-                            bottomLayer.pageInformation.changeInformation(info_Building)
+                            bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
                             changeTouchTypeAndShowPage(.Information)
                         }
                         
@@ -293,7 +295,7 @@ class IslandScene: SKScene {
         }
         
         // Update information
-        bottomLayer.pageInformation.changeInformation(info_Building)
+        bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
         buildingSelectLayer.updateSelectLayer()
         
         

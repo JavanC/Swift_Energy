@@ -37,7 +37,7 @@ class TopLayer: SKSpriteNode {
         
         let labelgap: CGFloat = 18
         let labelsize = (self.size.height - labelgap * 3) / 2
-        moneyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        moneyLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
         moneyLabel.name = "MoneyLabel"
         moneyLabel.fontColor = colorMoney
         moneyLabel.fontSize = labelsize
@@ -45,7 +45,7 @@ class TopLayer: SKSpriteNode {
         moneyLabel.position = CGPoint(x: buttonMenu.size.width + 20, y: labelgap * 2 + labelsize * 1)
         addChild(moneyLabel)
 
-        researchLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        researchLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
         researchLabel.name = "ResearchLabel"
         researchLabel.fontColor = colorResearch
         researchLabel.fontSize = labelsize
