@@ -25,6 +25,7 @@
 		65572A8A1C31318E00461802 /* ResearchScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A891C31318E00461802 /* ResearchScene.swift */; };
 		657283CD1C3B600F00B0B98F /* BuildingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657283CC1C3B600F00B0B98F /* BuildingData.swift */; };
 		657283CF1C3DFACD00B0B98F /* SKMultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */; };
+		65857BA21C43A3C10095B841 /* assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 65857BA11C43A3C10095B841 /* assets.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		65572A891C31318E00461802 /* ResearchScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchScene.swift; sourceTree = "<group>"; };
 		657283CC1C3B600F00B0B98F /* BuildingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingData.swift; sourceTree = "<group>"; };
 		657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKMultilineLabel.swift; sourceTree = "<group>"; };
+		65857BA11C43A3C10095B841 /* assets.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = assets.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */,
 				65386E161C2CD8A500D08B41 /* Main.storyboard */,
 				65386E191C2CD8A500D08B41 /* Assets.xcassets */,
+				65857BA11C43A3C10095B841 /* assets.atlas */,
 				65386E1B1C2CD8A500D08B41 /* LaunchScreen.storyboard */,
 				65386E1E1C2CD8A500D08B41 /* Info.plist */,
 			);
@@ -180,6 +183,7 @@
 				65386E1D1C2CD8A500D08B41 /* LaunchScreen.storyboard in Resources */,
 				65386E2E1C2CF4A100D08B41 /* level1.txt in Resources */,
 				65386E1A1C2CD8A500D08B41 /* Assets.xcassets in Resources */,
+				65857BA21C43A3C10095B841 /* assets.atlas in Resources */,
 				65386E181C2CD8A500D08B41 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

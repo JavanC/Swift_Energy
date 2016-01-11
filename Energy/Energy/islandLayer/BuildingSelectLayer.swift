@@ -55,6 +55,8 @@ class BuildingSelectLayer: SKNode {
     
     var show: Bool = false
     var selectLayer: SKSpriteNode!
+    var positions = [CGPoint]()
+    var buildingSelectElements = [BuildingSelectElement]()
     
     init(position: CGPoint, midSize: CGSize) {
         super.init()
@@ -65,18 +67,7 @@ class BuildingSelectLayer: SKNode {
         selectLayer.position = CGPoint(x: 0, y: -2 * selectLayer.size.height)
         addChild(selectLayer)
         
-        updateSelectLayer()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // Update building select page
-    func updateSelectLayer() {
-        selectLayer.removeAllChildren()
         // Caculae Position
-        var positions = [CGPoint]()
         let gap: CGFloat = 20
         let num: CGFloat = 7
         let elementsize = CGSizeMake(selectLayer.size.width / 4 - gap * 2, (selectLayer.size.height - gap) / num - gap)
@@ -86,44 +77,33 @@ class BuildingSelectLayer: SKNode {
             }
         }
         
+        buildingSelectElements = [BuildingSelectElement]()
+        for count in 0..<28 {
+            let element = BuildingSelectElement(buildType: BuildingType(rawValue: count)!, size: elementsize)
+            element.hidden = true
+            selectLayer.addChild(element)
+            buildingSelectElements.append(element)
+        }
+        
+        updateSelectLayer()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // Update building select page
+    func updateSelectLayer() {
         // page 1
-        let page1Types: [ResearchType] = [.WindTurbineResearch, .SolarCellResearch, .CoalBurnerResearch, .WaveCellResearch, .GasBurnerResearch, .NuclearCellResearch, .FusionCellResearch]
-        let page1images: [BuildingType] = [.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]
-        for count in 0..<page1Types.count {
-            if researchLevel[page1Types[count]] > 0 {
-                let sptireNode = BuildingSelectElement(buildType: page1images[count], size: elementsize)
-                sptireNode.position = positions[count]
-                selectLayer.addChild(sptireNode)
-            }
-        }
-        // page 2
-        let page2Types: [ResearchType] = [.SmallGeneratorResearch, .MediumGeneratorResearch, .LargeGeneratorResearch, .BoilerHouseResearch, .LargeBoilerHouseResearch, .IsolationResearch, .BatteryResearch]
-        let page2images: [BuildingType] = [.SmallGenerator, .MediumGenerator, .LargeGenerator, .BoilerHouse, .LargeBoilerHouse, .Isolation, .Battery]
-        for count in 0..<page2Types.count {
-            if researchLevel[page2Types[count]] > 0 {
-                let sptireNode = BuildingSelectElement(buildType: page2images[count], size: elementsize)
-                sptireNode.position = positions[count + 7]
-                selectLayer.addChild(sptireNode)
-            }
-        }
-        // page 3
-        let page3Types: [ResearchType] = [.HeatExchangerResearch, .HeatSinkResearch, .HeatInletResearch, .HeatOutletResearch, .WaterPumpResearch, .GroundwaterPumpResearch, .WaterPipeResearch]
-        let page3images: [BuildingType] = [.HeatExchanger, .HeatSink, .HeatInlet, .HeatOutlet, .WaterPump, .GroundwaterPump, .WaterPipe]
-        for count in 0..<page3Types.count {
-            if researchLevel[page3Types[count]] > 0 {
-                let sptireNode = BuildingSelectElement(buildType: page3images[count], size: elementsize)
-                sptireNode.position = positions[count + 14]
-                selectLayer.addChild(sptireNode)
-            }
-        }
-        // page 4
-        let page4Types: [ResearchType] = [.SmallOfficeResearch, .MediumOfficeResearch, .LargeOfficeResearch, .BankResearch, .ResearchCenterResearch, .AdvancedResearchCenterResearch, .LibraryResearch]
-        let page4images: [BuildingType] = [.SmallOffice, .MediumOffice, .LargeOffice, .Bank, .ResearchCenter, .AdvancedResearchCenter, .Library]
-        for count in 0..<page4Types.count {
-            if researchLevel[page4Types[count]] > 0 {
-                let sptireNode = BuildingSelectElement(buildType: page4images[count], size: elementsize)
-                sptireNode.position = positions[count + 21]
-                selectLayer.addChild(sptireNode)
+        let page1ShowTypesCheck: [ResearchType] = [.WindTurbineResearch, .SolarCellResearch, .CoalBurnerResearch, .WaveCellResearch, .GasBurnerResearch, .NuclearCellResearch, .FusionCellResearch, .SmallGeneratorResearch, .MediumGeneratorResearch, .LargeGeneratorResearch, .BoilerHouseResearch, .LargeBoilerHouseResearch, .IsolationResearch, .BatteryResearch, .HeatExchangerResearch, .HeatSinkResearch, .HeatInletResearch, .HeatOutletResearch, .WaterPumpResearch, .GroundwaterPumpResearch, .WaterPipeResearch, .SmallOfficeResearch, .MediumOfficeResearch, .LargeOfficeResearch, .BankResearch, .ResearchCenterResearch, .AdvancedResearchCenterResearch, .LibraryResearch]
+        for page in 0..<4 {
+            var pageFirstPositionNumber = page * 7
+            for count in 0..<7 {
+                if researchLevel[page1ShowTypesCheck[page * 7 + count]] > 0 {
+                    buildingSelectElements[page * 7 + count].hidden = false
+                    buildingSelectElements[page * 7 + count].position = positions[pageFirstPositionNumber]
+                    ++pageFirstPositionNumber
+                }
             }
         }
     }

@@ -37,6 +37,7 @@ class InformationLabel: SKNode {
 
 class PageInformation: SKSpriteNode {
 
+    var infoImage: SKSpriteNode!
     var info = [SKLabelNode]()
     
     var positions = [CGPoint]()
@@ -59,7 +60,7 @@ class PageInformation: SKSpriteNode {
         self.name = "PageInformation"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        let infoImage = BuildingData(buildType: .Land).image("infoImage")
+        infoImage = BuildingData(buildType: .Land).image("infoImage")
         infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: size.height / 2)
         addChild(infoImage)
     
@@ -92,13 +93,8 @@ class PageInformation: SKSpriteNode {
     func changeInformation(buildingData: BuildingData) {
         
         // Image
-        
-        let infoImagePosition = childNodeWithName("infoImage")?.position
-        childNodeWithName("infoImage")?.removeFromParent()
-        let infoImage = buildingData.image("infoImage")
-        infoImage.position = infoImagePosition!
-        addChild(infoImage)
-        
+        infoImage.runAction(SKAction.setTexture(SKTexture(imageNamed: buildingData.imageName)))
+
         // Label
         
         for label in allLabels {
@@ -207,22 +203,16 @@ class PageBuild: SKSpriteNode {
         addChild(selectInfo)
     }
     
-    func changeSelectBuildType(buildType: BuildingType) {
-        buildMenu[selectNumber - 1] = buildType
-        selectInfo.nowLevelImformation(buildType)
-        
-        let imgPosition = childNodeWithName("SelectImage\(selectNumber)")?.position
-        childNodeWithName("SelectImage\(selectNumber)")?.removeFromParent()
-        let image = BuildingData(buildType: buildType).image("SelectImage\(selectNumber)")
-        image.position = imgPosition!
-        images[selectNumber - 1] = image
-        addChild(image)
-    }
-    
     func changeSelectNumber(selectNumber: Int) {
         self.selectNumber = selectNumber
         selectBox.position = imagePosition[selectNumber - 1]
-        selectInfo.nowLevelImformation(buildMenu[selectNumber - 1])
+        selectInfo.changeInformation(BuildingData(buildType: buildMenu[selectNumber - 1]))
+    }
+    
+    func changeSelectBuildType(buildType: BuildingType) {
+        buildMenu[selectNumber - 1] = buildType
+        selectInfo.changeInformation(BuildingData(buildType: buildType))
+        images[selectNumber - 1].runAction(SKAction.setTexture(SKTexture(imageNamed: BuildingData(buildType: buildType).imageName)))
     }
     
     func openSelectInformation() {

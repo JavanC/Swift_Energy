@@ -96,7 +96,8 @@ class IslandScene: SKScene {
             addChild(buildingSelectLayer)
             
             changeTouchTypeAndShowPage(.Energy)
-            
+            buildingSelectLayer.updateSelectLayer()
+        
             contentCreated = true
         }
         
@@ -297,7 +298,7 @@ class IslandScene: SKScene {
         
         // Update information
         bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
-        buildingSelectLayer.updateSelectLayer()
+        
         
         
 //        print((maps[0].buildings[0][0]! as Building).buildingData.timeSystem?.rebuild)
