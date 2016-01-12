@@ -23,34 +23,38 @@ class ButtonLayer: SKSpriteNode {
         self.name = "ButtonLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        buttonBuild = SKSpriteNode(color: SKColor.brownColor(), size: CGSize(width: size.width * 2 / 11, height: size.height))
+        buttonBuild = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
         buttonBuild.name = "ButtonBuild"
         buttonBuild.anchorPoint = CGPoint(x: 0, y: 0)
         buttonBuild.position = CGPoint(x: 0, y: 0)
         addChild(buttonBuild)
+        let texture = SKSpriteNode(imageNamed: "btest123")
         
-        buttonSell = SKSpriteNode(color: SKColor.yellowColor(), size: CGSize(width: size.width * 2 / 11, height: size.height))
+        buttonBuild.addChild(texture)
+//        buttonBuild.runAction(SKAction.setTexture(SKTexture(imageNamed: "button build")))
+        
+        buttonSell = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
         buttonSell.name = "ButtonSell"
         buttonSell.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonSell.position = CGPoint(x: size.width * 2 / 11, y: 0)
+        buttonSell.position = CGPoint(x: size.width * 1 / 5, y: 0)
         addChild(buttonSell)
         
-        buttonEnergy = SKSpriteNode(color: colorEnergy, size: CGSize(width: size.width * 3 / 11, height: size.height))
+        buttonEnergy = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
         buttonEnergy.name = "ButtonEnergy"
         buttonEnergy.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonEnergy.position = CGPoint(x: size.width * 4 / 11, y: 0)
+        buttonEnergy.position = CGPoint(x: size.width * 2 / 5, y: 0)
         addChild(buttonEnergy)
   
-        buttonUpgrade = SKSpriteNode(color: SKColor.greenColor(), size: CGSize(width: size.width * 2 / 11, height: size.height))
+        buttonUpgrade = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
         buttonUpgrade.name = "ButtonUpgrade"
         buttonUpgrade.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonUpgrade.position = CGPoint(x: size.width * 7 / 11, y: 0)
+        buttonUpgrade.position = CGPoint(x: size.width * 3 / 5, y: 0)
         addChild(buttonUpgrade)
         
-        buttonResearch = SKSpriteNode(color: colorResearch, size: CGSize(width: size.width * 2 / 11, height: size.height))
+        buttonResearch = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
         buttonResearch.name = "ButtonResearch"
         buttonResearch.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonResearch.position = CGPoint(x: size.width * 9 / 11, y: 0)
+        buttonResearch.position = CGPoint(x: size.width * 4 / 5, y: 0)
         addChild(buttonResearch)
         
         tapButtonNil()

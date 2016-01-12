@@ -11,6 +11,7 @@ import SpriteKit
 var colorMoney = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000)
 var colorResearch = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
 var colorEnergy = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
+var colorBackground = UIColor(red: 0.118, green: 0.125, blue: 0.157, alpha: 1.000)
 // Game Data
 enum BuildingType: Int {
     case WindTurbine, SolarCell, CoalBurner, WaveCell, GasBurner, NuclearCell, FusionCell, SmallGenerator, MediumGenerator, LargeGenerator, BoilerHouse, LargeBoilerHouse, Isolation, Battery, HeatExchanger, HeatSink, HeatInlet, HeatOutlet, WaterPump, GroundwaterPump, WaterPipe, SmallOffice, MediumOffice, LargeOffice, Bank, ResearchCenter, AdvancedResearchCenter, Library, Ocean, Land, BuildingTypeLength

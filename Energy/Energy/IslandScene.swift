@@ -283,7 +283,6 @@ class IslandScene: SKScene {
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
         bottomLayer.pageEnergy.energyLabel.text = "Energy: \(maps[nowMapNumber].energy) (Max:\(maps[nowMapNumber].energyMax))"
-
     }
     
     func tickUpdata() {
