@@ -15,6 +15,8 @@ class ButtonLayer: SKSpriteNode {
     var buttonEnergy: SKSpriteNode!
     var buttonUpgrade: SKSpriteNode!
     var buttonResearch: SKSpriteNode!
+    var choiceCircle: SKShapeNode!
+    var energyArc: SKShapeNode!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
@@ -23,61 +25,123 @@ class ButtonLayer: SKSpriteNode {
         self.name = "ButtonLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        buttonBuild = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
+        buttonBuild = SKSpriteNode(color: colorBackground, size: CGSizeMake(size.width / 5, size.height))
         buttonBuild.name = "ButtonBuild"
-        buttonBuild.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonBuild.position = CGPoint(x: 0, y: 0)
+        buttonBuild.position = CGPoint(x: size.width * 1 / 10, y: size.height / 2)
+        buttonBuild.zPosition = 1
+        let buildImage = SKSpriteNode(imageNamed: "Button_build")
+        buildImage.name = "ButtonBuildImage"
+        buildImage.setScale(0.7)
+        buildImage.position = CGPoint(x: 2, y: -5)
+        buildImage.zPosition = 100
+        buttonBuild.addChild(buildImage)
         addChild(buttonBuild)
-        let texture = SKSpriteNode(imageNamed: "btest123")
         
-        buttonBuild.addChild(texture)
-//        buttonBuild.runAction(SKAction.setTexture(SKTexture(imageNamed: "button build")))
-        
-        buttonSell = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
+        buttonSell = SKSpriteNode(color: colorBackground, size: CGSizeMake(size.width / 5, size.height))
         buttonSell.name = "ButtonSell"
-        buttonSell.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonSell.position = CGPoint(x: size.width * 1 / 5, y: 0)
+        buttonSell.position = CGPoint(x: size.width * 3 / 10, y: size.height / 2)
+        buttonSell.zPosition = 1
+        let sellImage = SKSpriteNode(imageNamed: "Button_sell")
+        sellImage.name = "ButtonSellImage"
+        sellImage.setScale(0.8)
+        sellImage.position = CGPoint(x: 0, y: -3)
+        sellImage.zPosition = 100
+        buttonSell.addChild(sellImage)
         addChild(buttonSell)
         
-        buttonEnergy = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
+        buttonEnergy = SKSpriteNode(color: colorBackground, size: CGSizeMake(size.width / 5, size.height))
         buttonEnergy.name = "ButtonEnergy"
-        buttonEnergy.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonEnergy.position = CGPoint(x: size.width * 2 / 5, y: 0)
+        buttonEnergy.position = CGPoint(x: size.width * 5 / 10, y: size.height / 2)
+        buttonEnergy.zPosition = 1
+        let energyImage = SKSpriteNode(imageNamed: "Button_lightning")
+        energyImage.name = "ButtonEnergyImage"
+        energyImage.setScale(0.4)
+        energyImage.position = CGPoint(x: 1, y: -4)
+        energyImage.zPosition = 100
+        buttonEnergy.addChild(energyImage)
         addChild(buttonEnergy)
-  
-        buttonUpgrade = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
+        
+        buttonUpgrade = SKSpriteNode(color: colorBackground, size: CGSizeMake(size.width / 5, size.height))
         buttonUpgrade.name = "ButtonUpgrade"
-        buttonUpgrade.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonUpgrade.position = CGPoint(x: size.width * 3 / 5, y: 0)
+        buttonUpgrade.position = CGPoint(x: size.width * 7 / 10, y: size.height / 2)
+        buttonUpgrade.zPosition = 1
+        let upgradeImage = SKSpriteNode(imageNamed: "Button_upgrade")
+        upgradeImage.name = "ButtonUpgradeImage"
+        upgradeImage.setScale(0.7)
+        upgradeImage.position = CGPoint(x: 0, y: -3)
+        upgradeImage.zPosition = 100
+        buttonUpgrade.addChild(upgradeImage)
         addChild(buttonUpgrade)
         
-        buttonResearch = SKSpriteNode(color: colorBackground, size: CGSize(width: size.width / 5, height: size.height))
+        buttonResearch = SKSpriteNode(color: colorBackground, size: CGSizeMake(size.width / 5, size.height))
         buttonResearch.name = "ButtonResearch"
-        buttonResearch.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonResearch.position = CGPoint(x: size.width * 4 / 5, y: 0)
+        buttonResearch.position = CGPoint(x: size.width * 9 / 10, y: size.height / 2)
+        buttonResearch.zPosition = 1
+        let researchImage = SKSpriteNode(imageNamed: "Button_research")
+        researchImage.name = "ButtonResearchImage"
+        researchImage.setScale(0.7)
+        researchImage.position = CGPoint(x: 0, y: -3)
+        researchImage.zPosition = 100
+        buttonResearch.addChild(researchImage)
         addChild(buttonResearch)
         
-        tapButtonNil()
+        choiceCircle = SKShapeNode(circleOfRadius: 40)
+        choiceCircle.fillColor = SKColor.lightGrayColor()
+        choiceCircle.alpha = 0.8
+        choiceCircle.strokeColor = SKColor.lightGrayColor()
+        choiceCircle.position = CGPoint(x: buttonEnergy.position.x, y: buttonEnergy.position.y - 2)
+        choiceCircle.zPosition = 10
+        addChild(choiceCircle)
+        
+        tapButtonEnergy()
     }
     
-    func tapButtonNil() {
-        buttonBuild.alpha = 1
-        buttonSell.alpha = 1
-        buttonEnergy.alpha = 1
+    func drawEnergyCircle(percent: CGFloat) {
+        if energyArc != nil {
+            energyArc.removeFromParent()
+        }
+        let path = CGPathCreateMutable()
+        CGPathAddArc(path, nil, buttonEnergy.position.x, buttonEnergy.position.y - 2, 30.0, CGFloat(M_PI_2), CGFloat(M_PI_2 - M_PI * 2 * Double(percent)), true)
+        energyArc = SKShapeNode(path: path)
+        energyArc.zPosition = 100
+        energyArc.lineWidth = 5
+        addChild(energyArc)
     }
-    func tapButtonBuild() {
-        buttonBuild.alpha = 0.6
-        buttonSell.alpha = 1
-        buttonEnergy.alpha = 1
+    
+    func tapButtonNil(duration: Double = 0.0) {
+        choiceCircle.runAction(SKAction.fadeOutWithDuration(duration))
     }
-    func tapButtonSell() {
-        buttonBuild.alpha = 1
-        buttonSell.alpha = 0.6
-        buttonEnergy.alpha = 1
+    func tapButtonBuild(duration: Double = 0.0) {
+        choiceCircle.setScale(1)
+        choiceCircle.runAction(SKAction.fadeAlphaTo(0.8, duration: duration))
+        choiceCircle.runAction(SKAction.moveTo(CGPoint(x: buttonBuild.position.x, y: buttonBuild.position.y - 2), duration: duration))
     }
-    func tapButtonEnergy() {
-        buttonBuild.alpha = 1
-        buttonSell.alpha = 1
-        buttonEnergy.alpha = 0.6
+    func tapButtonSell(duration: Double = 0.0) {
+        choiceCircle.setScale(1)
+        choiceCircle.runAction(SKAction.fadeAlphaTo(0.8, duration: duration))
+        choiceCircle.runAction(SKAction.moveTo(CGPoint(x: buttonSell.position.x, y: buttonSell.position.y - 2), duration: duration))
+    }
+    func tapButtonEnergy(duration: Double = 0.0) {
+        choiceCircle.setScale(1)
+        choiceCircle.runAction(SKAction.fadeAlphaTo(0.8, duration: duration))
+        choiceCircle.runAction(SKAction.moveTo(CGPoint(x: buttonEnergy.position.x, y: buttonEnergy.position.y - 2), duration: duration))
+    }
+    func tapButtonUpgrade() {
+        let fadeIn = SKAction.fadeAlphaTo(0.8, duration: 0.1)
+        let moveTo = SKAction.moveTo(CGPoint(x: buttonUpgrade.position.x, y: buttonUpgrade.position.y - 2), duration: 0.1)
+        let group = SKAction.group([fadeIn, moveTo])
+        let delay = SKAction.waitForDuration(0.1)
+        let scale = SKAction.scaleTo(0.2, duration: 0.2)
+        let moveDown = SKAction.moveToY(-40, duration: 0.2)
+        choiceCircle.runAction(SKAction.sequence([group, delay, scale, delay, moveDown]))
+    }
+    func tapButtonResearch() {
+        let fadeIn = SKAction.fadeAlphaTo(0.8, duration: 0.1)
+        let moveTo = SKAction.moveTo(CGPoint(x: buttonResearch.position.x, y: buttonResearch.position.y - 2), duration: 0.1)
+        let group = SKAction.group([fadeIn, moveTo])
+        let delay = SKAction.waitForDuration(0.1)
+        let scale = SKAction.scaleTo(0.2, duration: 0.2)
+        let moveDown = SKAction.moveToY(-40, duration: 0.2)
+        choiceCircle.runAction(SKAction.sequence([group, delay, scale, delay, moveDown]))
     }
 }

@@ -39,9 +39,9 @@ class GameViewController: UIViewController {
             islandScene.scaleMode = .AspectFill
             upgradeScene.scaleMode = .AspectFill
             researchScene.scaleMode = .AspectFill
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            skView.ignoresSiblingOrder = true
+            skView.showsFPS = false
+            skView.showsNodeCount = false
+            skView.ignoresSiblingOrder = false
             skView.presentScene(menuScene)
         }
     }

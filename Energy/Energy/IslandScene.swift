@@ -95,7 +95,6 @@ class IslandScene: SKScene {
             buildingSelectLayer.zPosition = 50
             addChild(buildingSelectLayer)
             
-            changeTouchTypeAndShowPage(.Energy)
             buildingSelectLayer.updateSelectLayer()
         
             contentCreated = true
@@ -104,6 +103,9 @@ class IslandScene: SKScene {
         // Only show now map
         for count in 0..<8 { maps[count].hidden = true }
         maps[nowMapNumber].hidden = false
+        
+        // back to Energy type
+        changeTouchTypeAndShowPage(.Energy)
     }
     
     func showBuildSelectPage() {
@@ -121,19 +123,19 @@ class IslandScene: SKScene {
         buildingSelectLayer.showPage(false)
         switch touchType {
         case .Information:
-            buttonLayer.tapButtonNil()
+            buttonLayer.tapButtonNil(duration)
             bottomLayer.ShowPageInformation(duration)
             
         case .Energy:
-            buttonLayer.tapButtonEnergy()
+            buttonLayer.tapButtonEnergy(duration)
             bottomLayer.showPageEnergy(duration)
             
         case .Builded:
-            buttonLayer.tapButtonBuild()
+            buttonLayer.tapButtonBuild(duration)
             bottomLayer.ShowPageBuild(duration)
             
         case .Sell:
-            buttonLayer.tapButtonSell()
+            buttonLayer.tapButtonSell(duration)
             bottomLayer.showPageSell(duration)
         }
     }
@@ -173,16 +175,20 @@ class IslandScene: SKScene {
                     
                 case buttonLayer.buttonUpgrade:
                     print("Upgrade Button")
-                    changeTouchTypeAndShowPage(touchType)
-                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
-                    self.view?.presentScene(upgradeScene, transition: doors)
+                    buttonLayer.tapButtonUpgrade()
+                    RunAfterDelay(0.8) {
+                        let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
+                        self.view?.presentScene(upgradeScene, transition: doors)
+                    }
                     
                 case buttonLayer.buttonResearch:
                     print("Research Button")
-                    changeTouchTypeAndShowPage(touchType)
-                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
-                    self.view?.presentScene(researchScene, transition: doors)
-                
+                    buttonLayer.tapButtonResearch()
+                    RunAfterDelay(0.8) {
+                        let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
+                        self.view?.presentScene(researchScene, transition: doors)
+                    }
+                        
                 // Energy Page
                 case bottomLayer.pageEnergy.energy_ProgressBack:
                     print("Energy Preogree")
@@ -297,6 +303,9 @@ class IslandScene: SKScene {
         
         // Update information
         bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
+        // draw energy circle
+        let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
+        buttonLayer.drawEnergyCircle(percent)
         
         
         

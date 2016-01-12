@@ -10,7 +10,6 @@
 		65386E0F1C2CD8A500D08B41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E0E1C2CD8A500D08B41 /* AppDelegate.swift */; };
 		65386E151C2CD8A500D08B41 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E141C2CD8A500D08B41 /* GameViewController.swift */; };
 		65386E181C2CD8A500D08B41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65386E161C2CD8A500D08B41 /* Main.storyboard */; };
-		65386E1A1C2CD8A500D08B41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65386E191C2CD8A500D08B41 /* Assets.xcassets */; };
 		65386E1D1C2CD8A500D08B41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65386E1B1C2CD8A500D08B41 /* LaunchScreen.storyboard */; };
 		65386E251C2CE1A400D08B41 /* IslandsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E241C2CE1A400D08B41 /* IslandsScene.swift */; };
 		65386E271C2CE56C00D08B41 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E261C2CE56C00D08B41 /* MenuScene.swift */; };
@@ -25,7 +24,8 @@
 		65572A8A1C31318E00461802 /* ResearchScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A891C31318E00461802 /* ResearchScene.swift */; };
 		657283CD1C3B600F00B0B98F /* BuildingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657283CC1C3B600F00B0B98F /* BuildingData.swift */; };
 		657283CF1C3DFACD00B0B98F /* SKMultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */; };
-		6583529E1C44A46E00317FFD /* assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6583529D1C44A46E00317FFD /* assets.atlas */; };
+		658352A21C44CB8A00317FFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658352A11C44CB8A00317FFD /* Assets.xcassets */; };
+		658352A41C44F2CA00317FFD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658352A31C44F2CA00317FFD /* Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,6 @@
 		65386E0E1C2CD8A500D08B41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65386E141C2CD8A500D08B41 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		65386E171C2CD8A500D08B41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		65386E191C2CD8A500D08B41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65386E1C1C2CD8A500D08B41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65386E1E1C2CD8A500D08B41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65386E241C2CE1A400D08B41 /* IslandsScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IslandsScene.swift; sourceTree = "<group>"; };
@@ -49,7 +48,8 @@
 		65572A891C31318E00461802 /* ResearchScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchScene.swift; sourceTree = "<group>"; };
 		657283CC1C3B600F00B0B98F /* BuildingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingData.swift; sourceTree = "<group>"; };
 		657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKMultilineLabel.swift; sourceTree = "<group>"; };
-		6583529D1C44A46E00317FFD /* assets.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = assets.atlas; sourceTree = "<group>"; };
+		658352A11C44CB8A00317FFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		658352A31C44F2CA00317FFD /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,9 +93,9 @@
 				65386E261C2CE56C00D08B41 /* MenuScene.swift */,
 				65386E141C2CD8A500D08B41 /* GameViewController.swift */,
 				657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */,
+				658352A31C44F2CA00317FFD /* Helper.swift */,
+				658352A11C44CB8A00317FFD /* Assets.xcassets */,
 				65386E161C2CD8A500D08B41 /* Main.storyboard */,
-				65386E191C2CD8A500D08B41 /* Assets.xcassets */,
-				6583529D1C44A46E00317FFD /* assets.atlas */,
 				65386E1B1C2CD8A500D08B41 /* LaunchScreen.storyboard */,
 				65386E1E1C2CD8A500D08B41 /* Info.plist */,
 			);
@@ -182,8 +182,7 @@
 			files = (
 				65386E1D1C2CD8A500D08B41 /* LaunchScreen.storyboard in Resources */,
 				65386E2E1C2CF4A100D08B41 /* level1.txt in Resources */,
-				65386E1A1C2CD8A500D08B41 /* Assets.xcassets in Resources */,
-				6583529E1C44A46E00317FFD /* assets.atlas in Resources */,
+				658352A21C44CB8A00317FFD /* Assets.xcassets in Resources */,
 				65386E181C2CD8A500D08B41 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,6 +196,7 @@
 			files = (
 				65386E251C2CE1A400D08B41 /* IslandsScene.swift in Sources */,
 				65386E291C2CEC7F00D08B41 /* IslandScene.swift in Sources */,
+				658352A41C44F2CA00317FFD /* Helper.swift in Sources */,
 				657283CF1C3DFACD00B0B98F /* SKMultilineLabel.swift in Sources */,
 				65386E271C2CE56C00D08B41 /* MenuScene.swift in Sources */,
 				65386E3B1C2D19ED00D08B41 /* ButtonLayer.swift in Sources */,
