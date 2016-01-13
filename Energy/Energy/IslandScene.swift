@@ -9,6 +9,7 @@
 import SpriteKit
 
 var tilesScaleSize: CGSize!
+var framescale: CGFloat!
 
 class IslandScene: SKScene {
     
@@ -18,8 +19,8 @@ class IslandScene: SKScene {
     }
     let topTileSize = CGSizeMake(9, 1.5)
     let midTileSize = CGSizeMake(9, 11)
+    let buttonTileSize = CGSizeMake(9, 1.5)
     let tilesize = CGSizeMake(64, 64)
-    var framescale: CGFloat!
     var gameTimer: NSTimer!
     
     var touchType: TouchType = .Energy
@@ -57,10 +58,10 @@ class IslandScene: SKScene {
                 addChild(maps[count])
             }
             
-//            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 2), buildType: BuildingType.WaterPump)
-            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 3), buildType: BuildingType.SmallGenerator)
-            maps[0].setTileMapElement(coord: CGPoint(x: 3, y: 3), buildType: BuildingType.HeatExchanger)
-            maps[0].setTileMapElement(coord: CGPoint(x: 4, y: 3), buildType: BuildingType.CoalBurner)
+            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 2), buildType: BuildingType.WindTurbine)
+//            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 3), buildType: BuildingType.SmallGenerator)
+//            maps[0].setTileMapElement(coord: CGPoint(x: 3, y: 3), buildType: BuildingType.HeatExchanger)
+//            maps[0].setTileMapElement(coord: CGPoint(x: 4, y: 3), buildType: BuildingType.CoalBurner)
             
             
             
@@ -74,7 +75,7 @@ class IslandScene: SKScene {
             info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
             
             // Button Layer
-            let buttonLayerSize = CGSizeMake(frame.size.width, 100)
+            let buttonLayerSize = CGSizeMake(frame.size.width, buttonTileSize.height * tilesScaleSize.height)
             buttonLayer = ButtonLayer()
             buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
             buttonLayer.zPosition = 200
@@ -96,7 +97,7 @@ class IslandScene: SKScene {
             addChild(buildingSelectLayer)
             
             // initial
-            buildingSelectLayer.updateSelectLayer()
+//            buildingSelectLayer.updateSelectLayer()
             if isRebuild {
                 bottomLayer.pageBuild.rebuildOn()
             } else {
@@ -147,6 +148,7 @@ class IslandScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
         if let touch = touches.first {
             let location = touch.locationInNode(self)
             let nodes = nodesAtPoint(location)

@@ -19,7 +19,7 @@ class TopLayer: SKSpriteNode {
         
         self.position = position
         self.size = size
-        self.color = SKColor.grayColor()
+        self.color = colorBlue4
         self.name = "TopLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
@@ -35,7 +35,7 @@ class TopLayer: SKSpriteNode {
         buttonPause.position = CGPoint(x: self.size.width, y: self.size.height)
         addChild(buttonPause)
         
-        let labelgap: CGFloat = 18
+        let labelgap: CGFloat = size.height * 0.16
         let labelsize = (self.size.height - labelgap * 3) / 2
         moneyLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
         moneyLabel.name = "MoneyLabel"

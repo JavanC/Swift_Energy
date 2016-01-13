@@ -60,13 +60,13 @@ class PageInformation: SKSpriteNode {
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
         infoImage = BuildingData(buildType: .Land).image("infoImage")
-        infoImage.position = CGPoint(x: 40 + infoImage.size.width / 2, y: size.height / 2)
+        infoImage.position = CGPoint(x: infoImage.size.width, y: size.height / 2)
         addChild(infoImage)
     
-        let infogap: CGFloat = 5
-        let infoSize = (size.height - 6 * infogap) / 5
-        for i in 1...5 {
-            positions.append(CGPoint(x: infoImage.size.width + 80, y: infogap * CGFloat(6 - i) + infoSize * CGFloat(5 - i)))
+        let infogap: CGFloat = size.height * 0.08
+        let infoSize = (size.height - 5 * infogap) / 4
+        for i in 1...4 {
+            positions.append(CGPoint(x: infoImage.size.width * 2, y: infogap * CGFloat(5 - i) + infoSize * CGFloat(4 - i)))
         }
 
         infoTicksNode = InformationLabel(title: "Ticks", fontSize: infoSize, valueColor: SKColor.whiteColor())
@@ -178,15 +178,17 @@ class PageBuild: SKSpriteNode {
             images.append(image)
             addChild(image)
         }
-        rebuildButton = SKShapeNode(rect: CGRect(x: -32, y: -32, width: 64, height: 64), cornerRadius: 10)
+        let rect = CGRect(x: -32 * framescale, y: -32 * framescale, width: 64 * framescale, height: 64 * framescale)
+        rebuildButton = SKShapeNode(rect: rect, cornerRadius: 10 * framescale)
         rebuildButton.name = "SelectImage5"
         rebuildButton.position = imagePosition[4]
         let buildingiImage = SKSpriteNode(imageNamed: "Button_build")
         buildingiImage.name = "buildingImage"
-        buildingiImage.setScale(0.5)
+        buildingiImage.setScale(0.4 * framescale)
         rebuildButton.addChild(buildingiImage)
         let refreshImage = SKSpriteNode(imageNamed: "refresh")
         refreshImage.name = "refreshImage"
+        refreshImage.setScale(framescale)
         rebuildButton.addChild(refreshImage)
         addChild(rebuildButton)
 
@@ -240,7 +242,7 @@ class PageBuild: SKSpriteNode {
     
     func openSelectInformation() {
         if selectNumber > 4 || selectNumber < 1 { return }
-        let pos = CGPoint(x: 40 + tilesScaleSize.width / 2, y: size.height / 2)
+        let pos = CGPoint(x: tilesScaleSize.width, y: size.height / 2)
         
         // Remove Action
         childNodeWithName("SelectImage\(selectNumber)")?.removeAllActions()
@@ -294,8 +296,9 @@ class PageSell: SKSpriteNode {
         self.name = "PageSell"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
+        let gap = Int(20 * framescale)
         
-        sellLabel = SKMultilineLabel(text: "Touch buildings on the map to sell it. \n Notice: Produce energy building can not be recycled money.", labelWidth: Int(size.width) - 80, pos: CGPoint(x: size.width / 2, y: size.height - 20), fontSize: (size.height - 40 - 30) / 3, fontColor: colorMoney, leading: Int((size.height - 40) / 3),  shouldShowBorder: false)
+        sellLabel = SKMultilineLabel(text: "Touch buildings on the map to sell it. \n Notice: Produce energy building can not be recycled money.", labelWidth: Int(size.width) - Int(80 * framescale), pos: CGPoint(x: size.width / 2, y: size.height - CGFloat(gap)), fontName: "SanFranciscoText-BoldItalic", fontSize: (size.height - CGFloat(gap) * 2 - CGFloat(gap)) / 3, fontColor: colorMoney, leading: Int((size.height - CGFloat(gap) * 2) / 3),  shouldShowBorder: false)
         addChild(sellLabel)
     }
 }
@@ -312,23 +315,23 @@ class PageEnergy: SKSpriteNode {
         self.name = "PageEnergy"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        let energy_ProgressSize = CGSize(width: size.width * 3 / 4, height: size.height / 2)
-        energy_ProgressBack = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
+        energy_ProgressBack = SKSpriteNode(color: colorEnergy, size: size)
         energy_ProgressBack.name = "Energy_ProgressBack"
         energy_ProgressBack.alpha = 0.3
         energy_ProgressBack.anchorPoint = CGPoint(x: 0, y: 0.5)
-        energy_ProgressBack.position = CGPoint(x: size.width / 8, y: size.height / 2)
+        energy_ProgressBack.position = CGPoint(x: 0, y: size.height / 2)
         addChild(energy_ProgressBack)
-        energy_ProgressFront = SKSpriteNode(color: colorEnergy, size: energy_ProgressSize)
+        energy_ProgressFront = SKSpriteNode(color: colorEnergy, size: size)
         energy_ProgressFront.name = "Energy_ProgressFront"
         energy_ProgressFront.alpha = 0.7
         energy_ProgressFront.anchorPoint = CGPoint(x: 0, y: 0.5)
-        energy_ProgressFront.position = CGPoint(x: size.width / 8, y: size.height / 2)
+        energy_ProgressFront.position = CGPoint(x: 0, y: size.height / 2)
         addChild(energy_ProgressFront)
+        
         let labelsize = size.height / 8
         energyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
         energyLabel.name = "EnergyLabel"
-        energyLabel.fontColor = colorEnergy
+        energyLabel.fontColor = SKColor.whiteColor()
         energyLabel.fontSize = labelsize
         energyLabel.horizontalAlignmentMode = .Left
         energyLabel.position = CGPoint(x: size.width / 8, y: size.height * 3 / 4 + 10)

@@ -18,32 +18,27 @@ class BuildingSelectElement: SKNode {
         super.init()
         
         // background
-        background = SKSpriteNode(color: SKColor.grayColor(), size: size)
+        background = SKSpriteNode(color: colorBlue4, size: size)
         background.name = "BuildingSelectElementBackground"
         background.anchorPoint = CGPoint(x: 0, y: 0)
         addChild(background)
         // image
-        let gap = (size.height - tilesScaleSize.height) / 2
+        let gap: CGFloat = (size.height - tilesScaleSize.height) / 2
         let image = BuildingData(buildType: buildType).image("image")
         image.position = CGPoint(x: gap + image.size.width / 2, y: size.height / 2)
         addChild(image)
-        // label 1
-        let text = [String(buildType), "12312312312"]
-        let labelgap: CGFloat = 10
-        let labelsize = (image.size.height - labelgap) / 2
-        let label1 = SKLabelNode(fontNamed: "Verdana-Bold")
-        label1.name = "label1"
-        label1.text = text[0]
-        label1.horizontalAlignmentMode = .Left
-        label1.position = CGPoint(x: gap * 2 + image.size.width, y: gap + labelsize + labelgap)
-        addChild(label1)
-        // label 2
-        let label2 = SKLabelNode(fontNamed: "Verdana-Bold")
-        label2.name = "label2"
-        label2.text = text[1]
-        label2.horizontalAlignmentMode = .Left
-        label2.position = CGPoint(x: gap * 2 + image.size.width, y: gap)
-        addChild(label2)
+        
+        let buildingName = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        buildingName.name = "buildingName"
+        buildingName.text = "\(buildType)"
+        buildingName.fontColor = SKColor.whiteColor()
+        buildingName.fontSize = image.size.height * 2 / 5
+        buildingName.horizontalAlignmentMode = .Left
+        buildingName.verticalAlignmentMode = .Top
+        buildingName.position = CGPoint(x: image.size.width + gap * 2, y: size.height - gap)
+        addChild(buildingName)
+        let multilineLabel = SKMultilineLabel(text: "Build a game using SKCropNode and a sprinkling of Grand Central Dispatch.", labelWidth: Int(size.width - image.size.width - gap * 3), pos: CGPoint(x: (size.width + image.size.width + gap * 1) / 2 , y: size.height - gap - buildingName.fontSize), fontName: "SanFranciscoText-BoldItalic", fontSize: (image.size.height - buildingName.fontSize * 1.2) / 2, fontColor: SKColor.lightGrayColor(), leading: Int((image.size.height - buildingName.fontSize) / 2), alignment: .Left, shouldShowBorder: false)
+        addChild(multilineLabel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -53,7 +48,6 @@ class BuildingSelectElement: SKNode {
 
 class BuildingSelectLayer: SKNode {
     
-    var show: Bool = false
     var selectLayer: SKSpriteNode!
     var positions = [CGPoint]()
     var buildingSelectElements = [BuildingSelectElement]()
@@ -61,19 +55,19 @@ class BuildingSelectLayer: SKNode {
     init(position: CGPoint, midSize: CGSize) {
         super.init()
         self.position = position
-        selectLayer = SKSpriteNode(color: SKColor.brownColor(), size: CGSizeMake(midSize.width * 4, midSize.height))
+        selectLayer = SKSpriteNode(color: colorBlue4, size: CGSizeMake(midSize.width * 4, midSize.height))
         selectLayer.name = "buildingSelectLayer"
         selectLayer.anchorPoint = CGPoint(x: 0, y: 0)
-        selectLayer.position = CGPoint(x: 0, y: -2 * selectLayer.size.height)
+        selectLayer.position = CGPoint(x: 0, y: -selectLayer.size.height)
+        selectLayer.hidden = true
         addChild(selectLayer)
         
         // Caculae Position
-        let gap: CGFloat = 20
         let num: CGFloat = 7
-        let elementsize = CGSizeMake(selectLayer.size.width / 4 - gap * 2, (selectLayer.size.height - gap) / num - gap)
+        let elementsize = CGSizeMake(midSize.width , midSize.height / num )
         for x in 0..<4 {
             for y in 0..<Int(num) {
-                positions.append(CGPoint(x: gap + selectLayer.size.width / 4 * CGFloat(x), y: selectLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
+                positions.append(CGPoint(x: selectLayer.size.width / 4 * CGFloat(x), y: selectLayer.size.height - elementsize.height * CGFloat(y + 1)))
             }
         }
         
@@ -84,8 +78,6 @@ class BuildingSelectLayer: SKNode {
             selectLayer.addChild(element)
             buildingSelectElements.append(element)
         }
-        
-        updateSelectLayer()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -94,24 +86,31 @@ class BuildingSelectLayer: SKNode {
     
     // Update building select page
     func updateSelectLayer() {
-        // page 1
         let page1ShowTypesCheck: [ResearchType] = [.WindTurbineResearch, .SolarCellResearch, .CoalBurnerResearch, .WaveCellResearch, .GasBurnerResearch, .NuclearCellResearch, .FusionCellResearch, .SmallGeneratorResearch, .MediumGeneratorResearch, .LargeGeneratorResearch, .BoilerHouseResearch, .LargeBoilerHouseResearch, .IsolationResearch, .BatteryResearch, .HeatExchangerResearch, .HeatSinkResearch, .HeatInletResearch, .HeatOutletResearch, .WaterPumpResearch, .GroundwaterPumpResearch, .WaterPipeResearch, .SmallOfficeResearch, .MediumOfficeResearch, .LargeOfficeResearch, .BankResearch, .ResearchCenterResearch, .AdvancedResearchCenterResearch, .LibraryResearch]
-        for page in 0..<4 {
-            var pageFirstPositionNumber = page * 7
-            for count in 0..<7 {
-                if researchLevel[page1ShowTypesCheck[page * 7 + count]] > 0 {
-                    buildingSelectElements[page * 7 + count].hidden = false
-                    buildingSelectElements[page * 7 + count].position = positions[pageFirstPositionNumber]
-                    ++pageFirstPositionNumber
-                }
+        var pageFirstPositionNumber = 0
+        for count in 0..<28 {
+            if count % 7 == 0 {
+                pageFirstPositionNumber = count
+            }
+            if researchLevel[page1ShowTypesCheck[count]] > 0 {
+                buildingSelectElements[count].hidden = false
+                buildingSelectElements[count].position = positions[pageFirstPositionNumber]
+                let color = ((pageFirstPositionNumber % 7) % 2 == 0 ? colorBlue3 : colorBlue4)
+                buildingSelectElements[count].background.color = color
+                ++pageFirstPositionNumber
             }
         }
     }
     
     // Show page
     func showPage(show: Bool) {
-        self.show = show
-        selectLayer.runAction(SKAction.moveToY((show ? 0 : -2 * selectLayer.size.height), duration: 0.2))
+        if show {
+            let moveUp = SKAction.moveToY(0, duration: 0.2)
+            selectLayer.runAction(SKAction.sequence([SKAction.unhide(), moveUp]))
+        } else {
+            let moveDown = SKAction.moveToY(-selectLayer.size.height, duration: 0.2)
+            selectLayer.runAction(SKAction.sequence([moveDown, SKAction.hide()]))
+        }
     }
     func changePage(page: Int) {
         let frameWidth = selectLayer.size.width / 4

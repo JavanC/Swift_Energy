@@ -31,7 +31,8 @@ class ButtonLayer: SKSpriteNode {
         buttonBuild.zPosition = 1
         let buildImage = SKSpriteNode(imageNamed: "Button_build")
         buildImage.name = "ButtonBuildImage"
-        buildImage.setScale(0.8)
+        
+        buildImage.setScale(framescale * 0.7)
         buildImage.position = CGPoint(x: 2, y: -5)
         buildImage.zPosition = 100
         buttonBuild.addChild(buildImage)
@@ -43,7 +44,7 @@ class ButtonLayer: SKSpriteNode {
         buttonSell.zPosition = 1
         let sellImage = SKSpriteNode(imageNamed: "Button_sell")
         sellImage.name = "ButtonSellImage"
-        sellImage.setScale(0.8)
+        sellImage.setScale(framescale * 0.7)
         sellImage.position = CGPoint(x: 0, y: -3)
         sellImage.zPosition = 100
         buttonSell.addChild(sellImage)
@@ -55,7 +56,7 @@ class ButtonLayer: SKSpriteNode {
         buttonEnergy.zPosition = 1
         let energyImage = SKSpriteNode(imageNamed: "Button_lightning")
         energyImage.name = "ButtonEnergyImage"
-        energyImage.setScale(0.4)
+        energyImage.setScale(framescale * 0.4)
         energyImage.position = CGPoint(x: 1, y: -4)
         energyImage.zPosition = 100
         buttonEnergy.addChild(energyImage)
@@ -67,7 +68,7 @@ class ButtonLayer: SKSpriteNode {
         buttonUpgrade.zPosition = 1
         let upgradeImage = SKSpriteNode(imageNamed: "Button_upgrade")
         upgradeImage.name = "ButtonUpgradeImage"
-        upgradeImage.setScale(0.7)
+        upgradeImage.setScale(framescale * 0.6)
         upgradeImage.position = CGPoint(x: 0, y: -3)
         upgradeImage.zPosition = 100
         buttonUpgrade.addChild(upgradeImage)
@@ -79,13 +80,13 @@ class ButtonLayer: SKSpriteNode {
         buttonResearch.zPosition = 1
         let researchImage = SKSpriteNode(imageNamed: "Button_research")
         researchImage.name = "ButtonResearchImage"
-        researchImage.setScale(0.7)
+        researchImage.setScale(framescale * 0.6)
         researchImage.position = CGPoint(x: 0, y: -3)
         researchImage.zPosition = 100
         buttonResearch.addChild(researchImage)
         addChild(buttonResearch)
         
-        choiceCircle = SKShapeNode(circleOfRadius: 40)
+        choiceCircle = SKShapeNode(circleOfRadius: framescale * 35)
         choiceCircle.fillColor = colorBlue2
         choiceCircle.strokeColor = colorBlue2
         choiceCircle.alpha = 1
@@ -101,10 +102,10 @@ class ButtonLayer: SKSpriteNode {
             energyArc.removeFromParent()
         }
         let path = CGPathCreateMutable()
-        CGPathAddArc(path, nil, buttonEnergy.position.x, buttonEnergy.position.y - 2, 30.0, CGFloat(M_PI_2), CGFloat(M_PI_2 - M_PI * 2 * Double(percent)), true)
+        CGPathAddArc(path, nil, buttonEnergy.position.x, buttonEnergy.position.y - 2, framescale * 25.0, CGFloat(M_PI_2), CGFloat(M_PI_2 - M_PI * 2 * Double(percent)), true)
         energyArc = SKShapeNode(path: path)
         energyArc.zPosition = 100
-        energyArc.lineWidth = 5
+        energyArc.lineWidth = framescale * 5
         addChild(energyArc)
     }
     

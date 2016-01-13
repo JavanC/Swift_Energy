@@ -73,6 +73,7 @@ class MenuScene: SKScene {
             researchLevel[ResearchType(rawValue: count)!] = 0
         }
         researchLevel[ResearchType.WindTurbineResearch] = 1
+        upgradeLevel[UpgradeType.WindTurbineEffectiveness] = 1
         for _ in 0..<8 {
             let buildingMapLayer = BuildingMapLayer()
             buildingMapLayer.configureAtPosition(CGPoint(x: 0, y: 0))
