@@ -157,6 +157,7 @@ class PageBuild: SKSpriteNode {
     var buildMenu: [BuildingType] = [BuildingType.WindTurbine, BuildingType.CoalBurner, BuildingType.SmallGenerator, BuildingType.SmallOffice]
     var images = [SKSpriteNode]()
     var selectBox: SKSpriteNode!
+    var selectBoxArrow: SKSpriteNode!
     var selectInfo = PageInformation()
     var rebuildButton: SKShapeNode!
     
@@ -196,6 +197,13 @@ class PageBuild: SKSpriteNode {
         selectBox.zPosition = 1
         addChild(selectBox)
         
+        selectBoxArrow = SKSpriteNode(imageNamed: "up arrow")
+        selectBoxArrow.name = "selectBoxArrow"
+        selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50)
+        let upAction = SKAction.sequence([SKAction.moveByX(0, y: 5, duration: 0.5), SKAction.moveByX(0, y: -5, duration: 0.5)])
+        selectBoxArrow.runAction(SKAction.repeatActionForever(upAction))
+        addChild(selectBoxArrow)
+        
         selectInfo.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
         selectInfo.name = "SelectInformation"
         selectInfo.changeInformation(BuildingData(buildType: buildMenu[selectNumber - 1]))
@@ -220,6 +228,7 @@ class PageBuild: SKSpriteNode {
     func changeSelectNumber(selectNumber: Int) {
         self.selectNumber = selectNumber
         selectBox.position = imagePosition[selectNumber - 1]
+        selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50)
         selectInfo.changeInformation(BuildingData(buildType: buildMenu[selectNumber - 1]))
     }
     
@@ -236,7 +245,8 @@ class PageBuild: SKSpriteNode {
         // Remove Action
         childNodeWithName("SelectImage\(selectNumber)")?.removeAllActions()
         // Hide
-        childNodeWithName("selectBox")?.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
+        selectBox.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
+        selectBoxArrow.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
         for i in 1...5 {
             if i != selectNumber {
                 childNodeWithName("SelectImage\(i)")?.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
@@ -247,7 +257,7 @@ class PageBuild: SKSpriteNode {
         let seq = SKAction.sequence([move, SKAction.waitForDuration(0.2), SKAction.hide()])
         childNodeWithName("SelectImage\(selectNumber)")?.runAction(seq)
         // Show
-        selectInfo.runAction(SKAction.sequence([SKAction.unhide(), SKAction.waitForDuration(0.2), SKAction.fadeAlphaTo(1, duration: 0.2)]))
+        selectInfo.runAction(SKAction.sequence([SKAction.unhide(), SKAction.waitForDuration(0.2), SKAction.fadeInWithDuration(0.2)]))
     }
     
     func closeSelectInformation() {
@@ -263,8 +273,9 @@ class PageBuild: SKSpriteNode {
         childNodeWithName("SelectImage\(selectNumber)")?.runAction(SKAction.unhide())
         childNodeWithName("SelectImage\(selectNumber)")?.runAction(SKAction.moveTo(pos, duration: 0.2))
         // Show
-        let seq = SKAction.sequence([SKAction.unhide(), SKAction.waitForDuration(0.2), SKAction.fadeAlphaTo(1, duration: 0.2)])
-        self.childNodeWithName("selectBox")?.runAction(seq)
+        let seq = SKAction.sequence([SKAction.unhide(), SKAction.waitForDuration(0.2), SKAction.fadeInWithDuration(0.2)])
+        selectBox.runAction(seq)
+        selectBoxArrow.runAction(seq)
         for i in 1...5 {
             if i != selectNumber {
                 childNodeWithName("SelectImage\(i)")?.runAction(seq)
@@ -275,7 +286,7 @@ class PageBuild: SKSpriteNode {
 
 class PageSell: SKSpriteNode {
     
-    var sellLabel: SKLabelNode!
+    var sellLabel: SKMultilineLabel!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
@@ -283,12 +294,8 @@ class PageSell: SKSpriteNode {
         self.name = "PageSell"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        sellLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-        sellLabel.name = "SellLabel"
-        sellLabel.fontSize = size.height / 6
-        sellLabel.fontColor = SKColor.blackColor()
-        sellLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        sellLabel.text = "Touch building to sell."
+        
+        sellLabel = SKMultilineLabel(text: "Touch buildings on the map to sell it. \n Notice: Produce energy building can not be recycled money.", labelWidth: Int(size.width) - 80, pos: CGPoint(x: size.width / 2, y: size.height - 20), fontSize: (size.height - 40 - 30) / 3, fontColor: colorMoney, leading: Int((size.height - 40) / 3),  shouldShowBorder: false)
         addChild(sellLabel)
     }
 }
