@@ -20,7 +20,7 @@ class ResearchElement: SKNode {
         self.researchType = researchType
         
         // background
-        background = SKSpriteNode(color: SKColor.grayColor(), size: size)
+        background = SKSpriteNode(color: colorBlue4, size: size)
         background.name = "UpgradeElementBackground"
         background.anchorPoint = CGPoint(x: 0, y: 0)
         addChild(background)
@@ -33,42 +33,42 @@ class ResearchElement: SKNode {
         switch researchType {
         case .WindTurbineRebuild:
             imageType = BuildingType.WindTurbine
-            text1 = "Wind Turbine Rebuild Lv.\(level)"
+            text1 = "Wind Turbine Rebuild"
             text2 = "test123123"
             researchPrice = 1
             if level >= 1 { researchDone = true }
             
         case .CoalBurnerResearch:
             imageType = BuildingType.CoalBurner
-            text1 = "Coal Burner Lv.\(level)"
+            text1 = "Coal Burner"
             text2 = "test123123"
             researchPrice = 10
             if level >= 1 { researchDone = true }
             
         case .CoalBurnerRebuild:
             imageType = BuildingType.CoalBurner
-            text1 = "Coal Burner Rebuild Lv.\(level)"
+            text1 = "Coal Burner Rebuild"
             text2 = "test123123"
             researchPrice = 1
             if level >= 1 { researchDone = true }
             
         case .SmallGeneratorResearch:
             imageType = BuildingType.SmallGenerator
-            text1 = "Small Generator Lv.\(level)"
+            text1 = "Small Generator"
             text2 = "test123123"
             researchPrice = 1
             if level >= 1 { researchDone = true }
             
         case .SmallOfficeResearch:
             imageType = BuildingType.SmallOffice
-            text1 = "Small Office Lv.\(level)"
+            text1 = "Small Office"
             text2 = "test123123"
             researchPrice = 1
             if level >= 1 { researchDone = true }
             
         default:
             imageType = BuildingType.WindTurbine
-            text1 = "\(researchType) Lv.\(level)"
+            text1 = "\(researchType)"
             text2 = "test123123"
             researchPrice = 1
             if level >= 1 { researchDone = true }
@@ -135,6 +135,10 @@ class ResearchScene: SKScene {
     override func didMoveToView(view: SKView) {
         if !contentCreated {
             
+            self.backgroundColor = colorBlue4
+            
+            
+            
             topLabel = SKLabelNode(fontNamed: "Verdana-Bold")
             topLabel.fontSize = 30
             topLabel.text = "You have \(research) research can be used!"
@@ -153,7 +157,7 @@ class ResearchScene: SKScene {
             prevPage.name = "PrevPage"
             prevPage.position = CGPoint(x: prevPage.size.width / 2, y: 20 + prevPage.size.height / 2)
             addChild(prevPage)
-            researchdeLayer = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(frame.size.width * 4, frame.size.height - 200))
+            researchdeLayer = SKSpriteNode(color: colorBlue4, size: CGSizeMake(frame.size.width * 4, frame.size.height - 200))
             researchdeLayer.name = "ResearchLayer"
             researchdeLayer.anchorPoint = CGPoint(x: 0, y: 0)
             researchdeLayer.position = CGPoint(x: 0, y: 100)

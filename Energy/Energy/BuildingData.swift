@@ -214,49 +214,49 @@ class BuildingData {
             imageName = "WindTurbine"
             buildPrice = 1
             progress = .Time
-            timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: true)
+            timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: false)
             energySystem = EnergySystem(initAmount: 0, produce: 1)
             
         case .SolarCell:
             imageName = "SolarCell"
             buildPrice = 1
             progress = .Time
-            timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: true)
+            timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: false)
             heatSystem = HeatSystem(size: 150, produce: 3, output: true)
             
         case .CoalBurner:
             imageName = "CoalBurner"
             buildPrice = 20
             progress = .Time
-            timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: true)
+            timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: false)
             heatSystem = HeatSystem(size: 150, produce: 100, output: true)
             
         case .WaveCell:
             imageName = "WaveCell"
             buildPrice = 10
             progress = .Time
-            timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: true)
+            timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: false)
             energySystem = EnergySystem(initAmount: 0, produce: 5)
             
         case .GasBurner:
             imageName = "GasBurner"
             buildPrice = 10
             progress = .Time
-            timeSystem = TimeSystem(size: 20, initAmount: 20, rebuild: true)
+            timeSystem = TimeSystem(size: 20, initAmount: 20, rebuild: false)
             heatSystem = HeatSystem(size: 200, produce: 50, output: true)
             
         case .NuclearCell:
             imageName = "NuclearCell"
             buildPrice = 10
             progress = .Time
-            timeSystem = TimeSystem(size: 30, initAmount: 30, rebuild: true)
+            timeSystem = TimeSystem(size: 30, initAmount: 30, rebuild: false)
             heatSystem = HeatSystem(size: 300, produce: 30, output: true)
             
         case .FusionCell:
             imageName = "FusionCell"
             buildPrice = 10
             progress = .Time
-            timeSystem = TimeSystem(size: 40, initAmount: 40, rebuild: true)
+            timeSystem = TimeSystem(size: 40, initAmount: 40, rebuild: false)
             heatSystem = HeatSystem(size: 400, produce: 40, output: true)
             
         case .SmallGenerator:
@@ -392,10 +392,24 @@ class BuildingData {
     func reloadUpgradeAndResearchData() {
         switch buildType {
         case .WindTurbine:
-            energySystem.produce = upgradeLevel[UpgradeType.WindTurbineEffectiveness]! * 2
+            energySystem.produce = upgradeLevel[UpgradeType.WindTurbineEffectiveness]! * 1
             timeSystem.rebuild = (researchLevel[ResearchType.WindTurbineRebuild] > 0 ? true : false)
         default: break
         }
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
     }
     
     func heatTransformEnergy() {

@@ -305,7 +305,7 @@ class IslandScene: SKScene {
         topLayer.researchLabel.text = "Research: \(research) + \(maps[nowMapNumber].research_TickAdd)"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
-        bottomLayer.pageEnergy.energyLabel.text = "Energy: \(maps[nowMapNumber].energy) (Max:\(maps[nowMapNumber].energyMax))"
+        bottomLayer.pageEnergy.energyLabel.text = "\(maps[nowMapNumber].energy) / \(maps[nowMapNumber].energyMax)"
     }
     
     func tickUpdata() {

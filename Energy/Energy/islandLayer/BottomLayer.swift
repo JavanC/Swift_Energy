@@ -315,27 +315,33 @@ class PageEnergy: SKSpriteNode {
         self.name = "PageEnergy"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        energy_ProgressBack = SKSpriteNode(color: colorEnergy, size: size)
+        energy_ProgressBack = SKSpriteNode(color: colorBlue2, size: size)
         energy_ProgressBack.name = "Energy_ProgressBack"
-        energy_ProgressBack.alpha = 0.3
+//        energy_ProgressBack.alpha = 0.3
         energy_ProgressBack.anchorPoint = CGPoint(x: 0, y: 0.5)
         energy_ProgressBack.position = CGPoint(x: 0, y: size.height / 2)
         addChild(energy_ProgressBack)
         energy_ProgressFront = SKSpriteNode(color: colorEnergy, size: size)
         energy_ProgressFront.name = "Energy_ProgressFront"
-        energy_ProgressFront.alpha = 0.7
         energy_ProgressFront.anchorPoint = CGPoint(x: 0, y: 0.5)
         energy_ProgressFront.position = CGPoint(x: 0, y: size.height / 2)
         addChild(energy_ProgressFront)
         
-        let labelsize = size.height / 8
-        energyLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        energyLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
         energyLabel.name = "EnergyLabel"
         energyLabel.fontColor = SKColor.whiteColor()
-        energyLabel.fontSize = labelsize
-        energyLabel.horizontalAlignmentMode = .Left
-        energyLabel.position = CGPoint(x: size.width / 8, y: size.height * 3 / 4 + 10)
+        energyLabel.fontSize = size.height / 7
+        energyLabel.position = CGPoint(x: size.width / 2, y: size.height * 3 / 4)
         addChild(energyLabel)
+        
+        let label = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        label.name = "ExplanationLabel"
+        label.text = "TOUCH  TO  SELL  ENERGY"
+        label.fontColor = colorBlue2
+        label.fontSize = size.height / 4
+        label.verticalAlignmentMode = .Center
+        label.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        addChild(label)
     }
     
     func progressPercent(percent: CGFloat) {

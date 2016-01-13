@@ -306,24 +306,26 @@ class BuildingMapLayer: SKSpriteNode {
         
         for line in buildings {
             for building in line {
-                // Energy
-                if building!.buildingData.energySystem != nil {
-                    // 1. Production
-                    building!.buildingData.energySystem.produceEnergy()
-                    // 2. Heat transform energy
-                    if building!.buildingData.energySystem.isHeat2Energy() {
-                        building!.buildingData.heatTransformEnergy()
+                if building!.activate {
+                    // Energy
+                    if building!.buildingData.energySystem != nil {
+                        // 1. Production
+                        building!.buildingData.energySystem.produceEnergy()
+                        // 2. Heat transform energy
+                        if building!.buildingData.energySystem.isHeat2Energy() {
+                            building!.buildingData.heatTransformEnergy()
+                        }
+                        // 3. Water transform energy
+                        if building!.buildingData.energySystem.water2Energy {
+                            building!.buildingData.waterTransformEnergy()
+                        }
                     }
-                    // 3. Water transform energy
-                    if building!.buildingData.energySystem.water2Energy {
-                        building!.buildingData.waterTransformEnergy()
-                    }
-                }
-                // Money
-                if building!.buildingData.moneySystem != nil {
-                    // 1. Heat transform money
-                    if building!.buildingData.moneySystem.isHeat2Money() {
-                        building!.buildingData.heatTransformMoney()
+                    // Money
+                    if building!.buildingData.moneySystem != nil {
+                        // 1. Heat transform money
+                        if building!.buildingData.moneySystem.isHeat2Money() {
+                            building!.buildingData.heatTransformMoney()
+                        }
                     }
                 }
             }
