@@ -95,7 +95,13 @@ class IslandScene: SKScene {
             buildingSelectLayer.zPosition = 50
             addChild(buildingSelectLayer)
             
+            // initial
             buildingSelectLayer.updateSelectLayer()
+            if isRebuild {
+                bottomLayer.pageBuild.rebuildOn()
+            } else {
+                bottomLayer.pageBuild.rebuildOff()
+            }
         
             contentCreated = true
         }
@@ -124,19 +130,19 @@ class IslandScene: SKScene {
         switch touchType {
         case .Information:
             buttonLayer.tapButtonNil(duration)
-            bottomLayer.ShowPageInformation(duration)
+            bottomLayer.showPage(BottomLayer.PageType.PageInformation, duration: duration)
             
         case .Energy:
             buttonLayer.tapButtonEnergy(duration)
-            bottomLayer.showPageEnergy(duration)
+            bottomLayer.showPage(BottomLayer.PageType.PageEnergy, duration: duration)
             
         case .Builded:
             buttonLayer.tapButtonBuild(duration)
-            bottomLayer.ShowPageBuild(duration)
+            bottomLayer.showPage(BottomLayer.PageType.PageBuild, duration: duration)
             
         case .Sell:
             buttonLayer.tapButtonSell(duration)
-            bottomLayer.showPageSell(duration)
+            bottomLayer.showPage(BottomLayer.PageType.PageSell, duration: duration)
         }
     }
     
@@ -194,6 +200,9 @@ class IslandScene: SKScene {
                     print("Energy Preogree")
                     money += maps[nowMapNumber].energy
                     maps[nowMapNumber].energy = 0
+                    // draw energy circle
+                    let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
+                    buttonLayer.drawEnergyCircle(percent)
                     
                 // Builded Page
                 case bottomLayer.pageBuild.images[0]:
@@ -218,8 +227,13 @@ class IslandScene: SKScene {
                     
                 case bottomLayer.pageBuild.rebuildButton:
                     print("rebuild button")
-                    for count in 0..<8 { maps[count].autoRebuild = !maps[count].autoRebuild }
-                    bottomLayer.pageBuild.rebuildButton.color = (maps[nowMapNumber].autoRebuild ? SKColor.greenColor() : SKColor.redColor())
+                    isRebuild = !isRebuild
+                    for count in 0..<8 { maps[count].autoRebuild = isRebuild }
+                    if isRebuild {
+                        bottomLayer.pageBuild.rebuildOn()
+                    } else {
+                        bottomLayer.pageBuild.rebuildOff()
+                    }
                     
                 case bottomLayer.pageBuild.selectInfo:
                     print("Builded select info")
@@ -235,13 +249,14 @@ class IslandScene: SKScene {
                         if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                             info_Building = maps[nowMapNumber].buildingForCoord(coord)
                             bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
-                            changeTouchTypeAndShowPage(.Information)
+                            changeTouchTypeAndShowPage(.Information, duration: 0.1)
                         }
                         
                     case .Builded:
                         if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                             info_Building = maps[nowMapNumber].buildingForCoord(coord)
-                            changeTouchTypeAndShowPage(.Information)
+                            bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
+                            changeTouchTypeAndShowPage(.Information, duration: 0.1)
                         } else {
                             let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
                             let price = BuildingData.init(buildType: building).buildPrice

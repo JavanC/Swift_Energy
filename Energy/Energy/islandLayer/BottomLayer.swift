@@ -56,7 +56,6 @@ class PageInformation: SKSpriteNode {
         
         self.position = position
         self.size = size
-        self.color = SKColor.blackColor()
         self.name = "PageInformation"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
@@ -96,7 +95,6 @@ class PageInformation: SKSpriteNode {
         infoImage.runAction(SKAction.setTexture(SKTexture(imageNamed: buildingData.imageName)))
 
         // Label
-        
         for label in allLabels {
             label.hidden = true
         }
@@ -149,11 +147,6 @@ class PageInformation: SKSpriteNode {
         for count in 0..<informationLabels.count {
             informationLabels[count].position = positions[count]
         }
-        
-    }
-
-    func nowLevelImformation(buildType: BuildingType) {
-
     }
 }
 
@@ -165,12 +158,11 @@ class PageBuild: SKSpriteNode {
     var images = [SKSpriteNode]()
     var selectBox: SKSpriteNode!
     var selectInfo = PageInformation()
-    var rebuildButton: SKSpriteNode!
+    var rebuildButton: SKShapeNode!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
         self.size = size
-        self.color = SKColor.brownColor()
         self.name = "PageBuild"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
@@ -181,26 +173,48 @@ class PageBuild: SKSpriteNode {
         for i in 1...4 {
             let image = BuildingData(buildType: buildMenu[i - 1]).image("SelectImage\(i)")
             image.position = imagePosition[i - 1]
+            image.zPosition = 10
             images.append(image)
             addChild(image)
         }
-        rebuildButton = SKSpriteNode(color: SKColor.greenColor(), size: tilesScaleSize)
+        rebuildButton = SKShapeNode(rect: CGRect(x: -32, y: -32, width: 64, height: 64), cornerRadius: 10)
         rebuildButton.name = "SelectImage5"
         rebuildButton.position = imagePosition[4]
+        let buildingiImage = SKSpriteNode(imageNamed: "Button_build")
+        buildingiImage.name = "buildingImage"
+        buildingiImage.setScale(0.5)
+        rebuildButton.addChild(buildingiImage)
+        let refreshImage = SKSpriteNode(imageNamed: "refresh")
+        refreshImage.name = "refreshImage"
+        rebuildButton.addChild(refreshImage)
         addChild(rebuildButton)
 
         selectBox = SKSpriteNode(color: SKColor.redColor(), size: tilesScaleSize)
         selectBox.name = "selectBox"
         selectBox.setScale(1.1)
         selectBox.position = imagePosition[0]
+        selectBox.zPosition = 1
         addChild(selectBox)
         
         selectInfo.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
         selectInfo.name = "SelectInformation"
-        selectInfo.nowLevelImformation(buildMenu[selectNumber - 1])
+        selectInfo.changeInformation(BuildingData(buildType: buildMenu[selectNumber - 1]))
         selectInfo.alpha = 1
         selectInfo.hidden = true
         addChild(selectInfo)
+    }
+    
+    func rebuildOn() {
+        rebuildButton.fillColor = colorBlue2
+        rebuildButton.strokeColor = colorBlue2
+        let action = SKAction.rotateByAngle(CGFloat(M_PI), duration: 2)
+        rebuildButton.childNodeWithName("refreshImage")!.runAction(SKAction.repeatActionForever(action))
+    }
+    
+    func rebuildOff() {
+        rebuildButton.fillColor = SKColor.grayColor()
+        rebuildButton.strokeColor = SKColor.grayColor()
+        rebuildButton.childNodeWithName("refreshImage")!.removeAllActions()
     }
     
     func changeSelectNumber(selectNumber: Int) {
@@ -259,6 +273,26 @@ class PageBuild: SKSpriteNode {
     }
 }
 
+class PageSell: SKSpriteNode {
+    
+    var sellLabel: SKLabelNode!
+    
+    func configureAtPosition(position: CGPoint, size: CGSize) {
+        self.position = position
+        self.size = size
+        self.name = "PageSell"
+        self.anchorPoint = CGPoint(x: 0, y: 0)
+        
+        sellLabel = SKLabelNode(fontNamed: "Verdana-Bold")
+        sellLabel.name = "SellLabel"
+        sellLabel.fontSize = size.height / 6
+        sellLabel.fontColor = SKColor.blackColor()
+        sellLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        sellLabel.text = "Touch building to sell."
+        addChild(sellLabel)
+    }
+}
+
 class PageEnergy: SKSpriteNode {
     
     var energyLabel: SKLabelNode!
@@ -268,7 +302,6 @@ class PageEnergy: SKSpriteNode {
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
         self.size = size
-        self.color = SKColor.blueColor()
         self.name = "PageEnergy"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
@@ -300,29 +333,11 @@ class PageEnergy: SKSpriteNode {
     }
 }
 
-class PageSell: SKSpriteNode {
-    
-    var sellLabel: SKLabelNode!
-    
-    func configureAtPosition(position: CGPoint, size: CGSize) {
-        self.position = position
-        self.size = size
-        self.color = SKColor.yellowColor()
-        self.name = "PageSell"
-        self.anchorPoint = CGPoint(x: 0, y: 0)
-        
-        sellLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-        sellLabel.name = "SellLabel"
-        sellLabel.fontSize = size.height / 6
-        sellLabel.fontColor = SKColor.blackColor()
-        sellLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        sellLabel.text = "Touch building to sell."
-        addChild(sellLabel)
-    }
-}
-
 class BottomLayer: SKSpriteNode {
 
+    enum PageType {
+        case PageInformation, PageBuild, PageEnergy, PageSell
+    }
     var pageInformation: PageInformation!
     var pageBuild: PageBuild!
     var pageEnergy: PageEnergy!
@@ -332,7 +347,7 @@ class BottomLayer: SKSpriteNode {
         
         self.position = position
         self.size = size
-        self.color = SKColor.blackColor()
+        self.color = colorBlue4
         self.name = "BottomLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
@@ -349,35 +364,47 @@ class BottomLayer: SKSpriteNode {
         pageSell.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageSell)
         
-        showPageEnergy()
+        showPage(.PageEnergy)
     }
     
-    func ShowPageInformation(duration: Double = 0.0) {
-        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
-        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
-        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: duration)) { [unowned self] in
-            self.pageInformation.runAction(SKAction.moveToY(0, duration: duration))
-        }
-    }
-    func ShowPageBuild(duration: Double = 0.0) {
-        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
-        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
-        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: duration)) { [unowned self] in
-            self.pageBuild.runAction(SKAction.moveToY(0, duration: duration))
-        }
-    }
-    func showPageEnergy(duration: Double = 0.0) {
-        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
-        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
-        pageSell.runAction(SKAction.moveToY(-size.height * 2, duration: duration)) { [unowned self] in
-            self.pageEnergy.runAction(SKAction.moveToY(0, duration: duration))
-        }
-    }
-    func showPageSell(duration: Double = 0.0) {
-        pageInformation.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
-        pageBuild.runAction(SKAction.moveToY(-size.height * 2, duration: duration))
-        pageEnergy.runAction(SKAction.moveToY(-size.height * 2, duration: duration)) { [unowned self] in
-            self.pageSell.runAction(SKAction.moveToY(0, duration: duration))
+    func showPage(pageType: PageType, duration: Double = 0.0) {
+        let moveDown = SKAction.moveToY(-50, duration: duration)
+        let fadeOut = SKAction.fadeOutWithDuration(duration)
+        let group1 = SKAction.group([moveDown, fadeOut])
+        let seq1 = SKAction.sequence([group1, SKAction.hide()])
+        let moveUp = SKAction.moveToY(0, duration: duration)
+        let fadeIn = SKAction.fadeInWithDuration(duration)
+        let group2 = SKAction.group([moveUp, fadeIn])
+        let seq2 = SKAction.sequence([SKAction.unhide(), group2])
+        switch pageType {
+        case .PageBuild:
+            pageInformation.runAction(seq1)
+            pageSell.runAction(seq1)
+            pageEnergy.runAction(seq1)
+            RunAfterDelay(duration) { [unowned self] in
+                self.pageBuild.runAction(seq2)
+            }
+        case .PageEnergy:
+            pageInformation.runAction(seq1)
+            pageBuild.runAction(seq1)
+            pageSell.runAction(seq1)
+            RunAfterDelay(duration) { [unowned self] in
+                self.pageEnergy.runAction(seq2)
+            }
+        case .PageInformation:
+            pageBuild.runAction(seq1)
+            pageSell.runAction(seq1)
+            pageEnergy.runAction(seq1)
+            RunAfterDelay(duration) { [unowned self] in
+                self.pageInformation.runAction(seq2)
+            }
+        case .PageSell:
+            pageInformation.runAction(seq1)
+            pageBuild.runAction(seq1)
+            pageEnergy.runAction(seq1)
+            RunAfterDelay(duration) { [unowned self] in
+                self.pageSell.runAction(seq2)
+            }
         }
     }
 }
