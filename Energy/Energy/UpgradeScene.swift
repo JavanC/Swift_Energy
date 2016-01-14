@@ -249,6 +249,6 @@ class UpgradeScene: SKScene {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
         topLabel.text = "You have \(money)$ can be used!"
-        updateElement()
+//        updateElement()
     }
 }

@@ -123,12 +123,13 @@ class ResearchElement: SKNode {
 class ResearchScene: SKScene {
     
     var contentCreated: Bool = false
-    var backButton: SKLabelNode!
+    var backButton: SKSpriteNode!
     var nowPage: Int = 1
     var maxPage: Int = 1
     var nextPage: SKSpriteNode!
     var prevPage: SKSpriteNode!
-    var topLabel: SKLabelNode!
+    var researchLabel: SKLabelNode!
+    var itemLabel: SKLabelNode!
     
     var researchdeLayer: SKSpriteNode!
     
@@ -137,30 +138,64 @@ class ResearchScene: SKScene {
             
             self.backgroundColor = colorBlue4
             
+            let unitHeight = size.height / 10
+            let topCenter = CGPoint(x: size.width / 2, y: frame.size.height - unitHeight / 2)
             
+            let line = SKShapeNode(rectOfSize: CGSizeMake(frame.size.width * 0.9, 2 * framescale))
+            line.name = "line"
+            line.position = CGPoint(x: size.width / 2, y: frame.size.height - unitHeight)
+            addChild(line)
             
-            topLabel = SKLabelNode(fontNamed: "Verdana-Bold")
-            topLabel.fontSize = 30
-            topLabel.text = "You have \(research) research can be used!"
-            topLabel.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - 50)
-            addChild(topLabel)
-            backButton = SKLabelNode(fontNamed: "Verdana-Bold")
-            backButton.fontSize = 50
-            backButton.text = "<Back>"
-            backButton.position = CGPoint(x: frame.size.width / 2, y: 20)
+            let researchImage = SKSpriteNode(imageNamed: "Button_research")
+            researchImage.name = "researchImage"
+            researchImage.setScale(0.9 * framescale)
+            researchImage.position = topCenter
+            researchImage.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI_2), duration: 5)))
+            addChild(researchImage)
+            
+            researchLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            researchLabel.name = "top label"
+            researchLabel.fontSize = unitHeight * 0.2
+            researchLabel.fontColor = colorResearch
+            researchLabel.text = "\(research)"
+            researchLabel.horizontalAlignmentMode = .Left
+            researchLabel.verticalAlignmentMode = .Bottom
+            researchLabel.position = CGPoint(x: frame.size.width * 0.05, y: frame.size.height - unitHeight * 0.9)
+            addChild(researchLabel)
+            
+            itemLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            itemLabel.name = "item label"
+            itemLabel.fontSize = unitHeight * 0.2
+            itemLabel.fontColor = colorResearch
+            itemLabel.text = "1 / 35"
+            itemLabel.horizontalAlignmentMode = .Right
+            itemLabel.verticalAlignmentMode = .Bottom
+            itemLabel.position = CGPoint(x: frame.size.width * 0.95, y: frame.size.height - unitHeight * 0.9)
+            addChild(itemLabel)
+            
+            backButton = SKSpriteNode(imageNamed: "down arrow")
+            backButton.name = "back button"
+            backButton.setScale(framescale)
+            backButton.position = CGPoint(x: frame.size.width / 2, y: unitHeight / 2)
+            let downAction = SKAction.sequence([SKAction.moveByX(0, y: -5, duration: 0.5), SKAction.moveByX(0, y: 5, duration: 0.5)])
+            backButton.runAction(SKAction.repeatActionForever(downAction))
             addChild(backButton)
-            nextPage = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(50, 50))
+            
+            nextPage = SKSpriteNode(imageNamed: "next page")
             nextPage.name = "NextPage"
-            nextPage.position = CGPoint(x: size.width - nextPage.size.width / 2, y: 20 + nextPage.size.height / 2)
+            nextPage.setScale(0.8 * framescale)
+            nextPage.position = CGPoint(x: frame.size.width * 0.9, y: unitHeight  / 2)
             addChild(nextPage)
-            prevPage = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(50, 50))
+            prevPage = SKSpriteNode(imageNamed: "next page")
             prevPage.name = "PrevPage"
-            prevPage.position = CGPoint(x: prevPage.size.width / 2, y: 20 + prevPage.size.height / 2)
+            prevPage.setScale(0.8 * framescale)
+            prevPage.position = CGPoint(x: frame.size.width * 0.1, y: unitHeight  / 2)
+            prevPage.zRotation = CGFloat(M_PI)
             addChild(prevPage)
-            researchdeLayer = SKSpriteNode(color: colorBlue4, size: CGSizeMake(frame.size.width * 4, frame.size.height - 200))
+            researchdeLayer = SKSpriteNode(color: colorBlue4, size: CGSizeMake(frame.size.width * 4, frame.size.height - unitHeight * 2))
             researchdeLayer.name = "ResearchLayer"
             researchdeLayer.anchorPoint = CGPoint(x: 0, y: 0)
-            researchdeLayer.position = CGPoint(x: 0, y: 100)
+            researchdeLayer.position = CGPoint(x: 0, y: unitHeight)
             addChild(researchdeLayer)
             updateElement()
             
@@ -172,12 +207,11 @@ class ResearchScene: SKScene {
         researchdeLayer.removeAllChildren()
         // Caculae Position
         var positions = [CGPoint]()
-        let gap:CGFloat = 20
         let num:CGFloat = 8
-        let elementsize = CGSizeMake(frame.size.width - gap * 2, (researchdeLayer.size.height - gap) / num - gap)
+        let elementsize = CGSizeMake(frame.size.width, researchdeLayer.size.height / num)
         for x in 0..<5 {
             for y in 0..<Int(num) {
-                positions.append(CGPoint(x: gap + frame.size.width * CGFloat(x), y: researchdeLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
+                positions.append(CGPoint(x: frame.size.width * CGFloat(x), y: researchdeLayer.size.height - elementsize.height * CGFloat(y + 1)))
             }
         }
         
@@ -201,14 +235,22 @@ class ResearchScene: SKScene {
         if researchLevel[.LargeGeneratorResearch] == 1   { elements += [.BankResearch, .HeatInletResearch, .HeatOutletResearch] }
         
         // Add Element
+        var researchDoneNumber = 0
         for count in 0..<elements.count {
             let element = ResearchElement(researchType: elements[count], size: elementsize)
             element.position = positions[count]
+            element.background.color = (count % 2 == 0 ? colorBlue4 : colorBlue3)
             researchdeLayer.addChild(element)
+            if element.researchDone {
+                ++researchDoneNumber
+            }
         }
 
         // Caculate MaxPage
         maxPage = (elements.count - 1) / 8 + 1
+        
+        // update item count
+        itemLabel.text = "\(researchDoneNumber) / 35"
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -238,6 +280,7 @@ class ResearchScene: SKScene {
                     for count in 0..<maps.count {
                         maps[count].reloadMap()
                     }
+                    updateElement()
                 }
             }
         }
@@ -246,7 +289,6 @@ class ResearchScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
-        topLabel.text = "You have \(research) research can be used!"
-        updateElement()
+        researchLabel.text = "\(research)"
     }
 }
