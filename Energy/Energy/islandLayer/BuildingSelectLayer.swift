@@ -30,14 +30,14 @@ class BuildingSelectElement: SKNode {
         
         let buildingName = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
         buildingName.name = "buildingName"
-        buildingName.text = "\(buildType)"
+        buildingName.text = "\(BuildingData(buildType: buildType).name)"
         buildingName.fontColor = SKColor.whiteColor()
         buildingName.fontSize = image.size.height * 2 / 5
         buildingName.horizontalAlignmentMode = .Left
         buildingName.verticalAlignmentMode = .Top
         buildingName.position = CGPoint(x: image.size.width + gap * 2, y: size.height - gap)
         addChild(buildingName)
-        let multilineLabel = SKMultilineLabel(text: "Build a game using SKCropNode and a sprinkling of Grand Central Dispatch.", labelWidth: Int(size.width - image.size.width - gap * 3), pos: CGPoint(x: (size.width + image.size.width + gap * 1) / 2 , y: size.height - gap - buildingName.fontSize), fontName: "SanFranciscoText-BoldItalic", fontSize: (image.size.height - buildingName.fontSize * 1.2) / 2, fontColor: SKColor.lightGrayColor(), leading: Int((image.size.height - buildingName.fontSize) / 2), alignment: .Left, shouldShowBorder: false)
+        let multilineLabel = SKMultilineLabel(text: "\(BuildingData(buildType: buildType).comment)", labelWidth: Int(size.width - image.size.width - gap * 3), pos: CGPoint(x: (size.width + image.size.width + gap * 1) / 2 , y: size.height - gap - buildingName.fontSize), fontName: "SanFranciscoText-BoldItalic", fontSize: (image.size.height - buildingName.fontSize * 1.2) / 2, fontColor: SKColor.lightGrayColor(), leading: Int((image.size.height - buildingName.fontSize) / 2), alignment: .Left, shouldShowBorder: false)
         addChild(multilineLabel)
     }
 

@@ -187,6 +187,8 @@ class WaterSystem {
 class BuildingData {
     
     var imageName: String!
+    var name: String!
+    var comment: String!
     var buildType: BuildingType = .Land
     var buildPrice: Int!
     enum ProgressType { case Time, Heat, Water }
@@ -212,6 +214,8 @@ class BuildingData {
 
         case .WindTurbine:
             imageName = "WindTurbine"
+            name = "Wind Turbine"
+            comment = "Produced energy by the wind."
             buildPrice = 1
             progress = .Time
             timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: false)
@@ -219,6 +223,8 @@ class BuildingData {
             
         case .SolarCell:
             imageName = "SolarCell"
+            name = "Solar Plant"
+            comment = "Produced heat by the solar."
             buildPrice = 1
             progress = .Time
             timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: false)
@@ -226,6 +232,8 @@ class BuildingData {
             
         case .CoalBurner:
             imageName = "CoalBurner"
+            name = "Coal-Fired Plant"
+            comment = "Produce heat by burning coal."
             buildPrice = 20
             progress = .Time
             timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: false)
@@ -233,6 +241,8 @@ class BuildingData {
             
         case .WaveCell:
             imageName = "WaveCell"
+            name = "Wave Energy"
+            comment = "Produced energy by the ocean wave. Must be placed in water."
             buildPrice = 10
             progress = .Time
             timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: false)
@@ -240,6 +250,8 @@ class BuildingData {
             
         case .GasBurner:
             imageName = "GasBurner"
+            name = "Gas-Fired Plant"
+            comment = "Produce heat by burning gas."
             buildPrice = 10
             progress = .Time
             timeSystem = TimeSystem(size: 20, initAmount: 20, rebuild: false)
@@ -247,6 +259,8 @@ class BuildingData {
             
         case .NuclearCell:
             imageName = "NuclearCell"
+            name = "Nuclear Plant"
+            comment = "Produce heat by nuclear fission."
             buildPrice = 10
             progress = .Time
             timeSystem = TimeSystem(size: 30, initAmount: 30, rebuild: false)
@@ -254,6 +268,8 @@ class BuildingData {
             
         case .FusionCell:
             imageName = "FusionCell"
+            name = "Fusion Cell"
+            comment = "Produce heat by nuclear fusion."
             buildPrice = 10
             progress = .Time
             timeSystem = TimeSystem(size: 40, initAmount: 40, rebuild: false)
@@ -261,6 +277,8 @@ class BuildingData {
             
         case .SmallGenerator:
             imageName = "SmallGenerator"
+            name = "Small Generator"
+            comment = "Converts heat to energy."
             buildPrice = 50
             progress = .Heat
             energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2Energy: true)
@@ -269,6 +287,8 @@ class BuildingData {
             
         case .MediumGenerator:
             imageName = "MediumGenerator"
+            name = "Medium Generator"
+            comment = "Converts more heat to energy."
             buildPrice = 50
             progress = .Heat
             energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2Energy: true)
@@ -277,6 +297,8 @@ class BuildingData {
             
         case .LargeGenerator:
             imageName = "LargeGenerator"
+            name = "Large Generator"
+            comment = "Converts mass heat to energy."
             buildPrice = 50
             progress = .Heat
             energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2Energy: true)
@@ -285,6 +307,8 @@ class BuildingData {
             
         case .BoilerHouse:
             imageName = "BoilerHouse"
+            name = "Boiler House"
+            comment = "Direct sales store heat."
             buildPrice = 50
             progress = .Heat
             heatSystem = HeatSystem(size: 400, initAmount: 100)
@@ -292,6 +316,8 @@ class BuildingData {
             
         case .LargeBoilerHouse:
             imageName = "LargeBoilerHouse"
+            name = "Large Boiler House"
+            comment = "Direct sales more store heat."
             buildPrice = 50
             progress = .Heat
             heatSystem = HeatSystem(size: 400, initAmount: 100)
@@ -299,22 +325,30 @@ class BuildingData {
             
         case .Isolation:
             imageName = "Isolation"
+            name = "Isolation"
+            comment = "Increases heat output of heat producing building"
             buildPrice = 10
             isolationPercent = 0.5
             
         case .Battery:
             imageName = "Battery"
+            name = "Battery"
+            comment = "Increase the maximum energy that can be stored."
             buildPrice = 10
             batteryEnergySize = 1000
 
         case .HeatExchanger:
             imageName = "HeatExchanger"
+            name = "Heat Exchanger"
+            comment = "Balance heat between adjacent components."
             buildPrice = 10
             progress = .Heat
             heatSystem = HeatSystem(size: 1000, initAmount: 0)
             
         case .HeatSink:
             imageName = "HeatSink"
+            name = "Heat Sink"
+            comment = "Heat dissipation, according to the percentage of stored heat."
             buildPrice = 10
             progress = .Heat
             heatSystem = HeatSystem(size: 1000, coolingRate: 0.1)
@@ -323,60 +357,80 @@ class BuildingData {
             
         case .WaterPump:
             imageName = "WaterPump"
+            name = "Water Pump"
+            comment = "Produce Water to cools generators so they produce much more energy. Must be placed next to water."
             buildPrice = 10
             progress = .Water
             waterSystem = WaterSystem(size: 100, produce: 3, output: true)
  
         case .GroundwaterPump:
             imageName = "GroundwaterPump"
+            name = "Groundwater Pump"
+            comment = "Produce Water to cools generators so they produce much more energy."
             buildPrice = 10
             progress = .Water
             waterSystem = WaterSystem(size: 100, produce: 3, output: true)
 
         case .WaterPipe:
             imageName = "WaterPipe"
+            name = "Water Pipe"
+            comment = "Expands water pumps effective area."
             buildPrice = 10
             progress = .Water
             waterSystem = WaterSystem(size: 100, output: true)
             
         case .SmallOffice:
             imageName = "SmallOffice"
+            name = "Small Office"
+            comment = "Auto selling store of energy."
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
             moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 5)
             
         case .MediumOffice:
             imageName = "MediumOffice"
+            name = "Medium Office"
+            comment = "Auto selling more store of energy."
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
             moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 50)
             
         case .LargeOffice:
             imageName = "LargeOffice"
+            name = "Large Office"
+            comment = "Auto selling mass store of energy."
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
             moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 500)
             
         case .Bank:
             imageName = "Bank"
+            name = "Bank"
+            comment = "Boosts office salse energy speed."
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
             bankAddPercent = 0.5
             
         case .ResearchCenter:
             imageName = "ResearchCenter"
+            name = "Research Center"
+            comment = "Production Research points so that you can research new technology."
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
             researchSystem = ResearchSystem(amount: 10)
             
         case .AdvancedResearchCenter:
             imageName = "AdvancedResearchCenter"
+            name = "Advanced Research Center"
+            comment = "Production more Research points so that you can research new technology."
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
             researchSystem = ResearchSystem(amount: 100)
             
         case .Library:
             imageName = "Library"
+            name = "Library"
+            comment = "Boosts Research Center production research points speed."
             buildPrice = 10
             heatSystem = HeatSystem(size: 10)
             libraryAddPercent = 0.5

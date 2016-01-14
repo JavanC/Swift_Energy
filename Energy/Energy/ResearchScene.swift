@@ -27,49 +27,91 @@ class ResearchElement: SKNode {
         
         // Find information
         var imageType: BuildingType!
-        var text1: String!
-        var text2: String!
+        var name: String!
+        var comment: String!
         let level = Int(researchLevel[researchType]!)
         switch researchType {
-        case .WindTurbineRebuild:
+        case .WindTurbineResearch:
             imageType = BuildingType.WindTurbine
-            text1 = "Wind Turbine Rebuild"
-            text2 = "test123123"
+            name = "Wind Turbine"
+            comment = "Open wind turbine technology."
             researchPrice = 1
             if level >= 1 { researchDone = true }
             
+        case .WindTurbineRebuild:
+            imageType = BuildingType.WindTurbine
+            name = "Wind Turbine Manager"
+            comment = "Wind Turbine are automatically replaced."
+            researchPrice = 1
+            if level >= 1 { researchDone = true }
+            
+        case .SolarCellResearch: break
+        case .SolarCellRebuild: break
+            
+            
         case .CoalBurnerResearch:
             imageType = BuildingType.CoalBurner
-            text1 = "Coal Burner"
-            text2 = "test123123"
+            name = "Coal Burner"
+            comment = "test123123"
             researchPrice = 10
             if level >= 1 { researchDone = true }
             
         case .CoalBurnerRebuild:
             imageType = BuildingType.CoalBurner
-            text1 = "Coal Burner Rebuild"
-            text2 = "test123123"
+            name = "Coal Burner Rebuild"
+            comment = "test123123"
             researchPrice = 1
             if level >= 1 { researchDone = true }
+            
+        case .WaveCellResearch: break
+        case .WaveCellRebuild: break
+        case .FusionCellResearch: break
+        case .FusionCellRebuild:break
+        case .NuclearCellResearch:break
+        case .NuclearCellRebuild:break
+        case .GasBurnerResearch:break
+        case .GasBurnerRebuild:break
+            
             
         case .SmallGeneratorResearch:
             imageType = BuildingType.SmallGenerator
-            text1 = "Small Generator"
-            text2 = "test123123"
+            name = "Small Generator"
+            comment = "test123123"
             researchPrice = 1
             if level >= 1 { researchDone = true }
+            
+        case .MediumGeneratorResearch: break
+        case .LargeGeneratorResearch: break
+        case .BoilerHouseResearch: break
+        case .LargeBoilerHouseResearch: break
+        case .IsolationResearch: break
+        case .BatteryResearch: break
+        case .HeatExchangerResearch:break
+        case .HeatSinkResearch:break
+        case .HeatInletResearch:break
+        case .HeatOutletResearch: break
+        case .WaterPumpResearch:break
+        case .GroundwaterPumpResearch:break
+        case .WaterPipeResearch:break
             
         case .SmallOfficeResearch:
             imageType = BuildingType.SmallOffice
-            text1 = "Small Office"
-            text2 = "test123123"
+            name = "Small Office"
+            comment = "test123123"
             researchPrice = 1
             if level >= 1 { researchDone = true }
             
+        case .MediumOfficeResearch:break
+        case .LargeOfficeResearch:break
+        case .BankResearch:break
+        case .ResearchCenterResearch: break
+        case .AdvancedResearchCenterResearch: break
+        case .LibraryResearch: break
+            
         default:
             imageType = BuildingType.WindTurbine
-            text1 = "\(researchType)"
-            text2 = "test123123"
+            name = "\(researchType)"
+            comment = "test123123"
             researchPrice = 1
             if level >= 1 { researchDone = true }
         }
@@ -79,32 +121,51 @@ class ResearchElement: SKNode {
         let image = BuildingData(buildType: imageType).image("image")
         image.position = CGPoint(x: size.height / 2, y: gap + image.size.width / 2)
         addChild(image)
-        // label 1
-        let labelgap: CGFloat = 5
-        let labelsize = (image.size.height - labelgap * 2) / 3
-        let label1 = SKLabelNode(fontNamed: "Verdana-Bold")
-        label1.name = "label1"
-        label1.text = text1
-        label1.fontSize = labelsize
-        label1.horizontalAlignmentMode = .Left
-        label1.position = CGPoint(x: gap * 2 + image.size.width, y: gap + (labelsize + labelgap) * 2)
-        addChild(label1)
-        // label 2
-        let label2 = SKLabelNode(fontNamed: "Verdana-Bold")
-        label2.name = "label2"
-        label2.text = text2
-        label2.fontSize = labelsize
-        label2.horizontalAlignmentMode = .Left
-        label2.position = CGPoint(x: gap * 2 + image.size.width, y: gap + (labelsize + labelgap) * 1)
-        addChild(label2)
-        // label 3
-        let label3 = SKLabelNode(fontNamed: "Verdana-Bold")
-        label3.name = "label3"
-        label3.text = "Need Research : \(researchPrice)"
-        label3.fontSize = labelsize
-        label3.horizontalAlignmentMode = .Left
-        label3.position = CGPoint(x: gap * 2 + image.size.width, y: gap)
-        addChild(label3)
+        
+        // name
+        let researchName = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        researchName.name = "researchName"
+        researchName.text = name
+        researchName.fontColor = SKColor.whiteColor()
+        researchName.fontSize = image.size.height * 2 / 5
+        researchName.horizontalAlignmentMode = .Left
+        researchName.verticalAlignmentMode = .Top
+        researchName.position = CGPoint(x: image.size.width + gap * 2, y: size.height - gap)
+        addChild(researchName)
+        
+        // comment
+        let commentLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        commentLabel.name = "commentLabel"
+        commentLabel.text = comment
+        commentLabel.fontColor = SKColor.lightGrayColor()
+        commentLabel.fontSize = (image.size.height - researchName.fontSize * 1.2) / 2
+        commentLabel.horizontalAlignmentMode = .Left
+        commentLabel.verticalAlignmentMode = .Bottom
+        commentLabel.position = CGPoint(x: image.size.width + gap * 2, y: (image.size.height - researchName.fontSize) / 2 + gap)
+        addChild(commentLabel)
+        
+        // research
+        let researchLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        researchLabel.name = "researchLabel"
+        researchLabel.text = "Research:"
+        researchLabel.fontColor = SKColor.lightGrayColor()
+        researchLabel.fontSize = (image.size.height - researchName.fontSize * 1.2) / 2
+        researchLabel.horizontalAlignmentMode = .Left
+        researchLabel.verticalAlignmentMode = .Bottom
+        researchLabel.position = CGPoint(x: image.size.width + gap * 2, y: gap)
+        addChild(researchLabel)
+        
+        // price
+        let priceLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        priceLabel.name = "priceLabel"
+        priceLabel.text = "\(researchPrice)"
+        priceLabel.fontColor = colorResearch
+        priceLabel.fontSize = (image.size.height - researchName.fontSize * 1.2) / 2
+        priceLabel.horizontalAlignmentMode = .Left
+        priceLabel.verticalAlignmentMode = .Bottom
+        priceLabel.position = CGPoint(x: image.size.width + gap * 2 + researchLabel.frame.width, y: gap)
+        addChild(priceLabel)
+        
         // Upgrade Button
         if !researchDone {
             let color = (money > researchPrice ? SKColor.greenColor() : SKColor.redColor())
@@ -243,6 +304,8 @@ class ResearchScene: SKScene {
             researchdeLayer.addChild(element)
             if element.researchDone {
                 ++researchDoneNumber
+                element.childNodeWithName("researchLabel")?.hidden = true
+                element.childNodeWithName("priceLabel")?.hidden = true
             }
         }
 
