@@ -93,7 +93,6 @@ class IslandScene: SKScene {
             addChild(buildingSelectLayer)
             
             // initial
-//            buildingSelectLayer.updateSelectLayer()
             if isRebuild {
                 bottomLayer.pageBuild.rebuildOn()
             } else {
@@ -108,7 +107,8 @@ class IslandScene: SKScene {
         maps[nowMapNumber].hidden = false
         
         // back to Energy type
-        changeTouchTypeAndShowPage(.Energy)
+        buttonLayer.beginButtonEnergy()
+        bottomLayer.showPage(BottomLayer.PageType.PageEnergy)
     }
     
     func showBuildSelectPage() {

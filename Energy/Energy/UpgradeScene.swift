@@ -7,212 +7,6 @@
 //
 
 import SpriteKit
-//
-//        case .WindTurbineResearch:
-//            imageType = BuildingType.WindTurbine
-//            name = "Wind Turbine"
-//            comment = "Open Wind turbine technology."
-//            researchPrice = 1
-//            
-//        case .WindTurbineRebuild:
-//            imageType = BuildingType.WindTurbine
-//            name = "Wind Turbine Manager"
-//            comment = "Wind Turbine are automatically replaced."
-//            researchPrice = 1
-//            
-//        case .SolarCellResearch:
-//            imageType = BuildingType.SolarCell
-//            name = "Solar Plant"
-//            comment = "Open Solar Plant technology."
-//            researchPrice = 1
-//            
-//        case .SolarCellRebuild:
-//            imageType = BuildingType.SolarCell
-//            name = "Solar Manager"
-//            comment = "Solar Plant are automatically replaced."
-//            researchPrice = 1
-//            
-//        case .CoalBurnerResearch:
-//            imageType = BuildingType.CoalBurner
-//            name = "Coal-Fired Plant"
-//            comment = "Open Coal-Fired technology."
-//            researchPrice = 10
-//            
-//        case .CoalBurnerRebuild:
-//            imageType = BuildingType.CoalBurner
-//            name = "Coal-Fired Manager"
-//            comment = "Coal Coal-Fired are automatically replaced."
-//            researchPrice = 1
-//            
-//        case .WaveCellResearch:
-//            imageType = BuildingType.WaveCell
-//            name = "Wave Energy"
-//            comment = "Open Wave Energy technology."
-//            researchPrice = 1
-//            
-//        case .WaveCellRebuild:
-//            imageType = BuildingType.WaveCell
-//            name = "Wave Energy Manager"
-//            comment = "Wave Energy are automatically replaced."
-//            researchPrice = 1
-//            
-//        case .GasBurnerResearch:
-//            imageType = BuildingType.GasBurner
-//            name = "Gas-Fired Plant"
-//            comment = "Open Gas-Fired Plant technology."
-//            researchPrice = 1
-//            
-//        case .GasBurnerRebuild:
-//            imageType = BuildingType.GasBurner
-//            name = "Gas-Fired Manager"
-//            comment = "Gas-Fired are automatically replaced."
-//            researchPrice = 1
-//            
-//        case .NuclearCellResearch:
-//            imageType = BuildingType.NuclearCell
-//            name = "Nuclear Plant"
-//            comment = "Open Nuclear Plant technology."
-//            researchPrice = 1
-//            
-//        case .NuclearCellRebuild:
-//            imageType = BuildingType.NuclearCell
-//            name = "Nuclear Manager"
-//            comment = "Nuclear are automatically replaced."
-//            researchPrice = 1
-//            
-//        case .FusionCellResearch:
-//            imageType = BuildingType.FusionCell
-//            name = "Fusion Plant"
-//            comment = "Open Fusion Plant technology."
-//            researchPrice = 1
-//            
-//        case .FusionCellRebuild:
-//            imageType = BuildingType.FusionCell
-//            name = "Fusion Manager"
-//            comment = "Fusion are automatically replaced."
-//            researchPrice = 1
-//            
-//        case .SmallGeneratorResearch:
-//            imageType = BuildingType.SmallGenerator
-//            name = "Small Generator"
-//            comment = "Open Small Generator technology."
-//            researchPrice = 1
-//            
-//        case .MediumGeneratorResearch:
-//            imageType = BuildingType.MediumGenerator
-//            name = "Medium Generator"
-//            comment = "Open Medium Generator technology."
-//            researchPrice = 1
-//            
-//        case .LargeGeneratorResearch:
-//            imageType = BuildingType.LargeGenerator
-//            name = "Large Generator"
-//            comment = "Open Large Generator technology."
-//            researchPrice = 1
-//            
-//        case .BoilerHouseResearch:
-//            imageType = BuildingType.BoilerHouse
-//            name = "Boiler House"
-//            comment = "Open Boiler House technology."
-//            researchPrice = 1
-//            
-//        case .LargeBoilerHouseResearch:
-//            imageType = BuildingType.LargeBoilerHouse
-//            name = "Large Boiler House"
-//            comment = "Open Large Boiler House technology."
-//            researchPrice = 1
-//            
-//        case .IsolationResearch:
-//            imageType = BuildingType.Isolation
-//            name = "Isolation"
-//            comment = "Open Isolation technology."
-//            researchPrice = 1
-//            
-//        case .BatteryResearch:
-//            imageType = BuildingType.Battery
-//            name = "Battery"
-//            comment = "Open Battery technology."
-//            researchPrice = 1
-//            
-//        case .HeatExchangerResearch:
-//            imageType = BuildingType.HeatExchanger
-//            name = "Heat Exchanger"
-//            comment = "Open Heat Exchanger technology."
-//            researchPrice = 1
-//            
-//        case .HeatSinkResearch:
-//            imageType = BuildingType.HeatSink
-//            name = "Heat Sink"
-//            comment = "Open Heat Sink technology."
-//            researchPrice = 1
-//            
-//            // HeatInletResearch , HeatOutletResearch:
-//            
-//        case .WaterPumpResearch:
-//            imageType = BuildingType.WaterPump
-//            name = "Water Pump"
-//            comment = "Open Water Pump technology."
-//            researchPrice = 1
-//            
-//        case .GroundwaterPumpResearch:
-//            imageType = BuildingType.GroundwaterPump
-//            name = "Groundwater Pump"
-//            comment = "Open Groundwater Pump technology."
-//            researchPrice = 1
-//            
-//        case .WaterPipeResearch:
-//            imageType = BuildingType.WaterPipe
-//            name = "Water Pipe"
-//            comment = "Open Water Pipe technology."
-//            researchPrice = 1
-//            
-//        case .SmallOfficeResearch:
-//            imageType = BuildingType.SmallOffice
-//            name = "Small Office"
-//            comment = "Open Small Office technology."
-//            researchPrice = 1
-//            
-//        case .MediumOfficeResearch:
-//            imageType = BuildingType.MediumOffice
-//            name = "Medium Office"
-//            comment = "Open Medium Office technology."
-//            researchPrice = 1
-//            
-//        case .LargeOfficeResearch:
-//            imageType = BuildingType.LargeOffice
-//            name = "Large Office"
-//            comment = "Open Large Office technology."
-//            researchPrice = 1
-//            
-//        case .BankResearch:
-//            imageType = BuildingType.Bank
-//            name = "Bank"
-//            comment = "Open Bank technology."
-//            researchPrice = 1
-//            
-//        case .ResearchCenterResearch:
-//            imageType = BuildingType.ResearchCenter
-//            name = "Research Center"
-//            comment = "Open Research Center technology."
-//            researchPrice = 1
-//            
-//        case .AdvancedResearchCenterResearch:
-//            imageType = BuildingType.AdvancedResearchCenter
-//            name = "Advanced Research Center"
-//            comment = "Open Advanced Research Center technology."
-//            researchPrice = 1
-//        case .LibraryResearch:
-//            imageType = BuildingType.Library
-//            name = "Library"
-//            comment = "Open Library technology."
-//            researchPrice = 1
-//            
-//        default:
-//            imageType = BuildingType.WindTurbine
-//            name = "\(researchType)"
-//            comment = "test123123"
-//            researchPrice = 1
-//        }
 
 class UpgradeElement: SKNode {
     
@@ -240,42 +34,199 @@ class UpgradeElement: SKNode {
         switch upgradeType {
         case .WindTurbineEffectiveness:
             imageType = BuildingType.WindTurbine
-            name = "Wind Lv.\(level)"
-            comment = "test123123"
+            name = "Wind Turbine"
+            comment = "Lv.   Increases energy producetion by 50%"
+            upgradePrice = 1
+            
+        case .WindTurbineLifetime:
+            imageType = BuildingType.WindTurbine
+            name = "Wind Turbine Lifetime"
+            comment = "Lv.   Increases lifetime producetion by 500%"
+            upgradePrice = 1
+            
+        case .SolarCellEffectiveness:
+            imageType = BuildingType.SolarCell
+            name = "Solar Plant"
+            comment = "Lv.   Increases heat producetion by 25%"
+            upgradePrice = 1
+            
+        case .SolarCellLifetime:
+            imageType = BuildingType.SolarCell
+            name = "Solar Lifetime"
+            comment = "Lv.   Increases lifetime producetion by 50%"
             upgradePrice = 1
             
         case .CoalBurnerEffectiveness:
             imageType = BuildingType.CoalBurner
-            name = "Fire Lv.\(level)"
-            comment = "test123123"
+            name = "Coal-Fired Plant"
+            comment = "Lv.   Increases heat producetion by 25%"
             upgradePrice = 10
             
         case .CoalBurnerLifetime:
             imageType = BuildingType.CoalBurner
-            name = "Fire Lv.\(level)"
-            comment = "test123123"
-            upgradePrice = 100
+            name = "Coal-Fired Lifetime"
+            comment = "Lv.   Increases lifetime producetion by 50%"
+            upgradePrice = 1
+            
+        case .WaveCellEffectiveness:
+            imageType = BuildingType.WaveCell
+            name = "Wave Energy"
+            comment = "Lv.   Increases energy producetion by 25%"
+            upgradePrice = 1
+            
+        case .WaveCellLifetime:
+            imageType = BuildingType.WaveCell
+            name = "Wave Energy Lifetime"
+            comment = "Lv.   Increases lifetime producetion by 50%"
+            upgradePrice = 1
+            
+        case .GasBurnerEffectiveness:
+            imageType = BuildingType.GasBurner
+            name = "Gas-Fired Plant"
+            comment = "Lv.   Increases heat producetion by 25%"
+            upgradePrice = 1
+            
+        case .GasBurnerLifetime:
+            imageType = BuildingType.GasBurner
+            name = "Gas-Fired Lifetime"
+            comment = "Lv.   Increases lifetime producetion by 50%"
+            upgradePrice = 1
+            
+        case .NuclearCellEffectiveness:
+            imageType = BuildingType.NuclearCell
+            name = "Nuclear Plant"
+            comment = "Lv.   Increases heat producetion by 25%"
+            upgradePrice = 1
+            
+        case .NuclearCellLifetime:
+            imageType = BuildingType.NuclearCell
+            name = "Nuclear Lifetime"
+            comment = "Lv.   Increases lifetime producetion by 50%"
+            upgradePrice = 1
+            
+        case .FusionCellEffectiveness:
+            imageType = BuildingType.FusionCell
+            name = "Fusion Plant"
+            comment = "Lv.   Increases heat producetion by 25%"
+            upgradePrice = 1
+            
+        case .FusionCellLifetime:
+            imageType = BuildingType.FusionCell
+            name = "Fusion Lifetime"
+            comment = "Lv.   Increases lifetime producetion by 50%"
+            upgradePrice = 1
+            
+        case .GeneratorEffectiveness:
+            imageType = BuildingType.SmallGenerator
+            name = "Generator Effectiveness"
+            comment = "Lv.   Increases heat to energy conversion by 25%"
+            upgradePrice = 1
+            
+        case .GeneratorMaxHeat:
+            imageType = BuildingType.SmallGenerator
+            name = "Generator Max Heat"
+            comment = "Lv.   Increases max heat by 50%"
+            upgradePrice = 1
+            
+        case .BoilerHouseSellAmount:
+            imageType = BuildingType.BoilerHouse
+            name = "Boiler House"
+            comment = "Lv.   Increases energy sell amount by 40%"
+            upgradePrice = 1
+            
+        case .BoilerHouseMaxHeat:
+            imageType = BuildingType.BoilerHouse
+            name = "Boiler House Max Heat"
+            comment = "Lv.   Increases max heat by 50%"
+            upgradePrice = 1
+            
+        case .IsolationEffectiveness:
+            imageType = BuildingType.Isolation
+            name = "Isolation Effectiveness"
+            comment = "Lv.   Increases isolation effectiveness by 10%"
+            upgradePrice = 1
+            
+        case .EnergyBatterySize:
+            imageType = BuildingType.Battery
+            name = "Battery Size"
+            comment = "Lv.   Increases max energy storage by 50%"
+            upgradePrice = 1
+            
+        case .HeatExchangerMaxHeat:
+            imageType = BuildingType.HeatExchanger
+            name = "Heat Exchanger Max Heat"
+            comment = "Lv.   Increases max heat by 50%"
+            upgradePrice = 1
+            
+        case .HeatSinkMaxHeat:
+            imageType = BuildingType.HeatSink
+            name = "Heat Sink Max Heat"
+            comment = "Lv.   Increases max heat by 50%"
+            upgradePrice = 1
+            
+            // HeatInletResearch , HeatOutletResearch:
+            
+        case .WaterPumpProduction:
+            imageType = BuildingType.WaterPump
+            name = "Water Pump"
+            comment = "Lv.   Increases water producetion by 25%"
+            upgradePrice = 1
+            
+        case .GroundwaterPumpProduction:
+            imageType = BuildingType.GroundwaterPump
+            name = "Groundwater Pump"
+            comment = "Lv.   Increases water producetion by 25%"
+            upgradePrice = 1
+            
+        case .WaterElementMaxWater:
+            imageType = BuildingType.WaterPipe
+            name = "Water Element Max Water"
+            comment = "Lv.   Increases water element max water by 50%"
+            upgradePrice = 1
+            
+        case .GeneratorMaxWater:
+            imageType = BuildingType.SmallGenerator
+            name = "Generator Max Water"
+            comment = "Lv.   Increases max water by 25%"
+            upgradePrice = 1
             
         case .OfficeSellEnergy:
             imageType = BuildingType.SmallOffice
-            name = "Office Lv.\(level)"
-            comment = "test123123"
-            upgradePrice = 1000
+            name = "Office Sell Amount"
+            comment = "Lv.   Increases energy sell amount by 50%"
+            upgradePrice = 1
             
+        case .BankEffectiveness:
+            imageType = BuildingType.Bank
+            name = "Bank Effectiveness"
+            comment = "Lv.   Increases bank effectiveness by 10%"
+            upgradePrice = 1
+            
+        case .ResearchCenter:
+            imageType = BuildingType.ResearchCenter
+            name = "Research Center"
+            comment = "Lv.   Increases research producetion by 25%"
+            upgradePrice = 1
+            
+        case .LibraryEffectiveness:
+            imageType = BuildingType.Library
+            name = "Library Effectiveness"
+            comment = "Lv.   Increases library effectiveness by 10%"
+            upgradePrice = 1
+        
         default:
             imageType = BuildingType.WindTurbine
-            name = "\(upgradeType) Lv.\(level)"
+            name = "\(upgradeType)"
             comment = "test123123"
             upgradePrice = 1000
         }
-        
-        
+    
         // image
         let gap = (size.height - tilesScaleSize.height) / 2
         let image = BuildingData(buildType: imageType).image("image")
         image.position = CGPoint(x: size.height / 2, y: gap + image.size.width / 2)
         addChild(image)
-        
+    
         // name
         let upgradeName = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
         upgradeName.name = "upgradeName"
@@ -286,7 +237,7 @@ class UpgradeElement: SKNode {
         upgradeName.verticalAlignmentMode = .Top
         upgradeName.position = CGPoint(x: image.size.width + gap * 2, y: size.height - gap)
         addChild(upgradeName)
-        
+    
         // comment
         let commentLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
         commentLabel.name = "commentLabel"
@@ -297,7 +248,7 @@ class UpgradeElement: SKNode {
         commentLabel.verticalAlignmentMode = .Bottom
         commentLabel.position = CGPoint(x: image.size.width + gap * 2, y: (image.size.height - upgradeName.fontSize) / 2 + gap)
         addChild(commentLabel)
-        
+    
         // money
         let moneyLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
         moneyLabel.name = "researchLabel"
@@ -308,7 +259,7 @@ class UpgradeElement: SKNode {
         moneyLabel.verticalAlignmentMode = .Bottom
         moneyLabel.position = CGPoint(x: image.size.width + gap * 2, y: gap)
         addChild(moneyLabel)
-        
+    
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
         priceLabel.name = "priceLabel"
@@ -464,7 +415,7 @@ class UpgradeScene: SKScene {
         if researchLevel[.NuclearCellResearch] > 0       { elements += [.NuclearCellEffectiveness, .NuclearCellLifetime] }
         if researchLevel[.FusionCellResearch] > 0        { elements += [.FusionCellEffectiveness, .FusionCellLifetime] }
         if researchLevel[.SmallGeneratorResearch] > 0    { elements += [.GeneratorMaxHeat, .GeneratorEffectiveness] }
-        if researchLevel[.BoilerHouseResearch] > 0       { elements += [.BoilerHouseMaxHeat, .BoilerHouseSellAmount] }
+        if researchLevel[.BoilerHouseResearch] > 0       { elements += [.BoilerHouseSellAmount, .BoilerHouseMaxHeat] }
         if researchLevel[.IsolationResearch] > 0         { elements += [.IsolationEffectiveness] }
         if researchLevel[.BatteryResearch] > 0           { elements += [.EnergyBatterySize] }
         if researchLevel[.HeatExchangerResearch] > 0     { elements += [.HeatExchangerMaxHeat] }

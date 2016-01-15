@@ -127,13 +127,22 @@ class ButtonLayer: SKSpriteNode {
         choiceCircle.runAction(SKAction.fadeAlphaTo(1, duration: duration))
         choiceCircle.runAction(SKAction.moveTo(CGPoint(x: buttonEnergy.position.x, y: buttonEnergy.position.y - 2), duration: duration))
     }
+    func beginButtonEnergy() {
+        choiceCircle.position = CGPoint(x: buttonEnergy.position.x, y: -40 * framescale)
+        choiceCircle.alpha = 1
+        choiceCircle.setScale(0.2)
+        let moveUp = SKAction.moveTo(buttonEnergy.position, duration: 0.2)
+        let delay = SKAction.waitForDuration(0.1)
+        let scale = SKAction.scaleTo(1, duration: 0.2)
+        choiceCircle.runAction(SKAction.sequence([moveUp, delay, scale]))
+    }
     func tapButtonUpgrade() {
         let fadeIn = SKAction.fadeAlphaTo(1, duration: 0.1)
         let moveTo = SKAction.moveTo(CGPoint(x: buttonUpgrade.position.x, y: buttonUpgrade.position.y - 2), duration: 0.1)
         let group = SKAction.group([fadeIn, moveTo])
         let delay = SKAction.waitForDuration(0.1)
         let scale = SKAction.scaleTo(0.2, duration: 0.2)
-        let moveDown = SKAction.moveToY(-40, duration: 0.2)
+        let moveDown = SKAction.moveToY(-40 * framescale, duration: 0.2)
         choiceCircle.runAction(SKAction.sequence([group, delay, scale, delay, moveDown]))
     }
     func tapButtonResearch() {
@@ -142,7 +151,7 @@ class ButtonLayer: SKSpriteNode {
         let group = SKAction.group([fadeIn, moveTo])
         let delay = SKAction.waitForDuration(0.1)
         let scale = SKAction.scaleTo(0.2, duration: 0.2)
-        let moveDown = SKAction.moveToY(-40, duration: 0.2)
+        let moveDown = SKAction.moveToY(-40 * framescale, duration: 0.2)
         choiceCircle.runAction(SKAction.sequence([group, delay, scale, delay, moveDown]))
     }
 }
