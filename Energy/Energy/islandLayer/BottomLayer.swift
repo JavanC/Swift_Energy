@@ -327,7 +327,6 @@ class PageEnergy: SKSpriteNode {
         
         energy_ProgressBack = SKSpriteNode(color: colorBlue2, size: size)
         energy_ProgressBack.name = "Energy_ProgressBack"
-//        energy_ProgressBack.alpha = 0.3
         energy_ProgressBack.anchorPoint = CGPoint(x: 0, y: 0.5)
         energy_ProgressBack.position = CGPoint(x: 0, y: size.height / 2)
         addChild(energy_ProgressBack)

@@ -23,29 +23,29 @@ class IslandsScene: SKScene {
         if !contentCreated {
             
             leftarrow = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_left"))
-            leftarrow.size = CGSizeMake(44, 44)
+            leftarrow.size = CGSizeMake(44 * framescale, 44 * framescale)
             leftarrow.anchorPoint = CGPoint(x: 0, y: 1)
-            leftarrow.position = CGPoint(x: 10, y: frame.size.height - 30)
+            leftarrow.position = CGPoint(x: 10 * framescale, y: frame.size.height - 30 * framescale)
             self.addChild(leftarrow)
             backButton = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             backButton.text = "Menu"
             backButton.horizontalAlignmentMode = .Left
             backButton.verticalAlignmentMode = .Center
             backButton.fontColor = SKColor.whiteColor()
-            backButton.fontSize = 35
-            backButton.position = CGPoint(x: 15 + 44, y: Int(frame.size.height) - (30 + 22))
+            backButton.fontSize = 35 * framescale
+            backButton.position = CGPoint(x: (15 + 44) * framescale, y: frame.size.height - (30 + 22) * framescale)
             self.addChild(backButton)
             
             map1Button = SKLabelNode(fontNamed:"SanFranciscoText-BoldItalic")
             map1Button.text = "Select Map1"
-            map1Button.fontSize = 45
-            map1Button.position = CGPoint(x:frame.size.width / 2, y:frame.size.height / 2 + 100)
+            map1Button.fontSize = 45 * framescale
+            map1Button.position = CGPoint(x:frame.size.width / 2, y:frame.size.height / 2 + 100 * framescale)
             self.addChild(map1Button)
             
             map2Button = SKLabelNode(fontNamed:"SanFranciscoText-BoldItalic")
             map2Button.text = "Select Map2"
-            map2Button.fontSize = 45
-            map2Button.position = CGPoint(x:frame.size.width / 2, y:frame.size.height / 2 - 100)
+            map2Button.fontSize = 45 * framescale
+            map2Button.position = CGPoint(x:frame.size.width / 2, y:frame.size.height / 2 - 100 * framescale)
             self.addChild(map2Button)
             
             contentCreated = true

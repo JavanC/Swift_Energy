@@ -8,6 +8,8 @@
 
 import SpriteKit
 // Game UI Data
+var tilesScaleSize: CGSize!
+var framescale: CGFloat!
 var colorMoney = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000)
 var colorResearch = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
 var colorEnergy = UIColor(red: 0.000, green: 0.698, blue: 0.875, alpha: 1.000)
@@ -45,11 +47,14 @@ class MenuScene: SKScene {
     override func didMoveToView(view: SKView) {
         if !contentCreated {
             
+            framescale = frame.size.width / (9 * 64)
+            tilesScaleSize = CGSize(width: 64 * framescale, height: 64 * framescale)
+            
             self.backgroundColor = SKColor.whiteColor()
         
             startGameButton = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             startGameButton.text = "Play"
-            startGameButton.fontSize = 50
+            startGameButton.fontSize = 50 * framescale
             startGameButton.fontColor = SKColor.blackColor()
             startGameButton.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
             self.addChild(startGameButton)
@@ -59,15 +64,13 @@ class MenuScene: SKScene {
             
             initialLevelData()
 
-            print(frame.size)
-            
             contentCreated = true
         }
     }
     
     func initialLevelData() {
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
-            upgradeLevel[UpgradeType(rawValue: count)!] = 0
+            upgradeLevel[UpgradeType(rawValue: count)!] = 1
         }
         for count in 0..<ResearchType.ResearchTypeLength.hashValue {
             researchLevel[ResearchType(rawValue: count)!] = 0

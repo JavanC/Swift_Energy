@@ -8,8 +8,6 @@
 
 import SpriteKit
 
-var tilesScaleSize: CGSize!
-var framescale: CGFloat!
 
 class IslandScene: SKScene {
     
@@ -36,8 +34,6 @@ class IslandScene: SKScene {
         
         // First initial
         if !contentCreated {
-            framescale = frame.size.width / (midTileSize.width * 64)
-            tilesScaleSize = CGSize(width: tilesize.width * framescale, height: tilesize.width * framescale)
             gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
             //        defaults = NSUserDefaults.standardUserDefaults()
             

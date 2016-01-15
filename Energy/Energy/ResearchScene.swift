@@ -21,7 +21,7 @@ class ResearchElement: SKNode {
         
         // background
         background = SKSpriteNode(color: colorBlue4, size: size)
-        background.name = "UpgradeElementBackground"
+        background.name = "researchElementBackground"
         background.anchorPoint = CGPoint(x: 0, y: 0)
         addChild(background)
         
@@ -36,25 +36,25 @@ class ResearchElement: SKNode {
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine"
             comment = "Open Wind turbine technology."
-            researchPrice = 1
+            researchPrice = 100
             
         case .WindTurbineRebuild:
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine Manager"
             comment = "Wind Turbine are automatically replaced."
-            researchPrice = 1
+            researchPrice = 100
             
         case .SolarCellResearch:
             imageType = BuildingType.SolarCell
             name = "Solar Plant"
             comment = "Open Solar Plant technology."
-            researchPrice = 1
+            researchPrice = 100
 
         case .SolarCellRebuild:
             imageType = BuildingType.SolarCell
             name = "Solar Manager"
             comment = "Solar Plant are automatically replaced."
-            researchPrice = 1
+            researchPrice = 100
             
         case .CoalBurnerResearch:
             imageType = BuildingType.CoalBurner
@@ -290,9 +290,9 @@ class ResearchElement: SKNode {
         
         // Upgrade Button
         if !researchDone {
-            let color = (money > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
+            let color = (research > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
             buttonUpgrade = SKShapeNode(rectOfSize: CGSizeMake(tilesScaleSize.width, tilesScaleSize.height), cornerRadius: 10 * framescale)
-            buttonUpgrade.name = (money > researchPrice ? "Upgrade" : "NoMoney")
+            buttonUpgrade.name = (research > researchPrice ? "Upgrade" : "NoMoney")
             buttonUpgrade.fillColor = color
             buttonUpgrade.strokeColor = color
             buttonUpgrade.position = CGPoint(x: size.width - gap - tilesScaleSize.width / 2, y: size.height / 2)
@@ -300,6 +300,14 @@ class ResearchElement: SKNode {
             levelupImage.setScale(0.6 * framescale)
             buttonUpgrade.addChild(levelupImage)
             addChild(buttonUpgrade)
+        }
+    }
+    
+    func checkUpgradeButton() {
+        if !researchDone {
+            buttonUpgrade.name = (research > researchPrice ? "Upgrade" : "NoMoney")
+            buttonUpgrade.fillColor = (research > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
+            buttonUpgrade.strokeColor = (research > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
         }
     }
     
@@ -320,6 +328,7 @@ class ResearchScene: SKScene {
     var itemLabel: SKLabelNode!
     
     var researchdeLayer: SKSpriteNode!
+    var researchElements = [ResearchElement]()
     
     override func didMoveToView(view: SKView) {
         if !contentCreated {
@@ -385,10 +394,11 @@ class ResearchScene: SKScene {
             researchdeLayer.anchorPoint = CGPoint(x: 0, y: 0)
             researchdeLayer.position = CGPoint(x: 0, y: unitHeight)
             addChild(researchdeLayer)
-            updateElement()
             
             contentCreated = true
         }
+        
+        updateElement()
     }
     
     func updateElement() {
@@ -404,6 +414,7 @@ class ResearchScene: SKScene {
         }
         
         // Check Eleents
+        researchElements.removeAll()
         var elements = [ResearchType]()
         elements += [.WindTurbineResearch, .ResearchCenterResearch]
         if researchLevel[.ResearchCenterResearch] == 1   { elements += [.WindTurbineRebuild, .SmallOfficeResearch] }
@@ -425,15 +436,16 @@ class ResearchScene: SKScene {
         // Add Element
         var researchDoneNumber = 0
         for count in 0..<elements.count {
-            let element = ResearchElement(researchType: elements[count], size: elementsize)
-            element.position = positions[count]
-            element.background.color = (count % 2 == 0 ? colorBlue4 : colorBlue3)
-            researchdeLayer.addChild(element)
-            if element.researchDone {
+            let researchElement = ResearchElement(researchType: elements[count], size: elementsize)
+            if researchElement.researchDone {
                 ++researchDoneNumber
-                element.childNodeWithName("researchLabel")?.hidden = true
-                element.childNodeWithName("priceLabel")?.hidden = true
+                researchElement.childNodeWithName("researchLabel")?.hidden = true
+                researchElement.childNodeWithName("priceLabel")?.hidden = true
             }
+            researchElement.position = positions[count]
+            researchElement.background.color = (count % 2 == 0 ? colorBlue4 : colorBlue3)
+            researchElements.append(researchElement)
+            researchdeLayer.addChild(researchElement)
         }
 
         // Caculate MaxPage
@@ -480,5 +492,8 @@ class ResearchScene: SKScene {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
         researchLabel.text = "\(research)"
+        for researchElement in researchElements {
+            researchElement.checkUpgradeButton()
+        }
     }
 }
