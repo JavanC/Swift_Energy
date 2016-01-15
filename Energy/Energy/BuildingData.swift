@@ -268,7 +268,7 @@ class BuildingData {
             
         case .FusionCell:
             imageName = "FusionCell"
-            name = "Fusion Cell"
+            name = "Fusion Plant"
             comment = "Produce heat by nuclear fusion."
             buildPrice = 10
             progress = .Time
@@ -507,7 +507,7 @@ class BuildingData {
     }
     
     func image(name: String) -> SKSpriteNode {
-        let buildingImage = SKSpriteNode(imageNamed: imageName)
+        let buildingImage = SKSpriteNode(texture: buildingAtlas.textureNamed(imageName))
         buildingImage.name = name
         buildingImage.size = tilesScaleSize
         return buildingImage

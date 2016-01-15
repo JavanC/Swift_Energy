@@ -14,6 +14,8 @@ var islandsScene: SKScene!
 var islandScene: SKScene!
 var upgradeScene: SKScene!
 var researchScene: SKScene!
+let buildingAtlas = SKTextureAtlas(named: "building")
+let iconAtlas = SKTextureAtlas(named: "icon")
 
 class GameViewController: UIViewController {
     

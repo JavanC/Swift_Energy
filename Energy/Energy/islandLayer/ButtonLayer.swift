@@ -29,7 +29,7 @@ class ButtonLayer: SKSpriteNode {
         buttonBuild.name = "ButtonBuild"
         buttonBuild.position = CGPoint(x: size.width * 1 / 10, y: size.height / 2)
         buttonBuild.zPosition = 1
-        let buildImage = SKSpriteNode(imageNamed: "Button_build")
+        let buildImage = SKSpriteNode(texture: iconAtlas.textureNamed("building"))
         buildImage.name = "ButtonBuildImage"
         
         buildImage.setScale(framescale * 0.7)
@@ -42,7 +42,7 @@ class ButtonLayer: SKSpriteNode {
         buttonSell.name = "ButtonSell"
         buttonSell.position = CGPoint(x: size.width * 3 / 10, y: size.height / 2)
         buttonSell.zPosition = 1
-        let sellImage = SKSpriteNode(imageNamed: "Button_sell")
+        let sellImage = SKSpriteNode(texture: iconAtlas.textureNamed("sell"))
         sellImage.name = "ButtonSellImage"
         sellImage.setScale(framescale * 0.7)
         sellImage.position = CGPoint(x: 0, y: -3)
@@ -54,7 +54,7 @@ class ButtonLayer: SKSpriteNode {
         buttonEnergy.name = "ButtonEnergy"
         buttonEnergy.position = CGPoint(x: size.width * 5 / 10, y: size.height / 2)
         buttonEnergy.zPosition = 1
-        let energyImage = SKSpriteNode(imageNamed: "Button_lightning")
+        let energyImage = SKSpriteNode(texture: iconAtlas.textureNamed("lightning"))
         energyImage.name = "ButtonEnergyImage"
         energyImage.setScale(framescale * 0.4)
         energyImage.position = CGPoint(x: 1, y: -4)
@@ -66,7 +66,7 @@ class ButtonLayer: SKSpriteNode {
         buttonUpgrade.name = "ButtonUpgrade"
         buttonUpgrade.position = CGPoint(x: size.width * 7 / 10, y: size.height / 2)
         buttonUpgrade.zPosition = 1
-        let upgradeImage = SKSpriteNode(imageNamed: "Button_upgrade")
+        let upgradeImage = SKSpriteNode(texture: iconAtlas.textureNamed("upgrade"))
         upgradeImage.name = "ButtonUpgradeImage"
         upgradeImage.setScale(framescale * 0.6)
         upgradeImage.position = CGPoint(x: 0, y: -3)
@@ -78,7 +78,7 @@ class ButtonLayer: SKSpriteNode {
         buttonResearch.name = "ButtonResearch"
         buttonResearch.position = CGPoint(x: size.width * 9 / 10, y: size.height / 2)
         buttonResearch.zPosition = 1
-        let researchImage = SKSpriteNode(imageNamed: "Button_research")
+        let researchImage = SKSpriteNode(texture: iconAtlas.textureNamed("research"))
         researchImage.name = "ButtonResearchImage"
         researchImage.setScale(framescale * 0.6)
         researchImage.position = CGPoint(x: 0, y: -3)

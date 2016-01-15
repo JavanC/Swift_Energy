@@ -22,7 +22,7 @@ class IslandsScene: SKScene {
         
         if !contentCreated {
             
-            leftarrow = SKSpriteNode(imageNamed: "left arrow")
+            leftarrow = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_left"))
             leftarrow.size = CGSizeMake(44, 44)
             leftarrow.anchorPoint = CGPoint(x: 0, y: 1)
             leftarrow.position = CGPoint(x: 10, y: frame.size.height - 30)

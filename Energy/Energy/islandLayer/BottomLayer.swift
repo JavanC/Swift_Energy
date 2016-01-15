@@ -160,6 +160,7 @@ class PageBuild: SKSpriteNode {
     var selectBoxArrow: SKSpriteNode!
     var selectInfo = PageInformation()
     var rebuildButton: SKShapeNode!
+    var checkButton: SKSpriteNode!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position = position
@@ -178,15 +179,14 @@ class PageBuild: SKSpriteNode {
             images.append(image)
             addChild(image)
         }
-        let rect = CGRect(x: -32 * framescale, y: -32 * framescale, width: 64 * framescale, height: 64 * framescale)
-        rebuildButton = SKShapeNode(rect: rect, cornerRadius: 10 * framescale)
+        rebuildButton = SKShapeNode(rectOfSize: CGSizeMake(tilesScaleSize.width, tilesScaleSize.height), cornerRadius: 10 * framescale)
         rebuildButton.name = "SelectImage5"
         rebuildButton.position = imagePosition[4]
-        let buildingiImage = SKSpriteNode(imageNamed: "Button_build")
+        let buildingiImage = SKSpriteNode(texture: iconAtlas.textureNamed("building"))
         buildingiImage.name = "buildingImage"
         buildingiImage.setScale(0.4 * framescale)
         rebuildButton.addChild(buildingiImage)
-        let refreshImage = SKSpriteNode(imageNamed: "refresh")
+        let refreshImage = SKSpriteNode(texture: iconAtlas.textureNamed("refresh"))
         refreshImage.name = "refreshImage"
         refreshImage.setScale(framescale)
         rebuildButton.addChild(refreshImage)
@@ -199,7 +199,7 @@ class PageBuild: SKSpriteNode {
         selectBox.zPosition = 1
         addChild(selectBox)
         
-        selectBoxArrow = SKSpriteNode(imageNamed: "up arrow")
+        selectBoxArrow = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_up"))
         selectBoxArrow.name = "selectBoxArrow"
         selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50)
         let upAction = SKAction.sequence([SKAction.moveByX(0, y: 5, duration: 0.5), SKAction.moveByX(0, y: -5, duration: 0.5)])
@@ -212,6 +212,14 @@ class PageBuild: SKSpriteNode {
         selectInfo.alpha = 1
         selectInfo.hidden = true
         addChild(selectInfo)
+        
+        checkButton = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
+        checkButton.name = "checkButton"
+        checkButton.setScale(framescale)
+        checkButton.position = imagePosition[4]
+        checkButton.hidden = true
+        checkButton.alpha = 0
+        addChild(checkButton)
     }
     
     func rebuildOn() {
@@ -260,6 +268,7 @@ class PageBuild: SKSpriteNode {
         childNodeWithName("SelectImage\(selectNumber)")?.runAction(seq)
         // Show
         selectInfo.runAction(SKAction.sequence([SKAction.unhide(), SKAction.waitForDuration(0.2), SKAction.fadeInWithDuration(0.2)]))
+        checkButton.runAction(SKAction.sequence([SKAction.unhide(), SKAction.waitForDuration(0.2), SKAction.fadeInWithDuration(0.2)]))
     }
     
     func closeSelectInformation() {
@@ -271,6 +280,7 @@ class PageBuild: SKSpriteNode {
         // Hide
         selectInfo.childNodeWithName("infoImage")?.runAction(SKAction.sequence([SKAction.hide(), SKAction.waitForDuration(0.2), SKAction.unhide()]))
         selectInfo.runAction(SKAction.sequence([SKAction.fadeAlphaTo(0, duration: 0.2), SKAction.hide()]))
+        checkButton.runAction(SKAction.sequence([SKAction.fadeAlphaTo(0, duration: 0.2), SKAction.hide()]))
         // Move
         childNodeWithName("SelectImage\(selectNumber)")?.runAction(SKAction.unhide())
         childNodeWithName("SelectImage\(selectNumber)")?.runAction(SKAction.moveTo(pos, duration: 0.2))

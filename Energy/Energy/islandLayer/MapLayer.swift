@@ -24,7 +24,7 @@ class Building: SKNode {
         name = String(buildType.hashValue)
 
         buildingData = BuildingData(buildType: buildType)
-        buildingNode = SKSpriteNode(imageNamed: buildingData.imageName)
+        buildingNode = SKSpriteNode(texture: buildingAtlas.textureNamed(buildingData.imageName))
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(buildingNode)
         
@@ -42,7 +42,6 @@ class Building: SKNode {
             progressBack.alpha = 0.3
             progressBack.zPosition = 1
             addChild(progressBack)
-            progress = SKSpriteNode()
             progress = SKSpriteNode()
             progress.size = CGSize(width: 56, height: 5)
             progress.anchorPoint = CGPoint(x: 0, y: 0)

@@ -10,7 +10,7 @@ import SpriteKit
 
 class ResearchElement: SKNode {
     var background: SKSpriteNode!
-    var buttonUpgrade: SKSpriteNode!
+    var buttonUpgrade: SKShapeNode!
     var researchType: ResearchType!
     var researchPrice: Int!
     var researchDone: Bool = false
@@ -30,90 +30,212 @@ class ResearchElement: SKNode {
         var name: String!
         var comment: String!
         let level = Int(researchLevel[researchType]!)
+        if level >= 1 { researchDone = true }
         switch researchType {
         case .WindTurbineResearch:
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine"
-            comment = "Open wind turbine technology."
+            comment = "Open Wind turbine technology."
             researchPrice = 1
-            if level >= 1 { researchDone = true }
             
         case .WindTurbineRebuild:
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine Manager"
             comment = "Wind Turbine are automatically replaced."
             researchPrice = 1
-            if level >= 1 { researchDone = true }
             
-        case .SolarCellResearch: break
-        case .SolarCellRebuild: break
-            
+        case .SolarCellResearch:
+            imageType = BuildingType.SolarCell
+            name = "Solar Plant"
+            comment = "Open Solar Plant technology."
+            researchPrice = 1
+
+        case .SolarCellRebuild:
+            imageType = BuildingType.SolarCell
+            name = "Solar Manager"
+            comment = "Solar Plant are automatically replaced."
+            researchPrice = 1
             
         case .CoalBurnerResearch:
             imageType = BuildingType.CoalBurner
-            name = "Coal Burner"
-            comment = "test123123"
+            name = "Coal-Fired Plant"
+            comment = "Open Coal-Fired technology."
             researchPrice = 10
-            if level >= 1 { researchDone = true }
             
         case .CoalBurnerRebuild:
             imageType = BuildingType.CoalBurner
-            name = "Coal Burner Rebuild"
-            comment = "test123123"
+            name = "Coal-Fired Manager"
+            comment = "Coal Coal-Fired are automatically replaced."
             researchPrice = 1
-            if level >= 1 { researchDone = true }
             
-        case .WaveCellResearch: break
-        case .WaveCellRebuild: break
-        case .FusionCellResearch: break
-        case .FusionCellRebuild:break
-        case .NuclearCellResearch:break
-        case .NuclearCellRebuild:break
-        case .GasBurnerResearch:break
-        case .GasBurnerRebuild:break
+        case .WaveCellResearch:
+            imageType = BuildingType.WaveCell
+            name = "Wave Energy"
+            comment = "Open Wave Energy technology."
+            researchPrice = 1
             
+        case .WaveCellRebuild:
+            imageType = BuildingType.WaveCell
+            name = "Wave Energy Manager"
+            comment = "Wave Energy are automatically replaced."
+            researchPrice = 1
+            
+        case .GasBurnerResearch:
+            imageType = BuildingType.GasBurner
+            name = "Gas-Fired Plant"
+            comment = "Open Gas-Fired Plant technology."
+            researchPrice = 1
+            
+        case .GasBurnerRebuild:
+            imageType = BuildingType.GasBurner
+            name = "Gas-Fired Manager"
+            comment = "Gas-Fired are automatically replaced."
+            researchPrice = 1
+            
+        case .NuclearCellResearch:
+            imageType = BuildingType.NuclearCell
+            name = "Nuclear Plant"
+            comment = "Open Nuclear Plant technology."
+            researchPrice = 1
+            
+        case .NuclearCellRebuild:
+            imageType = BuildingType.NuclearCell
+            name = "Nuclear Manager"
+            comment = "Nuclear are automatically replaced."
+            researchPrice = 1
+            
+        case .FusionCellResearch:
+            imageType = BuildingType.FusionCell
+            name = "Fusion Plant"
+            comment = "Open Fusion Plant technology."
+            researchPrice = 1
+            
+        case .FusionCellRebuild:
+            imageType = BuildingType.FusionCell
+            name = "Fusion Manager"
+            comment = "Fusion are automatically replaced."
+            researchPrice = 1
             
         case .SmallGeneratorResearch:
             imageType = BuildingType.SmallGenerator
             name = "Small Generator"
-            comment = "test123123"
+            comment = "Open Small Generator technology."
             researchPrice = 1
-            if level >= 1 { researchDone = true }
             
-        case .MediumGeneratorResearch: break
-        case .LargeGeneratorResearch: break
-        case .BoilerHouseResearch: break
-        case .LargeBoilerHouseResearch: break
-        case .IsolationResearch: break
-        case .BatteryResearch: break
-        case .HeatExchangerResearch:break
-        case .HeatSinkResearch:break
-        case .HeatInletResearch:break
-        case .HeatOutletResearch: break
-        case .WaterPumpResearch:break
-        case .GroundwaterPumpResearch:break
-        case .WaterPipeResearch:break
+        case .MediumGeneratorResearch:
+            imageType = BuildingType.MediumGenerator
+            name = "Medium Generator"
+            comment = "Open Medium Generator technology."
+            researchPrice = 1
+            
+        case .LargeGeneratorResearch:
+            imageType = BuildingType.LargeGenerator
+            name = "Large Generator"
+            comment = "Open Large Generator technology."
+            researchPrice = 1
+            
+        case .BoilerHouseResearch:
+            imageType = BuildingType.BoilerHouse
+            name = "Boiler House"
+            comment = "Open Boiler House technology."
+            researchPrice = 1
+            
+        case .LargeBoilerHouseResearch:
+            imageType = BuildingType.LargeBoilerHouse
+            name = "Large Boiler House"
+            comment = "Open Large Boiler House technology."
+            researchPrice = 1
+            
+        case .IsolationResearch:
+            imageType = BuildingType.Isolation
+            name = "Isolation"
+            comment = "Open Isolation technology."
+            researchPrice = 1
+            
+        case .BatteryResearch:
+            imageType = BuildingType.Battery
+            name = "Battery"
+            comment = "Open Battery technology."
+            researchPrice = 1
+            
+        case .HeatExchangerResearch:
+            imageType = BuildingType.HeatExchanger
+            name = "Heat Exchanger"
+            comment = "Open Heat Exchanger technology."
+            researchPrice = 1
+            
+        case .HeatSinkResearch:
+            imageType = BuildingType.HeatSink
+            name = "Heat Sink"
+            comment = "Open Heat Sink technology."
+            researchPrice = 1
+            
+            // HeatInletResearch , HeatOutletResearch:
+
+        case .WaterPumpResearch:
+            imageType = BuildingType.WaterPump
+            name = "Water Pump"
+            comment = "Open Water Pump technology."
+            researchPrice = 1
+            
+        case .GroundwaterPumpResearch:
+            imageType = BuildingType.GroundwaterPump
+            name = "Groundwater Pump"
+            comment = "Open Groundwater Pump technology."
+            researchPrice = 1
+            
+        case .WaterPipeResearch:
+            imageType = BuildingType.WaterPipe
+            name = "Water Pipe"
+            comment = "Open Water Pipe technology."
+            researchPrice = 1
             
         case .SmallOfficeResearch:
             imageType = BuildingType.SmallOffice
             name = "Small Office"
-            comment = "test123123"
+            comment = "Open Small Office technology."
             researchPrice = 1
-            if level >= 1 { researchDone = true }
             
-        case .MediumOfficeResearch:break
-        case .LargeOfficeResearch:break
-        case .BankResearch:break
-        case .ResearchCenterResearch: break
-        case .AdvancedResearchCenterResearch: break
-        case .LibraryResearch: break
+        case .MediumOfficeResearch:
+            imageType = BuildingType.MediumOffice
+            name = "Medium Office"
+            comment = "Open Medium Office technology."
+            researchPrice = 1
+            
+        case .LargeOfficeResearch:
+            imageType = BuildingType.LargeOffice
+            name = "Large Office"
+            comment = "Open Large Office technology."
+            researchPrice = 1
+            
+        case .BankResearch:
+            imageType = BuildingType.Bank
+            name = "Bank"
+            comment = "Open Bank technology."
+            researchPrice = 1
+            
+        case .ResearchCenterResearch:
+            imageType = BuildingType.ResearchCenter
+            name = "Research Center"
+            comment = "Open Research Center technology."
+            researchPrice = 1
+            
+        case .AdvancedResearchCenterResearch:
+            imageType = BuildingType.AdvancedResearchCenter
+            name = "Advanced Research Center"
+            comment = "Open Advanced Research Center technology."
+            researchPrice = 1
+        case .LibraryResearch:
+            imageType = BuildingType.Library
+            name = "Library"
+            comment = "Open Library technology."
+            researchPrice = 1
             
         default:
             imageType = BuildingType.WindTurbine
             name = "\(researchType)"
             comment = "test123123"
             researchPrice = 1
-            if level >= 1 { researchDone = true }
         }
         
         // image
@@ -168,10 +290,15 @@ class ResearchElement: SKNode {
         
         // Upgrade Button
         if !researchDone {
-            let color = (money > researchPrice ? SKColor.greenColor() : SKColor.redColor())
-            buttonUpgrade = SKSpriteNode(color: color, size: tilesScaleSize)
+            let color = (money > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
+            buttonUpgrade = SKShapeNode(rectOfSize: CGSizeMake(tilesScaleSize.width, tilesScaleSize.height), cornerRadius: 10 * framescale)
             buttonUpgrade.name = (money > researchPrice ? "Upgrade" : "NoMoney")
+            buttonUpgrade.fillColor = color
+            buttonUpgrade.strokeColor = color
             buttonUpgrade.position = CGPoint(x: size.width - gap - tilesScaleSize.width / 2, y: size.height / 2)
+            let levelupImage = SKSpriteNode(texture: iconAtlas.textureNamed("levelup"))
+            levelupImage.setScale(0.6 * framescale)
+            buttonUpgrade.addChild(levelupImage)
             addChild(buttonUpgrade)
         }
     }
@@ -207,7 +334,7 @@ class ResearchScene: SKScene {
             line.position = CGPoint(x: size.width / 2, y: frame.size.height - unitHeight)
             addChild(line)
             
-            let researchImage = SKSpriteNode(imageNamed: "Button_research")
+            let researchImage = SKSpriteNode(texture: iconAtlas.textureNamed("research"))
             researchImage.name = "researchImage"
             researchImage.setScale(0.9 * framescale)
             researchImage.position = topCenter
@@ -234,7 +361,7 @@ class ResearchScene: SKScene {
             itemLabel.position = CGPoint(x: frame.size.width * 0.95, y: frame.size.height - unitHeight * 0.9)
             addChild(itemLabel)
             
-            backButton = SKSpriteNode(imageNamed: "down arrow")
+            backButton = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_down"))
             backButton.name = "back button"
             backButton.setScale(framescale)
             backButton.position = CGPoint(x: frame.size.width / 2, y: unitHeight / 2)
@@ -242,12 +369,12 @@ class ResearchScene: SKScene {
             backButton.runAction(SKAction.repeatActionForever(downAction))
             addChild(backButton)
             
-            nextPage = SKSpriteNode(imageNamed: "next page")
+            nextPage = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_right"))
             nextPage.name = "NextPage"
             nextPage.setScale(0.8 * framescale)
             nextPage.position = CGPoint(x: frame.size.width * 0.9, y: unitHeight  / 2)
             addChild(nextPage)
-            prevPage = SKSpriteNode(imageNamed: "next page")
+            prevPage = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_right"))
             prevPage.name = "PrevPage"
             prevPage.setScale(0.8 * framescale)
             prevPage.position = CGPoint(x: frame.size.width * 0.1, y: unitHeight  / 2)
