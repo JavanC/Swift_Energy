@@ -159,9 +159,10 @@ class IslandScene: SKScene {
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
                     self.view?.presentScene(islandsScene, transition: doors)
                     
-                case topLayer.buttonPause:
+                case topLayer.buttonPlayPause:
                     print("Pause: \(isPause)")
                     isPause = !isPause
+                    topLayer.isPauseChange()
                     if isPause { gameTimer.invalidate() }
                     else { gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true) }
                     

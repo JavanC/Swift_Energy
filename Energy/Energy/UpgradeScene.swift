@@ -119,7 +119,7 @@ class UpgradeElement: SKNode {
         case .GeneratorEffectiveness:
             imageType = BuildingType.SmallGenerator
             name = "Generator Effectiveness"
-            comment = "Increases heat-energy conversion by 25%"
+            comment = "Increases heat to energy rate by 25%"
             upgradePrice = 1
             
         case .GeneratorMaxHeat:
@@ -181,7 +181,7 @@ class UpgradeElement: SKNode {
         case .WaterElementMaxWater:
             imageType = BuildingType.WaterPipe
             name = "Water Element Max Water"
-            comment = "Increases water element max by 50%"
+            comment = "Increases max water by 50%"
             upgradePrice = 1
             
         case .GeneratorMaxWater:
@@ -406,12 +406,11 @@ class UpgradeScene: SKScene {
         upgradeLayer.removeAllChildren()
         // Caculae Position
         var positions = [CGPoint]()
-        let gap:CGFloat = 20
         let num:CGFloat = 8
-        let elementsize = CGSizeMake(frame.size.width - gap * 2, (upgradeLayer.size.height - gap) / num - gap)
+        let elementsize = CGSizeMake(frame.size.width, upgradeLayer.size.height / num)
         for x in 0..<4 {
             for y in 0..<Int(num) {
-                positions.append(CGPoint(x: gap + frame.size.width * CGFloat(x), y: upgradeLayer.size.height - (elementsize.height + gap) * CGFloat(y + 1)))
+                positions.append(CGPoint(x: frame.size.width * CGFloat(x), y: upgradeLayer.size.height - elementsize.height * CGFloat(y + 1)))
             }
         }
         

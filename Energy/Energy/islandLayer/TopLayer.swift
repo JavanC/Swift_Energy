@@ -11,7 +11,7 @@ import SpriteKit
 class TopLayer: SKSpriteNode {
     
     var buttonMenu: SKSpriteNode!
-    var buttonPause: SKSpriteNode!
+    var buttonPlayPause: SKSpriteNode!
     var moneyLabel: SKLabelNode!
     var researchLabel: SKLabelNode!
 
@@ -29,11 +29,13 @@ class TopLayer: SKSpriteNode {
         buttonMenu.position = CGPoint(x: 0, y: 0)
         addChild(buttonMenu)
         
-        buttonPause = SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: 64, height: 64))
-        buttonPause.name = "ButtonRebuild"
-        buttonPause.anchorPoint = CGPoint(x: 1, y: 1)
-        buttonPause.position = CGPoint(x: self.size.width, y: self.size.height)
-        addChild(buttonPause)
+        let gap = (size.height - tilesScaleSize.height) / 2
+        buttonPlayPause = SKSpriteNode(texture: iconAtlas.textureNamed(isPause ? "pause" : "play"))
+        buttonPlayPause.name = "buttonPlayPause"
+        buttonPlayPause.setScale(0.8 * framescale)
+        buttonPlayPause.anchorPoint = CGPoint(x: 1, y: 0.5)
+        buttonPlayPause.position = CGPoint(x: size.width - gap, y: size.height / 2)
+        addChild(buttonPlayPause)
         
         let labelgap: CGFloat = size.height * 0.16
         let labelsize = (self.size.height - labelgap * 3) / 2
@@ -52,5 +54,9 @@ class TopLayer: SKSpriteNode {
         researchLabel.horizontalAlignmentMode = .Left
         researchLabel.position = CGPoint(x: buttonMenu.size.width + 20, y: labelgap * 1 + labelsize * 0)
         addChild(researchLabel)
+    }
+    
+    func isPauseChange() {
+        buttonPlayPause.runAction(SKAction.setTexture(iconAtlas.textureNamed(isPause ? "pause" : "play")))
     }
 }

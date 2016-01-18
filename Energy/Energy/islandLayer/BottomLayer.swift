@@ -350,6 +350,8 @@ class PageEnergy: SKSpriteNode {
         label.fontSize = size.height / 4
         label.verticalAlignmentMode = .Center
         label.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        let fadeInFadeOut = SKAction.sequence([SKAction.fadeInWithDuration(1), SKAction.fadeOutWithDuration(1)])
+        label.runAction(SKAction.repeatActionForever(fadeInFadeOut))
         addChild(label)
     }
     
