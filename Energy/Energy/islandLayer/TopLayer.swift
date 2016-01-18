@@ -23,28 +23,29 @@ class TopLayer: SKSpriteNode {
         self.name = "TopLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
-        buttonMenu = SKSpriteNode(color: SKColor.whiteColor(), size: CGSize(width: size.height, height: size.height))
-        buttonMenu.name = "ButtonMenu"
-        buttonMenu.anchorPoint = CGPoint(x: 0, y: 0)
-        buttonMenu.position = CGPoint(x: 0, y: 0)
+        let gap = (size.height - tilesScaleSize.height) / 2
+        buttonMenu = SKSpriteNode(texture: iconAtlas.textureNamed("map"))
+        buttonMenu.name = "buttonMap"
+        buttonMenu.setScale(0.8 * framescale)
+        buttonMenu.anchorPoint = CGPoint(x: 0, y: 0.5)
+        buttonMenu.position = CGPoint(x: gap, y: size.height / 2)
         addChild(buttonMenu)
         
-        let gap = (size.height - tilesScaleSize.height) / 2
-        buttonPlayPause = SKSpriteNode(texture: iconAtlas.textureNamed(isPause ? "pause" : "play"))
+        buttonPlayPause = SKSpriteNode(texture: iconAtlas.textureNamed(isPause ? "button_pause" : "button_play"))
         buttonPlayPause.name = "buttonPlayPause"
-        buttonPlayPause.setScale(0.8 * framescale)
+        buttonPlayPause.setScale(0.6 * framescale)
         buttonPlayPause.anchorPoint = CGPoint(x: 1, y: 0.5)
         buttonPlayPause.position = CGPoint(x: size.width - gap, y: size.height / 2)
         addChild(buttonPlayPause)
         
-        let labelgap: CGFloat = size.height * 0.16
-        let labelsize = (self.size.height - labelgap * 3) / 2
+        let labelsize = (self.size.height) * 2 / 7
         moneyLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
         moneyLabel.name = "MoneyLabel"
         moneyLabel.fontColor = colorMoney
         moneyLabel.fontSize = labelsize
         moneyLabel.horizontalAlignmentMode = .Left
-        moneyLabel.position = CGPoint(x: buttonMenu.size.width + 20, y: labelgap * 2 + labelsize * 1)
+        moneyLabel.verticalAlignmentMode = .Center
+        moneyLabel.position = CGPoint(x: tilesScaleSize.width + gap * 2, y: size.height * 5 / 7)
         addChild(moneyLabel)
 
         researchLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
@@ -52,11 +53,12 @@ class TopLayer: SKSpriteNode {
         researchLabel.fontColor = colorResearch
         researchLabel.fontSize = labelsize
         researchLabel.horizontalAlignmentMode = .Left
-        researchLabel.position = CGPoint(x: buttonMenu.size.width + 20, y: labelgap * 1 + labelsize * 0)
+        researchLabel.verticalAlignmentMode = .Center
+        researchLabel.position = CGPoint(x: tilesScaleSize.width + gap * 2, y: size.height * 2 / 7)
         addChild(researchLabel)
     }
     
     func isPauseChange() {
-        buttonPlayPause.runAction(SKAction.setTexture(iconAtlas.textureNamed(isPause ? "pause" : "play")))
+        buttonPlayPause.runAction(SKAction.setTexture(iconAtlas.textureNamed(isPause ? "button_pause" : "button_play")))
     }
 }
