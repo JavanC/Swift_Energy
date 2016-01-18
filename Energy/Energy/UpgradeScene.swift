@@ -35,133 +35,133 @@ class UpgradeElement: SKNode {
         case .WindTurbineEffectiveness:
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine"
-            comment = "Lv.   Increases energy producetion by 50%"
+            comment = "Increases energy producetion by 50%"
             upgradePrice = 1
             
         case .WindTurbineLifetime:
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine Lifetime"
-            comment = "Lv.   Increases lifetime producetion by 500%"
+            comment = "Increases lifetime producetion by 500%"
             upgradePrice = 1
             
         case .SolarCellEffectiveness:
             imageType = BuildingType.SolarCell
             name = "Solar Plant"
-            comment = "Lv.   Increases heat producetion by 25%"
+            comment = "Increases heat producetion by 25%"
             upgradePrice = 1
             
         case .SolarCellLifetime:
             imageType = BuildingType.SolarCell
             name = "Solar Lifetime"
-            comment = "Lv.   Increases lifetime producetion by 50%"
+            comment = "Increases lifetime producetion by 50%"
             upgradePrice = 1
             
         case .CoalBurnerEffectiveness:
             imageType = BuildingType.CoalBurner
             name = "Coal-Fired Plant"
-            comment = "Lv.   Increases heat producetion by 25%"
+            comment = "Increases heat producetion by 25%"
             upgradePrice = 10
             
         case .CoalBurnerLifetime:
             imageType = BuildingType.CoalBurner
             name = "Coal-Fired Lifetime"
-            comment = "Lv.   Increases lifetime producetion by 50%"
+            comment = "Increases lifetime producetion by 50%"
             upgradePrice = 1
             
         case .WaveCellEffectiveness:
             imageType = BuildingType.WaveCell
             name = "Wave Energy"
-            comment = "Lv.   Increases energy producetion by 25%"
+            comment = "Increases energy producetion by 25%"
             upgradePrice = 1
             
         case .WaveCellLifetime:
             imageType = BuildingType.WaveCell
             name = "Wave Energy Lifetime"
-            comment = "Lv.   Increases lifetime producetion by 50%"
+            comment = "Increases lifetime producetion by 50%"
             upgradePrice = 1
             
         case .GasBurnerEffectiveness:
             imageType = BuildingType.GasBurner
             name = "Gas-Fired Plant"
-            comment = "Lv.   Increases heat producetion by 25%"
+            comment = "Increases heat producetion by 25%"
             upgradePrice = 1
             
         case .GasBurnerLifetime:
             imageType = BuildingType.GasBurner
             name = "Gas-Fired Lifetime"
-            comment = "Lv.   Increases lifetime producetion by 50%"
+            comment = "Increases lifetime producetion by 50%"
             upgradePrice = 1
             
         case .NuclearCellEffectiveness:
             imageType = BuildingType.NuclearCell
             name = "Nuclear Plant"
-            comment = "Lv.   Increases heat producetion by 25%"
+            comment = "Increases heat producetion by 25%"
             upgradePrice = 1
             
         case .NuclearCellLifetime:
             imageType = BuildingType.NuclearCell
             name = "Nuclear Lifetime"
-            comment = "Lv.   Increases lifetime producetion by 50%"
+            comment = "Increases lifetime producetion by 50%"
             upgradePrice = 1
             
         case .FusionCellEffectiveness:
             imageType = BuildingType.FusionCell
             name = "Fusion Plant"
-            comment = "Lv.   Increases heat producetion by 25%"
+            comment = "Increases heat producetion by 25%"
             upgradePrice = 1
             
         case .FusionCellLifetime:
             imageType = BuildingType.FusionCell
             name = "Fusion Lifetime"
-            comment = "Lv.   Increases lifetime producetion by 50%"
+            comment = "Increases lifetime producetion by 50%"
             upgradePrice = 1
             
         case .GeneratorEffectiveness:
             imageType = BuildingType.SmallGenerator
             name = "Generator Effectiveness"
-            comment = "Lv.   Increases heat to energy conversion by 25%"
+            comment = "Increases heat-energy conversion by 25%"
             upgradePrice = 1
             
         case .GeneratorMaxHeat:
             imageType = BuildingType.SmallGenerator
             name = "Generator Max Heat"
-            comment = "Lv.   Increases max heat by 50%"
+            comment = "Increases max heat by 50%"
             upgradePrice = 1
             
         case .BoilerHouseSellAmount:
             imageType = BuildingType.BoilerHouse
             name = "Boiler House"
-            comment = "Lv.   Increases energy sell amount by 40%"
+            comment = "Increases energy sell amount by 40%"
             upgradePrice = 1
             
         case .BoilerHouseMaxHeat:
             imageType = BuildingType.BoilerHouse
             name = "Boiler House Max Heat"
-            comment = "Lv.   Increases max heat by 50%"
+            comment = "Increases max heat by 50%"
             upgradePrice = 1
             
         case .IsolationEffectiveness:
             imageType = BuildingType.Isolation
             name = "Isolation Effectiveness"
-            comment = "Lv.   Increases isolation effectiveness by 10%"
+            comment = "Increases isolation effectiveness by 10%"
             upgradePrice = 1
             
         case .EnergyBatterySize:
             imageType = BuildingType.Battery
             name = "Battery Size"
-            comment = "Lv.   Increases max energy storage by 50%"
+            comment = "Increases max energy storage by 50%"
             upgradePrice = 1
             
         case .HeatExchangerMaxHeat:
             imageType = BuildingType.HeatExchanger
             name = "Heat Exchanger Max Heat"
-            comment = "Lv.   Increases max heat by 50%"
+            comment = "Increases max heat by 50%"
             upgradePrice = 1
             
         case .HeatSinkMaxHeat:
             imageType = BuildingType.HeatSink
             name = "Heat Sink Max Heat"
-            comment = "Lv.   Increases max heat by 50%"
+            comment = "Increases max heat by 50%"
             upgradePrice = 1
             
             // HeatInletResearch , HeatOutletResearch:
@@ -169,49 +169,49 @@ class UpgradeElement: SKNode {
         case .WaterPumpProduction:
             imageType = BuildingType.WaterPump
             name = "Water Pump"
-            comment = "Lv.   Increases water producetion by 25%"
+            comment = "Increases water producetion by 25%"
             upgradePrice = 1
             
         case .GroundwaterPumpProduction:
             imageType = BuildingType.GroundwaterPump
             name = "Groundwater Pump"
-            comment = "Lv.   Increases water producetion by 25%"
+            comment = "Increases water producetion by 25%"
             upgradePrice = 1
             
         case .WaterElementMaxWater:
             imageType = BuildingType.WaterPipe
             name = "Water Element Max Water"
-            comment = "Lv.   Increases water element max water by 50%"
+            comment = "Increases water element max by 50%"
             upgradePrice = 1
             
         case .GeneratorMaxWater:
             imageType = BuildingType.SmallGenerator
             name = "Generator Max Water"
-            comment = "Lv.   Increases max water by 25%"
+            comment = "Increases max water by 25%"
             upgradePrice = 1
             
         case .OfficeSellEnergy:
             imageType = BuildingType.SmallOffice
             name = "Office Sell Amount"
-            comment = "Lv.   Increases energy sell amount by 50%"
+            comment = "Increases energy sell amount by 50%"
             upgradePrice = 1
             
         case .BankEffectiveness:
             imageType = BuildingType.Bank
             name = "Bank Effectiveness"
-            comment = "Lv.   Increases bank effectiveness by 10%"
+            comment = "Increases bank effectiveness by 10%"
             upgradePrice = 1
             
         case .ResearchCenter:
             imageType = BuildingType.ResearchCenter
             name = "Research Center"
-            comment = "Lv.   Increases research producetion by 25%"
+            comment = "Increases research producetion by 25%"
             upgradePrice = 1
             
         case .LibraryEffectiveness:
             imageType = BuildingType.Library
             name = "Library Effectiveness"
-            comment = "Lv.   Increases library effectiveness by 10%"
+            comment = "Increases library effectiveness by 10%"
             upgradePrice = 1
         
         default:
@@ -248,27 +248,38 @@ class UpgradeElement: SKNode {
         commentLabel.verticalAlignmentMode = .Bottom
         commentLabel.position = CGPoint(x: image.size.width + gap * 2, y: (image.size.height - upgradeName.fontSize) / 2 + gap)
         addChild(commentLabel)
-    
-        // money
-        let moneyLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
-        moneyLabel.name = "researchLabel"
-        moneyLabel.text = "Price:"
-        moneyLabel.fontColor = SKColor.lightGrayColor()
-        moneyLabel.fontSize = (image.size.height - upgradeName.fontSize * 1.2) / 2
-        moneyLabel.horizontalAlignmentMode = .Left
-        moneyLabel.verticalAlignmentMode = .Bottom
-        moneyLabel.position = CGPoint(x: image.size.width + gap * 2, y: gap)
-        addChild(moneyLabel)
+        
+        // level and money label
+        let infoLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        infoLabel.name = "levelLabel"
+        infoLabel.text = "Lv.     Price:"
+        infoLabel.fontColor = SKColor.lightGrayColor()
+        infoLabel.fontSize = (image.size.height - upgradeName.fontSize * 1.2) / 2
+        infoLabel.horizontalAlignmentMode = .Left
+        infoLabel.verticalAlignmentMode = .Bottom
+        infoLabel.position = CGPoint(x: image.size.width + gap * 2, y: gap)
+        addChild(infoLabel)
+        
+        // level
+        let levelLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        levelLabel.name = "levelValue"
+        levelLabel.text = "\(level)"
+        levelLabel.fontColor = colorBlue1
+        levelLabel.fontSize = infoLabel.fontSize
+        levelLabel.horizontalAlignmentMode = .Left
+        levelLabel.verticalAlignmentMode = .Center
+        levelLabel.position = CGPoint(x: image.size.width + gap * 2 + 20 * framescale, y: gap + infoLabel.frame.height / 2)
+        addChild(levelLabel)
     
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
         priceLabel.name = "priceLabel"
         priceLabel.text = "\(upgradePrice)"
         priceLabel.fontColor = colorMoney
-        priceLabel.fontSize = (image.size.height - upgradeName.fontSize * 1.2) / 2
+        priceLabel.fontSize = infoLabel.fontSize
         priceLabel.horizontalAlignmentMode = .Left
-        priceLabel.verticalAlignmentMode = .Bottom
-        priceLabel.position = CGPoint(x: image.size.width + gap * 2 + moneyLabel.frame.width, y: gap)
+        priceLabel.verticalAlignmentMode = .Center
+        priceLabel.position = CGPoint(x: infoLabel.position.x + infoLabel.frame.width, y: gap + infoLabel.frame.height / 2)
         addChild(priceLabel)
         
         // Upgrade Button
