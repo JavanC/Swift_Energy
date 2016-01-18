@@ -103,12 +103,12 @@ class BuildingSelectLayer: SKNode {
     }
     
     // Show page
-    func showPage(show: Bool) {
+    func showPage(show: Bool, duration: Double = 0.2) {
         if show {
-            let moveUp = SKAction.moveToY(0, duration: 0.2)
+            let moveUp = SKAction.moveToY(0, duration: duration)
             selectLayer.runAction(SKAction.sequence([SKAction.unhide(), moveUp]))
         } else {
-            let moveDown = SKAction.moveToY(-selectLayer.size.height, duration: 0.2)
+            let moveDown = SKAction.moveToY(-selectLayer.size.height, duration: duration)
             selectLayer.runAction(SKAction.sequence([moveDown, SKAction.hide()]))
         }
     }

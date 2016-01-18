@@ -38,3 +38,11 @@ func RunAfterDelay(delay: NSTimeInterval, block: dispatch_block_t) {
 	let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
 	dispatch_after(time, dispatch_get_main_queue(), block)
 }
+
+func baseToPower(number: Int, base: Double, power: Int) -> Int {
+    var answer = Double(number)
+    for _ in 1...power {
+        answer *= base
+    }
+    return Int(answer)
+}

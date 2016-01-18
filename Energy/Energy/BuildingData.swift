@@ -89,13 +89,15 @@ class HeatSystem {
     var produceMultiply: CGFloat = 1.0
     var output: Bool
     var coolingRate: CGFloat
+    var inletTransfer: Int
     
-    init(size: Int, initAmount: Int = 0, produce: Int = 0, output: Bool = false, coolingRate: CGFloat = 0) {
+    init(size: Int, initAmount: Int = 0, produce: Int = 0, output: Bool = false, coolingRate: CGFloat = 0, inletTransfer: Int = 0) {
         self.size = size
         self.inAmount = initAmount
         self.produce = produce
         self.output = output
         self.coolingRate = coolingRate
+        self.inletTransfer = inletTransfer
     }
     func produceHeatValue() -> Int {
         return (produce * Int(produceMultiply * 100)) / 100
@@ -128,6 +130,21 @@ class HeatSystem {
                 ++heatSystem.inAmount
                 --allHeat
             }
+        }
+    }
+    func heatInletToOutletHeatSystem(heatSystems:[HeatSystem]) {
+        if inAmount >= inletTransfer {
+            let outputHeat = inletTransfer / heatSystems.count
+            for HeatSystem in heatSystems {
+                HeatSystem.inAmount += outputHeat
+            }
+            inAmount -= inletTransfer
+        } else {
+            let outputHeat = inAmount / heatSystems.count
+            for HeatSystem in heatSystems {
+                HeatSystem.inAmount += outputHeat
+            }
+            inAmount = 0
         }
     }
     func coolingHeatToHeatSink(heatSystems:[HeatSystem]) {
@@ -353,7 +370,21 @@ class BuildingData {
             progress = .Heat
             heatSystem = HeatSystem(size: 1000, coolingRate: 0.1)
             
-            // HeatInlet, HeatOutlet,
+        case .HeatInlet:
+            imageName = "HeatInlet"
+            name = "Heat Inlet"
+            comment = "Heat distributes evenly to every heat outlet."
+            buildPrice = 10
+            progress = .Heat
+            heatSystem = HeatSystem(size: 1000, initAmount: 0, inletTransfer: 50)
+            
+        case .HeatOutlet:
+            imageName = "HeatOutlet"
+            name = "Heat Outlet"
+            comment = "Heat transfer from the heat inlet, heat output need heat exchanger or heat sink."
+            buildPrice = 10
+            progress = .Heat
+            heatSystem = HeatSystem(size: 1000, initAmount: 0)
             
         case .WaterPump:
             imageName = "WaterPump"
@@ -446,8 +477,30 @@ class BuildingData {
     func reloadUpgradeAndResearchData() {
         switch buildType {
         case .WindTurbine:
-            energySystem.produce = upgradeLevel[UpgradeType.WindTurbineEffectiveness]! * 1
+            energySystem.produce = baseToPower(1, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!)
+            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
             timeSystem.rebuild = (researchLevel[ResearchType.WindTurbineRebuild] > 0 ? true : false)
+            
+        case .SolarCell:
+            heatSystem.produce = baseToPower(3, base: 1.25, power: upgradeLevel[UpgradeType.SolarCellEffectiveness]!)
+            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem.rebuild = (researchLevel[ResearchType.SolarCellRebuild] > 0 ? true : false)
+            
+        case .CoalBurner:
+            heatSystem.produce = baseToPower(300, base: 1.25, power: upgradeLevel[UpgradeType.CoalBurnerEffectiveness]!)
+            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.CoalBurnerLifetime]!)
+            timeSystem.rebuild = (researchLevel[ResearchType.CoalBurnerRebuild] > 0 ? true : false)
+            
+        case .WaveCell:
+            energySystem.produce = baseToPower(30000, base: 1.25, power: upgradeLevel[UpgradeType.WaveCellEffectiveness]!)
+            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.WaveCellLifetime]!)
+            timeSystem.rebuild = (researchLevel[ResearchType.WaveCellRebuild] > 0 ? true : false)
+            
+        case .GasBurner:
+            heatSystem.produce = baseToPower(3000000, base: 1.25, power: upgradeLevel[UpgradeType.GasBurnerEffectiveness]!)
+            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.GasBurnerLifetime]!)
+            timeSystem.rebuild = (researchLevel[ResearchType.GasBurnerRebuild] > 0 ? true : false)
+            
         default: break
         }
         //

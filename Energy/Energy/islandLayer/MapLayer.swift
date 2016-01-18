@@ -259,7 +259,25 @@ class BuildingMapLayer: SKSpriteNode {
                 }
             }
         }
-        // 4. Heat exchanger
+        // 4. Heat inlet to out let
+        var heatOutletHeatSystems = [HeatSystem]()
+        for line in buildings {
+            for building in line {
+                if building!.buildingData.buildType == .HeatOutlet {
+                    heatOutletHeatSystems.append(building!.buildingData.heatSystem)
+                }
+            }
+        }
+        for line in buildings {
+            for building in line {
+                if building!.buildingData.buildType == .HeatInlet {
+                    if heatOutletHeatSystems.count > 0 {
+                        building!.buildingData.heatSystem.heatInletToOutletHeatSystem(heatOutletHeatSystems)
+                    }
+                }
+            }
+        }
+        // 5. Heat exchanger
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
                 if building!.buildingData.buildType == .HeatExchanger {
@@ -273,10 +291,10 @@ class BuildingMapLayer: SKSpriteNode {
                 }
             }
         }
-        // 5. Heat Cooling transport
+        // 6. Heat Cooling transport
         for (y, line) in buildings.enumerate() {
             for (x, building) in line.enumerate() {
-                let coolingArray:[BuildingType] = [.SmallGenerator, .MediumGenerator, .LargeGenerator, .BoilerHouse, .LargeBoilerHouse]
+                let coolingArray:[BuildingType] = [.SmallGenerator, .MediumGenerator, .LargeGenerator, .BoilerHouse, .LargeBoilerHouse, .HeatOutlet]
                 if coolingArray.contains(building!.buildingData.buildType){
                     var heatSystems = [HeatSystem]()
                     for buildingData in aroundCoordBuildingData(x: x, y: y) {
@@ -290,7 +308,7 @@ class BuildingMapLayer: SKSpriteNode {
                 }
             }
         }
-        // 6. Heat Cooling
+        // 7. Heat Cooling
         for line in buildings {
             for building in line {
                 if building!.buildingData.buildType == .HeatSink {

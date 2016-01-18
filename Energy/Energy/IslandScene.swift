@@ -107,8 +107,12 @@ class IslandScene: SKScene {
         maps[nowMapNumber].hidden = false
         
         // back to Energy type
+        self.touchType = .Energy
+        maps[nowMapNumber].runAction(SKAction.unhide())
+        bottomLayer.pageBuild.closeSelectInformation()
+        buildingSelectLayer.showPage(false, duration: 0)
+        bottomLayer.showPage(BottomLayer.PageType.PageEnergy, duration: 0)
         buttonLayer.beginButtonEnergy()
-        bottomLayer.showPage(BottomLayer.PageType.PageEnergy)
     }
     
     func showBuildSelectPage() {

@@ -170,7 +170,15 @@ class ResearchElement: SKNode {
             comment = "Open Heat Sink technology."
             researchPrice = 1
             
-            // HeatInletResearch , HeatOutletResearch:
+        case .HeatInletResearch:
+            imageType = BuildingType.HeatInlet
+            name = "Heat Inlet"
+            comment = "Open Heat Inlet technology."
+            
+        case .HeatOutletResearch:
+            imageType = BuildingType.HeatOutlet
+            name = "Heat Outlet"
+            comment = "Open Heat Outlet technology."
 
         case .WaterPumpResearch:
             imageType = BuildingType.WaterPump
@@ -234,7 +242,7 @@ class ResearchElement: SKNode {
         default:
             imageType = BuildingType.WindTurbine
             name = "\(researchType)"
-            comment = "test123123"
+            comment = "error comment"
             researchPrice = 1
         }
         

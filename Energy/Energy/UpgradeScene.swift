@@ -36,85 +36,85 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine"
             comment = "Increases energy producetion by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(1, base: 3, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!)
             
         case .WindTurbineLifetime:
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine Lifetime"
-            comment = "Increases lifetime producetion by 500%"
-            upgradePrice = 1
+            comment = "Increases lifetime producetion by 50%"
+            upgradePrice = baseToPower(1, base: 6, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
             
         case .SolarCellEffectiveness:
             imageType = BuildingType.SolarCell
             name = "Solar Plant"
             comment = "Increases heat producetion by 25%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.SolarCellEffectiveness]!)
             
         case .SolarCellLifetime:
             imageType = BuildingType.SolarCell
             name = "Solar Lifetime"
             comment = "Increases lifetime producetion by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(300, base: 6, power: upgradeLevel[UpgradeType.SolarCellLifetime]!)
             
         case .CoalBurnerEffectiveness:
             imageType = BuildingType.CoalBurner
             name = "Coal-Fired Plant"
             comment = "Increases heat producetion by 25%"
-            upgradePrice = 10
+            upgradePrice = baseToPower(10000, base: 1.8, power: upgradeLevel[UpgradeType.CoalBurnerEffectiveness]!)
             
         case .CoalBurnerLifetime:
             imageType = BuildingType.CoalBurner
             name = "Coal-Fired Lifetime"
             comment = "Increases lifetime producetion by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(30000, base: 6, power: upgradeLevel[UpgradeType.CoalBurnerLifetime]!)
             
         case .WaveCellEffectiveness:
             imageType = BuildingType.WaveCell
             name = "Wave Energy"
             comment = "Increases energy producetion by 25%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(1000000, base: 1.8, power: upgradeLevel[UpgradeType.WaveCellEffectiveness]!)
             
         case .WaveCellLifetime:
             imageType = BuildingType.WaveCell
             name = "Wave Energy Lifetime"
             comment = "Increases lifetime producetion by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(3000000, base: 6, power: upgradeLevel[UpgradeType.WaveCellLifetime]!)
             
         case .GasBurnerEffectiveness:
             imageType = BuildingType.GasBurner
             name = "Gas-Fired Plant"
             comment = "Increases heat producetion by 25%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(100000000, base: 1.8, power: upgradeLevel[UpgradeType.GasBurnerEffectiveness]!)
             
         case .GasBurnerLifetime:
             imageType = BuildingType.GasBurner
             name = "Gas-Fired Lifetime"
             comment = "Increases lifetime producetion by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(300000000, base: 6, power: upgradeLevel[UpgradeType.GasBurnerLifetime]!)
             
         case .NuclearCellEffectiveness:
             imageType = BuildingType.NuclearCell
             name = "Nuclear Plant"
             comment = "Increases heat producetion by 25%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(10000000000, base: 1.8, power: upgradeLevel[UpgradeType.NuclearCellEffectiveness]!)
             
         case .NuclearCellLifetime:
             imageType = BuildingType.NuclearCell
             name = "Nuclear Lifetime"
             comment = "Increases lifetime producetion by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(30000000000, base: 6, power: upgradeLevel[UpgradeType.NuclearCellLifetime]!)
             
         case .FusionCellEffectiveness:
             imageType = BuildingType.FusionCell
             name = "Fusion Plant"
             comment = "Increases heat producetion by 25%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(1000000000000, base: 1.8, power: upgradeLevel[UpgradeType.FusionCellEffectiveness]!)
             
         case .FusionCellLifetime:
             imageType = BuildingType.FusionCell
             name = "Fusion Lifetime"
             comment = "Increases lifetime producetion by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(3000000000000, base: 6, power: upgradeLevel[UpgradeType.FusionCellLifetime]!)
             
         case .GeneratorEffectiveness:
             imageType = BuildingType.SmallGenerator
@@ -164,7 +164,17 @@ class UpgradeElement: SKNode {
             comment = "Increases max heat by 50%"
             upgradePrice = 1
             
-            // HeatInletResearch , HeatOutletResearch:
+        case .HeatInletOutletMaxHeat:
+            imageType = BuildingType.HeatInlet
+            name = "Heat Inlet,Outlet Max Heat"
+            comment = "Increases max heat by 50%"
+            upgradePrice = 1
+            
+        case .HeatInletMaxTransfer:
+            imageType = BuildingType.HeatInlet
+            name = "Heat Inlet Max Transfer"
+            comment = "Increases heat inlet transfer by 50%"
+            upgradePrice = 1
             
         case .WaterPumpProduction:
             imageType = BuildingType.WaterPump
@@ -430,7 +440,7 @@ class UpgradeScene: SKScene {
         if researchLevel[.BatteryResearch] > 0           { elements += [.EnergyBatterySize] }
         if researchLevel[.HeatExchangerResearch] > 0     { elements += [.HeatExchangerMaxHeat] }
         if researchLevel[.HeatSinkResearch] > 0          { elements += [.HeatSinkMaxHeat] }
-        if researchLevel[.HeatInletResearch] > 0         { elements += [.HeatInletOutletMaxHeat, .HeatInletOutletMaxHeat] }
+        if researchLevel[.HeatInletResearch] > 0         { elements += [.HeatInletOutletMaxHeat, .HeatInletMaxTransfer] }
         if researchLevel[.WaterPumpResearch] > 0         { elements += [.WaterPumpProduction, .WaterElementMaxWater, .GeneratorMaxWater] }
         if researchLevel[.GroundwaterPumpResearch] > 0   { elements += [.GroundwaterPumpProduction] }
         if researchLevel[.SmallOfficeResearch] > 0       { elements += [.OfficeSellEnergy] }
