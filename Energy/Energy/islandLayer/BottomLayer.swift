@@ -101,37 +101,37 @@ class PageInformation: SKSpriteNode {
         var informationLabels = [InformationLabel]()
         if buildingData.timeSystem != nil {
             infoTicksNode.hidden = false
-            infoTicksNode.valueLabel.text = "\(buildingData.timeSystem.inAmount) / \(buildingData.timeSystem.size)"
+            infoTicksNode.valueLabel.text = "\(numberToString(buildingData.timeSystem.inAmount)) / \(numberToString(buildingData.timeSystem.size))"
             informationLabels.append(infoTicksNode)
         }
         if buildingData.heatSystem != nil {
             infoHeatNode.hidden = false
-            infoHeatNode.valueLabel.text = "\(buildingData.heatSystem.inAmount) / \(buildingData.heatSystem.size)"
+            infoHeatNode.valueLabel.text = "\(numberToString(buildingData.heatSystem.inAmount)) / \(numberToString(buildingData.heatSystem.size))"
             informationLabels.append(infoHeatNode)
         }
         if buildingData.waterSystem != nil {
             infoWaterNode.hidden = false
-            infoWaterNode.valueLabel.text = "\(buildingData.waterSystem.inAmount) / \(buildingData.waterSystem.size)"
+            infoWaterNode.valueLabel.text = "\(numberToString(buildingData.waterSystem.inAmount)) / \(numberToString(buildingData.waterSystem.size))"
             informationLabels.append(infoWaterNode)
         }
         if ([.WindTurbine, .WaveCell]).contains(buildingData.buildType) {
             infoProduceEnergyNode.hidden = false
-            infoProduceEnergyNode.valueLabel.text = "\(buildingData.energySystem.produce)"
+            infoProduceEnergyNode.valueLabel.text = "\(numberToString(buildingData.energySystem.produce))"
             informationLabels.append(infoProduceEnergyNode)
         }
         if ([.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]).contains(buildingData.buildType) {
             infoProduceHeatNode.hidden = false
-            infoProduceHeatNode.valueLabel.text = "\(buildingData.heatSystem.produceHeatValue())"
+            infoProduceHeatNode.valueLabel.text = "\(numberToString(buildingData.heatSystem.produceHeatValue()))"
             informationLabels.append(infoProduceHeatNode)
         }
         if ([.SmallGenerator, .MediumGenerator, .LargeGenerator]).contains(buildingData.buildType) {
             infoConvertedEnergyNode.hidden = false
-            infoConvertedEnergyNode.valueLabel.text = "\(buildingData.energySystem.heat2EnergyAmount)"
+            infoConvertedEnergyNode.valueLabel.text = "\(numberToString(buildingData.energySystem.heat2EnergyAmount))"
             informationLabels.append(infoConvertedEnergyNode)
         }
         if ([.SmallOffice, .MediumOffice, .LargeOffice]).contains(buildingData.buildType) {
             infoSellsMoneyNode.hidden = false
-            infoSellsMoneyNode.valueLabel.text = "\(buildingData.moneySystem.heat2MoneyAmount)"
+            infoSellsMoneyNode.valueLabel.text = "\(numberToString(buildingData.moneySystem.heat2MoneyAmount))"
             informationLabels.append(infoSellsMoneyNode)
         }
         if ([.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]).contains(buildingData.buildType) {
@@ -140,7 +140,7 @@ class PageInformation: SKSpriteNode {
             informationLabels.append(infoPriceNode)
         } else {
             infoPriceNode.hidden = false
-            infoPriceNode.valueLabel.text = "\(buildingData.buildPrice)"
+            infoPriceNode.valueLabel.text = numberToString(buildingData.buildPrice)
             informationLabels.append(infoPriceNode)
         }
         

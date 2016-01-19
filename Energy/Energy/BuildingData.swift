@@ -228,6 +228,7 @@ class BuildingData {
         switch buildType {
         case .Land:
             imageName = "Land"
+            buildPrice = 0
 
         case .WindTurbine:
             imageName = "WindTurbine"
@@ -564,36 +565,5 @@ class BuildingData {
         buildingImage.name = name
         buildingImage.size = tilesScaleSize
         return buildingImage
-    }
-    
-    func buildingInfo() -> [String] {
-        var info = [String]()
-        if timeSystem != nil {
-            info.append("Time: \(timeSystem.inAmount) / \(timeSystem.size)")
-        }
-        if heatSystem != nil {
-            info.append("Heat: \(heatSystem.inAmount) / \(heatSystem.size)")
-        }
-        if waterSystem != nil {
-            info.append("Water: \(waterSystem.inAmount) / \(waterSystem.size)")
-        }
-        if ([.WindTurbine, .WaveCell]).contains(buildType) {
-            info.append("Produce Energy: \(energySystem.produce)")
-        }
-        if ([.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]).contains(buildType) {
-            info.append("Produce Heat: \(heatSystem.produceHeatValue())")
-        }
-        if ([.SmallGenerator, .MediumGenerator, .LargeGenerator]).contains(buildType) {
-            info.append("Converted Energy: \(energySystem.heat2EnergyAmount)")
-        }
-        if ([.SmallOffice, .MediumOffice, .LargeOffice]).contains(buildType) {
-            info.append("Produce Money: \(moneySystem.heat2MoneyAmount)")
-        }
-        if !([.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]).contains(buildType) {
-            info.append("Sell Money: 0")
-        } else {
-            info.append("Sell Money: \(buildPrice)")
-        }
-        return info
     }
 }

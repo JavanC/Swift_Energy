@@ -70,7 +70,7 @@ class MenuScene: SKScene {
     
     func initialLevelData() {
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
-            upgradeLevel[UpgradeType(rawValue: count)!] = 1
+            upgradeLevel[UpgradeType(rawValue: count)!] = 0
         }
         for count in 0..<ResearchType.ResearchTypeLength.hashValue {
             researchLevel[ResearchType(rawValue: count)!] = 1

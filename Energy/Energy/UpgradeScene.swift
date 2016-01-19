@@ -42,7 +42,7 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine Lifetime"
             comment = "Increases lifetime producetion by 50%"
-            upgradePrice = baseToPower(1, base: 6, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            upgradePrice = baseToPower(30, base: 6, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
             
         case .SolarCellEffectiveness:
             imageType = BuildingType.SolarCell
@@ -284,7 +284,7 @@ class UpgradeElement: SKNode {
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
         priceLabel.name = "priceLabel"
-        priceLabel.text = "\(upgradePrice)"
+        priceLabel.text = numberToString(upgradePrice)
         priceLabel.fontColor = colorMoney
         priceLabel.fontSize = infoLabel.fontSize
         priceLabel.horizontalAlignmentMode = .Left
@@ -366,7 +366,7 @@ class UpgradeScene: SKScene {
             moneyLabel.name = "top label"
             moneyLabel.fontSize = unitHeight * 0.2
             moneyLabel.fontColor = colorMoney
-            moneyLabel.text = "\(research)"
+            moneyLabel.text = numberToString(money)
             moneyLabel.horizontalAlignmentMode = .Left
             moneyLabel.verticalAlignmentMode = .Bottom
             moneyLabel.position = CGPoint(x: frame.size.width * 0.05, y: frame.size.height - unitHeight * 0.9)
@@ -511,7 +511,7 @@ class UpgradeScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
-        moneyLabel.text = "\(money)"
+        moneyLabel.text = numberToString(money)
         for upgradeElement in upgradeElements {
             upgradeElement.checkUpgradeAndDegrade()
         }

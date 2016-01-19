@@ -302,11 +302,11 @@ class IslandScene: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         // Updata text imformation
-        topLayer.moneyLabel.text = "Money: \(money) + \(maps[nowMapNumber].money_TickAdd)"
-        topLayer.researchLabel.text = "Research: \(research) + \(maps[nowMapNumber].research_TickAdd)"
+        topLayer.moneyLabel.text = "Money: \(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd))"
+        topLayer.researchLabel.text = "Research: \(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd))"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
-        bottomLayer.pageEnergy.energyLabel.text = "\(maps[nowMapNumber].energy) / \(maps[nowMapNumber].energyMax)"
+        bottomLayer.pageEnergy.energyLabel.text = "\(numberToString(maps[nowMapNumber].energy)) / \(numberToString(maps[nowMapNumber].energyMax))"
     }
     
     func tickUpdata() {

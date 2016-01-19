@@ -174,11 +174,13 @@ class ResearchElement: SKNode {
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet"
             comment = "Open Heat Inlet technology."
+            researchPrice = 1
             
         case .HeatOutletResearch:
             imageType = BuildingType.HeatOutlet
             name = "Heat Outlet"
             comment = "Open Heat Outlet technology."
+            researchPrice = 1
 
         case .WaterPumpResearch:
             imageType = BuildingType.WaterPump
@@ -288,7 +290,7 @@ class ResearchElement: SKNode {
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
         priceLabel.name = "priceLabel"
-        priceLabel.text = "\(researchPrice)"
+        priceLabel.text = numberToString(researchPrice)
         priceLabel.fontColor = colorResearch
         priceLabel.fontSize = (image.size.height - researchName.fontSize * 1.2) / 2
         priceLabel.horizontalAlignmentMode = .Left
@@ -362,7 +364,7 @@ class ResearchScene: SKScene {
             researchLabel.name = "top label"
             researchLabel.fontSize = unitHeight * 0.2
             researchLabel.fontColor = colorResearch
-            researchLabel.text = "\(research)"
+            researchLabel.text = numberToString(research)
             researchLabel.horizontalAlignmentMode = .Left
             researchLabel.verticalAlignmentMode = .Bottom
             researchLabel.position = CGPoint(x: frame.size.width * 0.05, y: frame.size.height - unitHeight * 0.9)
