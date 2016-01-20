@@ -13,9 +13,9 @@ class TimeSystem {
     var inAmount: Int
     var rebuild: Bool
     
-    init(size: Int, initAmount: Int, rebuild: Bool) {
+    init(size: Int, rebuild: Bool) {
         self.size = size
-        self.inAmount = initAmount
+        self.inAmount = size
         self.rebuild = rebuild
     }
     func tick() -> Bool{
@@ -32,8 +32,8 @@ class ResearchSystem {
     var addAmount: Int = 0
     var multiply: CGFloat = 1
     
-    init(amount: Int, multiply: CGFloat = 1) {
-        self.addAmount = amount
+    init(addAmount: Int, multiply: CGFloat = 1) {
+        self.addAmount = addAmount
         self.multiply = multiply
     }
     func researchMultiplyAmount() -> Int {
@@ -62,12 +62,12 @@ class MoneySystem {
 }
 
 class EnergySystem {
-    var inAmount: Int = 0
-    var produce: Int
+    var inAmount: Double = 0
+    var produce: Double!
     var heat2EnergyAmount: Int
     var water2Energy: Bool
     
-    init(initAmount: Int, produce: Int = 0, heat2EnergyAmount: Int = 0, water2Energy: Bool = false) {
+    init(initAmount: Double, produce: Double = 0, heat2EnergyAmount: Int = 0, water2Energy: Bool = false) {
         self.inAmount = initAmount
         self.produce = produce
         self.heat2EnergyAmount = heat2EnergyAmount
@@ -236,186 +236,193 @@ class BuildingData {
             comment = "Produced energy by the wind."
             buildPrice = 1
             progress = .Time
-            timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: false)
-            energySystem = EnergySystem(initAmount: 0, produce: 1)
+            let size = baseToPower(20, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem = TimeSystem(size: size, rebuild: false)
+            energySystem = EnergySystem(initAmount: 0, produce: 0.1)
             
         case .SolarCell:
             imageName = "SolarCell"
             name = "Solar Plant"
             comment = "Produced heat by the solar."
-            buildPrice = 1
+            buildPrice = 100
             progress = .Time
-            timeSystem = TimeSystem(size: 5, initAmount: 5, rebuild: false)
-            heatSystem = HeatSystem(size: 150, produce: 3, output: true)
+            let size = baseToPower(40, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem = TimeSystem(size: size, rebuild: false)
+            heatSystem = HeatSystem(size: 10, produce: 3, output: true)
             
         case .CoalBurner:
             imageName = "CoalBurner"
             name = "Coal-Fired Plant"
             comment = "Produce heat by burning coal."
-            buildPrice = 20
+            buildPrice = 10000
             progress = .Time
-            timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: false)
-            heatSystem = HeatSystem(size: 150, produce: 100, output: true)
+            let size = baseToPower(120, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem = TimeSystem(size: size, rebuild: false)
+            heatSystem = HeatSystem(size: 10, produce: 100, output: true)
             
         case .WaveCell:
             imageName = "WaveCell"
             name = "Wave Energy"
             comment = "Produced energy by the ocean wave. Must be placed in water."
-            buildPrice = 10
+            buildPrice = 1000000
             progress = .Time
-            timeSystem = TimeSystem(size: 10, initAmount: 10, rebuild: false)
-            energySystem = EnergySystem(initAmount: 0, produce: 5)
+            let size = baseToPower(400, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem = TimeSystem(size: size, rebuild: false)
+            energySystem = EnergySystem(initAmount: 10, produce: 2700)
             
         case .GasBurner:
             imageName = "GasBurner"
             name = "Gas-Fired Plant"
             comment = "Produce heat by burning gas."
-            buildPrice = 10
+            buildPrice = 100000000
             progress = .Time
-            timeSystem = TimeSystem(size: 20, initAmount: 20, rebuild: false)
-            heatSystem = HeatSystem(size: 200, produce: 50, output: true)
+            let size = baseToPower(600, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem = TimeSystem(size: size, rebuild: false)
+            heatSystem = HeatSystem(size: 10, produce: 200000, output: true)
             
         case .NuclearCell:
             imageName = "NuclearCell"
             name = "Nuclear Plant"
             comment = "Produce heat by nuclear fission."
-            buildPrice = 10
+            buildPrice = 100000000
             progress = .Time
-            timeSystem = TimeSystem(size: 30, initAmount: 30, rebuild: false)
-            heatSystem = HeatSystem(size: 300, produce: 30, output: true)
+            let size = baseToPower(1200, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem = TimeSystem(size: size, rebuild: false)
+            heatSystem = HeatSystem(size: 10, produce: 10000000, output: true)
             
         case .FusionCell:
             imageName = "FusionCell"
             name = "Fusion Plant"
             comment = "Produce heat by nuclear fusion."
-            buildPrice = 10
+            buildPrice = 100000000
             progress = .Time
-            timeSystem = TimeSystem(size: 40, initAmount: 40, rebuild: false)
-            heatSystem = HeatSystem(size: 400, produce: 40, output: true)
+            let size = baseToPower(1600, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem = TimeSystem(size: size, rebuild: false)
+            heatSystem = HeatSystem(size: 10, produce: 2000000000, output: true)
             
         case .SmallGenerator:
             imageName = "SmallGenerator"
             name = "Small Generator"
             comment = "Converts heat to energy."
-            buildPrice = 50
+            buildPrice = 300
             progress = .Heat
-            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2Energy: true)
-            heatSystem = HeatSystem(size: 400, initAmount: 100)
-            waterSystem = WaterSystem(size: 100, initAmount: 10)
+            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 3, water2Energy: true)
+            heatSystem = HeatSystem(size: 20, initAmount: 0)
+            waterSystem = WaterSystem(size: 1000, initAmount: 0)
             
         case .MediumGenerator:
             imageName = "MediumGenerator"
             name = "Medium Generator"
             comment = "Converts more heat to energy."
-            buildPrice = 50
+            buildPrice = 200000000
             progress = .Heat
-            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2Energy: true)
-            heatSystem = HeatSystem(size: 400, initAmount: 100)
-            waterSystem = WaterSystem(size: 100, initAmount: 10)
+            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 12, water2Energy: true)
+            heatSystem = HeatSystem(size: 80, initAmount: 0)
+            waterSystem = WaterSystem(size: 4000, initAmount: 0)
             
         case .LargeGenerator:
             imageName = "LargeGenerator"
             name = "Large Generator"
             comment = "Converts mass heat to energy."
-            buildPrice = 50
+            buildPrice = 5000000000000
             progress = .Heat
-            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 40, water2Energy: true)
-            heatSystem = HeatSystem(size: 400, initAmount: 100)
-            waterSystem = WaterSystem(size: 100, initAmount: 10)
+            energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 48, water2Energy: true)
+            heatSystem = HeatSystem(size: 320, initAmount: 0)
+            waterSystem = WaterSystem(size: 16000, initAmount: 0)
             
         case .BoilerHouse:
             imageName = "BoilerHouse"
             name = "Boiler House"
             comment = "Direct sales store heat."
-            buildPrice = 50
+            buildPrice = 30000
             progress = .Heat
-            heatSystem = HeatSystem(size: 400, initAmount: 100)
-            moneySystem = MoneySystem(initAmount: 0, heat2MoneyAmount: 10)
+            heatSystem = HeatSystem(size: 2000, initAmount: 0)
+            moneySystem = MoneySystem(initAmount: 0, heat2MoneyAmount: 150)
             
         case .LargeBoilerHouse:
             imageName = "LargeBoilerHouse"
             name = "Large Boiler House"
             comment = "Direct sales more store heat."
-            buildPrice = 50
+            buildPrice = 500000000
             progress = .Heat
-            heatSystem = HeatSystem(size: 400, initAmount: 100)
-            moneySystem = MoneySystem(initAmount: 0, heat2MoneyAmount: 100)
+            heatSystem = HeatSystem(size: 8000, initAmount: 0)
+            moneySystem = MoneySystem(initAmount: 0, heat2MoneyAmount: 600)
             
         case .Isolation:
             imageName = "Isolation"
             name = "Isolation"
             comment = "Increases heat output of heat producing building"
-            buildPrice = 10
-            isolationPercent = 0.5
+            buildPrice = 1000
+            isolationPercent = 0.1
             
         case .Battery:
             imageName = "Battery"
             name = "Battery"
             comment = "Increase the maximum energy that can be stored."
-            buildPrice = 10
+            buildPrice = 50
             batteryEnergySize = 1000
 
         case .HeatExchanger:
             imageName = "HeatExchanger"
             name = "Heat Exchanger"
             comment = "Balance heat between adjacent components."
-            buildPrice = 10
+            buildPrice = 50000
             progress = .Heat
-            heatSystem = HeatSystem(size: 1000, initAmount: 0)
+            heatSystem = HeatSystem(size: 500, initAmount: 0)
             
         case .HeatSink:
             imageName = "HeatSink"
             name = "Heat Sink"
-            comment = "Heat dissipation, according to the percentage of stored heat."
-            buildPrice = 10
+            comment = "Dissipation heat 10% from store heat. Stable heat source to prevent explosion."
+            buildPrice = 50000000
             progress = .Heat
-            heatSystem = HeatSystem(size: 1000, coolingRate: 0.1)
+            heatSystem = HeatSystem(size: 500000, coolingRate: 0.1)
             
         case .HeatInlet:
             imageName = "HeatInlet"
             name = "Heat Inlet"
             comment = "Heat distributes evenly to every heat outlet."
-            buildPrice = 10
+            buildPrice = 100000000000000
             progress = .Heat
-            heatSystem = HeatSystem(size: 1000, initAmount: 0, inletTransfer: 50)
+            heatSystem = HeatSystem(size: 8000000000, initAmount: 0, inletTransfer: 5000000000)
             
         case .HeatOutlet:
             imageName = "HeatOutlet"
             name = "Heat Outlet"
             comment = "Heat transfer from the heat inlet, heat output need heat exchanger or heat sink."
-            buildPrice = 10
+            buildPrice = 100000000000000
             progress = .Heat
-            heatSystem = HeatSystem(size: 1000, initAmount: 0)
+            heatSystem = HeatSystem(size: 8000000000, initAmount: 0)
             
         case .WaterPump:
             imageName = "WaterPump"
             name = "Water Pump"
             comment = "Produce Water to cools generators so they produce much more energy. Must be placed next to water."
-            buildPrice = 10
+            buildPrice = 40000000000
             progress = .Water
-            waterSystem = WaterSystem(size: 100, produce: 3, output: true)
+            waterSystem = WaterSystem(size: 200000, produce: 30000, output: true)
  
         case .GroundwaterPump:
             imageName = "GroundwaterPump"
             name = "Groundwater Pump"
             comment = "Produce Water to cools generators so they produce much more energy."
-            buildPrice = 10
+            buildPrice = 10000000000000
             progress = .Water
-            waterSystem = WaterSystem(size: 100, produce: 3, output: true)
+            waterSystem = WaterSystem(size: 300000, produce: 50000, output: true)
 
         case .WaterPipe:
             imageName = "WaterPipe"
             name = "Water Pipe"
             comment = "Expands water pumps effective area."
-            buildPrice = 10
+            buildPrice = 10000000000
             progress = .Water
-            waterSystem = WaterSystem(size: 100, output: true)
+            waterSystem = WaterSystem(size: 300000, output: true)
             
         case .SmallOffice:
             imageName = "SmallOffice"
             name = "Small Office"
             comment = "Auto selling store of energy."
-            buildPrice = 10
+            buildPrice = 400
             heatSystem = HeatSystem(size: 10)
             moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 5)
             
@@ -423,49 +430,49 @@ class BuildingData {
             imageName = "MediumOffice"
             name = "Medium Office"
             comment = "Auto selling more store of energy."
-            buildPrice = 10
+            buildPrice = 4000000
             heatSystem = HeatSystem(size: 10)
-            moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 50)
+            moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 100)
             
         case .LargeOffice:
             imageName = "LargeOffice"
             name = "Large Office"
             comment = "Auto selling mass store of energy."
-            buildPrice = 10
+            buildPrice = 200000000000
             heatSystem = HeatSystem(size: 10)
-            moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 500)
+            moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 2000)
             
         case .Bank:
             imageName = "Bank"
             name = "Bank"
             comment = "Boosts office salse energy speed."
-            buildPrice = 10
+            buildPrice = 10000000000000
             heatSystem = HeatSystem(size: 10)
-            bankAddPercent = 0.5
+            bankAddPercent = 0.2
             
         case .ResearchCenter:
             imageName = "ResearchCenter"
             name = "Research Center"
             comment = "Production Research points so that you can research new technology."
-            buildPrice = 10
+            buildPrice = 200
             heatSystem = HeatSystem(size: 10)
-            researchSystem = ResearchSystem(amount: 10)
+            researchSystem = ResearchSystem(addAmount: 1)
             
         case .AdvancedResearchCenter:
             imageName = "AdvancedResearchCenter"
             name = "Advanced Research Center"
             comment = "Production more Research points so that you can research new technology."
-            buildPrice = 10
+            buildPrice = 2000000
             heatSystem = HeatSystem(size: 10)
-            researchSystem = ResearchSystem(amount: 100)
+            researchSystem = ResearchSystem(addAmount: 6)
             
         case .Library:
             imageName = "Library"
             name = "Library"
             comment = "Boosts Research Center production research points speed."
-            buildPrice = 10
+            buildPrice = 400000000000
             heatSystem = HeatSystem(size: 10)
-            libraryAddPercent = 0.5
+            libraryAddPercent = 0.2
             
         default:
             imageName = "WindTurbine"
@@ -478,55 +485,125 @@ class BuildingData {
     func reloadUpgradeAndResearchData() {
         switch buildType {
         case .WindTurbine:
-            energySystem.produce = baseToPower(1, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!)
-            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            energySystem.produce = Double(baseToPower(1, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!))
+            timeSystem.size = baseToPower(20, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
             timeSystem.rebuild = (researchLevel[ResearchType.WindTurbineRebuild] > 0 ? true : false)
             
         case .SolarCell:
             heatSystem.produce = baseToPower(3, base: 1.25, power: upgradeLevel[UpgradeType.SolarCellEffectiveness]!)
-            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem.size = baseToPower(40, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
             timeSystem.rebuild = (researchLevel[ResearchType.SolarCellRebuild] > 0 ? true : false)
             
         case .CoalBurner:
-            heatSystem.produce = baseToPower(300, base: 1.25, power: upgradeLevel[UpgradeType.CoalBurnerEffectiveness]!)
-            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.CoalBurnerLifetime]!)
+            heatSystem.produce = baseToPower(100, base: 1.25, power: upgradeLevel[UpgradeType.CoalBurnerEffectiveness]!)
+            timeSystem.size = baseToPower(120, base: 1.5, power: upgradeLevel[UpgradeType.CoalBurnerLifetime]!)
             timeSystem.rebuild = (researchLevel[ResearchType.CoalBurnerRebuild] > 0 ? true : false)
             
         case .WaveCell:
-            energySystem.produce = baseToPower(30000, base: 1.25, power: upgradeLevel[UpgradeType.WaveCellEffectiveness]!)
-            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.WaveCellLifetime]!)
+            energySystem.produce = Double(baseToPower(2700, base: 1.25, power: upgradeLevel[UpgradeType.WaveCellEffectiveness]!))
+            timeSystem.size = baseToPower(400, base: 1.5, power: upgradeLevel[UpgradeType.WaveCellLifetime]!)
             timeSystem.rebuild = (researchLevel[ResearchType.WaveCellRebuild] > 0 ? true : false)
             
         case .GasBurner:
-            heatSystem.produce = baseToPower(3000000, base: 1.25, power: upgradeLevel[UpgradeType.GasBurnerEffectiveness]!)
-            timeSystem.size = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.GasBurnerLifetime]!)
+            heatSystem.produce = baseToPower(200000, base: 1.25, power: upgradeLevel[UpgradeType.GasBurnerEffectiveness]!)
+            timeSystem.size = baseToPower(600, base: 1.5, power: upgradeLevel[UpgradeType.GasBurnerLifetime]!)
             timeSystem.rebuild = (researchLevel[ResearchType.GasBurnerRebuild] > 0 ? true : false)
+            
+        case .NuclearCell:
+            heatSystem.produce = baseToPower(10000000, base: 1.25, power: upgradeLevel[UpgradeType.NuclearCellEffectiveness]!)
+            timeSystem.size = baseToPower(1200, base: 1.5, power: upgradeLevel[UpgradeType.NuclearCellLifetime]!)
+            timeSystem.rebuild = (researchLevel[ResearchType.NuclearCellRebuild] > 0 ? true : false)
+
+        case .FusionCell:
+            heatSystem.produce = baseToPower(2000000000, base: 1.25, power: upgradeLevel[UpgradeType.FusionCellEffectiveness]!)
+            timeSystem.size = baseToPower(1600, base: 1.5, power: upgradeLevel[UpgradeType.FusionCellLifetime]!)
+            timeSystem.rebuild = (researchLevel[ResearchType.FusionCellRebuild] > 0 ? true : false)
+            
+        case .SmallGenerator:
+            energySystem.heat2EnergyAmount = baseToPower(3, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]!)
+            heatSystem.size = baseToPower(20, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
+            waterSystem.size = baseToPower(1000, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxWater]!)
+            
+        case .MediumGenerator:
+            energySystem.heat2EnergyAmount = baseToPower(12, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]!)
+            heatSystem.size = baseToPower(80, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
+            waterSystem.size = baseToPower(4000, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxWater]!)
+            
+        case .LargeGenerator:
+            energySystem.heat2EnergyAmount = baseToPower(48, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]!)
+            heatSystem.size = baseToPower(320, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
+            waterSystem.size = baseToPower(16000, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxWater]!)
+            
+        case .BoilerHouse:
+            moneySystem.heat2MoneyAmount = baseToPower(150, base: 1.2, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]!)
+            heatSystem.size = baseToPower(2000, base: 1.25, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
+            
+        case .LargeBoilerHouse:
+            moneySystem.heat2MoneyAmount = baseToPower(600, base: 1.2, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]!)
+            heatSystem.size = baseToPower(8000, base: 1.25, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
+            
+        case .Isolation:
+            isolationPercent = CGFloat(0.1 * Double(upgradeLevel[UpgradeType.IsolationEffectiveness]!))
+            
+        case .Battery:
+            batteryEnergySize = baseToPower(1000, base: 1.5, power: upgradeLevel[UpgradeType.EnergyBatterySize]!)
+            
+        case .HeatExchanger:
+            heatSystem.size = baseToPower(500, base: 1.5, power: upgradeLevel[UpgradeType.HeatExchangerMaxHeat]!)
+
+        case .HeatSink:
+            heatSystem.size = baseToPower(500000, base: 1.5, power: upgradeLevel[UpgradeType.HeatSinkMaxHeat]!)
+
+        case .HeatInlet:
+            heatSystem.size = baseToPower(8000000000, base: 1.5, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]!)
+            heatSystem.inletTransfer = baseToPower(5000000000, base: 1.5, power: upgradeLevel[UpgradeType.HeatInletMaxTransfer]!)
+
+        case .HeatOutlet:
+            heatSystem.size = baseToPower(8000000000, base: 1.5, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]!)
+            
+        case .WaterPump:
+            waterSystem.size = baseToPower(200000, base: 1.5, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
+            waterSystem.produce = baseToPower(30000, base: 1.25, power: upgradeLevel[UpgradeType.WaterPumpProduction]!)
+            
+        case .GroundwaterPump:
+            waterSystem.size = baseToPower(300000, base: 1.5, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
+            waterSystem.produce = baseToPower(50000, base: 1.2, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
+            
+        case .WaterPipe:
+            waterSystem.size = baseToPower(300000, base: 1.5, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
+            
+        case .SmallOffice:
+            moneySystem.energy2MoneyAmount = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
+            
+        case .MediumOffice:
+            moneySystem.energy2MoneyAmount = baseToPower(100, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
+
+        case .LargeOffice:
+            moneySystem.energy2MoneyAmount = baseToPower(2000, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
+            
+        case .Bank:
+            bankAddPercent = CGFloat(0.2  + 0.1 * Double(upgradeLevel[UpgradeType.BankEffectiveness]!))
+            
+        case .ResearchCenter:
+            researchSystem.addAmount = baseToPower(1, base: 1.25, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
+            
+        case .AdvancedResearchCenter:
+            researchSystem.addAmount = baseToPower(6, base: 1.25, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
+            
+        case .Library:
+            libraryAddPercent = CGFloat(0.2  + 0.1 * Double(upgradeLevel[UpgradeType.LibraryEffectiveness]!))
             
         default: break
         }
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
     }
     
     func heatTransformEnergy() {
         if heatSystem != nil && energySystem != nil && energySystem.isHeat2Energy() {
             if heatSystem.inAmount >= energySystem.heat2EnergyAmount {
-                energySystem.inAmount += energySystem.heat2EnergyAmount
+                energySystem.inAmount += Double(energySystem.heat2EnergyAmount)
                 heatSystem.inAmount -= energySystem.heat2EnergyAmount
             } else {
-                energySystem.inAmount += heatSystem.inAmount
+                energySystem.inAmount += Double(heatSystem.inAmount)
                 heatSystem.inAmount = 0
             }
         }
@@ -535,11 +612,11 @@ class BuildingData {
     func waterTransformEnergy() {
         if waterSystem != nil && energySystem != nil && energySystem.water2Energy {
             if heatSystem.inAmount >= waterSystem.inAmount * 100 {
-                energySystem.inAmount += waterSystem.inAmount * 100
+                energySystem.inAmount += Double(waterSystem.inAmount * 100)
                 heatSystem.inAmount -= waterSystem.inAmount * 100
                 waterSystem.inAmount = 0
             } else {
-                energySystem.inAmount += heatSystem.inAmount
+                energySystem.inAmount += Double(heatSystem.inAmount)
                 if heatSystem.inAmount > 0 {
                     waterSystem.inAmount -= heatSystem.inAmount / 100 + 1
                 }

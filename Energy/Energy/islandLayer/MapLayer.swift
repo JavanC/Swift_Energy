@@ -89,9 +89,9 @@ class BuildingMapLayer: SKSpriteNode {
     var buildings = Array<Array<Building?>>()
     var money_TickAdd: Int = 0
     var research_TickAdd: Int = 0
-    var energy_TickAdd: Int = 0
-    var energy: Int = 0
-    var energyMax: Int = 100
+    var energy_TickAdd: Double = 0
+    var energy: Double = 0
+    var energyMax: Double = 100
     var autoRebuild: Bool = true
     
     // MARK: Configure At Position
@@ -443,18 +443,18 @@ class BuildingMapLayer: SKSpriteNode {
             }
             // battery
             if building!.buildingData.buildType == .Battery {
-                energyMax += building!.buildingData.batteryEnergySize
+                energyMax += Double(building!.buildingData.batteryEnergySize)
             }
         }}
         // 2. Calculate energy
         energy += energy_TickAdd
         // 3. Calculate money tick add and energy left
-        if energy >= energy2MoneyAmount {
-            energy -= energy2MoneyAmount
+        if energy >= Double(energy2MoneyAmount) {
+            energy -= Double(energy2MoneyAmount)
             money_TickAdd += energy2MoneyAmount
             if energy > energyMax { energy = energyMax }
         } else {
-            money_TickAdd += energy
+            money_TickAdd += Int(energy)
             energy = 0
         }
     }

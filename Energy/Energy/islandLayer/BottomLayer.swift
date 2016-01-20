@@ -51,13 +51,15 @@ class PageInformation: SKSpriteNode {
     var infoConvertedEnergyNode: InformationLabel!
     var infoPriceNode: InformationLabel!
     var allLabels = [InformationLabel]()
+    var isSellInfo: Bool!
     
-    func configureAtPosition(position: CGPoint, size: CGSize) {
+    func configureAtPosition(position: CGPoint, size: CGSize, isSellInfo: Bool = true) {
         
         self.position = position
         self.size = size
         self.name = "PageInformation"
         self.anchorPoint = CGPoint(x: 0, y: 0)
+        self.isSellInfo = isSellInfo
         
         infoImage = BuildingData(buildType: .Land).image("infoImage")
         infoImage.position = CGPoint(x: infoImage.size.width, y: size.height / 2)
@@ -116,7 +118,7 @@ class PageInformation: SKSpriteNode {
         }
         if ([.WindTurbine, .WaveCell]).contains(buildingData.buildType) {
             infoProduceEnergyNode.hidden = false
-            infoProduceEnergyNode.valueLabel.text = "\(numberToString(buildingData.energySystem.produce))"
+            infoProduceEnergyNode.valueLabel.text = "\(numberToString(Int(buildingData.energySystem.produce)))"
             informationLabels.append(infoProduceEnergyNode)
         }
         if ([.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]).contains(buildingData.buildType) {
@@ -134,7 +136,7 @@ class PageInformation: SKSpriteNode {
             infoSellsMoneyNode.valueLabel.text = "\(numberToString(buildingData.moneySystem.heat2MoneyAmount))"
             informationLabels.append(infoSellsMoneyNode)
         }
-        if ([.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]).contains(buildingData.buildType) {
+        if ([.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]).contains(buildingData.buildType) && isSellInfo == true {
             infoPriceNode.hidden = false
             infoPriceNode.valueLabel.text = "0"
             informationLabels.append(infoPriceNode)
@@ -206,7 +208,7 @@ class PageBuild: SKSpriteNode {
         selectBoxArrow.runAction(SKAction.repeatActionForever(upAction))
         addChild(selectBoxArrow)
         
-        selectInfo.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
+        selectInfo.configureAtPosition(CGPoint(x: 0, y: 0), size: size, isSellInfo: false)
         selectInfo.name = "SelectInformation"
         selectInfo.changeInformation(BuildingData(buildType: buildMenu[selectNumber - 1]))
         selectInfo.alpha = 1

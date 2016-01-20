@@ -197,11 +197,17 @@ class IslandScene: SKScene {
                         let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
                         self.view?.presentScene(researchScene, transition: doors)
                     }
-                        
+                    
+                // GMMMMM
+                case bottomLayer.pageSell:
+                    for _ in 1...100 {
+                        tickUpdata()
+                    }
+                    
                 // Energy Page
                 case bottomLayer.pageEnergy.energy_ProgressBack:
                     print("Energy Preogree")
-                    money += maps[nowMapNumber].energy
+                    money += Int(maps[nowMapNumber].energy)
                     maps[nowMapNumber].energy = 0
                     // draw energy circle
                     let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
@@ -306,7 +312,7 @@ class IslandScene: SKScene {
         topLayer.researchLabel.text = "Research: \(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd))"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
-        bottomLayer.pageEnergy.energyLabel.text = "\(numberToString(maps[nowMapNumber].energy)) / \(numberToString(maps[nowMapNumber].energyMax))"
+        bottomLayer.pageEnergy.energyLabel.text = "\(maps[nowMapNumber].energy) / \(maps[nowMapNumber].energyMax)"
     }
     
     func tickUpdata() {

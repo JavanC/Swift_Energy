@@ -36,7 +36,7 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine"
             comment = "Increases energy producetion by 50%"
-            upgradePrice = baseToPower(1, base: 3, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!)
+            upgradePrice = baseToPower(10, base: 3, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!)
             
         case .WindTurbineLifetime:
             imageType = BuildingType.WindTurbine
@@ -120,109 +120,109 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.SmallGenerator
             name = "Generator Effectiveness"
             comment = "Increases heat to energy rate by 25%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(300, base: 1.5, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]!)
             
         case .GeneratorMaxHeat:
             imageType = BuildingType.SmallGenerator
             name = "Generator Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(1000, base: 3.7, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
             
         case .BoilerHouseSellAmount:
             imageType = BuildingType.BoilerHouse
             name = "Boiler House"
-            comment = "Increases energy sell amount by 40%"
-            upgradePrice = 1
+            comment = "Increases energy sell amount by 20%"
+            upgradePrice = baseToPower(30000, base: 4, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]!)
             
         case .BoilerHouseMaxHeat:
             imageType = BuildingType.BoilerHouse
             name = "Boiler House Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(80000, base: 4.7, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .IsolationEffectiveness:
             imageType = BuildingType.Isolation
             name = "Isolation Effectiveness"
             comment = "Increases isolation effectiveness by 10%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(1000, base: 10, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .EnergyBatterySize:
             imageType = BuildingType.Battery
             name = "Battery Size"
             comment = "Increases max energy storage by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(50, base: 2, power: upgradeLevel[UpgradeType.EnergyBatterySize]!)
             
         case .HeatExchangerMaxHeat:
             imageType = BuildingType.HeatExchanger
             name = "Heat Exchanger Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(50000, base: 2.6, power: upgradeLevel[UpgradeType.HeatExchangerMaxHeat]!)
             
         case .HeatSinkMaxHeat:
             imageType = BuildingType.HeatSink
             name = "Heat Sink Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(50000000, base: 2.5, power: upgradeLevel[UpgradeType.HeatSinkMaxHeat]!)
             
         case .HeatInletOutletMaxHeat:
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet,Outlet Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(50000000000000, base: 2.3, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]!)
             
         case .HeatInletMaxTransfer:
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet Max Transfer"
             comment = "Increases heat inlet transfer by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(100000000000000, base: 1.5, power: upgradeLevel[UpgradeType.HeatInletMaxTransfer]!)
             
         case .WaterPumpProduction:
             imageType = BuildingType.WaterPump
             name = "Water Pump"
             comment = "Increases water producetion by 25%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(40000000000, base: 1.9, power: upgradeLevel[UpgradeType.WaterPumpProduction]!)
             
         case .GroundwaterPumpProduction:
             imageType = BuildingType.GroundwaterPump
             name = "Groundwater Pump"
-            comment = "Increases water producetion by 25%"
-            upgradePrice = 1
+            comment = "Increases water producetion by 20%"
+            upgradePrice = baseToPower(10000000000000, base: 2, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
             
         case .WaterElementMaxWater:
             imageType = BuildingType.WaterPipe
             name = "Water Element Max Water"
             comment = "Increases max water by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(20000000000, base: 2, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
             
         case .GeneratorMaxWater:
             imageType = BuildingType.SmallGenerator
             name = "Generator Max Water"
             comment = "Increases max water by 25%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(10000000000, base: 1.45, power: upgradeLevel[UpgradeType.GeneratorMaxWater]!)
             
         case .OfficeSellEnergy:
             imageType = BuildingType.SmallOffice
             name = "Office Sell Amount"
             comment = "Increases energy sell amount by 50%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(100, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
             
         case .BankEffectiveness:
             imageType = BuildingType.Bank
             name = "Bank Effectiveness"
             comment = "Increases bank effectiveness by 10%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(10000000000000, base: 2, power: upgradeLevel[UpgradeType.BankEffectiveness]!)
             
-        case .ResearchCenter:
+        case .ResearchCenterEffectiveness:
             imageType = BuildingType.ResearchCenter
             name = "Research Center"
             comment = "Increases research producetion by 25%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(100, base: 1.5, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
             
         case .LibraryEffectiveness:
             imageType = BuildingType.Library
             name = "Library Effectiveness"
             comment = "Increases library effectiveness by 10%"
-            upgradePrice = 1
+            upgradePrice = baseToPower(400000000000, base: 3, power: upgradeLevel[UpgradeType.LibraryEffectiveness]!)
         
         default:
             imageType = BuildingType.WindTurbine
@@ -445,7 +445,7 @@ class UpgradeScene: SKScene {
         if researchLevel[.GroundwaterPumpResearch] > 0   { elements += [.GroundwaterPumpProduction] }
         if researchLevel[.SmallOfficeResearch] > 0       { elements += [.OfficeSellEnergy] }
         if researchLevel[.BankResearch] > 0              { elements += [.BankEffectiveness] }
-        if researchLevel[.ResearchCenterResearch] > 0    { elements += [.ResearchCenter] }
+        if researchLevel[.ResearchCenterResearch] > 0    { elements += [.ResearchCenterEffectiveness] }
         if researchLevel[.LibraryResearch] > 0           { elements += [.LibraryEffectiveness] }
 
         // Add Element

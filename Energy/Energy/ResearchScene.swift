@@ -42,19 +42,19 @@ class ResearchElement: SKNode {
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine Manager"
             comment = "Wind Turbine are automatically replaced."
-            researchPrice = 100
+            researchPrice = 500
             
         case .SolarCellResearch:
             imageType = BuildingType.SolarCell
             name = "Solar Plant"
             comment = "Open Solar Plant technology."
-            researchPrice = 100
+            researchPrice = 2500
 
         case .SolarCellRebuild:
             imageType = BuildingType.SolarCell
             name = "Solar Manager"
             comment = "Solar Plant are automatically replaced."
-            researchPrice = 100
+            researchPrice = 5000
             
         case .CoalBurnerResearch:
             imageType = BuildingType.CoalBurner
@@ -228,7 +228,7 @@ class ResearchElement: SKNode {
             imageType = BuildingType.ResearchCenter
             name = "Research Center"
             comment = "Open Research Center technology."
-            researchPrice = 1
+            researchPrice = 100
             
         case .AdvancedResearchCenterResearch:
             imageType = BuildingType.AdvancedResearchCenter
@@ -292,6 +292,9 @@ class ResearchElement: SKNode {
         priceLabel.name = "priceLabel"
         priceLabel.text = numberToString(researchPrice)
         priceLabel.fontColor = colorResearch
+        if researchType == .ResearchCenterResearch {
+            priceLabel.fontColor = colorMoney
+        }
         priceLabel.fontSize = (image.size.height - researchName.fontSize * 1.2) / 2
         priceLabel.horizontalAlignmentMode = .Left
         priceLabel.verticalAlignmentMode = .Bottom
@@ -315,9 +318,15 @@ class ResearchElement: SKNode {
     
     func checkUpgradeButton() {
         if !researchDone {
-            buttonUpgrade.name = (research > researchPrice ? "Upgrade" : "NoMoney")
-            buttonUpgrade.fillColor = (research > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
-            buttonUpgrade.strokeColor = (research > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
+            if researchType == ResearchType.ResearchCenterResearch {
+                buttonUpgrade.name = (money > researchPrice ? "Upgrade" : "NoMoney")
+                buttonUpgrade.fillColor = (money > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
+                buttonUpgrade.strokeColor = (money > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
+            } else {
+                buttonUpgrade.name = (research > researchPrice ? "Upgrade" : "NoMoney")
+                buttonUpgrade.fillColor = (research > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
+                buttonUpgrade.strokeColor = (research > researchPrice ? colorBlue2 : SKColor.lightGrayColor())
+            }
         }
     }
     
@@ -487,12 +496,18 @@ class ResearchScene: SKScene {
                     let element = (node.parent as! ResearchElement)
                     let price = element.researchPrice
                     let type = element.researchType
-                    research -= price
-                    researchLevel[type]!++
-                    for count in 0..<maps.count {
-                        maps[count].reloadMap()
+                    if type == ResearchType.ResearchCenterResearch {
+                        money -= price
+                        researchLevel[type]!++
+                        updateElement()
+                    } else {
+                        research -= price
+                        researchLevel[type]!++
+                        for count in 0..<maps.count {
+                            maps[count].reloadMap()
+                        }
+                        updateElement()
                     }
-                    updateElement()
                 }
             }
         }
