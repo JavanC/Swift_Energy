@@ -97,7 +97,7 @@ class ButtonLayer: SKSpriteNode {
         tapButtonEnergy()
     }
     
-    func drawEnergyCircle(percent: CGFloat) {
+    func drawEnergyCircle(percent: Double) {
         if energyArc != nil {
             energyArc.removeFromParent()
         }

@@ -18,6 +18,8 @@ class IslandsScene: SKScene {
     var map1Button: SKLabelNode!
     var map2Button: SKLabelNode!
     
+    var spentTimeLabel: SKLabelNode!
+    
     override func didMoveToView(view: SKView) {
         
         if !contentCreated {
@@ -36,17 +38,24 @@ class IslandsScene: SKScene {
             backButton.position = CGPoint(x: (15 + 44) * framescale, y: frame.size.height - (30 + 22) * framescale)
             self.addChild(backButton)
             
-            map1Button = SKLabelNode(fontNamed:"SanFranciscoText-BoldItalic")
+            map1Button = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             map1Button.text = "Select Map1"
             map1Button.fontSize = 45 * framescale
             map1Button.position = CGPoint(x:frame.size.width / 2, y:frame.size.height / 2 + 100 * framescale)
             self.addChild(map1Button)
             
-            map2Button = SKLabelNode(fontNamed:"SanFranciscoText-BoldItalic")
+            map2Button = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             map2Button.text = "Select Map2"
             map2Button.fontSize = 45 * framescale
             map2Button.position = CGPoint(x:frame.size.width / 2, y:frame.size.height / 2 - 100 * framescale)
             self.addChild(map2Button)
+            
+            spentTimeLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            spentTimeLabel.name = "spentTimeLabel"
+            spentTimeLabel.fontSize = 30
+            spentTimeLabel.fontColor = SKColor.whiteColor()
+            spentTimeLabel.position = CGPoint(x: frame.width / 2, y: frame.height / 8)
+            self.addChild(spentTimeLabel)
             
             contentCreated = true
         }
@@ -72,8 +81,26 @@ class IslandsScene: SKScene {
             }
         }
     }
+
+    func hourToString(value: Int) -> String {
+        let year = value / 8760
+        let day = (value % 8760) / 24
+        let hour = value % 24
+        
+        var timeString = ""
+        if year > 0 {
+            timeString += "\(year) years "
+        }
+        if day > 0 {
+            timeString += "\(day) days "
+        }
+        if hour > 0 {
+            timeString += "\(hour) hours pass..."
+        }
+        return timeString
+    }
     
     override func update(currentTime: CFTimeInterval) {
-        
+        spentTimeLabel.text = hourToString(spendTime)
     }
 }

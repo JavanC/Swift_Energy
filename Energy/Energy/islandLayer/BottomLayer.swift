@@ -118,7 +118,7 @@ class PageInformation: SKSpriteNode {
         }
         if ([.WindTurbine, .WaveCell]).contains(buildingData.buildType) {
             infoProduceEnergyNode.hidden = false
-            infoProduceEnergyNode.valueLabel.text = "\(numberToString(Int(buildingData.energySystem.produce)))"
+            infoProduceEnergyNode.valueLabel.text = "\(numberToString(buildingData.energySystem.produce, isInt: false))"
             informationLabels.append(infoProduceEnergyNode)
         }
         if ([.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]).contains(buildingData.buildType) {
@@ -318,6 +318,7 @@ class PageSell: SKSpriteNode {
 class PageEnergy: SKSpriteNode {
     
     var energyLabel: SKLabelNode!
+    var energyTickAddLabel: SKLabelNode!
     var energy_ProgressBack: SKSpriteNode!
     var energy_ProgressFront: SKSpriteNode!
     
@@ -344,6 +345,14 @@ class PageEnergy: SKSpriteNode {
         energyLabel.fontSize = size.height / 7
         energyLabel.position = CGPoint(x: size.width / 2, y: size.height * 3 / 4)
         addChild(energyLabel)
+        
+        energyTickAddLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        energyTickAddLabel.name = "energyTickAddLabel"
+        energyTickAddLabel.fontColor = colorEnergy
+        energyTickAddLabel.fontSize = size.height / 7
+        energyTickAddLabel.horizontalAlignmentMode = .Right
+        energyTickAddLabel.position = CGPoint(x: size.width - size.height / 7, y: size.height * 3 / 4)
+        addChild(energyTickAddLabel)
         
         let label = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
         label.name = "ExplanationLabel"

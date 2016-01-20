@@ -39,18 +39,20 @@ func RunAfterDelay(delay: NSTimeInterval, block: dispatch_block_t) {
 	dispatch_after(time, dispatch_get_main_queue(), block)
 }
 
-func baseToPower(number: Int, base: Double, power: Int) -> Int {
-    var answer = Double(number)
+func baseToPower(number: Double, base: Double, power: Int) -> Double {
+    var answer = number
     if power == 0 {
-        return number
+        return answer
     }
     for _ in 1...power {
         answer *= base
     }
-    return Int(answer)
+    return answer
 }
 
-func numberToString(number: Int) -> String {
+func numberToString(value: Double, isInt: Bool = true) -> String {
+    let number = Int(value)
+    let less = value % 1
     if number >= 1000000 {
         let million = number / 1000000
         var residue = number % 1000000
@@ -66,5 +68,13 @@ func numberToString(number: Int) -> String {
         }
         return (residue == 0 ? "\(million) Million" : "\(million).\(residue / 10000) Million")
     }
-    return String(number)
+    if isInt {
+        return String(number)
+    } else {
+        if less == 0 {
+            return String(number)
+        } else {
+            return "\(number).\(Int(less * 100))"
+        }
+    }
 }

@@ -12,7 +12,7 @@ class ResearchElement: SKNode {
     var background: SKSpriteNode!
     var buttonUpgrade: SKShapeNode!
     var researchType: ResearchType!
-    var researchPrice: Int!
+    var researchPrice: Double!
     var researchDone: Bool = false
     
     init(researchType: ResearchType, size: CGSize) {
@@ -48,181 +48,181 @@ class ResearchElement: SKNode {
             imageType = BuildingType.SolarCell
             name = "Solar Plant"
             comment = "Open Solar Plant technology."
-            researchPrice = 2500
+            researchPrice = 2000
 
         case .SolarCellRebuild:
             imageType = BuildingType.SolarCell
             name = "Solar Manager"
             comment = "Solar Plant are automatically replaced."
-            researchPrice = 5000
+            researchPrice = 4000
             
         case .CoalBurnerResearch:
             imageType = BuildingType.CoalBurner
             name = "Coal-Fired Plant"
             comment = "Open Coal-Fired technology."
-            researchPrice = 10
+            researchPrice = 50000
             
         case .CoalBurnerRebuild:
             imageType = BuildingType.CoalBurner
             name = "Coal-Fired Manager"
             comment = "Coal Coal-Fired are automatically replaced."
-            researchPrice = 1
+            researchPrice = 100000
             
         case .WaveCellResearch:
             imageType = BuildingType.WaveCell
             name = "Wave Energy"
             comment = "Open Wave Energy technology."
-            researchPrice = 1
+            researchPrice = 500000
             
         case .WaveCellRebuild:
             imageType = BuildingType.WaveCell
             name = "Wave Energy Manager"
             comment = "Wave Energy are automatically replaced."
-            researchPrice = 1
+            researchPrice = 1000000
             
         case .GasBurnerResearch:
             imageType = BuildingType.GasBurner
             name = "Gas-Fired Plant"
             comment = "Open Gas-Fired Plant technology."
-            researchPrice = 1
+            researchPrice = 3000000
             
         case .GasBurnerRebuild:
             imageType = BuildingType.GasBurner
             name = "Gas-Fired Manager"
             comment = "Gas-Fired are automatically replaced."
-            researchPrice = 1
+            researchPrice = 6000000
             
         case .NuclearCellResearch:
             imageType = BuildingType.NuclearCell
             name = "Nuclear Plant"
             comment = "Open Nuclear Plant technology."
-            researchPrice = 1
+            researchPrice = 100000000
             
         case .NuclearCellRebuild:
             imageType = BuildingType.NuclearCell
             name = "Nuclear Manager"
             comment = "Nuclear are automatically replaced."
-            researchPrice = 1
+            researchPrice = 200000000
             
         case .FusionCellResearch:
             imageType = BuildingType.FusionCell
             name = "Fusion Plant"
             comment = "Open Fusion Plant technology."
-            researchPrice = 1
+            researchPrice = 2000000000
             
         case .FusionCellRebuild:
             imageType = BuildingType.FusionCell
             name = "Fusion Manager"
             comment = "Fusion are automatically replaced."
-            researchPrice = 1
+            researchPrice = 4000000000
             
         case .SmallGeneratorResearch:
             imageType = BuildingType.SmallGenerator
             name = "Small Generator"
             comment = "Open Small Generator technology."
-            researchPrice = 1
+            researchPrice = 2000
             
         case .MediumGeneratorResearch:
             imageType = BuildingType.MediumGenerator
             name = "Medium Generator"
             comment = "Open Medium Generator technology."
-            researchPrice = 1
+            researchPrice = 4000000
             
         case .LargeGeneratorResearch:
             imageType = BuildingType.LargeGenerator
             name = "Large Generator"
             comment = "Open Large Generator technology."
-            researchPrice = 1
+            researchPrice = 4000000000
             
         case .BoilerHouseResearch:
             imageType = BuildingType.BoilerHouse
             name = "Boiler House"
             comment = "Open Boiler House technology."
-            researchPrice = 1
+            researchPrice = 80000
             
         case .LargeBoilerHouseResearch:
             imageType = BuildingType.LargeBoilerHouse
             name = "Large Boiler House"
             comment = "Open Large Boiler House technology."
-            researchPrice = 1
+            researchPrice = 10000000
             
         case .IsolationResearch:
             imageType = BuildingType.Isolation
             name = "Isolation"
             comment = "Open Isolation technology."
-            researchPrice = 1
+            researchPrice = 1000
             
         case .BatteryResearch:
             imageType = BuildingType.Battery
             name = "Battery"
             comment = "Open Battery technology."
-            researchPrice = 1
+            researchPrice = 800
             
         case .HeatExchangerResearch:
             imageType = BuildingType.HeatExchanger
             name = "Heat Exchanger"
             comment = "Open Heat Exchanger technology."
-            researchPrice = 1
+            researchPrice = 20000
             
         case .HeatSinkResearch:
             imageType = BuildingType.HeatSink
             name = "Heat Sink"
             comment = "Open Heat Sink technology."
-            researchPrice = 1
+            researchPrice = 2000000
             
         case .HeatInletResearch:
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet"
             comment = "Open Heat Inlet technology."
-            researchPrice = 1
+            researchPrice = 5000000000
             
         case .HeatOutletResearch:
             imageType = BuildingType.HeatOutlet
             name = "Heat Outlet"
             comment = "Open Heat Outlet technology."
-            researchPrice = 1
+            researchPrice = 5000000000
 
         case .WaterPumpResearch:
             imageType = BuildingType.WaterPump
             name = "Water Pump"
             comment = "Open Water Pump technology."
-            researchPrice = 1
+            researchPrice = 50000000
             
         case .GroundwaterPumpResearch:
             imageType = BuildingType.GroundwaterPump
             name = "Groundwater Pump"
             comment = "Open Groundwater Pump technology."
-            researchPrice = 1
+            researchPrice = 500000000
             
         case .WaterPipeResearch:
             imageType = BuildingType.WaterPipe
             name = "Water Pipe"
             comment = "Open Water Pipe technology."
-            researchPrice = 1
+            researchPrice = 20000000
             
         case .SmallOfficeResearch:
             imageType = BuildingType.SmallOffice
             name = "Small Office"
             comment = "Open Small Office technology."
-            researchPrice = 1
+            researchPrice = 500
             
         case .MediumOfficeResearch:
             imageType = BuildingType.MediumOffice
             name = "Medium Office"
             comment = "Open Medium Office technology."
-            researchPrice = 1
+            researchPrice = 150000
             
         case .LargeOfficeResearch:
             imageType = BuildingType.LargeOffice
             name = "Large Office"
             comment = "Open Large Office technology."
-            researchPrice = 1
+            researchPrice = 40000000
             
         case .BankResearch:
             imageType = BuildingType.Bank
             name = "Bank"
             comment = "Open Bank technology."
-            researchPrice = 1
+            researchPrice = 8000000000
             
         case .ResearchCenterResearch:
             imageType = BuildingType.ResearchCenter
@@ -234,12 +234,13 @@ class ResearchElement: SKNode {
             imageType = BuildingType.AdvancedResearchCenter
             name = "Advanced Research Center"
             comment = "Open Advanced Research Center technology."
-            researchPrice = 1
+            researchPrice = 150000
+            
         case .LibraryResearch:
             imageType = BuildingType.Library
             name = "Library"
             comment = "Open Library technology."
-            researchPrice = 1
+            researchPrice = 100000000
             
         default:
             imageType = BuildingType.WindTurbine
@@ -516,7 +517,7 @@ class ResearchScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
-        researchLabel.text = "\(research)"
+        researchLabel.text = "\(numberToString(research))"
         for researchElement in researchElements {
             researchElement.checkUpgradeButton()
         }

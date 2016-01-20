@@ -34,7 +34,7 @@ class IslandScene: SKScene {
         
         // First initial
         if !contentCreated {
-            gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
+            gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
             //        defaults = NSUserDefaults.standardUserDefaults()
             
             // Top Layer
@@ -168,7 +168,7 @@ class IslandScene: SKScene {
                     isPause = !isPause
                     topLayer.isPauseChange()
                     if isPause { gameTimer.invalidate() }
-                    else { gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "tickUpdata", userInfo: nil, repeats: true) }
+                    else { gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true) }
                     
                 case buttonLayer.buttonBuild:
                     print("Build Button")
@@ -200,17 +200,17 @@ class IslandScene: SKScene {
                     
                 // GMMMMM
                 case bottomLayer.pageSell:
-                    for _ in 1...100 {
+                    for _ in 1...1000 {
                         tickUpdata()
                     }
                     
                 // Energy Page
                 case bottomLayer.pageEnergy.energy_ProgressBack:
                     print("Energy Preogree")
-                    money += Int(maps[nowMapNumber].energy)
+                    money += maps[nowMapNumber].energy
                     maps[nowMapNumber].energy = 0
                     // draw energy circle
-                    let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
+                    let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
                     buttonLayer.drawEnergyCircle(percent)
                     
                 // Builded Page
@@ -308,15 +308,16 @@ class IslandScene: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         // Updata text imformation
-        topLayer.moneyLabel.text = "Money: \(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd))"
-        topLayer.researchLabel.text = "Research: \(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd))"
+        topLayer.moneyLabel.text = "Money: \(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd, isInt: false))"
+        topLayer.researchLabel.text = "Research: \(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd, isInt: false))"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
-        bottomLayer.pageEnergy.energyLabel.text = "\(maps[nowMapNumber].energy) / \(maps[nowMapNumber].energyMax)"
+        bottomLayer.pageEnergy.energyLabel.text = "\(numberToString(maps[nowMapNumber].energy)) / \(numberToString(maps[nowMapNumber].energyMax))"
+        bottomLayer.pageEnergy.energyTickAddLabel.text = "+\(numberToString(maps[nowMapNumber].energy_TickAdd, isInt: false))"
     }
     
     func tickUpdata() {
-        
+        ++spendTime
         for i in 0...1 {
             // Update map data
             maps[i].Update()
@@ -328,12 +329,11 @@ class IslandScene: SKScene {
         // Update information
         bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
         // draw energy circle
-        let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
+        let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
         buttonLayer.drawEnergyCircle(percent)
         
         
         
-//        print((maps[0].buildings[0][0]! as Building).buildingData.timeSystem?.rebuild)
         //        save()
     }
     //    func save() {

@@ -87,8 +87,8 @@ class BuildingMapLayer: SKSpriteNode {
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array<Array<Building?>>()
-    var money_TickAdd: Int = 0
-    var research_TickAdd: Int = 0
+    var money_TickAdd: Double = 0
+    var research_TickAdd: Double = 0
     var energy_TickAdd: Double = 0
     var energy: Double = 0
     var energyMax: Double = 100
@@ -418,7 +418,7 @@ class BuildingMapLayer: SKSpriteNode {
          *  Calculate research, energy, money tick add
          */
         
-        var energy2MoneyAmount = 0
+        var energy2MoneyAmount: Double = 0
         research_TickAdd = 0
         energy_TickAdd = 0
         money_TickAdd = 0
@@ -454,7 +454,7 @@ class BuildingMapLayer: SKSpriteNode {
             money_TickAdd += energy2MoneyAmount
             if energy > energyMax { energy = energyMax }
         } else {
-            money_TickAdd += Int(energy)
+            money_TickAdd += energy
             energy = 0
         }
     }

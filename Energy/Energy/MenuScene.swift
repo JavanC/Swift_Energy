@@ -29,8 +29,9 @@ enum ResearchType: Int {
     case ResearchCenterResearch, AdvancedResearchCenterResearch, LibraryResearch, SmallOfficeResearch, MediumOfficeResearch, LargeOfficeResearch, BankResearch, SmallGeneratorResearch, MediumGeneratorResearch, LargeGeneratorResearch, BoilerHouseResearch, LargeBoilerHouseResearch, WaterPumpResearch, GroundwaterPumpResearch, WaterPipeResearch, BatteryResearch, IsolationResearch, HeatExchangerResearch, HeatSinkResearch, HeatInletResearch, HeatOutletResearch, FusionCellResearch, FusionCellRebuild, NuclearCellResearch, NuclearCellRebuild, GasBurnerResearch, GasBurnerRebuild, WaveCellResearch, WaveCellRebuild, CoalBurnerResearch, CoalBurnerRebuild, SolarCellResearch, SolarCellRebuild, WindTurbineResearch, WindTurbineRebuild, ResearchTypeLength
 }
 // User Data
-var money: Int = 1
-var research: Int = 0
+var money: Double = 1
+var research: Double = 0
+var spendTime: Int = 0
 var upgradeLevel = [UpgradeType: Int]()
 var researchLevel = [ResearchType: Int]()
 var maps = [BuildingMapLayer]()
@@ -76,7 +77,6 @@ class MenuScene: SKScene {
             researchLevel[ResearchType(rawValue: count)!] = 0
         }
         researchLevel[ResearchType.WindTurbineResearch] = 1
-        upgradeLevel[UpgradeType.WindTurbineEffectiveness] = 1
         for _ in 0..<8 {
             let buildingMapLayer = BuildingMapLayer()
             buildingMapLayer.configureAtPosition(CGPoint(x: 0, y: 0))

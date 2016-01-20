@@ -9,11 +9,11 @@
 import SpriteKit
 
 class TimeSystem {
-    var size: Int
-    var inAmount: Int
+    var size: Double
+    var inAmount: Double
     var rebuild: Bool
     
-    init(size: Int, rebuild: Bool) {
+    init(size: Double, rebuild: Bool) {
         self.size = size
         self.inAmount = size
         self.rebuild = rebuild
@@ -29,25 +29,25 @@ class TimeSystem {
 }
 
 class ResearchSystem {
-    var addAmount: Int = 0
-    var multiply: CGFloat = 1
+    var addAmount: Double = 0
+    var multiply: Double = 1
     
-    init(addAmount: Int, multiply: CGFloat = 1) {
+    init(addAmount: Double, multiply: Double = 1) {
         self.addAmount = addAmount
         self.multiply = multiply
     }
-    func researchMultiplyAmount() -> Int {
-        return (addAmount * Int(multiply * 100)) / 100
+    func researchMultiplyAmount() -> Double {
+        return addAmount * multiply
     }
 }
 
 class MoneySystem {
-    var inAmount: Int = 0
-    var energy2MoneyAmount: Int
-    var heat2MoneyAmount: Int
-    var multiply: CGFloat = 1
+    var inAmount: Double = 0
+    var energy2MoneyAmount: Double
+    var heat2MoneyAmount: Double
+    var multiply: Double = 1
     
-    init(initAmount: Int, energy2MoneyAmount: Int = 0, heat2MoneyAmount: Int = 0) {
+    init(initAmount: Double, energy2MoneyAmount: Double = 0, heat2MoneyAmount: Double = 0) {
         self.inAmount = initAmount
         self.energy2MoneyAmount = energy2MoneyAmount
         self.heat2MoneyAmount = heat2MoneyAmount
@@ -56,18 +56,18 @@ class MoneySystem {
         if heat2MoneyAmount > 0 { return true }
         return false
     }
-    func energy2MoneyMultiplyAmount() -> Int {
-        return (energy2MoneyAmount * Int(multiply * 100)) / 100
+    func energy2MoneyMultiplyAmount() -> Double {
+        return energy2MoneyAmount * multiply
     }
 }
 
 class EnergySystem {
     var inAmount: Double = 0
     var produce: Double!
-    var heat2EnergyAmount: Int
+    var heat2EnergyAmount: Double
     var water2Energy: Bool
     
-    init(initAmount: Double, produce: Double = 0, heat2EnergyAmount: Int = 0, water2Energy: Bool = false) {
+    init(initAmount: Double, produce: Double = 0, heat2EnergyAmount: Double = 0, water2Energy: Bool = false) {
         self.inAmount = initAmount
         self.produce = produce
         self.heat2EnergyAmount = heat2EnergyAmount
@@ -83,15 +83,15 @@ class EnergySystem {
 }
 
 class HeatSystem {
-    var size: Int
-    var inAmount: Int
-    var produce: Int
-    var produceMultiply: CGFloat = 1.0
+    var size: Double
+    var inAmount: Double
+    var produce: Double
+    var produceMultiply: Double = 1.0
     var output: Bool
-    var coolingRate: CGFloat
-    var inletTransfer: Int
+    var coolingRate: Double
+    var inletTransfer: Double
     
-    init(size: Int, initAmount: Int = 0, produce: Int = 0, output: Bool = false, coolingRate: CGFloat = 0, inletTransfer: Int = 0) {
+    init(size: Double, initAmount: Double = 0, produce: Double = 0, output: Bool = false, coolingRate: Double = 0, inletTransfer: Double = 0) {
         self.size = size
         self.inAmount = initAmount
         self.produce = produce
@@ -99,11 +99,11 @@ class HeatSystem {
         self.coolingRate = coolingRate
         self.inletTransfer = inletTransfer
     }
-    func produceHeatValue() -> Int {
-        return (produce * Int(produceMultiply * 100)) / 100
+    func produceHeatValue() -> Double {
+        return produce * produceMultiply
     }
     func produceHeat() {
-        inAmount += (produce * Int(produceMultiply * 100)) / 100
+        inAmount += produce * produceMultiply
     }
     func overflow() -> Bool {
         if inAmount > size { return true }
@@ -119,7 +119,7 @@ class HeatSystem {
         }
     }
     func exchangerHeatToOtherHeatSystem(heatSystems:[HeatSystem]) {
-        var allHeat = 0
+        var allHeat: Double = 0
         for heatSystem in heatSystems {
             allHeat += heatSystem.inAmount
             heatSystem.inAmount = 0
@@ -134,13 +134,13 @@ class HeatSystem {
     }
     func heatInletToOutletHeatSystem(heatSystems:[HeatSystem]) {
         if inAmount >= inletTransfer {
-            let outputHeat = inletTransfer / heatSystems.count
+            let outputHeat = inletTransfer / Double(heatSystems.count)
             for HeatSystem in heatSystems {
                 HeatSystem.inAmount += outputHeat
             }
             inAmount -= inletTransfer
         } else {
-            let outputHeat = inAmount / heatSystems.count
+            let outputHeat = inAmount / Double(heatSystems.count)
             for HeatSystem in heatSystems {
                 HeatSystem.inAmount += outputHeat
             }
@@ -148,24 +148,24 @@ class HeatSystem {
         }
     }
     func coolingHeatToHeatSink(heatSystems:[HeatSystem]) {
-        let outputHeat = inAmount / (heatSystems.count + 1)
+        let outputHeat = inAmount / Double(heatSystems.count + 1)
         for HeatSystem in heatSystems {
             HeatSystem.inAmount += outputHeat
         }
         inAmount = outputHeat
     }
     func coolingHeat() {
-        inAmount = (inAmount * Int((1 - coolingRate) * 100)) / 100
+        inAmount = inAmount * (1 - coolingRate)
     }
 }
 
 class WaterSystem {
-    var size: Int
-    var inAmount: Int
-    var produce: Int
+    var size: Double
+    var inAmount: Double
+    var produce: Double
     var output: Bool
     
-    init(size: Int, initAmount: Int = 0, produce: Int = 0, output: Bool = false){
+    init(size: Double, initAmount: Double = 0, produce: Double = 0, output: Bool = false){
         self.size = size
         self.inAmount = initAmount
         self.produce = produce
@@ -177,7 +177,7 @@ class WaterSystem {
     func overflow() {
         if inAmount > size { inAmount = size }
     }
-    func add(amount:Int) -> Bool {
+    func add(amount:Double) -> Bool {
         if inAmount + amount <= size{
             inAmount += amount
             return true
@@ -207,7 +207,7 @@ class BuildingData {
     var name: String!
     var comment: String!
     var buildType: BuildingType = .Land
-    var buildPrice: Int!
+    var buildPrice: Double!
     enum ProgressType { case Time, Heat, Water }
     var progress: ProgressType!
     var timeSystem: TimeSystem!
@@ -218,10 +218,10 @@ class BuildingData {
     var researchSystem: ResearchSystem!
     
     // Other
-    var batteryEnergySize: Int!
-    var isolationPercent: CGFloat!
-    var bankAddPercent: CGFloat!
-    var libraryAddPercent: CGFloat!
+    var batteryEnergySize: Double!
+    var isolationPercent: Double!
+    var bankAddPercent: Double!
+    var libraryAddPercent: Double!
     
     init(buildType: BuildingType) {
         self.buildType = buildType
@@ -485,7 +485,7 @@ class BuildingData {
     func reloadUpgradeAndResearchData() {
         switch buildType {
         case .WindTurbine:
-            energySystem.produce = Double(baseToPower(1, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!))
+            energySystem.produce = baseToPower(0.1, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!)
             timeSystem.size = baseToPower(20, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
             timeSystem.rebuild = (researchLevel[ResearchType.WindTurbineRebuild] > 0 ? true : false)
             
@@ -500,7 +500,7 @@ class BuildingData {
             timeSystem.rebuild = (researchLevel[ResearchType.CoalBurnerRebuild] > 0 ? true : false)
             
         case .WaveCell:
-            energySystem.produce = Double(baseToPower(2700, base: 1.25, power: upgradeLevel[UpgradeType.WaveCellEffectiveness]!))
+            energySystem.produce = baseToPower(2700, base: 1.25, power: upgradeLevel[UpgradeType.WaveCellEffectiveness]!)
             timeSystem.size = baseToPower(400, base: 1.5, power: upgradeLevel[UpgradeType.WaveCellLifetime]!)
             timeSystem.rebuild = (researchLevel[ResearchType.WaveCellRebuild] > 0 ? true : false)
             
@@ -543,7 +543,7 @@ class BuildingData {
             heatSystem.size = baseToPower(8000, base: 1.25, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .Isolation:
-            isolationPercent = CGFloat(0.1 * Double(upgradeLevel[UpgradeType.IsolationEffectiveness]!))
+            isolationPercent = 0.1 * Double(upgradeLevel[UpgradeType.IsolationEffectiveness]!)
             
         case .Battery:
             batteryEnergySize = baseToPower(1000, base: 1.5, power: upgradeLevel[UpgradeType.EnergyBatterySize]!)
@@ -582,7 +582,7 @@ class BuildingData {
             moneySystem.energy2MoneyAmount = baseToPower(2000, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
             
         case .Bank:
-            bankAddPercent = CGFloat(0.2  + 0.1 * Double(upgradeLevel[UpgradeType.BankEffectiveness]!))
+            bankAddPercent = 0.2 + 0.1 * Double(upgradeLevel[UpgradeType.BankEffectiveness]!)
             
         case .ResearchCenter:
             researchSystem.addAmount = baseToPower(1, base: 1.25, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
@@ -591,7 +591,7 @@ class BuildingData {
             researchSystem.addAmount = baseToPower(6, base: 1.25, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
             
         case .Library:
-            libraryAddPercent = CGFloat(0.2  + 0.1 * Double(upgradeLevel[UpgradeType.LibraryEffectiveness]!))
+            libraryAddPercent = 0.2  + 0.1 * Double(upgradeLevel[UpgradeType.LibraryEffectiveness]!)
             
         default: break
         }
@@ -600,10 +600,10 @@ class BuildingData {
     func heatTransformEnergy() {
         if heatSystem != nil && energySystem != nil && energySystem.isHeat2Energy() {
             if heatSystem.inAmount >= energySystem.heat2EnergyAmount {
-                energySystem.inAmount += Double(energySystem.heat2EnergyAmount)
+                energySystem.inAmount += energySystem.heat2EnergyAmount
                 heatSystem.inAmount -= energySystem.heat2EnergyAmount
             } else {
-                energySystem.inAmount += Double(heatSystem.inAmount)
+                energySystem.inAmount += heatSystem.inAmount
                 heatSystem.inAmount = 0
             }
         }
@@ -612,11 +612,11 @@ class BuildingData {
     func waterTransformEnergy() {
         if waterSystem != nil && energySystem != nil && energySystem.water2Energy {
             if heatSystem.inAmount >= waterSystem.inAmount * 100 {
-                energySystem.inAmount += Double(waterSystem.inAmount * 100)
+                energySystem.inAmount += waterSystem.inAmount * 100
                 heatSystem.inAmount -= waterSystem.inAmount * 100
                 waterSystem.inAmount = 0
             } else {
-                energySystem.inAmount += Double(heatSystem.inAmount)
+                energySystem.inAmount += heatSystem.inAmount
                 if heatSystem.inAmount > 0 {
                     waterSystem.inAmount -= heatSystem.inAmount / 100 + 1
                 }

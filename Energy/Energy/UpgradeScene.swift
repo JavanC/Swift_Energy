@@ -14,7 +14,7 @@ class UpgradeElement: SKNode {
     var buttonUpgrade: SKShapeNode!
     var buttonDegrade: SKShapeNode!
     var upgradeType: UpgradeType!
-    var upgradePrice: Int!
+    var upgradePrice: Double!
     
     init(upgradeType: UpgradeType, size: CGSize) {
         super.init()
@@ -126,7 +126,7 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.SmallGenerator
             name = "Generator Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = baseToPower(1000, base: 3.7, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
+            upgradePrice = baseToPower(1000, base: 2.3, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
             
         case .BoilerHouseSellAmount:
             imageType = BuildingType.BoilerHouse
@@ -138,7 +138,7 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.BoilerHouse
             name = "Boiler House Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = baseToPower(80000, base: 4.7, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
+            upgradePrice = baseToPower(80000, base: 3.7, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .IsolationEffectiveness:
             imageType = BuildingType.Isolation
@@ -156,43 +156,43 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.HeatExchanger
             name = "Heat Exchanger Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = baseToPower(50000, base: 2.6, power: upgradeLevel[UpgradeType.HeatExchangerMaxHeat]!)
+            upgradePrice = baseToPower(50000, base: 2.1, power: upgradeLevel[UpgradeType.HeatExchangerMaxHeat]!)
             
         case .HeatSinkMaxHeat:
             imageType = BuildingType.HeatSink
             name = "Heat Sink Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = baseToPower(50000000, base: 2.5, power: upgradeLevel[UpgradeType.HeatSinkMaxHeat]!)
+            upgradePrice = baseToPower(50000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatSinkMaxHeat]!)
             
         case .HeatInletOutletMaxHeat:
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet,Outlet Max Heat"
             comment = "Increases max heat by 50%"
-            upgradePrice = baseToPower(50000000000000, base: 2.3, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]!)
+            upgradePrice = baseToPower(50000000000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]!)
             
         case .HeatInletMaxTransfer:
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet Max Transfer"
             comment = "Increases heat inlet transfer by 50%"
-            upgradePrice = baseToPower(100000000000000, base: 1.5, power: upgradeLevel[UpgradeType.HeatInletMaxTransfer]!)
+            upgradePrice = baseToPower(100000000000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatInletMaxTransfer]!)
             
         case .WaterPumpProduction:
             imageType = BuildingType.WaterPump
             name = "Water Pump"
             comment = "Increases water producetion by 25%"
-            upgradePrice = baseToPower(40000000000, base: 1.9, power: upgradeLevel[UpgradeType.WaterPumpProduction]!)
+            upgradePrice = baseToPower(40000000000, base: 1.5, power: upgradeLevel[UpgradeType.WaterPumpProduction]!)
             
         case .GroundwaterPumpProduction:
             imageType = BuildingType.GroundwaterPump
             name = "Groundwater Pump"
             comment = "Increases water producetion by 20%"
-            upgradePrice = baseToPower(10000000000000, base: 2, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
+            upgradePrice = baseToPower(10000000000000, base: 1.9, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
             
         case .WaterElementMaxWater:
             imageType = BuildingType.WaterPipe
             name = "Water Element Max Water"
             comment = "Increases max water by 50%"
-            upgradePrice = baseToPower(20000000000, base: 2, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
+            upgradePrice = baseToPower(20000000000, base: 1.9, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
             
         case .GeneratorMaxWater:
             imageType = BuildingType.SmallGenerator
@@ -204,7 +204,7 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.SmallOffice
             name = "Office Sell Amount"
             comment = "Increases energy sell amount by 50%"
-            upgradePrice = baseToPower(100, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
+            upgradePrice = baseToPower(100, base: 1.9, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
             
         case .BankEffectiveness:
             imageType = BuildingType.Bank
@@ -216,13 +216,13 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.ResearchCenter
             name = "Research Center"
             comment = "Increases research producetion by 25%"
-            upgradePrice = baseToPower(100, base: 1.5, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
+            upgradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
             
         case .LibraryEffectiveness:
             imageType = BuildingType.Library
             name = "Library Effectiveness"
             comment = "Increases library effectiveness by 10%"
-            upgradePrice = baseToPower(400000000000, base: 3, power: upgradeLevel[UpgradeType.LibraryEffectiveness]!)
+            upgradePrice = baseToPower(400000000000, base: 2, power: upgradeLevel[UpgradeType.LibraryEffectiveness]!)
         
         default:
             imageType = BuildingType.WindTurbine
@@ -314,7 +314,7 @@ class UpgradeElement: SKNode {
         leveldownImage.setScale(0.6 * framescale)
         leveldownImage.zRotation = CGFloat(M_PI)
         buttonDegrade.addChild(leveldownImage)
-        buttonDegrade.hidden = (level > 1 ? false : true)
+        buttonDegrade.hidden = (level > 0 ? false : true)
         addChild(buttonDegrade)
     }
     
