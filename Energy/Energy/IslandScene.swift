@@ -35,7 +35,6 @@ class IslandScene: SKScene {
         // First initial
         if !contentCreated {
             gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
-            //        defaults = NSUserDefaults.standardUserDefaults()
             
             // Top Layer
             let topLayerSize = CGSizeMake(frame.size.width, topTileSize.height * tilesScaleSize.height)
@@ -200,9 +199,24 @@ class IslandScene: SKScene {
                 
             // GMMMMM
             case bottomLayer.pageSell:
-                for _ in 1...1000 {
-                    tickUpdata()
-                }
+                maps[nowMapNumber].saveGameData()
+                print("Save")
+                
+                
+//                let buildingData = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!.buildingData
+//                let savedData = NSKeyedArchiver.archivedDataWithRootObject(buildingData)
+//                NSUserDefaults.standardUserDefaults().setObject(savedData, forKey: "00Data")
+                
+//                print("save: \(buildingData.buildType)")
+                
+            case topLayer.moneyLabel:
+                maps[nowMapNumber].loadGameData()
+                print("Load")
+                
+                
+//                for _ in 1...1000 {
+//                    tickUpdata()
+//                }
                 
             // Energy Page
             case bottomLayer.pageEnergy.energy_ProgressBack:
@@ -315,7 +329,6 @@ class IslandScene: SKScene {
             
             // Move builded and sell building
             if node == maps[nowMapNumber] {
-                print("Building Map Layer")
                 let buildingmaplocation = touch.locationInNode(maps[nowMapNumber])
                 let coord = maps[nowMapNumber].position2Coord(buildingmaplocation)
                 switch touchType {
@@ -373,11 +386,14 @@ class IslandScene: SKScene {
         let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
         buttonLayer.drawEnergyCircle(percent)
         
-        
-        
-        //        save()
+        // save
+        save()
     }
-    //    func save() {
-    //        defaults.setInteger(money, forKey: "Money")
-    //    }
+        func save() {
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setDouble(money, forKey: "SavedMoney")
+            defaults.setDouble(research, forKey: "SavedResearch")
+           
+
+        }
 }

@@ -61,8 +61,58 @@ class Building: SKNode {
                 progress.color = colorEnergy
             }
         }
+        
         progressUpdate()
     }
+    
+    func loadBuildingData(buildingData: BuildingData) {
+        name = String(buildingData.buildType.hashValue)
+        
+        self.buildingData = buildingData
+        buildingNode.runAction(SKAction.setTexture(buildingAtlas.textureNamed(buildingData.imageName)))
+        buildingNode.alpha = 1
+        activate = true
+        if buildingData.timeSystem != nil {
+            activate = buildingData.timeSystem.inAmount == 0 ? false : true
+        }
+        
+        if buildingData.buildType == .Land {
+            buildingNode.alpha = 0.2
+            activate = false
+        }
+        
+        // Add progress
+        if progressBack == nil && buildingData.progress != nil {
+            progressBack = SKSpriteNode()
+            progressBack.size = CGSize(width: 56, height: 5)
+            progressBack.anchorPoint = CGPoint(x: 0, y: 0)
+            progressBack.position = CGPoint(x: 4, y: -60)
+            progressBack.alpha = 0.3
+            progressBack.zPosition = 1
+            addChild(progressBack)
+            progress = SKSpriteNode()
+            progress.size = CGSize(width: 56, height: 5)
+            progress.anchorPoint = CGPoint(x: 0, y: 0)
+            progress.position = CGPoint(x: 4, y: -60)
+            progress.alpha = 0.7
+            progress.zPosition = 1
+            addChild(progress)
+            switch buildingData.progress! {
+            case .Time:
+                progressBack.color = SKColor.yellowColor()
+                progress.color = SKColor.yellowColor()
+            case .Heat:
+                progressBack.color = SKColor.redColor()
+                progress.color = SKColor.redColor()
+            case .Water:
+                progressBack.color = colorEnergy
+                progress.color = colorEnergy
+            }
+        }
+        
+        progressUpdate()
+    }
+    
     
     // MARK: progress update
     func progressUpdate() {
@@ -80,6 +130,7 @@ class Building: SKNode {
             }
         }
     }
+    
 }
 
 class BuildingMapLayer: SKSpriteNode {
@@ -164,9 +215,33 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: Reload Map Upgrade Data
     func reloadMap() {
         for line in buildings {
-        for building in line {
-            building?.buildingData.reloadUpgradeAndResearchData()
-        }}
+            for building in line {
+                building?.buildingData.reloadUpgradeAndResearchData()
+            }
+        }
+    }
+    
+    // MARK: Save Map Data
+    func saveGameData() {
+        for y in 0..<11 {
+            for x in 0..<9 {
+                let buildingData = buildingForCoord(CGPoint(x: x, y: y))!.buildingData
+                let savedData = NSKeyedArchiver.archivedDataWithRootObject(buildingData)
+                NSUserDefaults.standardUserDefaults().setObject(savedData, forKey: "\(nowMapNumber)_\(x)_\(y)_Data")
+            }
+        }
+    }
+    
+    // MARK: Load Map Data
+    func loadGameData() {
+        for y in 0..<11 {
+            for x in 0..<9 {
+                if let loadData = NSUserDefaults.standardUserDefaults().objectForKey("\(nowMapNumber)_\(x)_\(y)_Data") as? NSData {
+                    let buildingData = NSKeyedUnarchiver.unarchiveObjectWithData(loadData) as? BuildingData
+                    buildingForCoord(CGPoint(x: x, y: y))?.loadBuildingData(buildingData!)
+                }
+            }
+        }
     }
     
     // MARK: Return Around Coord BuildingData
@@ -370,7 +445,7 @@ class BuildingMapLayer: SKSpriteNode {
                 } else {
                     // 3. Rebuild
                     if autoRebuild && buildingData.timeSystem != nil && buildingData.timeSystem.rebuild {
-                        let price = building!.buildingData.buildPrice!
+                        let price = building!.buildingData.buildPrice
                         if money >= price {
                             money -= price
                             building!.buildingData.timeSystem.resetTime()
@@ -458,18 +533,4 @@ class BuildingMapLayer: SKSpriteNode {
             energy = 0
         }
     }
-    
-    // MARK: Load Tile Map by word array
-//    func LoadTileMap() {
-//        for (row, line) in buildings.enumerate() {
-//            for (colume, letter) in line.enumerate() {
-//                let coord = CGPoint(x: colume, y: row)
-//                let build = Building()
-//                build.configureAtCoord(coord, build: BuildMenu.Wind)
-//                build.position = Coord2Position(coord)
-//                buildings[Int(coord.y)][Int(coord.x)] = build
-//                addChild(build)
-//            }
-//        }
-//    }
 }

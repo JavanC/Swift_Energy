@@ -30,7 +30,7 @@ enum ResearchType: Int {
 }
 // User Data
 var money: Double = 100
-var research: Double = 0
+var research: Double = 10
 var spendTime: Int = 0
 var upgradeLevel = [UpgradeType: Int]()
 var researchLevel = [ResearchType: Int]()
@@ -44,10 +44,10 @@ class MenuScene: SKScene {
     var contentCreated: Bool = false
     var startGameButton: SKLabelNode!
     var testbutton: SKMultilineLabel!
-
+    
     override func didMoveToView(view: SKView) {
         if !contentCreated {
-            
+
             framescale = frame.size.width / (9 * 64)
             tilesScaleSize = CGSize(width: 64 * framescale, height: 64 * framescale)
             
@@ -70,6 +70,14 @@ class MenuScene: SKScene {
     }
     
     func initialLevelData() {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        money = defaults.doubleForKey("SavedMoney")
+        if money == 0{
+            money = 1
+        }
+        research = defaults.doubleForKey("SavedResearch")
+        
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
             upgradeLevel[UpgradeType(rawValue: count)!] = 0
         }

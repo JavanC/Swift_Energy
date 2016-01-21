@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class TimeSystem {
+class TimeSystem: NSObject, NSCoding {
     var size: Double
     var inAmount: Double
     var rebuild: Bool
@@ -26,9 +26,25 @@ class TimeSystem {
     func resetTime() {
         inAmount = size
     }
+    
+    // NSCoding
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let size = aDecoder.decodeObjectForKey("size") as? Double,
+        let inAmount = aDecoder.decodeObjectForKey("inAmount") as? Double,
+        let rebuild = aDecoder.decodeObjectForKey("rebuild") as? Bool
+            else { return nil }
+        self.init(size: size, rebuild: rebuild)
+        self.inAmount = inAmount
+    
+    }
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(size, forKey: "size")
+        aCoder.encodeObject(inAmount, forKey: "inAmount")
+        aCoder.encodeObject(rebuild, forKey: "rebuild")
+    }
 }
 
-class ResearchSystem {
+class ResearchSystem: NSObject, NSCoding {
     var addAmount: Double = 0
     var multiply: Double = 1
     
@@ -39,9 +55,21 @@ class ResearchSystem {
     func researchMultiplyAmount() -> Double {
         return addAmount * multiply
     }
+    
+    // NSCoding
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let addAmount = aDecoder.decodeObjectForKey("addAmount") as? Double,
+            let multiply = aDecoder.decodeObjectForKey("multiply") as? Double
+            else { return nil }
+        self.init(addAmount: addAmount, multiply: multiply)
+    }
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(addAmount, forKey: "addAmount")
+        aCoder.encodeObject(multiply, forKey: "multiply")
+    }
 }
 
-class MoneySystem {
+class MoneySystem: NSObject, NSCoding {
     var inAmount: Double = 0
     var energy2MoneyAmount: Double
     var heat2MoneyAmount: Double
@@ -59,9 +87,27 @@ class MoneySystem {
     func energy2MoneyMultiplyAmount() -> Double {
         return energy2MoneyAmount * multiply
     }
+    
+    // NSCoding
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let inAmount = aDecoder.decodeObjectForKey("inAmount") as? Double,
+            let energy2MoneyAmount = aDecoder.decodeObjectForKey("energy2MoneyAmount") as? Double,
+            let heat2MoneyAmount = aDecoder.decodeObjectForKey("heat2MoneyAmount") as? Double,
+            let multiply = aDecoder.decodeObjectForKey("multiply") as? Double
+        
+            else { return nil }
+        self.init(initAmount: inAmount, energy2MoneyAmount: energy2MoneyAmount, heat2MoneyAmount:heat2MoneyAmount)
+        self.multiply = multiply
+    }
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(inAmount, forKey: "inAmount")
+        aCoder.encodeObject(energy2MoneyAmount, forKey: "energy2MoneyAmount")
+        aCoder.encodeObject(heat2MoneyAmount, forKey: "heat2MoneyAmount")
+        aCoder.encodeObject(multiply, forKey: "multiply")
+    }
 }
 
-class EnergySystem {
+class EnergySystem: NSObject, NSCoding {
     var inAmount: Double = 0
     var produce: Double!
     var heat2EnergyAmount: Double
@@ -80,9 +126,26 @@ class EnergySystem {
         if heat2EnergyAmount > 0 { return true }
         return false
     }
+    
+    // NSCoding
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let inAmount = aDecoder.decodeObjectForKey("inAmount") as? Double,
+            let produce = aDecoder.decodeObjectForKey("produce") as? Double,
+            let heat2EnergyAmount = aDecoder.decodeObjectForKey("heat2EnergyAmount") as? Double,
+            let water2Energy = aDecoder.decodeObjectForKey("water2Energy") as? Bool
+            
+            else { return nil }
+        self.init(initAmount: inAmount, produce: produce, heat2EnergyAmount: heat2EnergyAmount, water2Energy: water2Energy)
+    }
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(inAmount, forKey: "inAmount")
+        aCoder.encodeObject(produce, forKey: "produce")
+        aCoder.encodeObject(heat2EnergyAmount, forKey: "heat2EnergyAmount")
+        aCoder.encodeObject(water2Energy, forKey: "water2Energy")
+    }
 }
 
-class HeatSystem {
+class HeatSystem: NSObject, NSCoding {
     var size: Double
     var inAmount: Double
     var produce: Double
@@ -157,9 +220,32 @@ class HeatSystem {
     func coolingHeat() {
         inAmount = inAmount * (1 - coolingRate)
     }
+    
+    // NSCoding
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let size = aDecoder.decodeObjectForKey("size") as? Double,
+            let inAmount = aDecoder.decodeObjectForKey("inAmount") as? Double,
+            let produce = aDecoder.decodeObjectForKey("produce") as? Double,
+            let produceMultiply = aDecoder.decodeObjectForKey("produceMultiply") as? Double,
+            let output = aDecoder.decodeObjectForKey("output") as? Bool,
+            let coolingRate = aDecoder.decodeObjectForKey("coolingRate") as? Double,
+            let inletTransfer = aDecoder.decodeObjectForKey("inletTransfer") as? Double
+            else { return nil }
+        self.init(size: size, initAmount: inAmount, produce: produce, output: output, coolingRate: coolingRate, inletTransfer: inletTransfer)
+        self.produceMultiply = produceMultiply
+    }
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(size, forKey: "size")
+        aCoder.encodeObject(inAmount, forKey: "inAmount")
+        aCoder.encodeObject(produce, forKey: "produce")
+        aCoder.encodeObject(produceMultiply, forKey: "produceMultiply")
+        aCoder.encodeObject(output, forKey: "output")
+        aCoder.encodeObject(coolingRate, forKey: "coolingRate")
+        aCoder.encodeObject(inletTransfer, forKey: "inletTransfer")
+    }
 }
 
-class WaterSystem {
+class WaterSystem: NSObject, NSCoding {
     var size: Double
     var inAmount: Double
     var produce: Double
@@ -199,16 +285,33 @@ class WaterSystem {
             }
         }
     }
+    
+    // NSCoding
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let size = aDecoder.decodeObjectForKey("size") as? Double,
+            let inAmount = aDecoder.decodeObjectForKey("inAmount") as? Double,
+            let produce = aDecoder.decodeObjectForKey("produce") as? Double,
+            let output = aDecoder.decodeObjectForKey("output") as? Bool
+            
+            else { return nil }
+        self.init(size: size, initAmount: inAmount, produce: produce, output: output)
+    }
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(size, forKey: "size")
+        aCoder.encodeObject(inAmount, forKey: "inAmount")
+        aCoder.encodeObject(produce, forKey: "produce")
+        aCoder.encodeObject(output, forKey: "output")
+    }
 }
 
-class BuildingData {
-    
-    var imageName: String!
-    var name: String!
-    var comment: String!
+class BuildingData: NSObject, NSCoding {
+
+    var imageName: String = ""
+    var name: String = ""
+    var comment: String = ""
     var buildType: BuildingType = .Land
-    var buildPrice: Double!
-    enum ProgressType { case Time, Heat, Water }
+    var buildPrice: Double = 0
+    enum ProgressType: Int { case Time, Heat, Water}
     var progress: ProgressType!
     var timeSystem: TimeSystem!
     var heatSystem: HeatSystem!
@@ -224,7 +327,9 @@ class BuildingData {
     var libraryAddPercent: Double!
     
     init(buildType: BuildingType) {
+        super.init()
         self.buildType = buildType
+        
         switch buildType {
         case .Land:
             imageName = "Land"
@@ -642,5 +747,95 @@ class BuildingData {
         buildingImage.name = name
         buildingImage.size = tilesScaleSize
         return buildingImage
+    }
+    
+    // NSCoding
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let imageName = aDecoder.decodeObjectForKey("imageName") as? String,
+        let name = aDecoder.decodeObjectForKey("name") as? String,
+        let comment = aDecoder.decodeObjectForKey("comment") as? String,
+        let buildType = BuildingType(rawValue: (aDecoder.decodeObjectForKey("buildType") as? Int)!),
+        let buildPrice = aDecoder.decodeObjectForKey("buildPrice") as? Double
+        else { return nil }
+        self.init(buildType: buildType)
+        self.imageName = imageName
+        self.name = name
+        self.comment = comment
+        self.buildPrice = buildPrice
+        
+        if let progress = aDecoder.decodeObjectForKey("progress") as? Int {
+            self.progress = ProgressType(rawValue: progress)
+        }
+        if let timeSystem = aDecoder.decodeObjectForKey("timeSystem") as? TimeSystem {
+            self.timeSystem = timeSystem
+        }
+        if let heatSystem = aDecoder.decodeObjectForKey("heatSystem") as? HeatSystem {
+            self.heatSystem = heatSystem
+        }
+        if let waterSystem = aDecoder.decodeObjectForKey("waterSystem") as? WaterSystem {
+            self.waterSystem = waterSystem
+        }
+        if let moneySystem = aDecoder.decodeObjectForKey("moneySystem") as? MoneySystem {
+            self.moneySystem = moneySystem
+        }
+        if let energySystem = aDecoder.decodeObjectForKey("energySystem") as? EnergySystem {
+            self.energySystem = energySystem
+        }
+        if let researchSystem = aDecoder.decodeObjectForKey("researchSystem") as? ResearchSystem {
+            self.researchSystem = researchSystem
+        }
+        if let batteryEnergySize = aDecoder.decodeObjectForKey("batteryEnergySize") as? Double {
+            self.batteryEnergySize = batteryEnergySize
+        }
+        if let isolationPercent = aDecoder.decodeObjectForKey("isolationPercent") as? Double {
+            self.isolationPercent = isolationPercent
+        }
+        if let bankAddPercent = aDecoder.decodeObjectForKey("bankAddPercent") as? Double {
+            self.bankAddPercent = bankAddPercent
+        }
+        if let libraryAddPercent = aDecoder.decodeObjectForKey("libraryAddPercent") as? Double {
+            self.libraryAddPercent = libraryAddPercent
+        }
+    }
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(imageName, forKey: "imageName")
+        aCoder.encodeObject(name, forKey: "name")
+        aCoder.encodeObject(comment, forKey: "comment")
+        aCoder.encodeObject(buildType.rawValue, forKey: "buildType")
+        aCoder.encodeObject(buildPrice, forKey: "buildPrice")
+        
+        if progress != nil {
+            aCoder.encodeObject(progress.rawValue, forKey: "progress")
+        }
+        if timeSystem != nil {
+            aCoder.encodeObject(timeSystem, forKey: "timeSystem")
+        }
+        if heatSystem != nil {
+            aCoder.encodeObject(heatSystem, forKey: "heatSystem")
+        }
+        if waterSystem != nil {
+            aCoder.encodeObject(waterSystem, forKey: "waterSystem")
+        }
+        if moneySystem != nil {
+            aCoder.encodeObject(moneySystem, forKey: "moneySystem")
+        }
+        if energySystem != nil {
+            aCoder.encodeObject(energySystem, forKey: "energySystem")
+        }
+        if researchSystem != nil {
+            aCoder.encodeObject(researchSystem, forKey: "researchSystem")
+        }
+        if batteryEnergySize != nil {
+            aCoder.encodeObject(batteryEnergySize, forKey: "batteryEnergySize")
+        }
+        if isolationPercent != nil {
+            aCoder.encodeObject(isolationPercent, forKey: "isolationPercent")
+        }
+        if bankAddPercent != nil {
+            aCoder.encodeObject(bankAddPercent, forKey: "bankAddPercent")
+        }
+        if libraryAddPercent != nil {
+            aCoder.encodeObject(libraryAddPercent, forKey: "libraryAddPercent")
+        }
     }
 }
