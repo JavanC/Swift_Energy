@@ -21,6 +21,12 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // load game data
+        loadGameData()
+        
+        // save game data when app will resign
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "saveGameData", name: UIApplicationWillResignActiveNotification, object: nil)
     }
     
     override func viewWillLayoutSubviews() {
@@ -67,5 +73,58 @@ class GameViewController: UIViewController {
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    func loadGameData() {
+        print("Load game data")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        // load money, research and spendTime
+        money = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
+        research = defaults.doubleForKey("Research")
+        spendTime = defaults.integerForKey("spendTime")
+        
+        // load upgrade and research level
+        for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
+            upgradeLevel[UpgradeType(rawValue: count)!] = 0
+        }
+        for count in 0..<ResearchType.ResearchTypeLength.hashValue {
+            researchLevel[ResearchType(rawValue: count)!] = 0
+        }
+        researchLevel[ResearchType.WindTurbineResearch] = 1
+        
+        // load maps data
+        for count in 0..<8 {
+            let buildingMapLayer = BuildingMapLayer()
+            buildingMapLayer.configureAtPosition(CGPoint(x: 0, y: 0), mapNumber: count)
+            maps.append(buildingMapLayer)
+        }
+        for map in maps {
+            map.loadGameData()
+        }
+    }
+    
+    func saveGameData() {
+        print("Save game data")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        // save money, research and spendTime
+        defaults.setDouble(money, forKey: "Money")
+        defaults.setDouble(research, forKey: "Research")
+        defaults.setInteger(spendTime, forKey: "spendTime")
+        
+        // save upgrade and research level
+//        for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
+//            upgradeLevel[UpgradeType(rawValue: count)!] = 0
+//        }
+//        for count in 0..<ResearchType.ResearchTypeLength.hashValue {
+//            researchLevel[ResearchType(rawValue: count)!] = 0
+//        }
+//        researchLevel[ResearchType.WindTurbineResearch] = 1
+        
+        // save maps data
+        for map in maps {
+            map.saveGameData()
+        }
     }
 }

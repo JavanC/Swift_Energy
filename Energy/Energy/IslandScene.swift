@@ -387,13 +387,6 @@ class IslandScene: SKScene {
         buttonLayer.drawEnergyCircle(percent)
         
         // save
-        save()
+//        save()
     }
-        func save() {
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setDouble(money, forKey: "SavedMoney")
-            defaults.setDouble(research, forKey: "SavedResearch")
-           
-
-        }
 }

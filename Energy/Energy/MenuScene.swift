@@ -29,7 +29,7 @@ enum ResearchType: Int {
     case ResearchCenterResearch, AdvancedResearchCenterResearch, LibraryResearch, SmallOfficeResearch, MediumOfficeResearch, LargeOfficeResearch, BankResearch, SmallGeneratorResearch, MediumGeneratorResearch, LargeGeneratorResearch, BoilerHouseResearch, LargeBoilerHouseResearch, WaterPumpResearch, GroundwaterPumpResearch, WaterPipeResearch, BatteryResearch, IsolationResearch, HeatExchangerResearch, HeatSinkResearch, HeatInletResearch, HeatOutletResearch, FusionCellResearch, FusionCellRebuild, NuclearCellResearch, NuclearCellRebuild, GasBurnerResearch, GasBurnerRebuild, WaveCellResearch, WaveCellRebuild, CoalBurnerResearch, CoalBurnerRebuild, SolarCellResearch, SolarCellRebuild, WindTurbineResearch, WindTurbineRebuild, ResearchTypeLength
 }
 // User Data
-var money: Double = 100
+var money: Double = 10
 var research: Double = 10
 var spendTime: Int = 0
 var upgradeLevel = [UpgradeType: Int]()
@@ -62,33 +62,8 @@ class MenuScene: SKScene {
             
             testbutton = SKMultilineLabel(text: "abc ccdd aher. \n asdf", labelWidth: Int(frame.size.width), pos: CGPoint(x: CGRectGetMidX(frame), y: frame.size.height / 3), fontSize: 50, fontColor: SKColor.redColor(), leading: 60,  shouldShowBorder: true)
             self.addChild(testbutton)
-            
-            initialLevelData()
 
             contentCreated = true
-        }
-    }
-    
-    func initialLevelData() {
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        money = defaults.doubleForKey("SavedMoney")
-        if money == 0{
-            money = 1
-        }
-        research = defaults.doubleForKey("SavedResearch")
-        
-        for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
-            upgradeLevel[UpgradeType(rawValue: count)!] = 0
-        }
-        for count in 0..<ResearchType.ResearchTypeLength.hashValue {
-            researchLevel[ResearchType(rawValue: count)!] = 0
-        }
-        researchLevel[ResearchType.WindTurbineResearch] = 1
-        for _ in 0..<8 {
-            let buildingMapLayer = BuildingMapLayer()
-            buildingMapLayer.configureAtPosition(CGPoint(x: 0, y: 0))
-            maps.append(buildingMapLayer)
         }
     }
     
@@ -96,7 +71,7 @@ class MenuScene: SKScene {
         for touch in touches {
             let location = touch.locationInNode(self)
             if startGameButton.containsPoint(location) {
-                print("tap")
+                print("play")
                 let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(islandsScene, transition: doors)
             }

@@ -74,6 +74,7 @@ class Building: SKNode {
         activate = true
         if buildingData.timeSystem != nil {
             activate = buildingData.timeSystem.inAmount == 0 ? false : true
+            buildingNode.alpha = activate ? 1 : 0.5
         }
         
         if buildingData.buildType == .Land {
@@ -135,6 +136,7 @@ class Building: SKNode {
 
 class BuildingMapLayer: SKSpriteNode {
     
+    var mapNumber: Int!
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array<Array<Building?>>()
@@ -146,7 +148,8 @@ class BuildingMapLayer: SKSpriteNode {
     var autoRebuild: Bool = true
     
     // MARK: Configure At Position
-    func configureAtPosition(position: CGPoint) {
+    func configureAtPosition(position: CGPoint, mapNumber: Int) {
+        self.mapNumber = mapNumber
         self.position = position
         self.color = SKColor.whiteColor()
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
@@ -223,20 +226,22 @@ class BuildingMapLayer: SKSpriteNode {
     
     // MARK: Save Map Data
     func saveGameData() {
+        NSUserDefaults.standardUserDefaults().setDouble(energy, forKey: "map\(mapNumber)_Energy")
         for y in 0..<11 {
             for x in 0..<9 {
                 let buildingData = buildingForCoord(CGPoint(x: x, y: y))!.buildingData
                 let savedData = NSKeyedArchiver.archivedDataWithRootObject(buildingData)
-                NSUserDefaults.standardUserDefaults().setObject(savedData, forKey: "\(nowMapNumber)_\(x)_\(y)_Data")
+                NSUserDefaults.standardUserDefaults().setObject(savedData, forKey: "\(mapNumber)_\(x)_\(y)_Data")
             }
         }
     }
     
     // MARK: Load Map Data
     func loadGameData() {
+        energy = NSUserDefaults.standardUserDefaults().doubleForKey("map\(mapNumber)_Energy")
         for y in 0..<11 {
             for x in 0..<9 {
-                if let loadData = NSUserDefaults.standardUserDefaults().objectForKey("\(nowMapNumber)_\(x)_\(y)_Data") as? NSData {
+                if let loadData = NSUserDefaults.standardUserDefaults().objectForKey("\(mapNumber)_\(x)_\(y)_Data") as? NSData {
                     let buildingData = NSKeyedUnarchiver.unarchiveObjectWithData(loadData) as? BuildingData
                     buildingForCoord(CGPoint(x: x, y: y))?.loadBuildingData(buildingData!)
                 }

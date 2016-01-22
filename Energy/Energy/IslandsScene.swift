@@ -68,13 +68,13 @@ class IslandsScene: SKScene {
                 self.view?.presentScene(menuScene, transition: doors)
             }
             if map1Button.containsPoint(location) {
-                print("tap Map1")
+                print("Map1")
                 nowMapNumber = 0
                 let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(islandScene, transition: doors)
             }
             if map2Button.containsPoint(location) {
-                print("tap Map2")
+                print("Map2")
                 nowMapNumber = 1
                 let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(islandScene, transition: doors)
