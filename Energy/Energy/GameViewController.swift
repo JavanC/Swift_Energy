@@ -80,16 +80,17 @@ class GameViewController: UIViewController {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // load money, research and spendTime
-        money = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
+        money = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1000
         research = defaults.doubleForKey("Research")
         spendTime = defaults.integerForKey("spendTime")
+        boostTime = defaults.integerForKey("boostPoint")
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
-            upgradeLevel[UpgradeType(rawValue: count)!] = 0
+            upgradeLevel[UpgradeType(rawValue: count)!] = defaults.integerForKey("upgradeData_\(count)")
         }
         for count in 0..<ResearchType.ResearchTypeLength.hashValue {
-            researchLevel[ResearchType(rawValue: count)!] = 0
+            researchLevel[ResearchType(rawValue: count)!] = defaults.integerForKey("researchData_\(count)")
         }
         researchLevel[ResearchType.WindTurbineResearch] = 1
         
@@ -102,6 +103,15 @@ class GameViewController: UIViewController {
         for map in maps {
             map.loadGameData()
         }
+        
+        // load date and update game date
+        let lastDate = defaults.objectForKey("Date") as? NSDate
+        if let intervall = lastDate?.timeIntervalSinceNow {
+            let pastSeconds = -Int(intervall)
+            if pastSeconds <= 0 { return }
+            boostTime += pastSeconds / 5
+            boostTime %= 10001
+        }
     }
     
     func saveGameData() {
@@ -112,19 +122,25 @@ class GameViewController: UIViewController {
         defaults.setDouble(money, forKey: "Money")
         defaults.setDouble(research, forKey: "Research")
         defaults.setInteger(spendTime, forKey: "spendTime")
+        defaults.setInteger(boostTime, forKey: "boostPoint")
         
         // save upgrade and research level
-//        for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
-//            upgradeLevel[UpgradeType(rawValue: count)!] = 0
-//        }
-//        for count in 0..<ResearchType.ResearchTypeLength.hashValue {
-//            researchLevel[ResearchType(rawValue: count)!] = 0
-//        }
-//        researchLevel[ResearchType.WindTurbineResearch] = 1
+        for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
+            let level = upgradeLevel[UpgradeType(rawValue: count)!]!
+            defaults.setInteger(level, forKey: "upgradeData_\(count)")
+        }
+        for count in 0..<ResearchType.ResearchTypeLength.hashValue {
+            let level = researchLevel[ResearchType(rawValue: count)!]!
+            defaults.setInteger(level, forKey: "researchData_\(count)")
+        }
         
         // save maps data
         for map in maps {
             map.saveGameData()
         }
+        
+        // save now date
+        let now = NSDate()
+        defaults.setObject(now, forKey: "Date")
     }
 }

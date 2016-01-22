@@ -34,7 +34,6 @@ class IslandScene: SKScene {
         
         // First initial
         if !contentCreated {
-            gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
             
             // Top Layer
             let topLayerSize = CGSizeMake(frame.size.width, topTileSize.height * tilesScaleSize.height)
@@ -199,24 +198,9 @@ class IslandScene: SKScene {
                 
             // GMMMMM
             case bottomLayer.pageSell:
-                maps[nowMapNumber].saveGameData()
-                print("Save")
-                
-                
-//                let buildingData = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!.buildingData
-//                let savedData = NSKeyedArchiver.archivedDataWithRootObject(buildingData)
-//                NSUserDefaults.standardUserDefaults().setObject(savedData, forKey: "00Data")
-                
-//                print("save: \(buildingData.buildType)")
-                
-            case topLayer.moneyLabel:
-                maps[nowMapNumber].loadGameData()
-                print("Load")
-                
-                
-//                for _ in 1...1000 {
-//                    tickUpdata()
-//                }
+                for _ in 1...100 {
+                    tickUpdata()
+                }
                 
             // Energy Page
             case bottomLayer.pageEnergy.energy_ProgressBack:

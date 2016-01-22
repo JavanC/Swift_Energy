@@ -32,11 +32,12 @@ enum ResearchType: Int {
 var money: Double = 10
 var research: Double = 10
 var spendTime: Int = 0
+var boostTime: Int = 0
 var upgradeLevel = [UpgradeType: Int]()
 var researchLevel = [ResearchType: Int]()
 var maps = [BuildingMapLayer]()
 var nowMapNumber: Int = 0
-var isPause: Bool = false
+var isPause: Bool = true
 var isRebuild: Bool = true
 
 class MenuScene: SKScene {
