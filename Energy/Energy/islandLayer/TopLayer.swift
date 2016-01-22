@@ -14,6 +14,7 @@ class TopLayer: SKSpriteNode {
     var buttonPlayPause: SKSpriteNode!
     var moneyLabel: SKLabelNode!
     var researchLabel: SKLabelNode!
+    var boostLabel: SKLabelNode!
 
     func configureAtPosition(position: CGPoint, size: CGSize) {
         
@@ -31,7 +32,7 @@ class TopLayer: SKSpriteNode {
         buttonMenu.position = CGPoint(x: gap, y: size.height / 2)
         addChild(buttonMenu)
         
-        buttonPlayPause = SKSpriteNode(texture: iconAtlas.textureNamed(isPause ? "button_pause" : "button_play"))
+        buttonPlayPause = SKSpriteNode(texture: iconAtlas.textureNamed(isPause ? "button_pause" : (boostPoint > 0 ? "button_boost" : "button_play")))
         buttonPlayPause.name = "buttonPlayPause"
         buttonPlayPause.setScale(0.6 * framescale)
         buttonPlayPause.anchorPoint = CGPoint(x: 1, y: 0.5)
@@ -56,9 +57,10 @@ class TopLayer: SKSpriteNode {
         researchLabel.verticalAlignmentMode = .Center
         researchLabel.position = CGPoint(x: tilesScaleSize.width + gap * 2, y: size.height * 2 / 7)
         addChild(researchLabel)
+    
     }
     
     func isPauseChange() {
-        buttonPlayPause.runAction(SKAction.setTexture(iconAtlas.textureNamed(isPause ? "button_pause" : "button_play")))
+        buttonPlayPause.runAction(SKAction.setTexture(iconAtlas.textureNamed(isPause ? "button_pause" : (boostPoint > 0 ? "button_boost" : "button_play"))))
     }
 }

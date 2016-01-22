@@ -83,7 +83,7 @@ class GameViewController: UIViewController {
         money = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1000
         research = defaults.doubleForKey("Research")
         spendTime = defaults.integerForKey("spendTime")
-        boostTime = defaults.integerForKey("boostPoint")
+        boostPoint = defaults.doubleForKey("boostPoint")
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
@@ -109,8 +109,10 @@ class GameViewController: UIViewController {
         if let intervall = lastDate?.timeIntervalSinceNow {
             let pastSeconds = -Int(intervall)
             if pastSeconds <= 0 { return }
-            boostTime += pastSeconds / 5
-            boostTime %= 10001
+            boostPoint += Double(pastSeconds) / 5
+            if boostPoint > 10000 {
+                boostPoint = 10000
+            }
         }
     }
     
@@ -122,7 +124,7 @@ class GameViewController: UIViewController {
         defaults.setDouble(money, forKey: "Money")
         defaults.setDouble(research, forKey: "Research")
         defaults.setInteger(spendTime, forKey: "spendTime")
-        defaults.setInteger(boostTime, forKey: "boostPoint")
+        defaults.setDouble(boostPoint, forKey: "boostPoint")
         
         // save upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

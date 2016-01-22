@@ -166,7 +166,13 @@ class IslandScene: SKScene {
                 isPause = !isPause
                 topLayer.isPauseChange()
                 if isPause { gameTimer.invalidate() }
-                else { gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true) }
+                else {
+                    if boostPoint > 0 {
+                        gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
+                    } else {
+                        gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
+                    }
+                }
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
@@ -356,6 +362,15 @@ class IslandScene: SKScene {
     
     func tickUpdata() {
         ++spendTime
+        if boostPoint > 0 {
+            boostPoint -= 0.2
+            if boostPoint <= 0 {
+                boostPoint = 0
+                gameTimer.invalidate()
+                gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
+                topLayer.isPauseChange()
+            }
+        }
         for i in 0...1 {
             // Update map data
             maps[i].Update()
@@ -369,8 +384,5 @@ class IslandScene: SKScene {
         // draw energy circle
         let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
         buttonLayer.drawEnergyCircle(percent)
-        
-        // save
-//        save()
     }
 }

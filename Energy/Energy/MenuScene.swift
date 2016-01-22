@@ -17,6 +17,7 @@ var colorBlue1 = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
 var colorBlue2 = UIColor(red: 0.208, green: 0.455, blue: 0.635, alpha: 1.000) // #3474A2
 var colorBlue3 = UIColor(red: 0.067, green: 0.310, blue: 0.490, alpha: 1.000)
 var colorBlue4 = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000) // #02374B
+var colorBoost = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000) // #FF9800
 
 // Game Data
 enum BuildingType: Int {
@@ -32,7 +33,7 @@ enum ResearchType: Int {
 var money: Double = 10
 var research: Double = 10
 var spendTime: Int = 0
-var boostTime: Int = 0
+var boostPoint: Double = 10000
 var upgradeLevel = [UpgradeType: Int]()
 var researchLevel = [ResearchType: Int]()
 var maps = [BuildingMapLayer]()
