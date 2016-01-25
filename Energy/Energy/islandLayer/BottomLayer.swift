@@ -94,7 +94,7 @@ class PageInformation: SKSpriteNode {
     func changeInformation(buildingData: BuildingData) {
         
         // Image
-        infoImage.runAction(SKAction.setTexture(SKTexture(imageNamed: buildingData.imageName)))
+        infoImage.runAction(SKAction.setTexture(buildingAtlas.textureNamed(buildingData.imageName)))
 
         // Label
         for label in allLabels {
@@ -156,9 +156,9 @@ class PageBuild: SKSpriteNode {
     
     var selectNumber: Int = 1
     var imagePosition = [CGPoint]()
-    var buildMenu: [BuildingType] = [BuildingType.WindTurbine, BuildingType.CoalBurner, BuildingType.SmallGenerator, BuildingType.SmallOffice]
+    var buildMenu: [BuildingType] = [BuildingType.WindTurbine, BuildingType.SmallGenerator, BuildingType.HeatExchanger, BuildingType.SmallOffice]
     var images = [SKSpriteNode]()
-    var selectBox: SKSpriteNode!
+    var selectBox: SKShapeNode!
     var selectBoxArrow: SKSpriteNode!
     var selectInfo = PageInformation()
     var rebuildButton: SKShapeNode!
@@ -181,7 +181,9 @@ class PageBuild: SKSpriteNode {
             images.append(image)
             addChild(image)
         }
-        rebuildButton = SKShapeNode(rectOfSize: CGSizeMake(tilesScaleSize.width, tilesScaleSize.height), cornerRadius: 10 * framescale)
+        updateImageShow()
+        
+        rebuildButton = SKShapeNode(rectOfSize: tilesScaleSize, cornerRadius: 10 * framescale)
         rebuildButton.name = "SelectImage5"
         rebuildButton.position = imagePosition[4]
         let buildingiImage = SKSpriteNode(texture: iconAtlas.textureNamed("building"))
@@ -193,10 +195,17 @@ class PageBuild: SKSpriteNode {
         refreshImage.setScale(framescale)
         rebuildButton.addChild(refreshImage)
         addChild(rebuildButton)
+        if isRebuild {
+            rebuildOn()
+        } else {
+            rebuildOff()
+        }
 
-        selectBox = SKSpriteNode(color: SKColor.redColor(), size: tilesScaleSize)
+        selectBox = SKShapeNode(rectOfSize: tilesScaleSize, cornerRadius: 10 * framescale)
         selectBox.name = "selectBox"
         selectBox.setScale(1.1)
+        selectBox.fillColor = colorBlue2
+        selectBox.strokeColor = colorBlue2
         selectBox.position = imagePosition[0]
         selectBox.zPosition = 1
         addChild(selectBox)
@@ -247,7 +256,7 @@ class PageBuild: SKSpriteNode {
     func changeSelectBuildType(buildType: BuildingType) {
         buildMenu[selectNumber - 1] = buildType
         selectInfo.changeInformation(BuildingData(buildType: buildType))
-        images[selectNumber - 1].runAction(SKAction.setTexture(SKTexture(imageNamed: BuildingData(buildType: buildType).imageName)))
+        images[selectNumber - 1].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildType).imageName)))
     }
     
     func openSelectInformation() {
@@ -294,6 +303,30 @@ class PageBuild: SKSpriteNode {
             if i != selectNumber {
                 childNodeWithName("SelectImage\(i)")?.runAction(seq)
             }
+        }
+    }
+    
+    func updateImageShow() {
+        for i in 2...4 {
+            let pos = imagePosition[i - 1]
+            childNodeWithName("SelectImage\(i)")?.position = pos
+            if i == 2 && researchLevel[.BatteryResearch] == 0 && researchLevel[.SmallGeneratorResearch] == 0 {
+                childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
+            }
+            if i == 3 && researchLevel[.HeatExchangerResearch] == 0 {
+                childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
+            }
+            if i == 4 && researchLevel[.ResearchCenterResearch] == 0 {
+                childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
+            }
+        }
+        if researchLevel[.SmallGeneratorResearch] == 0 {
+            buildMenu[1] = .Battery
+            childNodeWithName("SelectImage\(2)")?.runAction(SKAction.setTexture(buildingAtlas.textureNamed("Battery")))
+        }
+        if researchLevel[.SmallOfficeResearch] == 0 {
+            buildMenu[3] = .ResearchCenter
+            childNodeWithName("SelectImage\(4)")?.runAction(SKAction.setTexture(buildingAtlas.textureNamed("ResearchCenter")))
         }
     }
 }

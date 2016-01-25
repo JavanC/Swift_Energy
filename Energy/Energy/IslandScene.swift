@@ -90,12 +90,7 @@ class IslandScene: SKScene {
             buildingSelectLayer.zPosition = 50
             addChild(buildingSelectLayer)
             
-            // initial
-            if isRebuild {
-                bottomLayer.pageBuild.rebuildOn()
-            } else {
-                bottomLayer.pageBuild.rebuildOff()
-            }
+
         
             contentCreated = true
         }
@@ -111,6 +106,9 @@ class IslandScene: SKScene {
         buildingSelectLayer.showPage(false, duration: 0)
         bottomLayer.showPage(BottomLayer.PageType.PageEnergy, duration: 0)
         buttonLayer.beginButtonEnergy()
+        
+        // update build page image show
+        bottomLayer.pageBuild.updateImageShow()
     }
     
     func showBuildSelectPage() {
