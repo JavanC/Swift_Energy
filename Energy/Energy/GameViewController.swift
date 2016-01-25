@@ -91,6 +91,7 @@ class GameViewController: UIViewController {
         }
         for count in 0..<ResearchType.ResearchTypeLength.hashValue {
             researchLevel[ResearchType(rawValue: count)!] = defaults.integerForKey("researchData_\(count)")
+            researchLevel[ResearchType(rawValue: count)!] = 1
         }
         researchLevel[ResearchType.WindTurbineResearch] = 1
         
