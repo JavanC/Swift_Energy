@@ -271,10 +271,23 @@ class IslandScene: SKScene {
                     } else {
                         let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
                         let price = BuildingData.init(buildType: building).buildPrice
-                        if money >= price {
-                            maps[nowMapNumber].removeBuilding(coord)
-                            maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
-                            money -= price
+                        let coordType = maps[nowMapNumber].buildingForCoord(coord)?.buildingData.buildType
+                        if building == BuildingType.WaveCell {
+                            if coordType == .Ocean || coordType == .WaveCell {
+                                if money >= price {
+                                    maps[nowMapNumber].removeBuilding(coord)
+                                    maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
+                                    money -= price
+                                }
+                            }
+                        } else {
+                            if coordType != .Ocean && coordType != .WaveCell {
+                                if money >= price {
+                                    maps[nowMapNumber].removeBuilding(coord)
+                                    maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
+                                    money -= price
+                                }
+                            }
                         }
                     }
                     
@@ -324,10 +337,23 @@ class IslandScene: SKScene {
                     if !maps[nowMapNumber].buildingForCoord(coord)!.activate {
                         let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
                         let price = BuildingData.init(buildType: building).buildPrice
-                        if money >= price {
-                            maps[nowMapNumber].removeBuilding(coord)
-                            maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
-                            money -= price
+                        let coordType = maps[nowMapNumber].buildingForCoord(coord)?.buildingData.buildType
+                        if building == BuildingType.WaveCell {
+                            if coordType == .Ocean || coordType == .WaveCell {
+                                if money >= price {
+                                    maps[nowMapNumber].removeBuilding(coord)
+                                    maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
+                                    money -= price
+                                }
+                            }
+                        } else {
+                            if coordType != .Ocean && coordType != .WaveCell {
+                                if money >= price {
+                                    maps[nowMapNumber].removeBuilding(coord)
+                                    maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
+                                    money -= price
+                                }
+                            }
                         }
                     }
                     

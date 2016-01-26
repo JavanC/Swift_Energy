@@ -80,12 +80,13 @@ class GameViewController: UIViewController {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // load money, research and spendTime
-        money = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1000000
+        money = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
         research = defaults.doubleForKey("Research")
         spendTime = defaults.integerForKey("spendTime")
         boostPoint = defaults.doubleForKey("boostPoint")
         
-        research = 1000000
+        money = 1000000000000000
+        research = 1000000000000000
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

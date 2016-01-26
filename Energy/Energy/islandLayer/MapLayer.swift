@@ -32,6 +32,10 @@ class Building: SKNode {
             buildingNode.alpha = 0.2
             activate = false
         }
+        if buildType == .Ocean {
+            buildingNode.alpha = 0.2
+            activate = false
+        }
         
         // Add progress
         if buildingData.progress != nil {
@@ -78,6 +82,10 @@ class Building: SKNode {
         }
         
         if buildingData.buildType == .Land {
+            buildingNode.alpha = 0.2
+            activate = false
+        }
+        if buildingData.buildType == .Ocean {
             buildingNode.alpha = 0.2
             activate = false
         }
@@ -166,6 +174,12 @@ class BuildingMapLayer: SKSpriteNode {
                 setTileMapElement(coord: coord, buildType: .Land)
             }
         }
+        for y in 0 ..< 3 {
+            for x in 0 ..< 9 {
+                let coord = CGPoint(x: x, y: y)
+                setTileMapElement(coord: coord, buildType: .Ocean)
+            }
+        }
     }
     
     // MARK: Coord transfer to position
@@ -215,6 +229,21 @@ class BuildingMapLayer: SKSpriteNode {
         }
     }
     
+    // MARK: Load Map Data By Array
+//    func loadMapArray(array: [String]) {
+//        for y in 0..<11 {
+//            for x in 0..<9 {
+//                switch array[y * 9 + x] {
+//                case "Land":
+//                    setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Land)
+//                case "Ocean":
+//                    setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Ocean)
+//                default:break
+//                }
+//            }
+//        }
+//    }
+
     // MARK: Reload Map Upgrade Data
     func reloadMap() {
         for line in buildings {

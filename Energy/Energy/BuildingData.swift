@@ -35,7 +35,6 @@ class TimeSystem: NSObject, NSCoding {
             else { return nil }
         self.init(size: size, rebuild: rebuild)
         self.inAmount = inAmount
-    
     }
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(size, forKey: "size")
@@ -333,6 +332,10 @@ class BuildingData: NSObject, NSCoding {
         switch buildType {
         case .Land:
             imageName = "Land"
+            buildPrice = 0
+            
+        case .Ocean:
+            imageName = "Ocean"
             buildPrice = 0
 
         case .WindTurbine:
