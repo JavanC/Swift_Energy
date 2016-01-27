@@ -184,15 +184,12 @@ class HeatSystem: NSObject, NSCoding {
             allHeat += heatSystem.inAmount
             heatSystem.inAmount = 0
         }
-        while allHeat > 0{
-            for heatSystem in heatSystems {
-                if allHeat == 0 { break }
-                ++heatSystem.inAmount
-                --allHeat
-            }
+        for heatSystem in heatSystems {
+            heatSystem.inAmount = allHeat / Double(heatSystems.count)
         }
     }
     func heatInletToOutletHeatSystem(heatSystems:[HeatSystem]) {
+        if heatSystems.count == 0 { return }
         if inAmount >= inletTransfer {
             let outputHeat = inletTransfer / Double(heatSystems.count)
             for HeatSystem in heatSystems {
@@ -208,6 +205,7 @@ class HeatSystem: NSObject, NSCoding {
         }
     }
     func coolingHeatToHeatSink(heatSystems:[HeatSystem]) {
+        if heatSystems.count == 0 { return }
         let outputHeat = inAmount / Double(heatSystems.count + 1)
         for HeatSystem in heatSystems {
             HeatSystem.inAmount += outputHeat

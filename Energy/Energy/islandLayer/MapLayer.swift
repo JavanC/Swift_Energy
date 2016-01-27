@@ -279,7 +279,9 @@ class BuildingMapLayer: SKSpriteNode {
     }
     
     // MARK: Return Around Coord BuildingData
-    func aroundCoordBuildingData(x x: Int, y: Int) -> [BuildingData] {
+    func aroundCoordBuildingData(coord coord: CGPoint) -> [BuildingData] {
+        let x = Int(coord.x)
+        let y = Int(coord.y)
         var data: [BuildingData] = []
         if y - 1 >= 0 { data.append(buildings[y-1][x]!.buildingData) }
         if y + 1 < Int(mapSize.height) { data.append(buildings[y+1][x]!.buildingData) }
@@ -291,11 +293,23 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: BuildingMap Update
     func Update() {
         
-        var waterSystemElements:[Building] = []
-        var waterProduceElements:[Building] = []
-        var watertransportElements:[Building] = []
-        
-        var heatProduceElement:[Building] = []
+        var waterSystemElements      = [Building]()
+        var waterProduceElements     = [Building]()
+        var watertransportElements   = [Building]()
+
+        var heatProduceElements      = [Building]()
+        var heatInletHeatElements    = [Building]()
+        var heatOutletHeatSystems    = [HeatSystem]()
+        var heatExchangerElements    = [Building]()
+        var heatCoolingElements      = [Building]()
+        var heatSinkElements         = [Building]()
+        var heatToMoneyElements      = [Building]()
+
+        var energyProduceElements    = [Building]()
+        var energyConversionElements = [Building]()
+
+        var officeElements           = [Building]()
+        var researchCenterElements   = [Building]()
         
         for line in buildings {
             for building in line {
@@ -313,9 +327,37 @@ class BuildingMapLayer: SKSpriteNode {
                         
                     case .SmallGenerator, .MediumGenerator, .LargeGenerator:
                         waterSystemElements.append(building!)
+                        heatCoolingElements.append(building!)
+                        energyConversionElements.append(building!)
+                        
+                    case .WindTurbine, .WaveCell:
+                        energyProduceElements.append(building!)
                         
                     case .SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell:
-                        heatProduceElement.append(building!)
+                        heatProduceElements.append(building!)
+                        
+                    case .HeatInlet:
+                        heatInletHeatElements.append(building!)
+                        
+                    case .HeatOutlet:
+                        heatOutletHeatSystems.append(building!.buildingData.heatSystem)
+                        heatCoolingElements.append(building!)
+                        
+                    case .HeatExchanger:
+                        heatExchangerElements.append(building!)
+                        
+                    case .BoilerHouse, .LargeBoilerHouse:
+                        heatCoolingElements.append(building!)
+                        heatToMoneyElements.append(building!)
+                        
+                    case .HeatSink:
+                        heatSinkElements.append(building!)
+                        
+                    case .SmallOffice, .MediumOffice, .LargeOffice:
+                        officeElements.append(building!)
+                        
+                    case .ResearchCenter, .AdvancedResearchCenter:
+                        researchCenterElements.append(building!)
                         
                     default: break
                     }
@@ -334,9 +376,7 @@ class BuildingMapLayer: SKSpriteNode {
         // 2. transport
         for element in watertransportElements {
             var waterSystems: [WaterSystem] = [element.buildingData.waterSystem]
-            let x = Int(element.coord.x)
-            let y = Int(element.coord.y)
-            for buildingData in aroundCoordBuildingData(x: x, y: y) {
+            for buildingData in aroundCoordBuildingData(coord: element.coord) {
                 if buildingData.waterSystem != nil {
                     waterSystems.append(buildingData.waterSystem)
                 }
@@ -353,11 +393,9 @@ class BuildingMapLayer: SKSpriteNode {
         */
         
         // 1. Isolation Multiply and Production Output
-        for element in heatProduceElement {
-            let x = Int(element.coord.x)
-            let y = Int(element.coord.y)
+        for element in heatProduceElements {
             element.buildingData.heatSystem.produceMultiply = 1
-            for buildingData in aroundCoordBuildingData(x: x, y: y) {
+            for buildingData in aroundCoordBuildingData(coord: element.coord) {
                 if buildingData.buildType == .Isolation {
                     element.buildingData.heatSystem.produceMultiply += buildingData.isolationPercent
                 }
@@ -365,183 +403,62 @@ class BuildingMapLayer: SKSpriteNode {
             
             element.buildingData.heatSystem.produceHeat()
             var heatSystems = [HeatSystem]()
-            for buildingData in aroundCoordBuildingData(x: x, y: y) {
+            for buildingData in aroundCoordBuildingData(coord: element.coord) {
                 if buildingData.heatSystem != nil {
                     heatSystems.append(buildingData.heatSystem)
                 }
             }
             element.buildingData.heatSystem.outputHeatToOtherHeatSystem(heatSystems)
         }
+        // 2. Heat Inlet to Outlet
+        for element in heatInletHeatElements {
+            element.buildingData.heatSystem.heatInletToOutletHeatSystem(heatOutletHeatSystems)
+        }
+        // 3. Heat exchanger
+        for element in heatExchangerElements {
+            var heatSystems: [HeatSystem] = [element.buildingData.heatSystem]
+            for buildingData in aroundCoordBuildingData(coord: element.coord) {
+                if buildingData.heatSystem != nil && !buildingData.heatSystem.output {
+                    heatSystems.append(buildingData.heatSystem)
+                }
+            }
+            element.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
+        }
+        // 4. Heat Cooling transport
+        for element in heatCoolingElements {
+            var heatSystems = [HeatSystem]()
+            for buildingData in aroundCoordBuildingData(coord: element.coord) {
+                if buildingData.buildType == .HeatSink {
+                    heatSystems.append(buildingData.heatSystem)
+                }
+            }
+            element.buildingData.heatSystem.coolingHeatToHeatSink(heatSystems)
+        }
+        // 5. Heat Sink Cooling
+        for element in heatSinkElements {
+            element.buildingData.heatSystem.coolingHeat()
+        }
+        // 6. Heat Conversion Money
+        for element in heatToMoneyElements {
+            element.buildingData.heatTransformMoney()
+        }
         
-        
-        /**
-        *  Water System
+        /*
+        // Energy System
         */
         
         // 1. Production
-//        for line in buildings {
-//            for building in line {
-//                if building!.buildingData.waterSystem != nil {
-//                    building!.buildingData.waterSystem.produceWater()
-//                }
-//            }
-//        }
-//        // 2. transport
-//        for (y, line) in buildings.enumerate() {
-//            for (x, building) in line.enumerate() {
-//                if building!.buildingData.waterSystem != nil && building!.buildingData.waterSystem.output {
-//                    var waterSystems = [WaterSystem]()
-//                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-//                        if buildingData.waterSystem != nil {
-//                            waterSystems.append(buildingData.waterSystem)
-//                        }
-//                    }
-//                    building!.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
-//                }
-//            }
-//        }
-//        // 3. Caculate water overflow
-//        for line in buildings {
-//            for building in line {
-//                if building!.buildingData.waterSystem != nil {
-//                    building!.buildingData.waterSystem.overflow()
-//                }
-//            }
-//        }
-    
-        /**
-        *  Heat System
-        */
-        
-//        // 1. Isolation Multiply
-//        for (y, line) in buildings.enumerate() {
-//            for (x, building) in line.enumerate() {
-//                let isolationArray: [BuildingType] = [.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]
-//                if isolationArray.contains(building!.buildingData.buildType) {
-//                    building!.buildingData.heatSystem.produceMultiply = 1
-//                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-//                        if buildingData.buildType == .Isolation {
-//                            building!.buildingData.heatSystem.produceMultiply += buildingData.isolationPercent
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        // 2. Production
-//        for line in buildings {
-//            for building in line {
-//                if building!.activate && building!.buildingData.heatSystem != nil {
-//                    building!.buildingData.heatSystem.produceHeat()
-//                }
-//            }
-//        }
-//        // 3. output transport
-//        for (y, line) in buildings.enumerate() {
-//            for (x, building) in line.enumerate() {
-//                if building!.buildingData.heatSystem != nil && building!.buildingData.heatSystem.output {
-//                    var heatSystems = [HeatSystem]()
-//                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-//                        if buildingData.heatSystem != nil {
-//                            heatSystems.append(buildingData.heatSystem)
-//                        }
-//                    }
-//                    if heatSystems.count > 0 {
-//                        building!.buildingData.heatSystem.outputHeatToOtherHeatSystem(heatSystems)
-//                    }
-//                }
-//            }
-//        }
-        // 4. Heat inlet to out let
-        var heatOutletHeatSystems = [HeatSystem]()
-        for line in buildings {
-            for building in line {
-                if building!.buildingData.buildType == .HeatOutlet {
-                    heatOutletHeatSystems.append(building!.buildingData.heatSystem)
-                }
-            }
+        for element in energyProduceElements {
+            element.buildingData.energySystem.produceEnergy()
         }
-        for line in buildings {
-            for building in line {
-                if building!.buildingData.buildType == .HeatInlet {
-                    if heatOutletHeatSystems.count > 0 {
-                        building!.buildingData.heatSystem.heatInletToOutletHeatSystem(heatOutletHeatSystems)
-                    }
-                }
-            }
-        }
-        // 5. Heat exchanger
-        for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                if building!.buildingData.buildType == .HeatExchanger {
-                    var heatSystems: [HeatSystem] = [building!.buildingData.heatSystem]
-                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-                        if buildingData.heatSystem != nil && !buildingData.heatSystem.output {
-                            heatSystems.append(buildingData.heatSystem)
-                        }
-                    }
-                    building!.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
-                }
-            }
-        }
-        // 6. Heat Cooling transport
-        for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                let coolingArray:[BuildingType] = [.SmallGenerator, .MediumGenerator, .LargeGenerator, .BoilerHouse, .LargeBoilerHouse, .HeatOutlet]
-                if coolingArray.contains(building!.buildingData.buildType){
-                    var heatSystems = [HeatSystem]()
-                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-                        if buildingData.buildType == .HeatSink {
-                            heatSystems.append(buildingData.heatSystem)
-                        }
-                    }
-                    if heatSystems.count > 0 {
-                        building!.buildingData.heatSystem.coolingHeatToHeatSink(heatSystems)
-                    }
-                }
-            }
-        }
-        // 7. Heat Cooling
-        for line in buildings {
-            for building in line {
-                if building!.buildingData.buildType == .HeatSink {
-                    building!.buildingData.heatSystem.coolingHeat()
-                }
-            }
+        // 2. Energy Conversion
+        for element in energyConversionElements {
+            element.buildingData.heatTransformEnergy()
+            element.buildingData.waterTransformEnergy()
         }
         
-        /**
-        *  Energy && Money System
-        */
-        
-        for line in buildings {
-            for building in line {
-                if building!.activate {
-                    // Energy
-                    if building!.buildingData.energySystem != nil {
-                        // 1. Production
-                        building!.buildingData.energySystem.produceEnergy()
-                        // 2. Heat transform energy
-                        if building!.buildingData.energySystem.isHeat2Energy() {
-                            building!.buildingData.heatTransformEnergy()
-                        }
-                        // 3. Water transform energy
-                        if building!.buildingData.energySystem.water2Energy {
-                            building!.buildingData.waterTransformEnergy()
-                        }
-                    }
-                    // Money
-                    if building!.buildingData.moneySystem != nil {
-                        // 1. Heat transform money
-                        if building!.buildingData.moneySystem.isHeat2Money() {
-                            building!.buildingData.heatTransformMoney()
-                        }
-                    }
-                }
-            }
-        }
-        
-        /**
-        *  EDestroy & Activate & Rebuild & Update Progress
+        /*
+        // EDestroy & Activate & Rebuild & Update Progress
         */
         
         for (y, line) in buildings.enumerate() {
@@ -575,40 +492,32 @@ class BuildingMapLayer: SKSpriteNode {
                 building!.progressUpdate()
             }
         }
-        
-        /**
-        *  Bank && Library multiply
+
+        /*
+        // Bank && Library multiply
         */
         
-        for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                // Bank
-                let bankArray:[BuildingType] = [.SmallOffice, .MediumOffice, .LargeOffice]
-                if bankArray.contains(building!.buildingData.buildType){
-                    building!.buildingData.moneySystem.multiply = 1
-                    
-                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-                        if buildingData.buildType == .Bank {
-                            building!.buildingData.moneySystem.multiply += buildingData.bankAddPercent
-                        }
-                    }
-                }
-                // Library
-                let libraryArray:[BuildingType] = [.ResearchCenter, .AdvancedResearchCenter]
-                if libraryArray.contains(building!.buildingData.buildType){
-                    building!.buildingData.researchSystem.multiply = 1
-                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-                        if buildingData.buildType == .Library {
-                            building!.buildingData.moneySystem.multiply += buildingData.libraryAddPercent
-                        }
-                    }
+        for element in officeElements {
+            element.buildingData.moneySystem.multiply = 1
+            for buildingData in aroundCoordBuildingData(coord: element.coord) {
+                if buildingData.buildType == .Bank {
+                    element.buildingData.moneySystem.multiply += buildingData.bankAddPercent
                 }
             }
         }
         
-        /**
-         *  Calculate research, energy, money tick add
-         */
+        for element in researchCenterElements {
+            element.buildingData.researchSystem.multiply = 1
+            for buildingData in aroundCoordBuildingData(coord: element.coord) {
+                if buildingData.buildType == .Library {
+                    element.buildingData.researchSystem.multiply += buildingData.libraryAddPercent
+                }
+            }
+        }
+        
+        /*
+        // Calculate research, energy, money tick add
+        */
         
         var energy2MoneyAmount: Double = 0
         research_TickAdd = 0
@@ -617,32 +526,32 @@ class BuildingMapLayer: SKSpriteNode {
         energyMax = 100
         // 1. statistics
         for line in buildings {
-        for building in line {
-            // research
-            if building!.buildingData.researchSystem != nil {
-                research_TickAdd += building!.buildingData.researchSystem.researchMultiplyAmount()
-            }
-            // energy
-            if building!.buildingData.energySystem != nil {
-                energy_TickAdd += building!.buildingData.energySystem.inAmount
-                building!.buildingData.energySystem.inAmount = 0
-            }
-            // money
-            if building!.buildingData.moneySystem != nil {
-                money_TickAdd += building!.buildingData.moneySystem.inAmount
-                building!.buildingData.moneySystem.inAmount = 0
-                energy2MoneyAmount += building!.buildingData.moneySystem.energy2MoneyMultiplyAmount()
-            }
-            // battery
-            if building!.buildingData.buildType == .Battery {
-                energyMax += Double(building!.buildingData.batteryEnergySize)
-            }
-        }}
+            for building in line {
+                // research
+                if building!.buildingData.researchSystem != nil {
+                    research_TickAdd += building!.buildingData.researchSystem.researchMultiplyAmount()
+                }
+                // energy
+                if building!.buildingData.energySystem != nil {
+                    energy_TickAdd += building!.buildingData.energySystem.inAmount
+                    building!.buildingData.energySystem.inAmount = 0
+                }
+                // money
+                if building!.buildingData.moneySystem != nil {
+                    money_TickAdd += building!.buildingData.moneySystem.inAmount
+                    building!.buildingData.moneySystem.inAmount = 0
+                    energy2MoneyAmount += building!.buildingData.moneySystem.energy2MoneyMultiplyAmount()
+                }
+                // battery
+                if building!.buildingData.buildType == .Battery {
+                    energyMax += building!.buildingData.batteryEnergySize
+                }
+            }}
         // 2. Calculate energy
         energy += energy_TickAdd
         // 3. Calculate money tick add and energy left
-        if energy >= Double(energy2MoneyAmount) {
-            energy -= Double(energy2MoneyAmount)
+        if energy >= energy2MoneyAmount {
+            energy -= energy2MoneyAmount
             money_TickAdd += energy2MoneyAmount
             if energy > energyMax { energy = energyMax }
         } else {
