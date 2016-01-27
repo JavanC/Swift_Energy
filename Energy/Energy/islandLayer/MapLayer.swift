@@ -290,84 +290,167 @@ class BuildingMapLayer: SKSpriteNode {
     
     // MARK: BuildingMap Update
     func Update() {
-
+        
+        var waterSystemElements:[Building] = []
+        var waterProduceElements:[Building] = []
+        var watertransportElements:[Building] = []
+        
+        var heatProduceElement:[Building] = []
+        
+        for line in buildings {
+            for building in line {
+                if building!.activate {
+                    let type = building!.buildingData.buildType
+                    switch type {
+                    case .WaterPump, .GroundwaterPump:
+                        waterSystemElements.append(building!)
+                        waterProduceElements.append(building!)
+                        watertransportElements.append(building!)
+                        
+                    case .WaterPipe:
+                        waterSystemElements.append(building!)
+                        watertransportElements.append(building!)
+                        
+                    case .SmallGenerator, .MediumGenerator, .LargeGenerator:
+                        waterSystemElements.append(building!)
+                        
+                    case .SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell:
+                        heatProduceElement.append(building!)
+                        
+                    default: break
+                    }
+                }
+            }
+        }
+        
+        /*
+        // Water System
+        */
+        
+        // 1. Production
+        for element in waterProduceElements {
+            element.buildingData.waterSystem.produceWater()
+        }
+        // 2. transport
+        for element in watertransportElements {
+            var waterSystems: [WaterSystem] = [element.buildingData.waterSystem]
+            let x = Int(element.coord.x)
+            let y = Int(element.coord.y)
+            for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                if buildingData.waterSystem != nil {
+                    waterSystems.append(buildingData.waterSystem)
+                }
+            }
+            element.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
+        }
+        // 3. Caculate water overflow
+        for element in waterSystemElements {
+            element.buildingData.waterSystem.overflow()
+        }
+        
+        /*
+        //  Heat System
+        */
+        
+        // 1. Isolation Multiply and Production Output
+        for element in heatProduceElement {
+            let x = Int(element.coord.x)
+            let y = Int(element.coord.y)
+            element.buildingData.heatSystem.produceMultiply = 1
+            for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                if buildingData.buildType == .Isolation {
+                    element.buildingData.heatSystem.produceMultiply += buildingData.isolationPercent
+                }
+            }
+            
+            element.buildingData.heatSystem.produceHeat()
+            var heatSystems = [HeatSystem]()
+            for buildingData in aroundCoordBuildingData(x: x, y: y) {
+                if buildingData.heatSystem != nil {
+                    heatSystems.append(buildingData.heatSystem)
+                }
+            }
+            element.buildingData.heatSystem.outputHeatToOtherHeatSystem(heatSystems)
+        }
+        
+        
         /**
         *  Water System
         */
         
         // 1. Production
-        for line in buildings {
-            for building in line {
-                if building!.buildingData.waterSystem != nil {
-                    building!.buildingData.waterSystem.produceWater()
-                }
-            }
-        }
-        // 2. transport
-        for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                if building!.buildingData.waterSystem != nil && building!.buildingData.waterSystem.output {
-                    var waterSystems = [WaterSystem]()
-                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-                        if buildingData.waterSystem != nil {
-                            waterSystems.append(buildingData.waterSystem)
-                        }
-                    }
-                    building!.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
-                }
-            }
-        }
-        // 3. Caculate water overflow
-        for line in buildings {
-            for building in line {
-                if building!.buildingData.waterSystem != nil {
-                    building!.buildingData.waterSystem.overflow()
-                }
-            }
-        }
+//        for line in buildings {
+//            for building in line {
+//                if building!.buildingData.waterSystem != nil {
+//                    building!.buildingData.waterSystem.produceWater()
+//                }
+//            }
+//        }
+//        // 2. transport
+//        for (y, line) in buildings.enumerate() {
+//            for (x, building) in line.enumerate() {
+//                if building!.buildingData.waterSystem != nil && building!.buildingData.waterSystem.output {
+//                    var waterSystems = [WaterSystem]()
+//                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+//                        if buildingData.waterSystem != nil {
+//                            waterSystems.append(buildingData.waterSystem)
+//                        }
+//                    }
+//                    building!.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
+//                }
+//            }
+//        }
+//        // 3. Caculate water overflow
+//        for line in buildings {
+//            for building in line {
+//                if building!.buildingData.waterSystem != nil {
+//                    building!.buildingData.waterSystem.overflow()
+//                }
+//            }
+//        }
     
         /**
         *  Heat System
         */
         
-        // 1. Isolation Multiply
-        for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                let isolationArray: [BuildingType] = [.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]
-                if isolationArray.contains(building!.buildingData.buildType) {
-                    building!.buildingData.heatSystem.produceMultiply = 1
-                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-                        if buildingData.buildType == .Isolation {
-                            building!.buildingData.heatSystem.produceMultiply += buildingData.isolationPercent
-                        }
-                    }
-                }
-            }
-        }
-        // 2. Production
-        for line in buildings {
-            for building in line {
-                if building!.activate && building!.buildingData.heatSystem != nil {
-                    building!.buildingData.heatSystem.produceHeat()
-                }
-            }
-        }
-        // 3. output transport
-        for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                if building!.buildingData.heatSystem != nil && building!.buildingData.heatSystem.output {
-                    var heatSystems = [HeatSystem]()
-                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
-                        if buildingData.heatSystem != nil {
-                            heatSystems.append(buildingData.heatSystem)
-                        }
-                    }
-                    if heatSystems.count > 0 {
-                        building!.buildingData.heatSystem.outputHeatToOtherHeatSystem(heatSystems)
-                    }
-                }
-            }
-        }
+//        // 1. Isolation Multiply
+//        for (y, line) in buildings.enumerate() {
+//            for (x, building) in line.enumerate() {
+//                let isolationArray: [BuildingType] = [.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell]
+//                if isolationArray.contains(building!.buildingData.buildType) {
+//                    building!.buildingData.heatSystem.produceMultiply = 1
+//                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+//                        if buildingData.buildType == .Isolation {
+//                            building!.buildingData.heatSystem.produceMultiply += buildingData.isolationPercent
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        // 2. Production
+//        for line in buildings {
+//            for building in line {
+//                if building!.activate && building!.buildingData.heatSystem != nil {
+//                    building!.buildingData.heatSystem.produceHeat()
+//                }
+//            }
+//        }
+//        // 3. output transport
+//        for (y, line) in buildings.enumerate() {
+//            for (x, building) in line.enumerate() {
+//                if building!.buildingData.heatSystem != nil && building!.buildingData.heatSystem.output {
+//                    var heatSystems = [HeatSystem]()
+//                    for buildingData in aroundCoordBuildingData(x: x, y: y) {
+//                        if buildingData.heatSystem != nil {
+//                            heatSystems.append(buildingData.heatSystem)
+//                        }
+//                    }
+//                    if heatSystems.count > 0 {
+//                        building!.buildingData.heatSystem.outputHeatToOtherHeatSystem(heatSystems)
+//                    }
+//                }
+//            }
+//        }
         // 4. Heat inlet to out let
         var heatOutletHeatSystems = [HeatSystem]()
         for line in buildings {

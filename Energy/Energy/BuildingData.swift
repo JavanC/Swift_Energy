@@ -172,13 +172,11 @@ class HeatSystem: NSObject, NSCoding {
         else { return false }
     }
     func outputHeatToOtherHeatSystem(heatSystems:[HeatSystem]) {
-        while inAmount > 0 {
-            for heatSystem in heatSystems {
-                if inAmount == 0 { break }
-                ++heatSystem.inAmount
-                --inAmount
-            }
+        if heatSystems.count == 0 { return }
+        for heatSystem in heatSystems {
+            heatSystem.inAmount += inAmount / Double(heatSystems.count)
         }
+        inAmount = 0
     }
     func exchangerHeatToOtherHeatSystem(heatSystems:[HeatSystem]) {
         var allHeat: Double = 0
@@ -270,17 +268,32 @@ class WaterSystem: NSObject, NSCoding {
         return false
     }
     func balanceWithOtherWaterSystem(var waterSystems:[WaterSystem]) {
-        while waterSystems.count > 0 && inAmount > 0{
-            var index = 0
-            for waterSystem in waterSystems {
-                if inAmount == 0 { break }
-                if !waterSystem.add(1) {
-                    waterSystems.removeAtIndex(index)
-                    break
-                } else {
-                    --self.inAmount
+        var allWater: Double = 0
+        for waterSystem in waterSystems {
+            allWater += waterSystem.inAmount
+            waterSystem.inAmount = 0
+        }
+        
+        while waterSystems.count > 0 {
+            var minSizeIndex = 0
+            var minSize = waterSystems[minSizeIndex].size
+            
+            for (index, waterSystem) in waterSystems.enumerate() {
+                if waterSystem.size < minSize {
+                    minSize = waterSystem.size
+                    minSizeIndex = index
                 }
-                index++
+            }
+            
+            if allWater > minSize * Double(waterSystems.count) {
+                allWater -= minSize
+                waterSystems[minSizeIndex].inAmount = minSize
+                waterSystems.removeAtIndex(minSizeIndex)
+            } else {
+                for waterSystem in waterSystems {
+                    waterSystem.inAmount = allWater / Double(waterSystems.count)
+                }
+                break
             }
         }
     }
@@ -524,7 +537,7 @@ class BuildingData: NSObject, NSCoding {
             comment = "Expands water pumps effective area."
             buildPrice = 10000000000
             progress = .Water
-            waterSystem = WaterSystem(size: 300000, output: true)
+            waterSystem = WaterSystem(size: 200000, output: true)
             
         case .SmallOffice:
             imageName = "SmallOffice"
@@ -678,7 +691,7 @@ class BuildingData: NSObject, NSCoding {
             waterSystem.produce = baseToPower(50000, base: 1.2, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
             
         case .WaterPipe:
-            waterSystem.size = baseToPower(300000, base: 1.5, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
+            waterSystem.size = baseToPower(200000, base: 1.5, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
             
         case .SmallOffice:
             moneySystem.energy2MoneyAmount = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)

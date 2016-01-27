@@ -113,8 +113,8 @@ class GameViewController: UIViewController {
             let pastSeconds = -Int(intervall)
             if pastSeconds <= 0 { return }
             boostPoint += Double(pastSeconds) / 5
-            if boostPoint > 10000 {
-                boostPoint = 10000
+            if boostPoint > 10 {
+                boostPoint = 10
             }
         }
     }

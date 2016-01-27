@@ -416,24 +416,24 @@ class IslandScene: SKScene {
                 topLayer.isPauseChange()
             }
         }
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) { [unowned self] in
+//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) { [unowned self] in
             for i in 0...1 {
                 // Update map data
                 maps[i].Update()
             }
-        }
+            for i in 0...1 {
+                // Calculate money and research
+                money += maps[i].money_TickAdd
+                research += maps[i].research_TickAdd
+            }
+//        }
 
-        
-        for i in 0...1 {
-            // Calculate money and research
-            money += maps[i].money_TickAdd
-            research += maps[i].research_TickAdd
+            
+            // Update information
+            self.bottomLayer.pageInformation.changeInformation(self.info_Building.buildingData)
+            // draw energy circle
+            let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
+            self.buttonLayer.drawEnergyCircle(percent)
         }
-        
-        // Update information
-        bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
-        // draw energy circle
-        let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
-        buttonLayer.drawEnergyCircle(percent)
-    }
+   
 }
