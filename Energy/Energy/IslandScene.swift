@@ -275,7 +275,6 @@ class IslandScene: SKScene {
                         if building == BuildingType.WaveCell {
                             if coordType == .Ocean || coordType == .WaveCell {
                                 if money >= price {
-                                    maps[nowMapNumber].removeBuilding(coord)
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
                                 }
@@ -283,7 +282,6 @@ class IslandScene: SKScene {
                         } else {
                             if coordType != .Ocean && coordType != .WaveCell {
                                 if money >= price {
-                                    maps[nowMapNumber].removeBuilding(coord)
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
                                 }
@@ -292,14 +290,27 @@ class IslandScene: SKScene {
                     }
                     
                 case .Sell:
+                    let coordType = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildType
                     if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                         let price = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildPrice
                         let canotSellBuildings: [BuildingType] = [.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]
-                        if !canotSellBuildings.contains(maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildType) {
+                        if !canotSellBuildings.contains(coordType) {
                             money += price
                         }
                         maps[nowMapNumber].removeBuilding(coord)
-                        maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
+                        if coordType == .WaveCell {
+                            maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Ocean)
+                        } else {
+                            maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
+                        }
+                    } else {
+                        if coordType != .Land && coordType != .Ocean {
+                            if coordType == .WaveCell {
+                                maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Ocean)
+                            } else {
+                                maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
+                            }
+                        }
                     }
                 }
                 
@@ -341,7 +352,6 @@ class IslandScene: SKScene {
                         if building == BuildingType.WaveCell {
                             if coordType == .Ocean || coordType == .WaveCell {
                                 if money >= price {
-                                    maps[nowMapNumber].removeBuilding(coord)
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
                                 }
@@ -349,7 +359,6 @@ class IslandScene: SKScene {
                         } else {
                             if coordType != .Ocean && coordType != .WaveCell {
                                 if money >= price {
-                                    maps[nowMapNumber].removeBuilding(coord)
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
                                 }
@@ -358,14 +367,26 @@ class IslandScene: SKScene {
                     }
                     
                 case .Sell:
+                    let coordType = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildType
                     if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                         let price = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildPrice
                         let canotSellBuildings: [BuildingType] = [.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]
                         if !canotSellBuildings.contains(maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildType) {
                             money += price
                         }
-                        maps[nowMapNumber].removeBuilding(coord)
-                        maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
+                        if coordType == .WaveCell {
+                            maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Ocean)
+                        } else {
+                            maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
+                        }
+                    } else {
+                        if coordType != .Land && coordType != .Ocean {
+                            if coordType == .WaveCell {
+                                maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Ocean)
+                            } else {
+                                maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
+                            }
+                        }
                     }
                     
                 default : break
@@ -395,9 +416,15 @@ class IslandScene: SKScene {
                 topLayer.isPauseChange()
             }
         }
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) { [unowned self] in
+            for i in 0...1 {
+                // Update map data
+                maps[i].Update()
+            }
+        }
+
+        
         for i in 0...1 {
-            // Update map data
-            maps[i].Update()
             // Calculate money and research
             money += maps[i].money_TickAdd
             research += maps[i].research_TickAdd
