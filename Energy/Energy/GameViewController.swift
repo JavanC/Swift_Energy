@@ -34,21 +34,22 @@ class GameViewController: UIViewController {
         
         let skView = self.view as! SKView
         if (skView.scene == nil) {
-            let scale:CGFloat = UIScreen.mainScreen().scale
-            let size = CGSizeMake(skView.frame.width * scale, skView.frame.height * scale)
-            menuScene = MenuScene(size: size)
-            islandsScene = IslandsScene(size: size)
-            islandScene = IslandScene(size: size)
-            upgradeScene = UpgradeScene(size: size)
-            researchScene = ResearchScene(size: size)
+            let scale:CGFloat          = UIScreen.mainScreen().scale
+            let size                   = CGSizeMake(skView.frame.width * scale, skView.frame.height * scale)
+            menuScene                  = MenuScene(size: size)
+            islandsScene               = IslandsScene(size: size)
+            islandScene                = IslandScene(size: size)
+            upgradeScene               = UpgradeScene(size: size)
+            researchScene              = ResearchScene(size: size)
+            
             // Configure the view
-            menuScene.scaleMode = .AspectFill
-            islandsScene.scaleMode = .AspectFill
-            islandScene.scaleMode = .AspectFill
-            upgradeScene.scaleMode = .AspectFill
-            researchScene.scaleMode = .AspectFill
-            skView.showsFPS = true
-            skView.showsNodeCount = true
+            menuScene.scaleMode        = .AspectFill
+            islandsScene.scaleMode     = .AspectFill
+            islandScene.scaleMode      = .AspectFill
+            upgradeScene.scaleMode     = .AspectFill
+            researchScene.scaleMode    = .AspectFill
+            skView.showsFPS            = true
+            skView.showsNodeCount      = true
             skView.ignoresSiblingOrder = true
             skView.presentScene(menuScene)
         }
@@ -83,6 +84,8 @@ class GameViewController: UIViewController {
         money = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
         research = defaults.doubleForKey("Research")
         spendTime = defaults.integerForKey("spendTime")
+        isPause = defaults.boolForKey("isPause")
+        isRebuild = defaults.boolForKey("isRebuild")
         
         money = 1000000000000000
         research = 1000000000000000
@@ -103,18 +106,23 @@ class GameViewController: UIViewController {
             maps.append(buildingMapLayer)
         }
         for map in maps {
-            map.loadGameData()
+            map.loadMapData()
         }
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) { [unowned self] in
-            
+        // Boost lost time
+        if isPause { return }
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+            print("Start Boost time!")
+            isBoost = true
             // load date and update game date
             let lastDate = defaults.objectForKey("Date") as? NSDate
             if let intervall = lastDate?.timeIntervalSinceNow {
                 let pastSeconds = -Int(intervall)
                 if pastSeconds <= 0 { return }
-                print("past seconds: \(pastSeconds)")
+                boostTime = Double(pastSeconds)
+                boostTimeLess = 0
+                print("Boost seconds: \(pastSeconds)")
                 for _ in 0..<pastSeconds {
+                    ++boostTimeLess
                     for i in 0...1 {
                         // Update map data
                         maps[i].Update()
@@ -123,13 +131,9 @@ class GameViewController: UIViewController {
                         research += maps[i].research_TickAdd
                     }
                 }
-                //            boostPoint += Double(pastSeconds) / 5
-                //            if boostPoint > 10 {
-                //                boostPoint = 10
-                //            }
             }
-            print("load calculate OK!")
-            
+            isBoost = false
+            print("End Boost time!")
         }
     }
     
@@ -141,6 +145,8 @@ class GameViewController: UIViewController {
         defaults.setDouble(money, forKey: "Money")
         defaults.setDouble(research, forKey: "Research")
         defaults.setInteger(spendTime, forKey: "spendTime")
+        defaults.setBool(isPause, forKey: "isPause")
+        defaults.setBool(isRebuild, forKey: "isRebuild")
         
         // save upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

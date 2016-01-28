@@ -37,8 +37,11 @@ var upgradeLevel = [UpgradeType: Int]()
 var researchLevel = [ResearchType: Int]()
 var maps = [BuildingMapLayer]()
 var nowMapNumber: Int = 0
-var isPause: Bool = true
+var isPause: Bool = false
 var isRebuild: Bool = true
+var isBoost: Bool = false
+var boostTime: Double = 1
+var boostTimeLess: Double = 1
 
 class MenuScene: SKScene {
     

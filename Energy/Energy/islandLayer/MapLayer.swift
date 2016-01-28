@@ -266,7 +266,7 @@ class BuildingMapLayer: SKSpriteNode {
     }
     
     // MARK: Load Map Data
-    func loadGameData() {
+    func loadMapData() {
         energy = NSUserDefaults.standardUserDefaults().doubleForKey("map\(mapNumber)_Energy")
         for y in 0..<11 {
             for x in 0..<9 {
@@ -404,7 +404,7 @@ class BuildingMapLayer: SKSpriteNode {
             element.buildingData.heatSystem.produceHeat()
             var heatSystems = [HeatSystem]()
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
-                if buildingData.heatSystem != nil {
+                if buildingData.heatSystem != nil && !buildingData.heatSystem.output{
                     heatSystems.append(buildingData.heatSystem)
                 }
             }

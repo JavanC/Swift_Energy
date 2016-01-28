@@ -21,6 +21,8 @@ class IslandScene: SKScene {
     let tilesize = CGSizeMake(64, 64)
     var gameTimer: NSTimer!
     
+    var boostLayer: SKSpriteNode!
+    var boostArc: SKShapeNode!
     var touchType: TouchType = .Energy
     var topLayer: TopLayer!
     var buttonLayer: ButtonLayer!
@@ -34,6 +36,10 @@ class IslandScene: SKScene {
         
         // First initial
         if !contentCreated {
+            
+            if !isPause {
+                gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
+            }
             
             // Top Layer
             let topLayerSize = CGSizeMake(frame.size.width, topTileSize.height * tilesScaleSize.height)
@@ -75,8 +81,25 @@ class IslandScene: SKScene {
             buildingSelectLayer.zPosition = 50
             addChild(buildingSelectLayer)
             
-
-        
+            // Boost Layer
+            boostLayer = SKSpriteNode()
+            boostLayer.name = "BoostLayer"
+            boostLayer.hidden = !isBoost
+            boostLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            boostLayer.zPosition = 300
+            let boostBG = SKSpriteNode(color: SKColor.blackColor(), size: frame.size)
+            boostBG.name = "boostBG"
+            boostBG.alpha = 0.5
+            boostLayer.addChild(boostBG)
+            let boostLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            boostLabel.name = "boostLabel"
+            boostLabel.text = "TIME  REPLY"
+            boostLabel.fontColor = SKColor.whiteColor()
+            boostLabel.fontSize = 50 * framescale
+            boostLabel.verticalAlignmentMode = .Center
+            boostLayer.addChild(boostLabel)
+            addChild(boostLayer)
+            
             contentCreated = true
         }
         
@@ -85,15 +108,21 @@ class IslandScene: SKScene {
         maps[nowMapNumber].hidden = false
         
         // back to Energy type
-        self.touchType = .Energy
-        maps[nowMapNumber].runAction(SKAction.unhide())
-        bottomLayer.pageBuild.closeSelectInformation()
-        buildingSelectLayer.showPage(false, duration: 0)
-        bottomLayer.showPage(BottomLayer.PageType.PageEnergy, duration: 0)
-        buttonLayer.beginButtonEnergy()
+        changeTouchTypeAndShowPage(.Energy, duration: 0)
         
         // update build page image show
         bottomLayer.pageBuild.updateImageShow()
+    }
+    
+    func drawBoostTimeCircle(percent: Double) {
+        if boostArc != nil {
+            boostArc.removeFromParent()
+        }
+        let path = CGPathCreateMutable()
+        CGPathAddArc(path, nil, 0, 0, framescale * 200, CGFloat(M_PI_2), CGFloat(M_PI_2 - M_PI * 2 * Double(percent)), true)
+        boostArc = SKShapeNode(path: path)
+        boostArc.lineWidth = framescale * 10
+        boostLayer.addChild(boostArc)
     }
     
     func showBuildSelectPage() {
@@ -108,14 +137,22 @@ class IslandScene: SKScene {
         self.touchType = touchType
         maps[nowMapNumber].runAction(SKAction.unhide())
         bottomLayer.pageBuild.closeSelectInformation()
-        buildingSelectLayer.showPage(false)
+        if duration == 0 {
+            buildingSelectLayer.showPage(false, duration: 0)
+        } else {
+            buildingSelectLayer.showPage(false)
+        }
         switch touchType {
         case .Information:
             buttonLayer.tapButtonNil(duration)
             bottomLayer.showPage(BottomLayer.PageType.PageInformation, duration: duration)
             
         case .Energy:
-            buttonLayer.tapButtonEnergy(duration)
+            if duration == 0 {
+                buttonLayer.beginButtonEnergy()
+            } else {
+                buttonLayer.tapButtonEnergy(duration)
+            }
             bottomLayer.showPage(BottomLayer.PageType.PageEnergy, duration: duration)
             
         case .Builded:
@@ -129,6 +166,7 @@ class IslandScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if isBoost { return }
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         let nodes = nodesAtPoint(location)
@@ -313,6 +351,7 @@ class IslandScene: SKScene {
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if isBoost { return }
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         let nodes = nodesAtPoint(location)
@@ -377,6 +416,16 @@ class IslandScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        // Boost Layer
+        if isBoost {
+            boostLayer.alpha = 1
+            boostLayer.hidden = false
+            let percent = boostTimeLess / boostTime
+            drawBoostTimeCircle(percent)
+        } else {
+            boostLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.waitForDuration(0.2), SKAction.hide()]))
+        }
+        
         // Updata text imformation
         topLayer.moneyLabel.text = "Money: \(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd, isInt: false))"
         topLayer.researchLabel.text = "Research: \(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd, isInt: false))"
@@ -387,6 +436,7 @@ class IslandScene: SKScene {
     }
     
     func tickUpdata() {
+        if isBoost { return }
         ++spendTime
         for i in 0...1 {
             // Update map data
@@ -402,5 +452,4 @@ class IslandScene: SKScene {
         let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
         self.buttonLayer.drawEnergyCircle(percent)
     }
-   
 }

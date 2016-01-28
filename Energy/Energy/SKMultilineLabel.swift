@@ -117,7 +117,7 @@ class SKMultilineLabel: SKNode {
                     label.position = CGPointMake( linePos.x , linePos.y )
                     self.addChild(label)
                     labels.append(label)
-                    print("was \(lineLength), now \(label.frame.size.width)")
+//                    print("was \(lineLength), now \(label.frame.size.width)")
                 }
             }
         }
