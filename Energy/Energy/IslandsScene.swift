@@ -50,11 +50,19 @@ class IslandsScene: SKScene {
             map2Button.position = CGPoint(x:frame.size.width / 2, y:frame.size.height / 2 - 100 * framescale)
             self.addChild(map2Button)
             
+            let label = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            label.name = "spentTimeLabel"
+            label.text = "SPEND  TIME"
+            label.fontSize = 20 * framescale
+            label.fontColor = SKColor.whiteColor()
+            label.position = CGPoint(x: frame.width / 2, y: frame.height / 8)
+            addChild(label)
+            
             spentTimeLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             spentTimeLabel.name = "spentTimeLabel"
             spentTimeLabel.fontSize = 30 * framescale
             spentTimeLabel.fontColor = SKColor.whiteColor()
-            spentTimeLabel.position = CGPoint(x: frame.width / 2, y: frame.height / 8)
+            spentTimeLabel.position = CGPoint(x: frame.width / 2, y: label.position.y - 50 * framescale)
             self.addChild(spentTimeLabel)
             
             contentCreated = true
@@ -83,20 +91,21 @@ class IslandsScene: SKScene {
     }
 
     func hourToString(value: Int) -> String {
-        let year = value / 8760
-        let day = (value % 8760) / 24
-        let hour = value % 24
+        let day = value / 86400
+        let hour = (value % 86400) / 3600
+        let min = (value % 3600) / 60
+        let sec = value % 60
         
         var timeString = ""
-        if year > 0 {
-            timeString += "\(year) years "
-        }
         if day > 0 {
             timeString += "\(day) days "
         }
-        if hour > 0 {
-            timeString += "\(hour) hours pass..."
-        }
+        if hour < 10 { timeString += "0" }
+        timeString += "\(hour):"
+        if min < 10 { timeString += "0" }
+        timeString += "\(min):"
+        if sec < 10 { timeString += "0" }
+        timeString += "\(sec)"
         return timeString
     }
     

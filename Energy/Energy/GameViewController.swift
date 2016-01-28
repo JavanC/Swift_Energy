@@ -87,8 +87,9 @@ class GameViewController: UIViewController {
         isPause = defaults.boolForKey("isPause")
         isRebuild = defaults.boolForKey("isRebuild")
         
-        money = 1000000000000000
-        research = 1000000000000000
+        //1000000000000000
+        money = 100
+        research = 100
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
@@ -116,13 +117,17 @@ class GameViewController: UIViewController {
             // load date and update game date
             let lastDate = defaults.objectForKey("Date") as? NSDate
             if let intervall = lastDate?.timeIntervalSinceNow {
-                let pastSeconds = -Int(intervall)
+                var pastSeconds = -Int(intervall)
                 if pastSeconds <= 0 { return }
+                if pastSeconds > 3600 {
+                    pastSeconds = 3600
+                }
                 boostTime = Double(pastSeconds)
                 boostTimeLess = 0
                 print("Boost seconds: \(pastSeconds)")
                 for _ in 0..<pastSeconds {
                     ++boostTimeLess
+                    ++spendTime
                     for i in 0...1 {
                         // Update map data
                         maps[i].Update()

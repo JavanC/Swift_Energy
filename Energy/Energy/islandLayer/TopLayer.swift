@@ -30,6 +30,7 @@ class TopLayer: SKSpriteNode {
         buttonMenu.setScale(0.8 * framescale)
         buttonMenu.anchorPoint = CGPoint(x: 0, y: 0.5)
         buttonMenu.position = CGPoint(x: gap, y: size.height / 2)
+        buttonMenu.zPosition = 500
         addChild(buttonMenu)
         
         buttonPlayPause = SKSpriteNode(texture: iconAtlas.textureNamed(isPause ? "button_pause" : "button_play"))

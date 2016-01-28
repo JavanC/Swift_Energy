@@ -293,6 +293,15 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: BuildingMap Update
     func Update() {
         
+        var energy2MoneyAmount: Double = 0
+        research_TickAdd = 0
+        energy_TickAdd = 0
+        money_TickAdd = 0
+        energyMax = 100
+        
+        var heatSystemElements       = [Building]()
+        var timeSysTemElements       = [Building]()
+        
         var waterSystemElements      = [Building]()
         var waterProduceElements     = [Building]()
         var watertransportElements   = [Building]()
@@ -313,7 +322,13 @@ class BuildingMapLayer: SKSpriteNode {
         
         for line in buildings {
             for building in line {
+                if building?.buildingData.timeSystem != nil {
+                    timeSysTemElements.append(building!)
+                }
                 if building!.activate {
+                    if building?.buildingData.heatSystem != nil {
+                        heatSystemElements.append(building!)
+                    }
                     let type = building!.buildingData.buildType
                     switch type {
                     case .WaterPump, .GroundwaterPump:
@@ -359,6 +374,9 @@ class BuildingMapLayer: SKSpriteNode {
                     case .ResearchCenter, .AdvancedResearchCenter:
                         researchCenterElements.append(building!)
                         
+                    // Calculate energyMax
+                    case .Battery:
+                        energyMax += building!.buildingData.batteryEnergySize
                     default: break
                     }
                 }
@@ -373,7 +391,7 @@ class BuildingMapLayer: SKSpriteNode {
         for element in waterProduceElements {
             element.buildingData.waterSystem.produceWater()
         }
-        // 2. transport
+        // 2. transport & Update Progress-heat,time
         for element in watertransportElements {
             var waterSystems: [WaterSystem] = [element.buildingData.waterSystem]
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
@@ -382,6 +400,7 @@ class BuildingMapLayer: SKSpriteNode {
                 }
             }
             element.buildingData.waterSystem.balanceWithOtherWaterSystem(waterSystems)
+            element.progressUpdate()
         }
         // 3. Caculate water overflow
         for element in waterSystemElements {
@@ -389,7 +408,7 @@ class BuildingMapLayer: SKSpriteNode {
         }
         
         /*
-        //  Heat System
+        //  Heat System && Calculate money_TickAdd
         */
         
         // 1. Isolation Multiply and Production Output
@@ -441,62 +460,67 @@ class BuildingMapLayer: SKSpriteNode {
         // 6. Heat Conversion Money
         for element in heatToMoneyElements {
             element.buildingData.heatTransformMoney()
+            money_TickAdd += element.buildingData.moneySystem.inAmount
+            element.buildingData.moneySystem.inAmount = 0
+            
         }
         
         /*
-        // Energy System
+        // Energy System && Calculate energy_TickAdd
         */
         
         // 1. Production
         for element in energyProduceElements {
             element.buildingData.energySystem.produceEnergy()
+            energy_TickAdd += element.buildingData.energySystem.inAmount
+            element.buildingData.energySystem.inAmount = 0
         }
         // 2. Energy Conversion
         for element in energyConversionElements {
             element.buildingData.heatTransformEnergy()
             element.buildingData.waterTransformEnergy()
+            energy_TickAdd += element.buildingData.energySystem.inAmount
+            element.buildingData.energySystem.inAmount = 0
         }
         
         /*
-        // EDestroy & Activate & Rebuild & Update Progress
+        // Destroy & Activate & Rebuild & Update Progress-heat,time
         */
         
-        for (y, line) in buildings.enumerate() {
-            for (x, building) in line.enumerate() {
-                let buildingData = building!.buildingData
-                if building!.activate {
-                    // 1. Destroy
-                    if buildingData.heatSystem != nil && buildingData.heatSystem.overflow() {
-                        let coord = CGPoint(x: x, y: y)
-                        removeBuilding(coord)
-                        setTileMapElement(coord: coord, buildType: .Land)
-                    }
-                    // 2. Activate
-                    if buildingData.timeSystem != nil && !buildingData.timeSystem.tick(){
-                        building!.activate = false
-//                        building!.alpha = 0.5
-                    }
-                } else {
-                    // 3. Rebuild
-                    if autoRebuild && buildingData.timeSystem != nil && buildingData.timeSystem.rebuild {
-                        let price = building!.buildingData.buildPrice
-                        if money >= price {
-                            money -= price
-                            building!.buildingData.timeSystem.resetTime()
-                            building!.activate = true
-//                            building!.alpha = 1
-                        }
+        // 1. Destroy
+        for element in heatSystemElements {
+            if element.buildingData.heatSystem.overflow() {
+                setTileMapElement(coord: element.coord, buildType: .Land)
+            }
+            element.progressUpdate()
+        }
+        
+        // 2. Activate and Rebuild
+        for element in timeSysTemElements {
+            if element.activate {
+                if element.buildingData.timeSystem.tick() {
+                    element.activate = false
+                    element.alpha = 0.5
+                }
+            } else {
+                if autoRebuild && element.buildingData.timeSystem.rebuild {
+                    let price = element.buildingData.buildPrice
+                    if money >= price {
+                        money -= price
+                        element.buildingData.timeSystem.resetTime()
+                        element.activate = true
+                        element.alpha = 1
                     }
                 }
-                // 4. Update progress
-                building!.progressUpdate()
             }
+            element.progressUpdate()
         }
-
+        
         /*
-        // Bank && Library multiply
+        // Bank && Library multiply && Calculate energy2MoneyAmount && Calculate research_TickAdd
         */
         
+        // 1. officeElements
         for element in officeElements {
             element.buildingData.moneySystem.multiply = 1
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
@@ -504,8 +528,9 @@ class BuildingMapLayer: SKSpriteNode {
                     element.buildingData.moneySystem.multiply += buildingData.bankAddPercent
                 }
             }
+            energy2MoneyAmount += element.buildingData.moneySystem.energy2MoneyMultiplyAmount()
         }
-        
+        // 2. researchCenterElements
         for element in researchCenterElements {
             element.buildingData.researchSystem.multiply = 1
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
@@ -513,43 +538,16 @@ class BuildingMapLayer: SKSpriteNode {
                     element.buildingData.researchSystem.multiply += buildingData.libraryAddPercent
                 }
             }
+            research_TickAdd += element.buildingData.researchSystem.researchMultiplyAmount()
         }
         
         /*
-        // Calculate research, energy, money tick add
+        // Calculate final energy, research and money tick add
         */
         
-        var energy2MoneyAmount: Double = 0
-        research_TickAdd = 0
-        energy_TickAdd = 0
-        money_TickAdd = 0
-        energyMax = 100
-        // 1. statistics
-        for line in buildings {
-            for building in line {
-                // research
-                if building!.buildingData.researchSystem != nil {
-                    research_TickAdd += building!.buildingData.researchSystem.researchMultiplyAmount()
-                }
-                // energy
-                if building!.buildingData.energySystem != nil {
-                    energy_TickAdd += building!.buildingData.energySystem.inAmount
-                    building!.buildingData.energySystem.inAmount = 0
-                }
-                // money
-                if building!.buildingData.moneySystem != nil {
-                    money_TickAdd += building!.buildingData.moneySystem.inAmount
-                    building!.buildingData.moneySystem.inAmount = 0
-                    energy2MoneyAmount += building!.buildingData.moneySystem.energy2MoneyMultiplyAmount()
-                }
-                // battery
-                if building!.buildingData.buildType == .Battery {
-                    energyMax += building!.buildingData.batteryEnergySize
-                }
-            }}
-        // 2. Calculate energy
+        // 1. Calculate energy
         energy += energy_TickAdd
-        // 3. Calculate money tick add and energy left
+        // 2. Calculate money tick add and energy left
         if energy >= energy2MoneyAmount {
             energy -= energy2MoneyAmount
             money_TickAdd += energy2MoneyAmount

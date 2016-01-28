@@ -98,6 +98,14 @@ class IslandScene: SKScene {
             boostLabel.fontSize = 50 * framescale
             boostLabel.verticalAlignmentMode = .Center
             boostLayer.addChild(boostLabel)
+            let boostPSLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            boostPSLabel.name = "boostPSLabel"
+            boostPSLabel.text = "Max reply one hour."
+            boostPSLabel.fontColor = SKColor.whiteColor()
+            boostPSLabel.fontSize = 20 * framescale
+            boostPSLabel.verticalAlignmentMode = .Center
+            boostPSLabel.position = CGPoint(x: 0, y: -frame.height / 4)
+            boostLayer.addChild(boostPSLabel)
             addChild(boostLayer)
             
             contentCreated = true
@@ -166,10 +174,23 @@ class IslandScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if isBoost { return }
+
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         let nodes = nodesAtPoint(location)
+        
+        if isBoost {
+            for node in nodes {
+                if node.hidden { return }
+                if node == topLayer.buttonMenu {
+                    print("Menu Button")
+                    changeTouchTypeAndShowPage(touchType)
+                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
+                    self.view?.presentScene(islandsScene, transition: doors)
+                }
+            }
+            return
+        }
         
         for node in nodes {
             if node.hidden { return }
