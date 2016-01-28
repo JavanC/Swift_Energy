@@ -19,7 +19,6 @@ class IslandsScene: SKScene {
     var map2Button: SKLabelNode!
     
     var spentTimeLabel: SKLabelNode!
-    var boostPointLabel: SKLabelNode!
     
     override func didMoveToView(view: SKView) {
         
@@ -57,13 +56,6 @@ class IslandsScene: SKScene {
             spentTimeLabel.fontColor = SKColor.whiteColor()
             spentTimeLabel.position = CGPoint(x: frame.width / 2, y: frame.height / 8)
             self.addChild(spentTimeLabel)
-            
-            boostPointLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
-            boostPointLabel.name = "boostPointLabel"
-            boostPointLabel.fontSize = 30 * framescale
-            boostPointLabel.fontColor = colorBoost
-            boostPointLabel.position = CGPoint(x: frame.width / 2 , y: spentTimeLabel.position.y - 50 * framescale)
-            self.addChild(boostPointLabel)
             
             contentCreated = true
         }
@@ -110,7 +102,5 @@ class IslandsScene: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         spentTimeLabel.text = hourToString(spendTime)
-        boostPointLabel.text = "Boost Point: \(Int(boostPoint))"
-        boostPointLabel.hidden = boostPoint <= 0 ? true : false
     }
 }

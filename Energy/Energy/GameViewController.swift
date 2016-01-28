@@ -83,7 +83,6 @@ class GameViewController: UIViewController {
         money = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
         research = defaults.doubleForKey("Research")
         spendTime = defaults.integerForKey("spendTime")
-        boostPoint = defaults.doubleForKey("boostPoint")
         
         money = 1000000000000000
         research = 1000000000000000
@@ -107,15 +106,30 @@ class GameViewController: UIViewController {
             map.loadGameData()
         }
         
-        // load date and update game date
-        let lastDate = defaults.objectForKey("Date") as? NSDate
-        if let intervall = lastDate?.timeIntervalSinceNow {
-            let pastSeconds = -Int(intervall)
-            if pastSeconds <= 0 { return }
-            boostPoint += Double(pastSeconds) / 5
-            if boostPoint > 10 {
-                boostPoint = 10
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) { [unowned self] in
+            
+            // load date and update game date
+            let lastDate = defaults.objectForKey("Date") as? NSDate
+            if let intervall = lastDate?.timeIntervalSinceNow {
+                let pastSeconds = -Int(intervall)
+                if pastSeconds <= 0 { return }
+                print("past seconds: \(pastSeconds)")
+                for _ in 0..<pastSeconds {
+                    for i in 0...1 {
+                        // Update map data
+                        maps[i].Update()
+                        // Calculate money and research
+                        money    += maps[i].money_TickAdd
+                        research += maps[i].research_TickAdd
+                    }
+                }
+                //            boostPoint += Double(pastSeconds) / 5
+                //            if boostPoint > 10 {
+                //                boostPoint = 10
+                //            }
             }
+            print("load calculate OK!")
+            
         }
     }
     
@@ -127,7 +141,6 @@ class GameViewController: UIViewController {
         defaults.setDouble(money, forKey: "Money")
         defaults.setDouble(research, forKey: "Research")
         defaults.setInteger(spendTime, forKey: "spendTime")
-        defaults.setDouble(boostPoint, forKey: "boostPoint")
         
         // save upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
@@ -145,7 +158,7 @@ class GameViewController: UIViewController {
         }
         
         // save now date
-        let now = NSDate()
+        let now = NSDate(timeInterval: -3600, sinceDate: NSDate())
         defaults.setObject(now, forKey: "Date")
     }
 }

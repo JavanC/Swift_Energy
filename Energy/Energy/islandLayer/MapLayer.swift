@@ -474,7 +474,7 @@ class BuildingMapLayer: SKSpriteNode {
                     // 2. Activate
                     if buildingData.timeSystem != nil && !buildingData.timeSystem.tick(){
                         building!.activate = false
-                        building!.alpha = 0.5
+//                        building!.alpha = 0.5
                     }
                 } else {
                     // 3. Rebuild
@@ -484,7 +484,7 @@ class BuildingMapLayer: SKSpriteNode {
                             money -= price
                             building!.buildingData.timeSystem.resetTime()
                             building!.activate = true
-                            building!.alpha = 1
+//                            building!.alpha = 1
                         }
                     }
                 }

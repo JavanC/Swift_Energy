@@ -33,7 +33,6 @@ enum ResearchType: Int {
 var money: Double = 10
 var research: Double = 10
 var spendTime: Int = 0
-var boostPoint: Double = 10000
 var upgradeLevel = [UpgradeType: Int]()
 var researchLevel = [ResearchType: Int]()
 var maps = [BuildingMapLayer]()

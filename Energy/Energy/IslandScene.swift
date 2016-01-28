@@ -51,21 +51,6 @@ class IslandScene: SKScene {
                 maps[count].zPosition = 1
                 addChild(maps[count])
             }
-            
-            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 2), buildType: BuildingType.WindTurbine)
-//            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 3), buildType: BuildingType.SmallGenerator)
-//            maps[0].setTileMapElement(coord: CGPoint(x: 3, y: 3), buildType: BuildingType.HeatExchanger)
-//            maps[0].setTileMapElement(coord: CGPoint(x: 4, y: 3), buildType: BuildingType.CoalBurner)
-            
-            
-            
-//            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 2), buildType: BuildingType.SmallGenerator)
-//            maps[0].setTileMapElement(coord: CGPoint(x: 1, y: 1), buildType: BuildingType.SmallGenerator)
-//            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: BuildingType.SmallGenerator)
-//            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 1), buildType: BuildingType.CoalBurner)
-//            maps[0].setTileMapElement(coord: CGPoint(x: 2, y: 1), buildType: BuildingType.SmallGenerator)
-//            maps[0].setTileMapElement(coord: CGPoint(x: 0, y: 0), buildType: BuildingType.SmallOffice)
-            maps[1].setTileMapElement(coord: CGPoint(x: 1, y: 0), buildType: BuildingType.SmallGenerator)
             info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
             
             // Button Layer
@@ -165,11 +150,7 @@ class IslandScene: SKScene {
                 topLayer.isPauseChange()
                 if isPause { gameTimer.invalidate() }
                 else {
-                    if boostPoint > 0 {
-                        gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
-                    } else {
-                        gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
-                    }
+                    gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
                 }
                 
             case buttonLayer.buttonBuild:
@@ -407,33 +388,19 @@ class IslandScene: SKScene {
     
     func tickUpdata() {
         ++spendTime
-        if boostPoint > 0 {
-            boostPoint -= 0.2
-            if boostPoint <= 0 {
-                boostPoint = 0
-                gameTimer.invalidate()
-                gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
-                topLayer.isPauseChange()
-            }
+        for i in 0...1 {
+            // Update map data
+            maps[i].Update()
+            // Calculate money and research
+            money       += maps[i].money_TickAdd
+            research    += maps[i].research_TickAdd
         }
-//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) { [unowned self] in
-            for i in 0...1 {
-                // Update map data
-                maps[i].Update()
-            }
-            for i in 0...1 {
-                // Calculate money and research
-                money += maps[i].money_TickAdd
-                research += maps[i].research_TickAdd
-            }
-//        }
 
-            
-            // Update information
-            self.bottomLayer.pageInformation.changeInformation(self.info_Building.buildingData)
-            // draw energy circle
-            let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
-            self.buttonLayer.drawEnergyCircle(percent)
-        }
+        // Update information
+        self.bottomLayer.pageInformation.changeInformation(self.info_Building.buildingData)
+        // draw energy circle
+        let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
+        self.buttonLayer.drawEnergyCircle(percent)
+    }
    
 }
