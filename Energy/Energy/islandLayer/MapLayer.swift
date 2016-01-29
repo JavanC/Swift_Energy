@@ -153,7 +153,6 @@ class BuildingMapLayer: SKSpriteNode {
     var energy_TickAdd: Double = 0
     var energy: Double = 0
     var energyMax: Double = 100
-    var autoRebuild: Bool = true
     
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, mapNumber: Int) {
@@ -498,12 +497,12 @@ class BuildingMapLayer: SKSpriteNode {
         // 2. Activate and Rebuild
         for element in timeSysTemElements {
             if element.activate {
-                if element.buildingData.timeSystem.tick() {
+                if !element.buildingData.timeSystem.tick() {
                     element.activate = false
                     element.alpha = 0.5
                 }
             } else {
-                if autoRebuild && element.buildingData.timeSystem.rebuild {
+                if isRebuild && element.buildingData.timeSystem.rebuild {
                     let price = element.buildingData.buildPrice
                     if money >= price {
                         money -= price

@@ -470,7 +470,7 @@ class BuildingData: NSObject, NSCoding {
         case .Isolation:
             imageName = "Isolation"
             name = "Isolation"
-            comment = "Increases heat output of heat producing building"
+            comment = "Increases heat produce of adjacent building."
             buildPrice = 1000
             isolationPercent = 0.1
             
@@ -662,7 +662,7 @@ class BuildingData: NSObject, NSCoding {
             heatSystem.size = baseToPower(8000, base: 1.25, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .Isolation:
-            isolationPercent = 0.1 * Double(upgradeLevel[UpgradeType.IsolationEffectiveness]!)
+            isolationPercent = 0.1 * Double(upgradeLevel[UpgradeType.IsolationEffectiveness]! + 1)
             
         case .Battery:
             batteryEnergySize = baseToPower(1000, base: 1.5, power: upgradeLevel[UpgradeType.EnergyBatterySize]!)
@@ -701,7 +701,7 @@ class BuildingData: NSObject, NSCoding {
             moneySystem.energy2MoneyAmount = baseToPower(2000, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
             
         case .Bank:
-            bankAddPercent = 0.2 + 0.1 * Double(upgradeLevel[UpgradeType.BankEffectiveness]!)
+            bankAddPercent = 0.2 + 0.1 * Double(upgradeLevel[UpgradeType.BankEffectiveness]! + 1)
             
         case .ResearchCenter:
             researchSystem.addAmount = baseToPower(1, base: 1.25, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
@@ -710,7 +710,7 @@ class BuildingData: NSObject, NSCoding {
             researchSystem.addAmount = baseToPower(6, base: 1.25, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
             
         case .Library:
-            libraryAddPercent = 0.2  + 0.1 * Double(upgradeLevel[UpgradeType.LibraryEffectiveness]!)
+            libraryAddPercent = 0.2  + 0.1 * Double(upgradeLevel[UpgradeType.LibraryEffectiveness]! + 1)
             
         default: break
         }

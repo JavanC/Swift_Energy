@@ -89,7 +89,7 @@ class IslandScene: SKScene {
             boostLayer.zPosition = 300
             let boostBG = SKSpriteNode(color: SKColor.blackColor(), size: frame.size)
             boostBG.name = "boostBG"
-            boostBG.alpha = 0.5
+            boostBG.alpha = 0.7
             boostLayer.addChild(boostBG)
             let boostLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             boostLabel.name = "boostLabel"
@@ -279,7 +279,6 @@ class IslandScene: SKScene {
             case bottomLayer.pageBuild.rebuildButton:
                 print("rebuild button")
                 isRebuild = !isRebuild
-                for count in 0..<8 { maps[count].autoRebuild = isRebuild }
                 if isRebuild {
                     bottomLayer.pageBuild.rebuildOn()
                 } else {

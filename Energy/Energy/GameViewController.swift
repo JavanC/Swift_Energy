@@ -88,8 +88,8 @@ class GameViewController: UIViewController {
         isRebuild = defaults.boolForKey("isRebuild")
         
         //1000000000000000
-        money = 100
-        research = 100
+        money = 1000000000000000
+        research = 1000000000000000
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

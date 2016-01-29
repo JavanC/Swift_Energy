@@ -49,6 +49,15 @@ class PageInformation: SKSpriteNode {
     var infoProduceHeatNode: InformationLabel!
     var infoSellsMoneyNode: InformationLabel!
     var infoConvertedEnergyNode: InformationLabel!
+    var infoSellHeatNode: InformationLabel!
+    var infoIsolationNode: InformationLabel!
+    var infoBatteryNode: InformationLabel!
+    var infoHeatSinkNode: InformationLabel!
+    var infoHeatInletNode: InformationLabel!
+    var infoProduceWaterNode: InformationLabel!
+    var infoBankNode: InformationLabel!
+    var infoProduceResearchNode: InformationLabel!
+    var infoLibraryNode: InformationLabel!
     var infoPriceNode: InformationLabel!
     var allLabels = [InformationLabel]()
     var isSellInfo: Bool!
@@ -81,14 +90,32 @@ class PageInformation: SKSpriteNode {
         addChild(infoProduceEnergyNode)
         infoProduceHeatNode = InformationLabel(title: "Produce Heat", fontSize: infoSize, valueColor: SKColor.redColor())
         addChild(infoProduceHeatNode)
-        infoSellsMoneyNode = InformationLabel(title: "Sells Money", fontSize: infoSize, valueColor: colorMoney)
+        infoSellsMoneyNode = InformationLabel(title: "Sells Energy", fontSize: infoSize, valueColor: colorEnergy)
         addChild(infoSellsMoneyNode)
         infoConvertedEnergyNode = InformationLabel(title: "Converted Energy", fontSize: infoSize, valueColor: SKColor.redColor())
         addChild(infoConvertedEnergyNode)
+        infoSellHeatNode = InformationLabel(title: "Sells Heat", fontSize: infoSize, valueColor: SKColor.redColor())
+        addChild(infoSellHeatNode)
+        infoIsolationNode = InformationLabel(title: "Increases Heat Produce", fontSize: infoSize, valueColor: SKColor.whiteColor())
+        addChild(infoIsolationNode)
+        infoBatteryNode = InformationLabel(title: "Increases Energy Max", fontSize: infoSize, valueColor: colorEnergy)
+        addChild(infoBatteryNode)
+        infoHeatInletNode = InformationLabel(title: "Heat transfer amount", fontSize: infoSize, valueColor: SKColor.redColor())
+        addChild(infoHeatInletNode)
+        infoHeatSinkNode = InformationLabel(title: "Cooling Heat", fontSize: infoSize, valueColor: SKColor.whiteColor())
+        addChild(infoHeatSinkNode)
+        infoProduceWaterNode = InformationLabel(title: "Produce Water", fontSize: infoSize, valueColor: colorEnergy)
+        addChild(infoProduceWaterNode)
+        infoBankNode = InformationLabel(title: "Increases Energy Sells", fontSize: infoSize, valueColor: SKColor.whiteColor())
+        addChild(infoBankNode)
+        infoProduceResearchNode = InformationLabel(title: "Produce Research", fontSize: infoSize, valueColor: colorResearch)
+        addChild(infoProduceResearchNode)
+        infoLibraryNode = InformationLabel(title: "Increases Research Produce", fontSize: infoSize, valueColor: SKColor.whiteColor())
+        addChild(infoLibraryNode)
         infoPriceNode = InformationLabel(title: "Price", fontSize: infoSize, valueColor: colorMoney)
         addChild(infoPriceNode)
         
-        allLabels = [infoTicksNode, infoHeatNode, infoWaterNode, infoProduceEnergyNode, infoProduceHeatNode, infoSellsMoneyNode, infoConvertedEnergyNode, infoPriceNode]
+        allLabels = [infoTicksNode, infoHeatNode, infoWaterNode, infoProduceEnergyNode, infoProduceHeatNode, infoSellsMoneyNode, infoConvertedEnergyNode, infoSellHeatNode, infoIsolationNode, infoBatteryNode, infoHeatInletNode, infoHeatSinkNode, infoProduceWaterNode, infoBankNode, infoProduceResearchNode, infoLibraryNode, infoPriceNode]
     }
     
     func changeInformation(buildingData: BuildingData) {
@@ -131,10 +158,55 @@ class PageInformation: SKSpriteNode {
             infoConvertedEnergyNode.valueLabel.text = "\(numberToString(buildingData.energySystem.heat2EnergyAmount))"
             informationLabels.append(infoConvertedEnergyNode)
         }
+        if ([.BoilerHouse, .LargeBoilerHouse]).contains(buildingData.buildType) {
+            infoSellHeatNode.hidden = false
+            infoSellHeatNode.valueLabel.text = "\(numberToString(buildingData.moneySystem.heat2MoneyAmount))"
+            informationLabels.append(infoSellHeatNode)
+        }
+        if buildingData.buildType == .Isolation {
+            infoIsolationNode.hidden = false
+            infoIsolationNode.valueLabel.text = "\(Int(buildingData.isolationPercent * 100))%"
+            informationLabels.append(infoIsolationNode)
+        }
+        if buildingData.buildType == .Battery {
+            infoBatteryNode.hidden = false
+            infoBatteryNode.valueLabel.text = "\(numberToString(buildingData.batteryEnergySize))"
+            informationLabels.append(infoBatteryNode)
+        }
+        if buildingData.buildType == .HeatSink {
+            infoHeatSinkNode.hidden = false
+            infoHeatSinkNode.valueLabel.text = "\(Int(buildingData.heatSystem.coolingRate * 100))%"
+            informationLabels.append(infoHeatSinkNode)
+        }
+        if buildingData.buildType == .HeatInlet {
+            infoHeatInletNode.hidden = false
+            infoHeatInletNode.valueLabel.text = "\(numberToString(buildingData.heatSystem.inletTransfer))"
+            informationLabels.append(infoHeatInletNode)
+        }
+        if ([.WaterPump, .GroundwaterPump]).contains(buildingData.buildType) {
+            infoProduceWaterNode.hidden = false
+            infoProduceWaterNode.valueLabel.text = "\(numberToString(buildingData.waterSystem.produce))"
+            informationLabels.append(infoProduceWaterNode)
+        }
         if ([.SmallOffice, .MediumOffice, .LargeOffice]).contains(buildingData.buildType) {
             infoSellsMoneyNode.hidden = false
-            infoSellsMoneyNode.valueLabel.text = "\(numberToString(buildingData.moneySystem.heat2MoneyAmount))"
+            infoSellsMoneyNode.valueLabel.text = "\(numberToString(buildingData.moneySystem.energy2MoneyAmount))"
             informationLabels.append(infoSellsMoneyNode)
+        }
+        if buildingData.buildType == .Bank {
+            infoBankNode.hidden = false
+            infoHeatInletNode.valueLabel.text = "\(Int(buildingData.bankAddPercent * 100))%"
+            informationLabels.append(infoBankNode)
+        }
+        if ([.ResearchCenter, .AdvancedResearchCenter]).contains(buildingData.buildType) {
+            infoProduceResearchNode.hidden = false
+            infoProduceResearchNode.valueLabel.text = "\(numberToString(buildingData.researchSystem.addAmount))"
+            informationLabels.append(infoProduceResearchNode)
+        }
+        if buildingData.buildType == .Library {
+            infoLibraryNode.hidden = false
+            infoLibraryNode.valueLabel.text = "\(Int(buildingData.libraryAddPercent * 100))%"
+            informationLabels.append(infoLibraryNode)
         }
         if ([.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]).contains(buildingData.buildType) && isSellInfo == true {
             infoPriceNode.hidden = false
