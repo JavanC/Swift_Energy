@@ -502,6 +502,9 @@ class ResearchScene: SKScene {
                         researchLevel[type]!++
                         updateElement()
                     } else {
+                        if type == ResearchType.WindTurbineRebuild {
+                            isRebuild = true
+                        }
                         research -= price
                         researchLevel[type]!++
                         for count in 0..<maps.count {

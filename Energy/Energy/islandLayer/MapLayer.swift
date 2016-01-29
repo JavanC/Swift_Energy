@@ -253,7 +253,7 @@ class BuildingMapLayer: SKSpriteNode {
     }
     
     // MARK: Save Map Data
-    func saveGameData() {
+    func saveMapData() {
         NSUserDefaults.standardUserDefaults().setDouble(energy, forKey: "map\(mapNumber)_Energy")
         for y in 0..<11 {
             for x in 0..<9 {

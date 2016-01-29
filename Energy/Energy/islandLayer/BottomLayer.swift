@@ -14,20 +14,20 @@ class InformationLabel: SKNode {
     
     init(title: String, fontSize: CGFloat, valueColor: SKColor) {
         super.init()
-        titleLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
-        titleLabel.name = "title"
-        titleLabel.text = "\(title) :"
-        titleLabel.fontSize = fontSize
-        titleLabel.fontColor = SKColor.whiteColor()
+        titleLabel                         = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        titleLabel.name                    = "title"
+        titleLabel.text                    = "\(title) :"
+        titleLabel.fontSize                = fontSize
+        titleLabel.fontColor               = SKColor.whiteColor()
         titleLabel.horizontalAlignmentMode = .Left
         addChild(titleLabel)
-        valueLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
-        valueLabel.name = "value"
-        valueLabel.text = ""
-        valueLabel.fontSize = fontSize
-        valueLabel.fontColor = valueColor
+        valueLabel                         = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        valueLabel.name                    = "value"
+        valueLabel.text                    = ""
+        valueLabel.fontSize                = fontSize
+        valueLabel.fontColor               = valueColor
         valueLabel.horizontalAlignmentMode = .Left
-        valueLabel.position = CGPoint(x: titleLabel.frame.size.width + 5, y: 0)
+        valueLabel.position                = CGPoint(x: titleLabel.frame.size.width + 5, y: 0)
         addChild(valueLabel)
     }
     required init?(coder aDecoder: NSCoder) {
@@ -138,7 +138,7 @@ class PageInformation: SKSpriteNode {
             infoHeatNode.valueLabel.text = "\(numberToString(buildingData.heatSystem.inAmount)) / \(numberToString(buildingData.heatSystem.size))"
             informationLabels.append(infoHeatNode)
         }
-        if buildingData.waterSystem != nil {
+        if buildingData.waterSystem != nil && researchLevel[.WaterPumpResearch] != 0 {
             infoWaterNode.hidden = false
             infoWaterNode.valueLabel.text = "\(numberToString(buildingData.waterSystem.inAmount)) / \(numberToString(buildingData.waterSystem.size))"
             informationLabels.append(infoWaterNode)
@@ -306,9 +306,11 @@ class PageBuild: SKSpriteNode {
     }
     
     func rebuildOn() {
+        
         rebuildButton.fillColor = colorBlue2
         rebuildButton.strokeColor = colorBlue2
         let action = SKAction.rotateByAngle(CGFloat(M_PI), duration: 2)
+        rebuildButton.childNodeWithName("refreshImage")!.removeAllActions()
         rebuildButton.childNodeWithName("refreshImage")!.runAction(SKAction.repeatActionForever(action))
     }
     
@@ -379,7 +381,7 @@ class PageBuild: SKSpriteNode {
     }
     
     func updateImageShow() {
-        for i in 2...4 {
+        for i in 2...5 {
             let pos = imagePosition[i - 1]
             childNodeWithName("SelectImage\(i)")?.position = pos
             if i == 2 && researchLevel[.BatteryResearch] == 0 && researchLevel[.SmallGeneratorResearch] == 0 {
@@ -389,6 +391,9 @@ class PageBuild: SKSpriteNode {
                 childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
             }
             if i == 4 && researchLevel[.ResearchCenterResearch] == 0 {
+                childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
+            }
+            if i == 5 && researchLevel[.WindTurbineRebuild] == 0 {
                 childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
             }
         }

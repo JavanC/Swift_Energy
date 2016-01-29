@@ -41,7 +41,7 @@ class GameViewController: UIViewController {
             islandScene                = IslandScene(size: size)
             upgradeScene               = UpgradeScene(size: size)
             researchScene              = ResearchScene(size: size)
-            
+
             // Configure the view
             menuScene.scaleMode        = .AspectFill
             islandsScene.scaleMode     = .AspectFill
@@ -81,15 +81,15 @@ class GameViewController: UIViewController {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // load money, research and spendTime
-        money = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
-        research = defaults.doubleForKey("Research")
+        money     = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
+        research  = defaults.doubleForKey("Research")
         spendTime = defaults.integerForKey("spendTime")
-        isPause = defaults.boolForKey("isPause")
+        isPause   = defaults.boolForKey("isPause")
         isRebuild = defaults.boolForKey("isRebuild")
-        
+
         //1000000000000000
-        money = 1000000000000000
-        research = 1000000000000000
+        money     = 1000000000000000
+        research  = 1000000000000000
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
@@ -146,7 +146,7 @@ class GameViewController: UIViewController {
         print("Save game data")
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        // save money, research and spendTime
+        // save money, research, spendTime, pause and rebuild state
         defaults.setDouble(money, forKey: "Money")
         defaults.setDouble(research, forKey: "Research")
         defaults.setInteger(spendTime, forKey: "spendTime")
@@ -165,7 +165,7 @@ class GameViewController: UIViewController {
         
         // save maps data
         for map in maps {
-            map.saveGameData()
+            map.saveMapData()
         }
         
         // save now date

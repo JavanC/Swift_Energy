@@ -120,6 +120,13 @@ class IslandScene: SKScene {
         
         // update build page image show
         bottomLayer.pageBuild.updateImageShow()
+        
+        // update rebuild button
+        if isRebuild {
+            bottomLayer.pageBuild.rebuildOn()
+        } else {
+            bottomLayer.pageBuild.rebuildOff()
+        }
     }
     
     func drawBoostTimeCircle(percent: Double) {
