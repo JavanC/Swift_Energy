@@ -28,45 +28,14 @@ class Building: SKNode {
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(buildingNode)
         
-        if buildType == .Land {
-            buildingNode.alpha = 0.2
-            activate = false
-        }
-        if buildType == .Ocean {
-            buildingNode.alpha = 0.2
+        if buildType == .Land || buildType == .Ocean {
             activate = false
         }
         
         // Add progress
         if buildingData.progress != nil {
-            progressBack = SKSpriteNode()
-            progressBack.size = CGSize(width: 56, height: 5)
-            progressBack.anchorPoint = CGPoint(x: 0, y: 0)
-            progressBack.position = CGPoint(x: 4, y: -60)
-            progressBack.alpha = 0.3
-            progressBack.zPosition = 1
-            addChild(progressBack)
-            progress = SKSpriteNode()
-            progress.size = CGSize(width: 56, height: 5)
-            progress.anchorPoint = CGPoint(x: 0, y: 0)
-            progress.position = CGPoint(x: 4, y: -60)
-            progress.alpha = 0.7
-            progress.zPosition = 1
-            addChild(progress)
-            switch buildingData.progress! {
-            case .Time:
-                progressBack.color = SKColor.yellowColor()
-                progress.color = SKColor.yellowColor()
-            case .Heat:
-                progressBack.color = SKColor.redColor()
-                progress.color = SKColor.redColor()
-            case .Water:
-                progressBack.color = colorEnergy
-                progress.color = colorEnergy
-            }
+            addProgress()
         }
-        
-        progressUpdate()
     }
     
     func loadBuildingData(buildingData: BuildingData) {
@@ -81,47 +50,45 @@ class Building: SKNode {
             buildingNode.alpha = activate ? 1 : 0.5
         }
         
-        if buildingData.buildType == .Land {
-            buildingNode.alpha = 0.2
-            activate = false
-        }
-        if buildingData.buildType == .Ocean {
-            buildingNode.alpha = 0.2
+        if buildingData.buildType == .Land || buildingData.buildType == .Ocean {
             activate = false
         }
         
         // Add progress
-        if progressBack == nil && buildingData.progress != nil {
-            progressBack = SKSpriteNode()
-            progressBack.size = CGSize(width: 56, height: 5)
-            progressBack.anchorPoint = CGPoint(x: 0, y: 0)
-            progressBack.position = CGPoint(x: 4, y: -60)
-            progressBack.alpha = 0.3
-            progressBack.zPosition = 1
-            addChild(progressBack)
-            progress = SKSpriteNode()
-            progress.size = CGSize(width: 56, height: 5)
-            progress.anchorPoint = CGPoint(x: 0, y: 0)
-            progress.position = CGPoint(x: 4, y: -60)
-            progress.alpha = 0.7
-            progress.zPosition = 1
-            addChild(progress)
-            switch buildingData.progress! {
-            case .Time:
-                progressBack.color = SKColor.yellowColor()
-                progress.color = SKColor.yellowColor()
-            case .Heat:
-                progressBack.color = SKColor.redColor()
-                progress.color = SKColor.redColor()
-            case .Water:
-                progressBack.color = colorEnergy
-                progress.color = colorEnergy
-            }
+        if buildingData.progress != nil && progressBack == nil {
+            addProgress()
         }
-        
-        progressUpdate()
     }
     
+    // MARK: add progress
+    func addProgress() {
+        progressBack = SKSpriteNode()
+        progressBack.size = CGSize(width: 56, height: 5)
+        progressBack.anchorPoint = CGPoint(x: 0, y: 0)
+        progressBack.position = CGPoint(x: 4, y: -60)
+        progressBack.alpha = 0.3
+        progressBack.zPosition = 1
+        addChild(progressBack)
+        progress = SKSpriteNode()
+        progress.size = CGSize(width: 56, height: 5)
+        progress.anchorPoint = CGPoint(x: 0, y: 0)
+        progress.position = CGPoint(x: 4, y: -60)
+        progress.alpha = 0.7
+        progress.zPosition = 1
+        addChild(progress)
+        switch buildingData.progress! {
+        case .Time:
+            progressBack.color = SKColor.yellowColor()
+            progress.color = SKColor.yellowColor()
+        case .Heat:
+            progressBack.color = SKColor.redColor()
+            progress.color = SKColor.redColor()
+        case .Water:
+            progressBack.color = colorEnergy
+            progress.color = colorEnergy
+        }
+        progressUpdate()
+    }
     
     // MARK: progress update
     func progressUpdate() {
@@ -139,7 +106,6 @@ class Building: SKNode {
             }
         }
     }
-    
 }
 
 class BuildingMapLayer: SKSpriteNode {
@@ -321,11 +287,11 @@ class BuildingMapLayer: SKSpriteNode {
         
         for line in buildings {
             for building in line {
-                if building?.buildingData.timeSystem != nil {
+                if building!.buildingData.timeSystem != nil {
                     timeSysTemElements.append(building!)
                 }
                 if building!.activate {
-                    if building?.buildingData.heatSystem != nil {
+                    if building!.buildingData.heatSystem != nil {
                         heatSystemElements.append(building!)
                     }
                     let type = building!.buildingData.buildType
@@ -461,7 +427,6 @@ class BuildingMapLayer: SKSpriteNode {
             element.buildingData.heatTransformMoney()
             money_TickAdd += element.buildingData.moneySystem.inAmount
             element.buildingData.moneySystem.inAmount = 0
-            
         }
         
         /*

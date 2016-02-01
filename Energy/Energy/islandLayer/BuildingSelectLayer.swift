@@ -16,28 +16,28 @@ class BuildingSelectElement: SKNode {
     init(buildType: BuildingType, size: CGSize) {
         self.buildType = buildType
         super.init()
-        
+
         // background
-        background = SKSpriteNode(color: colorBlue4, size: size)
-        background.name = "BuildingSelectElementBackground"
-        background.anchorPoint = CGPoint(x: 0, y: 0)
+        background                           = SKSpriteNode(color: colorBlue4, size: size)
+        background.name                      = "BuildingSelectElementBackground"
+        background.anchorPoint               = CGPoint(x: 0, y: 0)
         addChild(background)
         // image
-        let gap: CGFloat = (size.height - tilesScaleSize.height) / 2
-        let image = BuildingData(buildType: buildType).image("image")
-        image.position = CGPoint(x: gap + image.size.width / 2, y: size.height / 2)
+        let gap: CGFloat                     = (size.height - tilesScaleSize.height) / 2
+        let image                            = BuildingData(buildType: buildType).image("image")
+        image.position                       = CGPoint(x: gap + image.size.width / 2, y: size.height / 2)
         addChild(image)
-        
-        let buildingName = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
-        buildingName.name = "buildingName"
-        buildingName.text = "\(BuildingData(buildType: buildType).name)"
-        buildingName.fontColor = SKColor.whiteColor()
-        buildingName.fontSize = image.size.height * 2 / 5
+
+        let buildingName                     = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        buildingName.name                    = "buildingName"
+        buildingName.text                    = "\(BuildingData(buildType: buildType).name)"
+        buildingName.fontColor               = SKColor.whiteColor()
+        buildingName.fontSize                = image.size.height * 2 / 5
         buildingName.horizontalAlignmentMode = .Left
-        buildingName.verticalAlignmentMode = .Top
-        buildingName.position = CGPoint(x: image.size.width + gap * 2, y: size.height - gap)
+        buildingName.verticalAlignmentMode   = .Top
+        buildingName.position                = CGPoint(x: image.size.width + gap * 2, y: size.height - gap)
         addChild(buildingName)
-        let multilineLabel = SKMultilineLabel(text: "\(BuildingData(buildType: buildType).comment)", labelWidth: Int(size.width - image.size.width - gap * 3), pos: CGPoint(x: (size.width + image.size.width + gap * 1) / 2 , y: size.height - gap - buildingName.fontSize), fontName: "SanFranciscoText-BoldItalic", fontSize: (image.size.height - buildingName.fontSize * 1.2) / 2, fontColor: SKColor.lightGrayColor(), leading: Int((image.size.height - buildingName.fontSize) / 2), alignment: .Left, shouldShowBorder: false)
+        let multilineLabel                   = SKMultilineLabel(text: "\(BuildingData(buildType: buildType).comment)", labelWidth: Int(size.width - image.size.width - gap * 3), pos: CGPoint(x: (size.width + image.size.width + gap * 1) / 2 , y: size.height - gap - buildingName.fontSize), fontName: "SanFranciscoText-BoldItalic", fontSize: (image.size.height - buildingName.fontSize * 1.2) / 2, fontColor: SKColor.lightGrayColor(), leading: Int((image.size.height - buildingName.fontSize) / 2), alignment: .Left, shouldShowBorder: false)
         addChild(multilineLabel)
     }
 
@@ -54,27 +54,27 @@ class BuildingSelectLayer: SKNode {
     
     init(position: CGPoint, midSize: CGSize) {
         super.init()
-        self.position = position
-        selectLayer = SKSpriteNode(color: colorBlue4, size: CGSizeMake(midSize.width * 4, midSize.height))
-        selectLayer.name = "buildingSelectLayer"
+        self.position           = position
+        selectLayer             = SKSpriteNode(color: colorBlue4, size: CGSizeMake(midSize.width * 4, midSize.height))
+        selectLayer.name        = "buildingSelectLayer"
         selectLayer.anchorPoint = CGPoint(x: 0, y: 0)
-        selectLayer.position = CGPoint(x: 0, y: -selectLayer.size.height)
-        selectLayer.hidden = true
+        selectLayer.position    = CGPoint(x: 0, y: -selectLayer.size.height)
+        selectLayer.hidden      = true
         addChild(selectLayer)
-        
+
         // Caculae Position
-        let num: CGFloat = 7
-        let elementsize = CGSizeMake(midSize.width , midSize.height / num )
+        let num: CGFloat        = 7
+        let elementsize         = CGSizeMake(midSize.width , midSize.height / num )
         for x in 0..<4 {
             for y in 0..<Int(num) {
                 positions.append(CGPoint(x: selectLayer.size.width / 4 * CGFloat(x), y: selectLayer.size.height - elementsize.height * CGFloat(y + 1)))
             }
         }
-        
-        buildingSelectElements = [BuildingSelectElement]()
+
+        buildingSelectElements  = [BuildingSelectElement]()
         for count in 0..<28 {
-            let element = BuildingSelectElement(buildType: BuildingType(rawValue: count)!, size: elementsize)
-            element.hidden = true
+        let element             = BuildingSelectElement(buildType: BuildingType(rawValue: count)!, size: elementsize)
+        element.hidden          = true
             selectLayer.addChild(element)
             buildingSelectElements.append(element)
         }
@@ -105,7 +105,7 @@ class BuildingSelectLayer: SKNode {
     // Show page
     func showPage(show: Bool, duration: Double = 0.2) {
         if show {
-            let moveUp = SKAction.moveToY(0, duration: duration)
+            let moveUp   = SKAction.moveToY(0, duration: duration)
             selectLayer.runAction(SKAction.sequence([SKAction.unhide(), moveUp]))
         } else {
             let moveDown = SKAction.moveToY(-selectLayer.size.height, duration: duration)
