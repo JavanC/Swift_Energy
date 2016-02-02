@@ -27,6 +27,8 @@
 		657283CF1C3DFACD00B0B98F /* SKMultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */; };
 		658352A21C44CB8A00317FFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658352A11C44CB8A00317FFD /* Assets.xcassets */; };
 		658352A41C44F2CA00317FFD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658352A31C44F2CA00317FFD /* Helper.swift */; };
+		65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6C1C608A8B008E0BB5 /* Explode.sks */; };
+		65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6D1C608A8B008E0BB5 /* spark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKMultilineLabel.swift; sourceTree = "<group>"; };
 		658352A11C44CB8A00317FFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		658352A31C44F2CA00317FFD /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		65ED1E6C1C608A8B008E0BB5 /* Explode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Explode.sks; path = Content/Explode.sks; sourceTree = "<group>"; };
+		65ED1E6D1C608A8B008E0BB5 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Content/spark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,7 @@
 		65386E0D1C2CD8A500D08B41 /* Energy */ = {
 			isa = PBXGroup;
 			children = (
+				659456C11C60801300ECC4D7 /* Content */,
 				65386E311C2D0F8A00D08B41 /* islandLayer */,
 				65386E0E1C2CD8A500D08B41 /* AppDelegate.swift */,
 				657283CC1C3B600F00B0B98F /* BuildingData.swift */,
@@ -115,6 +120,15 @@
 				65572A851C30DFC200461802 /* MapLayer.swift */,
 			);
 			path = islandLayer;
+			sourceTree = "<group>";
+		};
+		659456C11C60801300ECC4D7 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				65ED1E6C1C608A8B008E0BB5 /* Explode.sks */,
+				65ED1E6D1C608A8B008E0BB5 /* spark.png */,
+			);
+			name = Content;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,7 +190,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				65386E1D1C2CD8A500D08B41 /* LaunchScreen.storyboard in Resources */,
+				65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */,
 				655BCC0E1C48A67B007A8079 /* building.atlas in Resources */,
+				65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */,
 				658352A21C44CB8A00317FFD /* Assets.xcassets in Resources */,
 				655BCC0F1C48A67B007A8079 /* icon.atlas in Resources */,
 				65386E181C2CD8A500D08B41 /* Main.storyboard in Resources */,

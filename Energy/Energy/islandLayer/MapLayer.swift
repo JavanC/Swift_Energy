@@ -255,6 +255,15 @@ class BuildingMapLayer: SKSpriteNode {
         return data
     }
     
+    // MARK: Explode Emitter
+    func explodeBuilding(building: SKNode) {
+        let emitter = SKEmitterNode(fileNamed: "Explode.sks")!
+        let pos = CGPoint(x: building.position.x + 32, y: building.position.y - 32)
+        emitter.position = pos
+        emitter.zPosition = 1
+        addChild(emitter)
+    }
+    
     // MARK: BuildingMap Update
     func Update() {
         
@@ -454,6 +463,7 @@ class BuildingMapLayer: SKSpriteNode {
         // 1. Destroy
         for element in heatSystemElements {
             if element.buildingData.heatSystem.overflow() {
+                explodeBuilding(element)
                 setTileMapElement(coord: element.coord, buildType: .Land)
             }
             element.progressUpdate()
