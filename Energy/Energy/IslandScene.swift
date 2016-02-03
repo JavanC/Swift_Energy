@@ -206,14 +206,14 @@ class IslandScene: SKScene {
             // Button
             case topLayer.buttonMenu:
                 print("Menu Button")
-                runAction(soundTap)
+                if !isSoundMute{ runAction(soundTap) }
                 changeTouchTypeAndShowPage(touchType)
                 let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(islandsScene, transition: doors)
                 
             case topLayer.buttonPlayPause:
                 print("Pause: \(isPause)")
-                runAction(soundTap)
+                if !isSoundMute{ runAction(soundTap) }
                 isPause = !isPause
                 topLayer.isPauseChange()
                 if isPause { gameTimer.invalidate() }
@@ -223,22 +223,22 @@ class IslandScene: SKScene {
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
-                runAction(soundClick)
+                if !isSoundMute{ runAction(soundClick) }
                 changeTouchTypeAndShowPage(.Builded, duration: 0.1)
                 
             case buttonLayer.buttonSell:
                 print("Sell Button")
-                runAction(soundClick)
+                if !isSoundMute{ runAction(soundClick) }
                 changeTouchTypeAndShowPage(.Sell, duration: 0.1)
                 
             case buttonLayer.buttonEnergy:
                 print("Energy Button")
-                runAction(soundClick)
+                if !isSoundMute{ runAction(soundClick) }
                 changeTouchTypeAndShowPage(.Energy, duration: 0.1)
                 
             case buttonLayer.buttonUpgrade:
                 print("Upgrade Button")
-                runAction(soundClick)
+                if !isSoundMute{ runAction(soundClick) }
                 buttonLayer.tapButtonUpgrade()
                 RunAfterDelay(0.8) {
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
@@ -247,7 +247,7 @@ class IslandScene: SKScene {
                 
             case buttonLayer.buttonResearch:
                 print("Research Button")
-                runAction(soundClick)
+                if !isSoundMute{ runAction(soundClick) }
                 buttonLayer.tapButtonResearch()
                 RunAfterDelay(0.8) {
                     let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
@@ -263,7 +263,7 @@ class IslandScene: SKScene {
             // Energy Page
             case bottomLayer.pageEnergy.energy_ProgressBack:
                 print("Energy Preogree")
-                runAction(soundSell)
+                if !isSoundMute{ runAction(soundSell) }
                 money += maps[nowMapNumber].energy
                 maps[nowMapNumber].energy = 0
                 // draw energy circle
@@ -273,31 +273,31 @@ class IslandScene: SKScene {
             // Builded Page
             case bottomLayer.pageBuild.images[0]:
                 print("Builded image1")
-                runAction(soundSelect)
+                if !isSoundMute{ runAction(soundSelect) }
                 if bottomLayer.pageBuild.selectNumber == 1 { showBuildSelectPage() }
                 bottomLayer.pageBuild.changeSelectNumber(1)
                 
             case bottomLayer.pageBuild.images[1]:
                 print("Builded image2")
-                runAction(soundSelect)
+                if !isSoundMute{ runAction(soundSelect) }
                 if bottomLayer.pageBuild.selectNumber == 2 { showBuildSelectPage() }
                 bottomLayer.pageBuild.changeSelectNumber(2)
                 
             case bottomLayer.pageBuild.images[2]:
                 print("Builded image3")
-                runAction(soundSelect)
+                if !isSoundMute{ runAction(soundSelect) }
                 if bottomLayer.pageBuild.selectNumber == 3 { showBuildSelectPage() }
                 bottomLayer.pageBuild.changeSelectNumber(3)
                 
             case bottomLayer.pageBuild.images[3]:
                 print("Builded image4")
-                runAction(soundSelect)
+                if !isSoundMute{ runAction(soundSelect) }
                 if bottomLayer.pageBuild.selectNumber == 4 { showBuildSelectPage() }
                 bottomLayer.pageBuild.changeSelectNumber(4)
                 
             case bottomLayer.pageBuild.rebuildButton:
                 print("rebuild button")
-                runAction(soundSelect)
+                if !isSoundMute{ runAction(soundSelect) }
                 isRebuild = !isRebuild
                 if isRebuild {
                     bottomLayer.pageBuild.rebuildOn()
@@ -307,7 +307,7 @@ class IslandScene: SKScene {
                 
             case bottomLayer.pageBuild.selectInfo:
                 print("Builded select info")
-                runAction(soundSelect)
+                if !isSoundMute{ runAction(soundSelect) }
                 changeTouchTypeAndShowPage(.Builded)
                 
             // Build Select Page
@@ -316,7 +316,7 @@ class IslandScene: SKScene {
                 for node in nodes {
                     if node.hidden { return }
                     if node.name == "BuildingSelectElementBackground" {
-                        runAction(soundSelect)
+                        if !isSoundMute{ runAction(soundSelect) }
                         let buildType = (node.parent as! BuildingSelectElement).buildType
                         bottomLayer.pageBuild.changeSelectBuildType(buildType)
                     }
@@ -330,7 +330,7 @@ class IslandScene: SKScene {
                 switch touchType {
                 case .Information, .Energy:
                     if maps[nowMapNumber].buildingForCoord(coord)!.activate {
-                        runAction(soundClick)
+                        if !isSoundMute{ runAction(soundClick) }
                         info_Building = maps[nowMapNumber].buildingForCoord(coord)
                         bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
                         changeTouchTypeAndShowPage(.Information, duration: 0.1)
@@ -338,7 +338,7 @@ class IslandScene: SKScene {
                     
                 case .Builded:
                     if maps[nowMapNumber].buildingForCoord(coord)!.activate {
-                        runAction(soundClick)
+                        if !isSoundMute{ runAction(soundClick) }
                         info_Building = maps[nowMapNumber].buildingForCoord(coord)
                         bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
                         changeTouchTypeAndShowPage(.Information, duration: 0.1)
@@ -349,7 +349,7 @@ class IslandScene: SKScene {
                         if building == BuildingType.WaveCell {
                             if coordType == .Ocean || coordType == .WaveCell {
                                 if money >= price {
-                                    runAction(soundPlacing)
+                                    if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
                                 }
@@ -357,7 +357,7 @@ class IslandScene: SKScene {
                         } else {
                             if coordType != .Ocean && coordType != .WaveCell {
                                 if money >= price {
-                                    runAction(soundPlacing)
+                                    if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
                                 }
@@ -368,7 +368,7 @@ class IslandScene: SKScene {
                 case .Sell:
                     let coordType = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildType
                     if maps[nowMapNumber].buildingForCoord(coord)!.activate {
-                        runAction(soundSell)
+                        if !isSoundMute{ runAction(soundSell) }
                         let price = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildPrice
                         let canotSellBuildings: [BuildingType] = [.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]
                         if !canotSellBuildings.contains(coordType) {
@@ -419,7 +419,7 @@ class IslandScene: SKScene {
                         if building == BuildingType.WaveCell {
                             if coordType == .Ocean || coordType == .WaveCell {
                                 if money >= price {
-                                    runAction(soundPlacing)
+                                    if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
                                 }
@@ -427,7 +427,7 @@ class IslandScene: SKScene {
                         } else {
                             if coordType != .Ocean && coordType != .WaveCell {
                                 if money >= price {
-                                    runAction(soundPlacing)
+                                    if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
                                 }

@@ -40,6 +40,8 @@ var nowMapNumber: Int = 0
 var isPause: Bool = false
 var isRebuild: Bool = true
 var isBoost: Bool = false
+var isSoundMute: Bool = false
+var isMusicMute: Bool = false
 var boostTime: Double = 1
 var boostTimeLess: Double = 1
 
@@ -76,7 +78,7 @@ class MenuScene: SKScene {
             let location = touch.locationInNode(self)
             if startGameButton.containsPoint(location) {
                 print("play")
-                runAction(soundTap)
+                if !isSoundMute{ runAction(soundTap) }
                 let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(islandsScene, transition: doors)
             }

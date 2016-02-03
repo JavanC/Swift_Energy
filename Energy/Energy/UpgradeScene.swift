@@ -471,19 +471,19 @@ class UpgradeScene: SKScene {
             for node in nodes {
                 if node.hidden { return }
                 if backButton.containsPoint(location) {
-                    runAction(soundTap)
+                    if !isSoundMute{ runAction(soundTap) }
                     let doors = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.3)
                     self.view?.presentScene(islandScene, transition: doors)
                 }
                 if nextPage.containsPoint(location) {
                     nowPage++
                     upgradeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
-                    runAction(soundSlide)
+                    if !isSoundMute{ runAction(soundSlide) }
                 }
                 if prevPage.containsPoint(location) {
                     nowPage--
                     upgradeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
-                    runAction(soundSlide)
+                    if !isSoundMute{ runAction(soundSlide) }
                 }
                 if node.name == "Upgrade" {
                     let element = (node.parent as! UpgradeElement)
@@ -495,7 +495,7 @@ class UpgradeScene: SKScene {
                         maps[count].reloadMap()
                     }
                     updateElement()
-                    runAction(soundLevelup)
+                    if !isSoundMute{ runAction(soundLevelup) }
                 }
                 if node.name == "Degrade" {
                     let element = (node.parent as! UpgradeElement)
@@ -507,7 +507,7 @@ class UpgradeScene: SKScene {
                         maps[count].reloadMap()
                     }
                     updateElement()
-                    runAction(soundTap)
+                    if !isSoundMute{ runAction(soundTap) }
                 }
             }
         }

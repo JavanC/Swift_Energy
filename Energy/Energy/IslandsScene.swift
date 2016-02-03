@@ -14,6 +14,11 @@ class IslandsScene: SKScene {
     var contentCreated: Bool = false
     var leftarrow: SKSpriteNode!
     var backButton: SKLabelNode!
+    var settingButton: SKSpriteNode!
+    var settingLayer: SKNode!
+    var soundButton: SKSpriteNode!
+    var musicButton: SKSpriteNode!
+    var saveSettingButton: SKSpriteNode!
     
     var map1Button: SKLabelNode!
     var map2Button: SKLabelNode!
@@ -37,6 +42,32 @@ class IslandsScene: SKScene {
             backButton.fontSize = 35 * framescale
             backButton.position = CGPoint(x: (15 + 44) * framescale, y: frame.size.height - (30 + 22) * framescale)
             self.addChild(backButton)
+            
+            settingButton = SKSpriteNode(texture: iconAtlas.textureNamed("setting"))
+            settingButton.setScale(framescale)
+            settingButton.position = CGPoint(x: frame.width - 52 * framescale, y: frame.height - 52 * framescale)
+            self.addChild(settingButton)
+            settingLayer = SKNode()
+            settingLayer.alpha = 0
+            settingLayer.hidden = true
+            settingLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            settingLayer.zPosition = 10
+            let bg = SKSpriteNode(color: SKColor.blackColor(), size: frame.size)
+            bg.alpha = 0.7
+            settingLayer.addChild(bg)
+            soundButton = SKSpriteNode(texture: iconAtlas.textureNamed("sound"))
+            soundButton.setScale(framescale)
+            soundButton.position = CGPoint(x: frame.width / 6, y: frame.height / 4)
+            settingLayer.addChild(soundButton)
+            musicButton = SKSpriteNode(texture: iconAtlas.textureNamed("music"))
+            musicButton.setScale(framescale)
+            musicButton.position = CGPoint(x: -frame.width / 6, y: frame.height / 4)
+            settingLayer.addChild(musicButton)
+            saveSettingButton = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
+            saveSettingButton.setScale(framescale)
+            saveSettingButton.position = CGPoint(x: 0, y: -frame.height / 4)
+            settingLayer.addChild(saveSettingButton)
+            addChild(settingLayer)
             
             map1Button = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             map1Button.text = "Select Map1"
@@ -71,24 +102,69 @@ class IslandsScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
             let location = touch.locationInNode(self)
-            if leftarrow.containsPoint(location) || backButton.containsPoint(location) {
-                runAction(soundTap)
-                let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                self.view?.presentScene(menuScene, transition: doors)
+            let nodes = nodesAtPoint(location)
+            
+            if settingLayer.hidden == false {
+                for node in nodes {
+                    if node.hidden { return }
+                    if node == soundButton {
+                        isSoundMute = !isSoundMute
+                        if isSoundMute {
+                            soundButton.runAction(SKAction.setTexture(iconAtlas.textureNamed("soundMute")))
+                            print("sound Mute")
+                        } else {
+                            soundButton.runAction(SKAction.setTexture(iconAtlas.textureNamed("sound")))
+                            print("sount on")
+                        }
+                    }
+                    if node == musicButton {
+                        isMusicMute = !isMusicMute
+                        if isMusicMute {
+                            musicButton.runAction(SKAction.setTexture(iconAtlas.textureNamed("musicMute")))
+                            backgroundMusicPlayer.pause()
+                            print("music Mute")
+                        } else {
+                            musicButton.runAction(SKAction.setTexture(iconAtlas.textureNamed("music")))
+                            backgroundMusicPlayer.play()
+                            print("music on")
+                        }
+                    }
+                    if node == saveSettingButton {
+                        settingLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
+                    }
+                }
+                return
             }
-            if map1Button.containsPoint(location) {
-                print("Map1")
-                nowMapNumber = 0
-                runAction(soundTap)
-                let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                self.view?.presentScene(islandScene, transition: doors)
-            }
-            if map2Button.containsPoint(location) {
-                print("Map2")
-                nowMapNumber = 1
-                runAction(soundTap)
-                let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                self.view?.presentScene(islandScene, transition: doors)
+            
+            for node in nodes {
+                if node.hidden { return }
+                switch node {
+                    
+                case leftarrow, backButton:
+                    if !isSoundMute{ runAction(soundTap) }
+                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
+                    self.view?.presentScene(menuScene, transition: doors)
+                    
+                case settingButton:
+                    print("setting")
+                    settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.2)]))
+                    
+                case map1Button:
+                    print("Map1")
+                    nowMapNumber = 0
+                    if !isSoundMute{ runAction(soundTap) }
+                    let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
+                    self.view?.presentScene(islandScene, transition: doors)
+                    
+                case map2Button:
+                    print("Map2")
+                    nowMapNumber = 1
+                    if !isSoundMute{ runAction(soundTap) }
+                    let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
+                    self.view?.presentScene(islandScene, transition: doors)
+                    
+                default:break
+                }
             }
         }
     }
@@ -101,7 +177,7 @@ class IslandsScene: SKScene {
         
         var timeString = ""
         if day > 0 {
-            timeString += "\(day) days "
+            timeString += "\(day) day" + (day == 1 ? " " : "s ")
         }
         if hour < 10 { timeString += "0" }
         timeString += "\(hour):"
