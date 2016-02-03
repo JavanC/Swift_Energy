@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65361A701C61A30D006C3E18 /* action.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A691C61A30D006C3E18 /* action.wav */; };
+		65361A711C61A30D006C3E18 /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */; };
+		65361A721C61A30D006C3E18 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6B1C61A30D006C3E18 /* explosion.mp3 */; };
+		65361A731C61A30D006C3E18 /* levelup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6C1C61A30D006C3E18 /* levelup.wav */; };
+		65361A741C61A30D006C3E18 /* placing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6D1C61A30D006C3E18 /* placing.wav */; };
+		65361A751C61A30D006C3E18 /* sell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6E1C61A30D006C3E18 /* sell.wav */; };
+		65361A761C61A30D006C3E18 /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6F1C61A30D006C3E18 /* tap.wav */; };
 		65386E0F1C2CD8A500D08B41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E0E1C2CD8A500D08B41 /* AppDelegate.swift */; };
 		65386E151C2CD8A500D08B41 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E141C2CD8A500D08B41 /* GameViewController.swift */; };
 		65386E181C2CD8A500D08B41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65386E161C2CD8A500D08B41 /* Main.storyboard */; };
@@ -32,6 +39,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65361A691C61A30D006C3E18 /* action.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = action.wav; path = Content/action.wav; sourceTree = "<group>"; };
+		65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = backgroundMusic.mp3; path = Content/backgroundMusic.mp3; sourceTree = "<group>"; };
+		65361A6B1C61A30D006C3E18 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = explosion.mp3; path = Content/explosion.mp3; sourceTree = "<group>"; };
+		65361A6C1C61A30D006C3E18 /* levelup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = levelup.wav; path = Content/levelup.wav; sourceTree = "<group>"; };
+		65361A6D1C61A30D006C3E18 /* placing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = placing.wav; path = Content/placing.wav; sourceTree = "<group>"; };
+		65361A6E1C61A30D006C3E18 /* sell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sell.wav; path = Content/sell.wav; sourceTree = "<group>"; };
+		65361A6F1C61A30D006C3E18 /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tap.wav; path = Content/tap.wav; sourceTree = "<group>"; };
 		65386E0B1C2CD8A500D08B41 /* Energy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Energy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65386E0E1C2CD8A500D08B41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65386E141C2CD8A500D08B41 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -127,6 +141,13 @@
 			children = (
 				65ED1E6C1C608A8B008E0BB5 /* Explode.sks */,
 				65ED1E6D1C608A8B008E0BB5 /* spark.png */,
+				65361A691C61A30D006C3E18 /* action.wav */,
+				65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */,
+				65361A6B1C61A30D006C3E18 /* explosion.mp3 */,
+				65361A6C1C61A30D006C3E18 /* levelup.wav */,
+				65361A6D1C61A30D006C3E18 /* placing.wav */,
+				65361A6E1C61A30D006C3E18 /* sell.wav */,
+				65361A6F1C61A30D006C3E18 /* tap.wav */,
 			);
 			name = Content;
 			sourceTree = "<group>";
@@ -191,9 +212,16 @@
 			files = (
 				65386E1D1C2CD8A500D08B41 /* LaunchScreen.storyboard in Resources */,
 				65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */,
+				65361A711C61A30D006C3E18 /* backgroundMusic.mp3 in Resources */,
 				655BCC0E1C48A67B007A8079 /* building.atlas in Resources */,
+				65361A721C61A30D006C3E18 /* explosion.mp3 in Resources */,
+				65361A731C61A30D006C3E18 /* levelup.wav in Resources */,
 				65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */,
+				65361A701C61A30D006C3E18 /* action.wav in Resources */,
+				65361A761C61A30D006C3E18 /* tap.wav in Resources */,
 				658352A21C44CB8A00317FFD /* Assets.xcassets in Resources */,
+				65361A741C61A30D006C3E18 /* placing.wav in Resources */,
+				65361A751C61A30D006C3E18 /* sell.wav in Resources */,
 				655BCC0F1C48A67B007A8079 /* icon.atlas in Resources */,
 				65386E181C2CD8A500D08B41 /* Main.storyboard in Resources */,
 			);

@@ -51,6 +51,8 @@ class MenuScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         if !contentCreated {
+            
+
 
             framescale = frame.size.width / (9 * 64)
             tilesScaleSize = CGSize(width: 64 * framescale, height: 64 * framescale)

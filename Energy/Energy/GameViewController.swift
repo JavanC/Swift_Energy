@@ -8,7 +8,9 @@
 
 import UIKit
 import SpriteKit
+import AVFoundation
 
+var backgroundMusicPlayer: AVAudioPlayer!
 var menuScene: SKScene!
 var islandsScene: SKScene!
 var islandScene: SKScene!
@@ -23,6 +25,9 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         // load game data
         loadGameData()
+        
+        // play background music
+        playBackgroundMusic()
         
         // save game data when app will resign
         let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -74,6 +79,18 @@ class GameViewController: UIViewController {
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    func playBackgroundMusic() {
+        let aSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("backgroundMusic", ofType: "mp3")!)
+        do {
+            backgroundMusicPlayer = try AVAudioPlayer(contentsOfURL:aSound)
+            backgroundMusicPlayer!.numberOfLoops = -1
+            backgroundMusicPlayer!.prepareToPlay()
+            backgroundMusicPlayer!.play()
+        } catch {
+            print("Cannot play the file")
+        }
     }
     
     func loadGameData() {
