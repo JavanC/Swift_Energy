@@ -72,18 +72,21 @@ class IslandsScene: SKScene {
         for touch in touches {
             let location = touch.locationInNode(self)
             if leftarrow.containsPoint(location) || backButton.containsPoint(location) {
+                runAction(soundTap)
                 let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(menuScene, transition: doors)
             }
             if map1Button.containsPoint(location) {
                 print("Map1")
                 nowMapNumber = 0
+                runAction(soundTap)
                 let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(islandScene, transition: doors)
             }
             if map2Button.containsPoint(location) {
                 print("Map2")
                 nowMapNumber = 1
+                runAction(soundTap)
                 let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(islandScene, transition: doors)
             }

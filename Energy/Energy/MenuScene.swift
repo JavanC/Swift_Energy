@@ -51,8 +51,6 @@ class MenuScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         if !contentCreated {
-            
-
 
             framescale = frame.size.width / (9 * 64)
             tilesScaleSize = CGSize(width: 64 * framescale, height: 64 * framescale)
@@ -78,6 +76,7 @@ class MenuScene: SKScene {
             let location = touch.locationInNode(self)
             if startGameButton.containsPoint(location) {
                 print("play")
+                runAction(soundTap)
                 let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
                 self.view?.presentScene(islandsScene, transition: doors)
             }

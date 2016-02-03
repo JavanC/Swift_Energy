@@ -262,6 +262,7 @@ class BuildingMapLayer: SKSpriteNode {
         emitter.position = pos
         emitter.zPosition = 1
         addChild(emitter)
+        runAction(soundExplosion)
     }
     
     // MARK: BuildingMap Update
