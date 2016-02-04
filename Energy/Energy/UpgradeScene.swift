@@ -353,6 +353,7 @@ class UpgradeScene: SKScene {
             
             let line = SKShapeNode(rectOfSize: CGSizeMake(frame.size.width * 0.9, 2 * framescale))
             line.name = "line"
+            line.fillColor = SKColor.whiteColor()
             line.position = CGPoint(x: size.width / 2, y: frame.size.height - unitHeight)
             addChild(line)
             
