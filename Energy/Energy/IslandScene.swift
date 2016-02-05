@@ -109,6 +109,10 @@ class IslandScene: SKScene {
             addChild(boostLayer)
             
             contentCreated = true
+            // remove first touch delay
+            buildingSelectLayer.containsPoint(CGPoint(x: 0, y: 0))
+            // remove first load delay
+            self.view?.presentScene(upgradeScene)
         }
         
         // Only show now map

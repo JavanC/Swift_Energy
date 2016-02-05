@@ -8,8 +8,7 @@
 
 import SpriteKit
 // Game UI Data
-var tilesScaleSize: CGSize!
-var framescale: CGFloat!
+
 var colorMoney = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000) // #DAD74E
 var colorResearch = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
 var colorEnergy = UIColor(red: 0.000, green: 0.698, blue: 0.875, alpha: 1.000)
@@ -68,7 +67,11 @@ class MenuScene: SKScene {
             testbutton = SKMultilineLabel(text: "abc ccdd aher. \n asdf", labelWidth: Int(frame.size.width), pos: CGPoint(x: CGRectGetMidX(frame), y: frame.size.height / 3), fontSize: 50, fontColor: SKColor.redColor(), leading: 60,  shouldShowBorder: true)
             self.addChild(testbutton)
             
+            
             contentCreated = true
+            
+            // first load remove delay
+            self.view?.presentScene(islandsScene)
         }
     }
     

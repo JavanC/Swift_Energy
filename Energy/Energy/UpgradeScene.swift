@@ -409,6 +409,10 @@ class UpgradeScene: SKScene {
             addChild(upgradeLayer)
             
             contentCreated = true
+            // remove first touch delay
+            upgradeLayer.containsPoint(CGPoint(x: 0, y: 0))
+            // remove first load delay
+            self.view?.presentScene(researchScene)
         }
         updateElement()
     }

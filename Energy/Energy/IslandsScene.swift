@@ -78,10 +78,13 @@ class IslandsScene: SKScene {
             spentTimeLabel.position = CGPoint(x: frame.width / 2, y: label.position.y - 50 * framescale)
             self.addChild(spentTimeLabel)
             
-            // remove first touch delay
-            settingLayer.containsPoint(CGPoint(x: 0, y: 0))
+
             
             contentCreated = true
+            // remove first touch delay
+            settingLayer.containsPoint(CGPoint(x: 0, y: 0))
+            // remove first load  delay
+            self.view?.presentScene(islandScene)
         }
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
