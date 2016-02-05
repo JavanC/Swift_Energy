@@ -46,9 +46,16 @@ class GameViewController: UIViewController {
         super.viewWillLayoutSubviews()
         
         let skView = self.view as! SKView
+        
         if (skView.scene == nil) {
             let scale:CGFloat          = UIScreen.mainScreen().scale
+            print(scale)
             let size                   = CGSizeMake(skView.frame.width * scale, skView.frame.height * scale)
+            print(size)
+            framescale = size.width / (9 * 64)
+            print(framescale)
+            tilesScaleSize = CGSize(width: 64 * framescale, height: 64 * framescale)
+            
             menuScene                  = MenuScene(size: size)
             islandsScene               = IslandsScene(size: size)
             islandScene                = IslandScene(size: size)

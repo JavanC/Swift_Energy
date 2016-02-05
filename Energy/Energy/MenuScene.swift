@@ -54,8 +54,7 @@ class MenuScene: SKScene {
     override func didMoveToView(view: SKView) {
         if !contentCreated {
 
-            framescale = frame.size.width / (9 * 64)
-            tilesScaleSize = CGSize(width: 64 * framescale, height: 64 * framescale)
+
             
             self.backgroundColor = SKColor.whiteColor()
         
@@ -68,7 +67,7 @@ class MenuScene: SKScene {
             
             testbutton = SKMultilineLabel(text: "abc ccdd aher. \n asdf", labelWidth: Int(frame.size.width), pos: CGPoint(x: CGRectGetMidX(frame), y: frame.size.height / 3), fontSize: 50, fontColor: SKColor.redColor(), leading: 60,  shouldShowBorder: true)
             self.addChild(testbutton)
-
+            
             contentCreated = true
         }
     }

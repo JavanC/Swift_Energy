@@ -14,12 +14,7 @@ class IslandsScene: SKScene {
     var leftarrow: SKSpriteNode!
     var backButton: SKLabelNode!
     var settingButton: SKSpriteNode!
-
-    var settingLayer: SKNode!
-    var soundButton: SwitchButton!
-    var musicButton: SwitchButton!
-    var resetButton: SKLabelNode!
-    var saveSettingButton: SKSpriteNode!
+    var settingLayer: SettingLayer!
     
     var map1Button: SKLabelNode!
     var map2Button: SKLabelNode!
@@ -49,50 +44,11 @@ class IslandsScene: SKScene {
             settingButton.position = CGPoint(x: frame.width - 52 * framescale, y: frame.height - 52 * framescale)
             self.addChild(settingButton)
             
-            settingLayer = SKNode()
+            settingLayer = SettingLayer(frameSize: frame.size)
             settingLayer.alpha = 0
             settingLayer.hidden = true
-            settingLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             settingLayer.zPosition = 10
-            let bg = SKSpriteNode(color: SKColor.blackColor(), size: frame.size)
-            bg.alpha = 0.7
-            settingLayer.addChild(bg)
-            soundButton = SwitchButton(texture: iconAtlas.textureNamed("sound"))
-            soundButton.position = CGPoint(x: frame.width / 6, y: frame.height / 4)
-            settingLayer.addChild(soundButton)
-            let soundLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
-            soundLabel.text = "Sound"
-            soundLabel.fontSize = 20 * framescale
-            soundLabel.position = CGPoint(x: frame.width / 6, y: frame.height / 6)
-            settingLayer.addChild(soundLabel)
-            musicButton = SwitchButton(texture: iconAtlas.textureNamed("music"))
-            musicButton.position = CGPoint(x: -frame.width / 6, y: frame.height / 4)
-            settingLayer.addChild(musicButton)
-            let musicLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
-            musicLabel.text = "Music"
-            musicLabel.fontSize = 20 * framescale
-            musicLabel.position = CGPoint(x: -frame.width / 6, y: frame.height / 6)
-            settingLayer.addChild(musicLabel)
-            let line = SKShapeNode(rectOfSize: CGSizeMake(frame.width * 0.8, 1 * framescale))
-            line.name = "line"
-            line.fillColor = SKColor.whiteColor()
-            line.position = CGPoint(x: 0, y: frame.height / 8)
-            settingLayer.addChild(line)
-            resetButton = SKLabelNode(fontNamed: "SanFranciscoText-ThinItalic")
-            resetButton.text = "Reset All Data"
-            resetButton.fontSize = 40 * framescale
-            resetButton.verticalAlignmentMode = .Center
-            resetButton.position = CGPoint(x: 0, y: 0)
-            settingLayer.addChild(resetButton)
-            let line2 = SKShapeNode(rectOfSize: CGSizeMake(frame.width * 0.8, 1 * framescale))
-            line2.name = "line"
-            line2.fillColor = SKColor.whiteColor()
-            line2.position = CGPoint(x: 0, y: -frame.height / 8)
-            settingLayer.addChild(line2)
-            saveSettingButton = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
-            saveSettingButton.size = CGSizeMake(80 * framescale, 80 * framescale)
-            saveSettingButton.position = CGPoint(x: 0, y: -frame.height / 4)
-            settingLayer.addChild(saveSettingButton)
+            settingLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             self.addChild(settingLayer)
             
             map1Button = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
@@ -122,74 +78,76 @@ class IslandsScene: SKScene {
             spentTimeLabel.position = CGPoint(x: frame.width / 2, y: label.position.y - 50 * framescale)
             self.addChild(spentTimeLabel)
             
+            // remove first touch delay
+            settingLayer.containsPoint(CGPoint(x: 0, y: 0))
+            
             contentCreated = true
         }
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        for touch in touches {
-            let location = touch.locationInNode(self)
-            let nodes = nodesAtPoint(location)
-            
-            if settingLayer.hidden == false {
-                for node in nodes {
-                    if node.hidden { return }
-                    if node == soundButton.shape {
-                        isSoundMute = !isSoundMute
-                        if isSoundMute {
-                            soundButton.off()
-                            print("sound Mute")
-                        } else {
-                            soundButton.on()
-                            print("sount on")
-                        }
-                    }
-                    if node == musicButton.shape {
-                        isMusicMute = !isMusicMute
-                        if isMusicMute {
-                            musicButton.off()
-                            backgroundMusicPlayer.pause()
-                            print("music Mute")
-                        } else {
-                            musicButton.on()
-                            backgroundMusicPlayer.play()
-                            print("music on")
-                        }
-                    }
-                    if node == saveSettingButton {
-                        settingLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
-                    }
-                }
-                return
-            }
-            
+        guard let touch = touches.first else { return }
+        let location = touch.locationInNode(self)
+        let nodes = nodesAtPoint(location)
+        
+        if settingLayer.hidden == false {
             for node in nodes {
                 if node.hidden { return }
-                switch node {
-                    
-                case leftarrow, backButton:
-                    if !isSoundMute{ runAction(soundTap) }
-                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                    self.view?.presentScene(menuScene, transition: doors)
-                    
-                case settingButton:
-                    print("setting")
-                    self.settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.0)]))
-                case map1Button:
-                    print("Map1")
-                    nowMapNumber = 0
-                    if !isSoundMute{ runAction(soundTap) }
-                    let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                    self.view?.presentScene(islandScene, transition: doors)
-                    
-                case map2Button:
-                    print("Map2")
-                    nowMapNumber = 1
-                    if !isSoundMute{ runAction(soundTap) }
-                    let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                    self.view?.presentScene(islandScene, transition: doors)
-                    
-                default:break
+                if node == settingLayer.soundButton.shape {
+                    isSoundMute = !isSoundMute
+                    if isSoundMute {
+                        settingLayer.soundButton.off()
+                        print("sound Mute")
+                    } else {
+                        settingLayer.soundButton.on()
+                        print("sount on")
+                    }
                 }
+                if node == settingLayer.musicButton.shape {
+                    isMusicMute = !isMusicMute
+                    if isMusicMute {
+                        settingLayer.musicButton.off()
+                        backgroundMusicPlayer.pause()
+                        print("music Mute")
+                    } else {
+                        settingLayer.musicButton.on()
+                        backgroundMusicPlayer.play()
+                        print("music on")
+                    }
+                }
+                if node == settingLayer.saveSettingButton {
+                    settingLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
+                }
+            }
+            return
+        }
+        
+        for node in nodes {
+            if node.hidden { return }
+            switch node {
+                
+            case leftarrow, backButton:
+                if !isSoundMute{ runAction(soundTap) }
+                let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
+                self.view?.presentScene(menuScene, transition: doors)
+                
+            case settingButton:
+                print("setting")
+                settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.2)]))
+            case map1Button:
+                print("Map1")
+                nowMapNumber = 0
+                if !isSoundMute{ runAction(soundTap) }
+                let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
+                self.view?.presentScene(islandScene, transition: doors)
+                
+            case map2Button:
+                print("Map2")
+                nowMapNumber = 1
+                if !isSoundMute{ runAction(soundTap) }
+                let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
+                self.view?.presentScene(islandScene, transition: doors)
+                
+            default:break
             }
         }
     }
@@ -216,33 +174,4 @@ class IslandsScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         spentTimeLabel.text = hourToString(spendTime)
     }
-    
-    
-    class SwitchButton: SKNode {
-        var image: SKSpriteNode!
-        var shape: SKShapeNode!
-        
-        init(texture: SKTexture) {
-            super.init()
-            shape = SKShapeNode(ellipseOfSize: CGSizeMake(80 * framescale,80 * framescale))
-            shape.fillColor = colorEnergy
-            shape.strokeColor = SKColor.whiteColor()
-            shape.lineWidth = 3 * framescale
-            addChild(shape)
-            image = SKSpriteNode(texture: texture)
-            image.size = CGSizeMake(30 * framescale, 30 * framescale)
-            addChild(image)
-        }
-        func on() {
-            shape.fillColor = colorEnergy
-        }
-        func off() {
-            shape.fillColor = SKColor.grayColor()
-        }
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-    }
 }
-
-
