@@ -53,8 +53,6 @@ class MenuScene: SKScene {
     override func didMoveToView(view: SKView) {
         if !contentCreated {
 
-
-            
             self.backgroundColor = SKColor.whiteColor()
         
             startGameButton = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
