@@ -20,6 +20,7 @@ var upgradeScene: SKScene!
 var researchScene: SKScene!
 let buildingAtlas = SKTextureAtlas(named: "building")
 let iconAtlas = SKTextureAtlas(named: "icon")
+let backgroundAtlas = SKTextureAtlas(named: "background")
 let soundTap = SKAction.playSoundFileNamed("tap.wav", waitForCompletion: false)
 let soundSell = SKAction.playSoundFileNamed("sell.wav", waitForCompletion: false)
 let soundPlacing = SKAction.playSoundFileNamed("placing.wav", waitForCompletion: false)
@@ -28,6 +29,7 @@ let soundLevelup = SKAction.playSoundFileNamed("levelup.wav", waitForCompletion:
 let soundSlide = SKAction.playSoundFileNamed("slide.wav", waitForCompletion: false)
 let soundClick = SKAction.playSoundFileNamed("click.wav", waitForCompletion: false)
 let soundSelect = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
+let soundAction = SKAction.playSoundFileNamed("action.wav", waitForCompletion: false)
 
 class GameViewController: UIViewController {
     

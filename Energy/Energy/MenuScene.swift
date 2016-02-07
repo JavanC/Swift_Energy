@@ -61,15 +61,18 @@ class MenuScene: SKScene {
             startGameButton.fontColor = SKColor.blackColor()
             startGameButton.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
             self.addChild(startGameButton)
-            
-            testbutton = SKMultilineLabel(text: "abc ccdd aher. \n asdf", labelWidth: Int(frame.size.width), pos: CGPoint(x: CGRectGetMidX(frame), y: frame.size.height / 3), fontSize: 50, fontColor: SKColor.redColor(), leading: 60,  shouldShowBorder: true)
-            self.addChild(testbutton)
-            
+//            
+//            testbutton = SKMultilineLabel(text: "abc ccdd aher. \n asdf", labelWidth: Int(frame.size.width), pos: CGPoint(x: CGRectGetMidX(frame), y: frame.size.height / 3), fontSize: 50, fontColor: SKColor.redColor(), leading: 60,  shouldShowBorder: true)
+//            self.addChild(testbutton)
             
             contentCreated = true
             
             // first load remove delay
             self.view?.presentScene(islandsScene)
+        }
+        RunAfterDelay(2) {
+            let doors = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 3)
+            self.view?.presentScene(islandsScene, transition: doors)
         }
     }
     

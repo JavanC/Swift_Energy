@@ -212,7 +212,7 @@ class IslandScene: SKScene {
                 print("Menu Button")
                 if !isSoundMute{ runAction(soundTap) }
                 changeTouchTypeAndShowPage(touchType)
-                let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
+                let doors = SKTransition.fadeWithDuration(2)
                 self.view?.presentScene(islandsScene, transition: doors)
                 
             case topLayer.buttonPlayPause:

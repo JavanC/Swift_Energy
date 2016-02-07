@@ -14,16 +14,74 @@ class IslandsScene: SKScene {
     var leftarrow: SKSpriteNode!
     var backButton: SKLabelNode!
     var settingButton: SKSpriteNode!
+    var settingHighlight: Highlight!
+    var settingHighlightFlag: Bool = false
     var settingLayer: SettingLayer!
     
-    var map1Button: SKLabelNode!
-    var map2Button: SKLabelNode!
+    var mapsRange: [SKShapeNode] = []
+    var selectMaps: [SKSpriteNode] = []
+    var nowSelectNum: Int = 0
     
     var spentTimeLabel: SKLabelNode!
     
     override func didMoveToView(view: SKView) {
         
         if !contentCreated {
+            
+            let background = SKSpriteNode(texture: backgroundAtlas.textureNamed("Maps"))
+            background.name = "background"
+            background.size = frame.size
+            background.zPosition = -1
+            background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            addChild(background)
+            
+            for i in 1...6 {
+                let selectMap = SKSpriteNode(texture: backgroundAtlas.textureNamed("selectMap\(i)"))
+                selectMap.name = "selectMap\(i)"
+                selectMap.size = frame.size
+                selectMap.hidden = true
+                selectMap.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+                addChild(selectMap)
+                selectMaps.append(selectMap)
+            }
+            
+            let map1 = SKShapeNode(circleOfRadius: 60 * framescale)
+            map1.name = "map1Range"
+            map1.lineWidth = 0
+            map1.position = CGPoint(x: 120 * framescale, y: 160 * framescale)
+            addChild(map1)
+            mapsRange.append(map1)
+            let map2 = SKShapeNode(circleOfRadius: 80 * framescale)
+            map2.name = "map2Range"
+            map2.lineWidth = 0
+            map2.position = CGPoint(x: 410 * framescale, y: 220 * framescale)
+            addChild(map2)
+            mapsRange.append(map2)
+            let map3 = SKShapeNode(circleOfRadius: 80 * framescale)
+            map3.name = "map3Range"
+            map3.lineWidth = 0
+            map3.strokeColor = SKColor.blackColor()
+            map3.position = CGPoint(x: 95 * framescale, y: 400 * framescale)
+            addChild(map3)
+            mapsRange.append(map3)
+            let map4 = SKShapeNode(circleOfRadius: 90 * framescale)
+            map4.name = "map4Range"
+            map4.lineWidth = 0
+            map4.position = CGPoint(x: 450 * framescale, y: 500 * framescale)
+            addChild(map4)
+            mapsRange.append(map4)
+            let map5 = SKShapeNode(circleOfRadius: 90 * framescale)
+            map5.name = "map5Range"
+            map5.lineWidth = 0
+            map5.position = CGPoint(x: 100 * framescale, y: 610 * framescale)
+            addChild(map5)
+            mapsRange.append(map5)
+            let map6 = SKShapeNode(circleOfRadius: 90 * framescale)
+            map6.name = "map6Range"
+            map6.lineWidth = 0
+            map6.position = CGPoint(x: 410 * framescale, y: 720 * framescale)
+            addChild(map6)
+            mapsRange.append(map6)
             
             leftarrow = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_left"))
             leftarrow.size = CGSizeMake(44 * framescale, 44 * framescale)
@@ -44,6 +102,11 @@ class IslandsScene: SKScene {
             settingButton.position = CGPoint(x: frame.width - 52 * framescale, y: frame.height - 52 * framescale)
             self.addChild(settingButton)
             
+            let select = SKAction.runBlock({self.settingButton.setScale(framescale * 1.1)})
+            let diselect = SKAction.runBlock({ self.settingButton.setScale(framescale) })
+            settingHighlight = Highlight(highlightBlock:select, dishighlightBlock: diselect, sound: soundClick)
+            
+            
             settingLayer = SettingLayer(frameSize: frame.size)
             settingLayer.alpha = 0
             settingLayer.hidden = true
@@ -51,32 +114,20 @@ class IslandsScene: SKScene {
             settingLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             self.addChild(settingLayer)
             
-            map1Button = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
-            map1Button.text = "Select Map1"
-            map1Button.fontSize = 45 * framescale
-            map1Button.position = CGPoint(x:frame.size.width / 2, y:frame.size.height / 2 + 100 * framescale)
-            self.addChild(map1Button)
-            
-            map2Button = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
-            map2Button.text = "Select Map2"
-            map2Button.fontSize = 45 * framescale
-            map2Button.position = CGPoint(x:frame.size.width / 2, y:frame.size.height / 2 - 100 * framescale)
-            self.addChild(map2Button)
-            
             let label = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             label.name = "spentTimeLabel"
             label.text = "SPEND  TIME"
             label.fontSize = 20 * framescale
             label.fontColor = SKColor.whiteColor()
             label.position = CGPoint(x: frame.width / 2, y: frame.height / 8)
-            addChild(label)
+//            addChild(label)
             
             spentTimeLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             spentTimeLabel.name = "spentTimeLabel"
             spentTimeLabel.fontSize = 30 * framescale
             spentTimeLabel.fontColor = SKColor.whiteColor()
             spentTimeLabel.position = CGPoint(x: frame.width / 2, y: label.position.y - 50 * framescale)
-            self.addChild(spentTimeLabel)
+//            self.addChild(spentTimeLabel)
             
 
             
@@ -118,40 +169,97 @@ class IslandsScene: SKScene {
                     }
                 }
                 if node == settingLayer.saveSettingButton {
-                    settingLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
+                    settingLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
                 }
             }
             return
         }
         
-        for node in nodes {
-            if node.hidden { return }
-            switch node {
-                
-            case leftarrow, backButton:
-                if !isSoundMute{ runAction(soundTap) }
-                let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                self.view?.presentScene(menuScene, transition: doors)
-                
-            case settingButton:
-                print("setting")
-                settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.2)]))
-            case map1Button:
-                print("Map1")
-                nowMapNumber = 0
-                if !isSoundMute{ runAction(soundTap) }
-                let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                self.view?.presentScene(islandScene, transition: doors)
-                
-            case map2Button:
-                print("Map2")
-                nowMapNumber = 1
-                if !isSoundMute{ runAction(soundTap) }
-                let doors = SKTransition.revealWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                self.view?.presentScene(islandScene, transition: doors)
-                
-            default:break
+        for i in 0...5 {
+            if mapsRange[i].containsPoint(location) {
+                mapHighlight(i+1)
             }
+        }
+        
+        if settingButton.containsPoint(location) {
+            settingHighlight.change(true)
+        }
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let location = touch.locationInNode(self)
+        
+        var inMap = false
+        for i in 0...5 {
+            if mapsRange[i].containsPoint(location) {
+                inMap = true
+                mapHighlight(i+1)
+            }
+        }
+        if inMap == false {
+            mapHighlight(0)
+        }
+        
+        if settingButton.containsPoint(location) {
+            settingHighlight.change(true)
+//            settingButtonHighlight(true)
+        } else {
+            settingHighlight.change(false)
+//            settingButtonHighlight(false)
+        }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let location = touch.locationInNode(self)
+        
+        for i in 0...5 {
+            if mapsRange[i].containsPoint(location) {
+                print("Map\(i+1)")
+                mapHighlight(0)
+                nowMapNumber = i
+                if !isSoundMute{ runAction(soundAction) }
+                let doors = SKTransition.fadeWithDuration(2)
+                self.view?.presentScene(islandScene, transition: doors)
+            }
+        }
+        
+        if settingButton.containsPoint(location) {
+            settingHighlight.change(false)
+            //            settingButtonHighlight(false)
+            settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+        }
+    }
+    
+    func settingButtonHighlight(isHighlight: Bool) {
+        if settingHighlightFlag != isHighlight {
+            settingHighlightFlag = isHighlight
+            print("now select setting button \(isHighlight)")
+            if settingHighlightFlag == true {
+                runAction(soundClick)
+            }
+        }
+        if isHighlight {
+            settingButton.setScale(framescale * 1.1)
+        } else {
+            settingButton.setScale(framescale)
+        }
+    }
+    
+    func mapHighlight(mapNum: Int) {
+        if nowSelectNum != mapNum {
+            nowSelectNum = mapNum
+            print("now select \(nowSelectNum)")
+            if nowSelectNum >= 1 && nowSelectNum <= 6 {
+                runAction(soundClick)
+            }
+        }
+        for i in 0...5 {
+            selectMaps[i].hidden = true
+        }
+        if mapNum >= 1 && mapNum <= 6 {
+            selectMaps[mapNum-1].hidden = false
         }
     }
 
@@ -176,5 +284,40 @@ class IslandsScene: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         spentTimeLabel.text = hourToString(spendTime)
+    }
+}
+
+class Highlight: SKNode {
+    var isHighlight: Bool = false
+    var sound: SKAction
+    var highlightBlock: SKAction
+    var dishighlightBlock: SKAction
+    init(highlightBlock: SKAction, dishighlightBlock: SKAction, sound: SKAction = SKAction.waitForDuration(0)) {
+        self.sound = sound
+        self.highlightBlock = highlightBlock
+        self.dishighlightBlock = dishighlightBlock
+        super.init()
+    }
+    
+    func change(isHighlight: Bool) -> Bool {
+        if self.isHighlight != isHighlight {
+            if isHighlight {
+                print("sound")
+                runAction(sound)
+            }
+            self.isHighlight = isHighlight
+            return true
+        }
+        if isHighlight {
+            print("1111")
+            runAction(highlightBlock)
+        } else {
+            print("2222")
+            runAction(dishighlightBlock)
+        }
+        return false
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

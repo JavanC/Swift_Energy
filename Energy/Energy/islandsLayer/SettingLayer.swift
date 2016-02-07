@@ -45,7 +45,7 @@ class SettingLayer: SKNode {
         
         
         let bg = SKSpriteNode(color: SKColor.blackColor(), size: frameSize)
-        bg.alpha = 0.7
+        bg.alpha = 0.8
         addChild(bg)
         soundButton = SwitchButton(texture: iconAtlas.textureNamed("sound"))
         soundButton.position = CGPoint(x: frameSize.width / 6, y: frameSize.height / 4)
