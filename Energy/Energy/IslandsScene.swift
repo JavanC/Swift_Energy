@@ -14,7 +14,6 @@ class IslandsScene: SKScene {
     var leftarrow: SKSpriteNode!
     var backButton: SKLabelNode!
     var settingButton: SKSpriteNode!
-    var settingHighlight: Highlight!
     var settingHighlightFlag: Bool = false
     var settingLayer: SettingLayer!
     
@@ -102,11 +101,6 @@ class IslandsScene: SKScene {
             settingButton.position = CGPoint(x: frame.width - 52 * framescale, y: frame.height - 52 * framescale)
             self.addChild(settingButton)
             
-            let select = SKAction.runBlock({self.settingButton.setScale(framescale * 1.1)})
-            let diselect = SKAction.runBlock({ self.settingButton.setScale(framescale) })
-            settingHighlight = Highlight(highlightBlock:select, dishighlightBlock: diselect, sound: soundClick)
-            
-            
             settingLayer = SettingLayer(frameSize: frame.size)
             settingLayer.alpha = 0
             settingLayer.hidden = true
@@ -182,7 +176,7 @@ class IslandsScene: SKScene {
         }
         
         if settingButton.containsPoint(location) {
-            settingHighlight.change(true)
+            settingButtonHighlight(true)
         }
     }
     
@@ -202,11 +196,9 @@ class IslandsScene: SKScene {
         }
         
         if settingButton.containsPoint(location) {
-            settingHighlight.change(true)
-//            settingButtonHighlight(true)
+            settingButtonHighlight(true)
         } else {
-            settingHighlight.change(false)
-//            settingButtonHighlight(false)
+            settingButtonHighlight(false)
         }
     }
     
@@ -226,8 +218,7 @@ class IslandsScene: SKScene {
         }
         
         if settingButton.containsPoint(location) {
-            settingHighlight.change(false)
-            //            settingButtonHighlight(false)
+            settingButtonHighlight(false)
             settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
         }
     }
@@ -284,40 +275,5 @@ class IslandsScene: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         spentTimeLabel.text = hourToString(spendTime)
-    }
-}
-
-class Highlight: SKNode {
-    var isHighlight: Bool = false
-    var sound: SKAction
-    var highlightBlock: SKAction
-    var dishighlightBlock: SKAction
-    init(highlightBlock: SKAction, dishighlightBlock: SKAction, sound: SKAction = SKAction.waitForDuration(0)) {
-        self.sound = sound
-        self.highlightBlock = highlightBlock
-        self.dishighlightBlock = dishighlightBlock
-        super.init()
-    }
-    
-    func change(isHighlight: Bool) -> Bool {
-        if self.isHighlight != isHighlight {
-            if isHighlight {
-                print("sound")
-                runAction(sound)
-            }
-            self.isHighlight = isHighlight
-            return true
-        }
-        if isHighlight {
-            print("1111")
-            runAction(highlightBlock)
-        } else {
-            print("2222")
-            runAction(dishighlightBlock)
-        }
-        return false
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
