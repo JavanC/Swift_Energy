@@ -123,8 +123,6 @@ class IslandsScene: SKScene {
             spentTimeLabel.position = CGPoint(x: frame.width / 2, y: label.position.y - 50 * framescale)
 //            self.addChild(spentTimeLabel)
             
-
-            
             contentCreated = true
             // remove first touch delay
             settingLayer.containsPoint(CGPoint(x: 0, y: 0))
