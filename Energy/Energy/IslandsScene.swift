@@ -11,8 +11,7 @@ import SpriteKit
 class IslandsScene: SKScene {
     
     var contentCreated: Bool = false
-    var leftarrow: SKSpriteNode!
-    var backButton: SKLabelNode!
+    var infoButton: SKSpriteNode!
     var settingButton: SKSpriteNode!
     var settingHighlightFlag: Bool = false
     var settingLayer: SettingLayer!
@@ -82,19 +81,10 @@ class IslandsScene: SKScene {
             addChild(map6)
             mapsRange.append(map6)
             
-            leftarrow = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_left"))
-            leftarrow.size = CGSizeMake(44 * framescale, 44 * framescale)
-            leftarrow.anchorPoint = CGPoint(x: 0, y: 1)
-            leftarrow.position = CGPoint(x: 10 * framescale, y: frame.size.height - 30 * framescale)
-            self.addChild(leftarrow)
-            backButton = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
-            backButton.text = "Menu"
-            backButton.horizontalAlignmentMode = .Left
-            backButton.verticalAlignmentMode = .Center
-            backButton.fontColor = SKColor.whiteColor()
-            backButton.fontSize = 35 * framescale
-            backButton.position = CGPoint(x: (15 + 44) * framescale, y: frame.size.height - (30 + 22) * framescale)
-            self.addChild(backButton)
+            infoButton = SKSpriteNode(texture: iconAtlas.textureNamed("button_info"))
+            infoButton.setScale(framescale)
+            infoButton.position = CGPoint(x: frame.width - (52 + 64 + 10) * framescale, y: frame.height - 52 * framescale)
+            self.addChild(infoButton)
             
             settingButton = SKSpriteNode(texture: iconAtlas.textureNamed("setting"))
             settingButton.setScale(framescale)
@@ -142,7 +132,7 @@ class IslandsScene: SKScene {
                     isSoundMute = !isSoundMute
                     if isSoundMute {
                         settingLayer.soundButton.off()
-                        print("sound Mute")
+                        print("sound off")
                     } else {
                         settingLayer.soundButton.on()
                         print("sount on")
@@ -153,7 +143,7 @@ class IslandsScene: SKScene {
                     if isMusicMute {
                         settingLayer.musicButton.off()
                         backgroundMusicPlayer.pause()
-                        print("music Mute")
+                        print("music off")
                     } else {
                         settingLayer.musicButton.on()
                         backgroundMusicPlayer.play()
