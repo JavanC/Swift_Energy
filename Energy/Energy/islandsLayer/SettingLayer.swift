@@ -42,46 +42,56 @@ class SettingLayer: SKNode {
     
     init(frameSize: CGSize) {
         super.init()
-        
-        
+        let gap = frameSize.height / 25
+    
         let bg = SKSpriteNode(color: SKColor.blackColor(), size: frameSize)
         bg.alpha = 0.8
         addChild(bg)
+        
+        let word = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        word.text = "SETTING"
+        word.fontSize = 60 * framescale
+        word.verticalAlignmentMode = .Center
+        word.position = CGPoint(x: 0, y: gap * 8)
+        addChild(word)
+        
         soundButton = SwitchButton(texture: iconAtlas.textureNamed("sound"))
-        soundButton.position = CGPoint(x: frameSize.width / 6, y: frameSize.height / 4)
+        soundButton.position = CGPoint(x: frameSize.width / 6, y: gap * 3)
         addChild(soundButton)
         let soundLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
         soundLabel.text = "Sound"
         soundLabel.fontSize = 20 * framescale
-        soundLabel.position = CGPoint(x: frameSize.width / 6, y: frameSize.height / 6)
+        soundLabel.position = CGPoint(x: frameSize.width / 6, y: gap * 1)
         addChild(soundLabel)
         musicButton = SwitchButton(texture: iconAtlas.textureNamed("music"))
-        musicButton.position = CGPoint(x: -frameSize.width / 6, y: frameSize.height / 4)
+        musicButton.position = CGPoint(x: -frameSize.width / 6, y: gap * 3)
         addChild(musicButton)
         let musicLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
         musicLabel.text = "Music"
         musicLabel.fontSize = 20 * framescale
-        musicLabel.position = CGPoint(x: -frameSize.width / 6, y: frameSize.height / 6)
+        musicLabel.position = CGPoint(x: -frameSize.width / 6, y: gap * 1)
         addChild(musicLabel)
-        let line = SKShapeNode(rectOfSize: CGSizeMake(frameSize.width * 0.8, 1 * framescale))
+        let line = SKShapeNode(rectOfSize: CGSizeMake(frameSize.width * 0.6, 0.5 * framescale))
         line.name = "line"
+        line.alpha = 0.7
         line.fillColor = SKColor.whiteColor()
-        line.position = CGPoint(x: 0, y: frameSize.height / 8)
+        line.position = CGPoint(x: 0, y: gap * 0)
         addChild(line)
         resetButton = SKLabelNode(fontNamed: "SanFranciscoText-ThinItalic")
         resetButton.text = "Reset All Data"
         resetButton.fontSize = 40 * framescale
         resetButton.verticalAlignmentMode = .Center
-        resetButton.position = CGPoint(x: 0, y: 0)
+        resetButton.position = CGPoint(x: 0, y: gap * -2)
         addChild(resetButton)
-        let line2 = SKShapeNode(rectOfSize: CGSizeMake(frameSize.width * 0.8, 1 * framescale))
+        let line2 = SKShapeNode(rectOfSize: CGSizeMake(frameSize.width * 0.8, 0.5 * framescale))
         line2.name = "line"
+        line2.alpha = 0.7
         line2.fillColor = SKColor.whiteColor()
         line2.position = CGPoint(x: 0, y: -frameSize.height / 8)
-        addChild(line2)
+//        addChild(line2)
         saveSettingButton = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
         saveSettingButton.size = CGSizeMake(80 * framescale, 80 * framescale)
-        saveSettingButton.position = CGPoint(x: 0, y: -frameSize.height / 4)
+        saveSettingButton.position = CGPoint(x: 0, y: gap * -8)
         addChild(saveSettingButton)
     }
     

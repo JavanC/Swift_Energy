@@ -12,6 +12,8 @@ class IslandsScene: SKScene {
     
     var contentCreated: Bool = false
     var infoButton: SKSpriteNode!
+    var infoHighlightFlag: Bool = false
+    var infoLayer: InfoLayer!
     var settingButton: SKSpriteNode!
     var settingHighlightFlag: Bool = false
     var settingLayer: SettingLayer!
@@ -86,6 +88,13 @@ class IslandsScene: SKScene {
             infoButton.position = CGPoint(x: frame.width - (52 + 64 + 10) * framescale, y: frame.height - 52 * framescale)
             self.addChild(infoButton)
             
+            infoLayer = InfoLayer(frameSize: frame.size)
+            infoLayer.alpha = 0
+            infoLayer.hidden = true
+            infoLayer.zPosition = 10
+            infoLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            self.addChild(infoLayer)
+            
             settingButton = SKSpriteNode(texture: iconAtlas.textureNamed("setting"))
             settingButton.setScale(framescale)
             settingButton.position = CGPoint(x: frame.width - 52 * framescale, y: frame.height - 52 * framescale)
@@ -157,6 +166,16 @@ class IslandsScene: SKScene {
             return
         }
         
+        if infoLayer.hidden == false {
+            for node in nodes {
+                if node.hidden { return }
+                if node == infoLayer.saveButton {
+                    infoLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
+                }
+            }
+            return
+        }
+        
         for i in 0...5 {
             if mapsRange[i].containsPoint(location) {
                 mapHighlight(i+1)
@@ -165,6 +184,10 @@ class IslandsScene: SKScene {
         
         if settingButton.containsPoint(location) {
             settingButtonHighlight(true)
+        }
+        
+        if infoButton.containsPoint(location) {
+            infoButtonHighlight(true)
         }
     }
     
@@ -188,6 +211,12 @@ class IslandsScene: SKScene {
         } else {
             settingButtonHighlight(false)
         }
+        
+        if infoButton.containsPoint(location) {
+            infoButtonHighlight(true)
+        } else {
+            infoButtonHighlight(false)
+        }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -208,6 +237,26 @@ class IslandsScene: SKScene {
         if settingButton.containsPoint(location) {
             settingButtonHighlight(false)
             settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+        }
+        
+        if infoButton.containsPoint(location) {
+            infoButtonHighlight(false)
+            infoLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+        }
+    }
+    
+    func infoButtonHighlight(isHighlight: Bool) {
+        if infoHighlightFlag != isHighlight {
+            infoHighlightFlag = isHighlight
+            print("now select info button \(isHighlight)")
+            if infoHighlightFlag == true {
+                runAction(soundClick)
+            }
+        }
+        if isHighlight {
+            infoButton.setScale(framescale * 1.1)
+        } else {
+            infoButton.setScale(framescale)
         }
     }
     
