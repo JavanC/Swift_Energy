@@ -125,6 +125,7 @@ class IslandsScene: SKScene {
             contentCreated = true
             // remove first touch delay
             settingLayer.containsPoint(CGPoint(x: 0, y: 0))
+            infoLayer.containsPoint(CGPoint(x: 0,y: 0))
             // remove first load  delay
             self.view?.presentScene(islandScene)
         }
@@ -159,7 +160,7 @@ class IslandsScene: SKScene {
                         print("music on")
                     }
                 }
-                if node == settingLayer.saveSettingButton {
+                if node == settingLayer.saveButton {
                     settingLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
                 }
             }
@@ -195,6 +196,8 @@ class IslandsScene: SKScene {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         
+        if settingLayer.hidden == false || infoLayer.hidden == false { return }
+        
         var inMap = false
         for i in 0...5 {
             if mapsRange[i].containsPoint(location) {
@@ -222,6 +225,8 @@ class IslandsScene: SKScene {
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
+        
+        if settingLayer.hidden == false || infoLayer.hidden == false { return }
         
         for i in 0...5 {
             if mapsRange[i].containsPoint(location) {
