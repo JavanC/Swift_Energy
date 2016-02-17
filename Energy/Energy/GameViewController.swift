@@ -134,7 +134,7 @@ class GameViewController: UIViewController {
         researchLevel[ResearchType.WindTurbineResearch] = 1
         
         // load maps data
-        for count in 0..<8 {
+        for count in 0..<6 {
             let buildingMapLayer = BuildingMapLayer()
             buildingMapLayer.configureAtPosition(CGPoint(x: 0, y: 0), mapNumber: count)
             maps.append(buildingMapLayer)

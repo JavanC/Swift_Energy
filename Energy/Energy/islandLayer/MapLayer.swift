@@ -117,6 +117,7 @@ class BuildingMapLayer: SKSpriteNode {
     var money_TickAdd: Double = 0
     var research_TickAdd: Double = 0
     var energy_TickAdd: Double = 0
+    var tickAddDone: Bool = false
     var energy: Double = 0
     var energyMax: Double = 100
     
@@ -531,5 +532,7 @@ class BuildingMapLayer: SKSpriteNode {
             money_TickAdd += energy
             energy = 0
         }
+        
+        tickAddDone = true
     }
 }

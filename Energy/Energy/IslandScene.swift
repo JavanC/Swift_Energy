@@ -36,10 +36,9 @@ class IslandScene: SKScene {
         
         // First initial
         if !contentCreated {
-
-            if !isPause {
-                gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
-            }
+            
+            // Game Timer
+            gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
             
             // Top Layer
             let topLayerSize = CGSizeMake(frame.size.width, topTileSize.height * tilesScaleSize.height)
@@ -119,7 +118,7 @@ class IslandScene: SKScene {
         }
         
         // Only show now map
-        for count in 0..<8 { maps[count].hidden = true }
+        for count in 0..<6 { maps[count].hidden = true }
         maps[nowMapNumber].hidden = false
         
         // back to Energy type
@@ -226,10 +225,6 @@ class IslandScene: SKScene {
                 if !isSoundMute{ runAction(soundTap) }
                 isPause = !isPause
                 topLayer.isPauseChange()
-                if isPause { gameTimer.invalidate() }
-                else {
-                    gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
-                }
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
@@ -497,15 +492,18 @@ class IslandScene: SKScene {
     
     func tickUpdata() {
         if isBoost { return }
+        if isPause { return }
+        
         ++spendTime
-        for i in 0...1 {
+        
+        for i in 0..<6 {
             // Update map data
             maps[i].Update()
             // Calculate money and research
             money       += maps[i].money_TickAdd
             research    += maps[i].research_TickAdd
         }
-
+        
         // Update information
         self.bottomLayer.pageInformation.changeInformation(self.info_Building.buildingData)
         // draw energy circle

@@ -22,12 +22,13 @@ class IslandsScene: SKScene {
     var selectMaps: [SKSpriteNode] = []
     var nowSelectNum: Int = 0
     
+    var isShowTickAdd: Bool = false
     var spentTimeLabel: SKLabelNode!
     
     override func didMoveToView(view: SKView) {
         
         if !contentCreated {
-            
+
             let background = SKSpriteNode(texture: backgroundAtlas.textureNamed("Maps"))
             background.name = "background"
             background.size = frame.size
@@ -82,7 +83,7 @@ class IslandsScene: SKScene {
             map6.position = CGPoint(x: 410 * framescale, y: 720 * framescale)
             addChild(map6)
             mapsRange.append(map6)
-
+            
             infoButton = SKSpriteNode(texture: iconAtlas.textureNamed("button_info"))
             infoButton.setScale(framescale)
             infoButton.position = CGPoint(x: frame.width - (52 + 64 + 10) * framescale, y: frame.height - 52 * framescale)
@@ -131,6 +132,11 @@ class IslandsScene: SKScene {
             // remove first load  delay
             print("load 2")
             self.view?.presentScene(islandScene)
+        }
+        
+        isShowTickAdd = false
+        RunAfterDelay(5) {
+            self.isShowTickAdd = true
         }
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -318,7 +324,44 @@ class IslandsScene: SKScene {
         return timeString
     }
     
+    func showTickAdd() {
+        for i in 0..<6 {
+            if maps[i].tickAddDone {
+                
+                let fadeout = SKAction.fadeOutWithDuration(1.5)
+                let moveup = SKAction.moveByX(0, y: 100 * framescale, duration: 1.5)
+                let group = SKAction.group([fadeout, moveup])
+                let tickAction = SKAction.sequence([group, SKAction.removeFromParent()])
+                
+                if maps[i].money_TickAdd != 0 {
+                    let addMoney = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+                    addMoney.name = "add Money"
+                    addMoney.text = "+\(numberToString(maps[i].money_TickAdd))"
+                    addMoney.fontColor = colorMoney
+                    addMoney.fontSize = 30 * framescale
+                    addMoney.position = CGPoint(x: mapsRange[i].position.x, y:mapsRange[i].position.y + 15 * framescale)
+                    addMoney.runAction(tickAction)
+                    addChild(addMoney)
+                }
+                
+                if maps[i].research_TickAdd != 0 {
+                    let addResearch = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+                    addResearch.name = "add research"
+                    addResearch.text = "+\(numberToString(maps[i].research_TickAdd))"
+                    addResearch.fontColor = colorResearch
+                    addResearch.fontSize = 30 * framescale
+                    addResearch.position = CGPoint(x: mapsRange[i].position.x, y:mapsRange[i].position.y - 15 * framescale)
+                    addResearch.runAction(tickAction)
+                    addChild(addResearch)
+                }
+                
+                maps[i].tickAddDone = false
+            }
+        }
+    }
+    
     override func update(currentTime: CFTimeInterval) {
         spentTimeLabel.text = hourToString(spendTime)
+        if isShowTickAdd { showTickAdd() }
     }
 }
