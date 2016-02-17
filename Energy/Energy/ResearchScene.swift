@@ -420,6 +420,7 @@ class ResearchScene: SKScene {
             // remove first touch delay
             researchdeLayer.containsPoint(CGPoint(x: 0, y: 0))
             // remove first load delay
+            print("load 5")
             self.view?.presentScene(menuScene)
         }
         

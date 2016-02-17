@@ -13,8 +13,9 @@ class InformationLabel: SKNode {
     var valueLabel: SKLabelNode!
     
     init(title: String, fontSize: CGFloat, valueColor: SKColor) {
+        
         super.init()
-        titleLabel                         = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        titleLabel                         = SKLabelNode(fontNamed: "ArialMT")
         titleLabel.name                    = "title"
         titleLabel.text                    = "\(title) :"
         titleLabel.fontSize                = fontSize
@@ -73,7 +74,7 @@ class PageInformation: SKSpriteNode {
         infoImage = BuildingData(buildType: .Land).image("infoImage")
         infoImage.position = CGPoint(x: infoImage.size.width, y: size.height / 2)
         addChild(infoImage)
-    
+        
         let infogap: CGFloat = size.height * 0.08
         let infoSize = (size.height - 5 * infogap) / 4
         for i in 1...4 {
@@ -114,7 +115,7 @@ class PageInformation: SKSpriteNode {
         addChild(infoLibraryNode)
         infoPriceNode           = InformationLabel(title: "Price", fontSize: infoSize, valueColor: colorMoney)
         addChild(infoPriceNode)
-        
+
         allLabels = [infoTicksNode, infoHeatNode, infoWaterNode, infoProduceEnergyNode, infoProduceHeatNode, infoSellsMoneyNode, infoConvertedEnergyNode, infoSellHeatNode, infoIsolationNode, infoBatteryNode, infoHeatInletNode, infoHeatSinkNode, infoProduceWaterNode, infoBankNode, infoProduceResearchNode, infoLibraryNode, infoPriceNode]
     }
     
@@ -419,8 +420,7 @@ class PageSell: SKSpriteNode {
         self.anchorPoint = CGPoint(x: 0, y: 0)
 
         let gap          = Int(20 * framescale)
-
-        sellLabel        = SKMultilineLabel(text: "Touch buildings on the map to sell it. \n Notice: Produce energy building can not be recycled money.", labelWidth: Int(size.width) - Int(80 * framescale), pos: CGPoint(x: size.width / 2, y: size.height - CGFloat(gap)), fontName: "SanFranciscoText-BoldItalic", fontSize: (size.height - CGFloat(gap) * 2 - CGFloat(gap)) / 3, fontColor: colorMoney, leading: Int((size.height - CGFloat(gap) * 2) / 3),  shouldShowBorder: false)
+        sellLabel        = SKMultilineLabel(text: "Touch buildings on the map to sell it. \n Notice: Produce energy building can not be recycled money.", labelWidth: Int(size.width) - Int(80 * framescale), pos: CGPoint(x: size.width / 2, y: size.height - CGFloat(gap)), fontName: "ArialMT", fontSize: (size.height - CGFloat(gap) * 2 - CGFloat(gap)) / 3, fontColor: colorMoney, leading: Int((size.height - CGFloat(gap) * 2) / 3),  shouldShowBorder: false)
         addChild(sellLabel)
     }
 }
@@ -502,16 +502,19 @@ class BottomLayer: SKSpriteNode {
         pageInformation  = PageInformation()
         pageInformation.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageInformation)
+        
         pageBuild        = PageBuild()
         pageBuild.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageBuild)
+
         pageEnergy       = PageEnergy()
         pageEnergy.configureAtPosition(CGPoint(x: 0, y: 0), size: size)
         addChild(pageEnergy)
+
         pageSell         = PageSell()
         pageSell.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageSell)
-        
+
         showPage(.PageEnergy)
     }
     

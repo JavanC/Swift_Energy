@@ -47,29 +47,43 @@ var boostTimeLess: Double = 1
 class MenuScene: SKScene {
     
     var contentCreated: Bool = false
+    var background: SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
         if !contentCreated {
 
             self.backgroundColor = SKColor.whiteColor()
         
+            background = SKSpriteNode(color: SKColor.whiteColor(), size: frame.size)
+            background.name = "background"
+            background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            addChild(background)
+            
             let startGameButton = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
-            startGameButton.text = "Play"
-            startGameButton.fontSize = 50 * framescale
+            startGameButton.text = "touch to continute"
+            startGameButton.fontSize = 30 * framescale
             startGameButton.fontColor = SKColor.blackColor()
-            startGameButton.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
-            self.addChild(startGameButton)
+            startGameButton.position = CGPoint(x: 0, y: 0)
+            background.addChild(startGameButton)
             
             contentCreated = true
             
             // first load remove delay
+            print("load 1")
             self.view?.presentScene(islandsScene)
         }
-        RunAfterDelay(2) {
-            let doors = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 2)
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let location = touch.locationInNode(self)
+        if background.containsPoint(location) {
+            let doors = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 3)
             self.view?.presentScene(islandsScene, transition: doors)
         }
     }
+    
     override func update(currentTime: CFTimeInterval) {
+    
     }
 }

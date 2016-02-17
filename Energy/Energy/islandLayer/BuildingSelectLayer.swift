@@ -37,7 +37,7 @@ class BuildingSelectElement: SKNode {
         buildingName.verticalAlignmentMode   = .Top
         buildingName.position                = CGPoint(x: image.size.width + gap * 2, y: size.height - gap)
         addChild(buildingName)
-        let multilineLabel                   = SKMultilineLabel(text: "\(BuildingData(buildType: buildType).comment)", labelWidth: Int(size.width - image.size.width - gap * 3), pos: CGPoint(x: (size.width + image.size.width + gap * 1) / 2 , y: size.height - gap - buildingName.fontSize), fontName: "SanFranciscoText-BoldItalic", fontSize: (image.size.height - buildingName.fontSize * 1.2) / 2, fontColor: SKColor.lightGrayColor(), leading: Int((image.size.height - buildingName.fontSize) / 2), alignment: .Left, shouldShowBorder: false)
+        let multilineLabel                   = SKMultilineLabel(text: "\(BuildingData(buildType: buildType).comment)", labelWidth: Int(size.width - image.size.width - gap * 3), pos: CGPoint(x: (size.width + image.size.width + gap * 1) / 2 , y: size.height - gap - buildingName.fontSize), fontName: "ArialMT", fontSize: (image.size.height - buildingName.fontSize * 1.2) / 2, fontColor: SKColor.lightGrayColor(), leading: Int((image.size.height - buildingName.fontSize) / 2), alignment: .Left, shouldShowBorder: false)
         addChild(multilineLabel)
     }
 
@@ -70,7 +70,6 @@ class BuildingSelectLayer: SKNode {
                 positions.append(CGPoint(x: selectLayer.size.width / 4 * CGFloat(x), y: selectLayer.size.height - elementsize.height * CGFloat(y + 1)))
             }
         }
-
         buildingSelectElements  = [BuildingSelectElement]()
         for count in 0..<28 {
         let element             = BuildingSelectElement(buildType: BuildingType(rawValue: count)!, size: elementsize)

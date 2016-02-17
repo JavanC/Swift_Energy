@@ -36,7 +36,7 @@ class IslandScene: SKScene {
         
         // First initial
         if !contentCreated {
-            
+
             if !isPause {
                 gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
             }
@@ -48,7 +48,7 @@ class IslandScene: SKScene {
             topLayer.configureAtPosition(topLayerPosition, size: topLayerSize)
             topLayer.zPosition = 200
             addChild(topLayer)
-            
+
             // Map Layer
             let mapLayerSize = CGSizeMake(tilesScaleSize.width * midTileSize.width, tilesScaleSize.height * midTileSize.height)
             for count in 0..<maps.count {
@@ -58,14 +58,14 @@ class IslandScene: SKScene {
                 addChild(maps[count])
             }
             info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
-            
+
             // Button Layer
             let buttonLayerSize = CGSizeMake(frame.size.width, buttonTileSize.height * tilesScaleSize.height)
             buttonLayer = ButtonLayer()
             buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
             buttonLayer.zPosition = 200
             addChild(buttonLayer)
-            
+
             // Bottom Layer
             let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - mapLayerSize.height - buttonLayer.size.height)
             let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
@@ -73,7 +73,7 @@ class IslandScene: SKScene {
             bottomLayer.configureAtPosition(bottomLayerPosition, size: bottomLayerSize)
             bottomLayer.zPosition = 100
             addChild(bottomLayer)
-            
+
             // Building Select Layer
             let buildingSelectLayerSize = mapLayerSize
             let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
@@ -110,8 +110,11 @@ class IslandScene: SKScene {
             
             contentCreated = true
             // remove first touch delay
-            buildingSelectLayer.containsPoint(CGPoint(x: 0, y: 0))
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+                self.buildingSelectLayer.containsPoint(CGPoint(x: 0, y: 0))
+            }
             // remove first load delay
+            print("load 3")
             self.view?.presentScene(upgradeScene)
         }
         
@@ -124,6 +127,9 @@ class IslandScene: SKScene {
         
         // update build page image show
         bottomLayer.pageBuild.updateImageShow()
+        
+        // update boostLayer hidden
+        boostLayer.hidden = !isBoost
         
         // update rebuild button
         if isRebuild {

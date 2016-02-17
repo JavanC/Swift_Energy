@@ -44,7 +44,7 @@ class IslandsScene: SKScene {
                 addChild(selectMap)
                 selectMaps.append(selectMap)
             }
-            
+
             let map1 = SKShapeNode(circleOfRadius: 60 * framescale)
             map1.name = "map1Range"
             map1.lineWidth = 0
@@ -82,7 +82,7 @@ class IslandsScene: SKScene {
             map6.position = CGPoint(x: 410 * framescale, y: 720 * framescale)
             addChild(map6)
             mapsRange.append(map6)
-            
+
             infoButton = SKSpriteNode(texture: iconAtlas.textureNamed("button_info"))
             infoButton.setScale(framescale)
             infoButton.position = CGPoint(x: frame.width - (52 + 64 + 10) * framescale, y: frame.height - 52 * framescale)
@@ -94,7 +94,7 @@ class IslandsScene: SKScene {
             infoLayer.zPosition = 10
             infoLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             self.addChild(infoLayer)
-            
+
             settingButton = SKSpriteNode(texture: iconAtlas.textureNamed("setting"))
             settingButton.setScale(framescale)
             settingButton.position = CGPoint(x: frame.width - 52 * framescale, y: frame.height - 52 * framescale)
@@ -124,9 +124,12 @@ class IslandsScene: SKScene {
             
             contentCreated = true
             // remove first touch delay
-            settingLayer.containsPoint(CGPoint(x: 0, y: 0))
-            infoLayer.containsPoint(CGPoint(x: 0,y: 0))
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+                self.settingLayer.containsPoint(CGPoint(x: 0, y: 0))
+                self.infoLayer.containsPoint(CGPoint(x: 0,y: 0))
+            }
             // remove first load  delay
+            print("load 2")
             self.view?.presentScene(islandScene)
         }
     }
