@@ -264,6 +264,8 @@ class IslandScene: SKScene {
                 for _ in 1...100 {
                     tickUpdata()
                 }
+//                for count in 0..<6 { maps[count].hidden = true }
+//                maps[nowMapNumber].hidden = false
                 
             // Energy Page
             case bottomLayer.pageEnergy.energy_ProgressBack:

@@ -62,11 +62,11 @@ func numberToString(value: Double, isInt: Bool = true) -> String {
             if billion >= 1000 {
                 let trillion = billion / 1000
                 residue = billion % 1000
-                return (residue == 0 ? "\(trillion) Trillion" : "\(trillion).\(residue / 100) Trillion")
+                return (residue == 0 ? "\(trillion) T" : "\(trillion).\(residue / 100) T")
             }
-            return (residue == 0 ? "\(billion) Billion" : "\(billion).\(residue / 100) Billion")
+            return (residue == 0 ? "\(billion) B" : "\(billion).\(residue / 100) B")
         }
-        return (residue == 0 ? "\(million) Million" : "\(million).\(residue / 10000) Million")
+        return (residue == 0 ? "\(million) M" : "\(million).\(residue / 10000) M")
     }
     if isInt {
         return String(number)

@@ -23,6 +23,7 @@ class IslandsScene: SKScene {
     var nowSelectNum: Int = 0
     
     var isShowTickAdd: Bool = false
+    var isFirstShowTickAdd: Bool = true
     var spentTimeLabel: SKLabelNode!
     
     override func didMoveToView(view: SKView) {
@@ -135,7 +136,8 @@ class IslandsScene: SKScene {
         }
         
         isShowTickAdd = false
-        RunAfterDelay(5) {
+        isFirstShowTickAdd = true
+        RunAfterDelay(3) {
             self.isShowTickAdd = true
         }
     }
@@ -325,9 +327,17 @@ class IslandsScene: SKScene {
     }
     
     func showTickAdd() {
+        if maps[0].tickAddDone && isFirstShowTickAdd {
+            for i in 0..<6 {
+                maps[i].tickAddDone = false
+            }
+            isFirstShowTickAdd = false
+            return
+        }
+        
         for i in 0..<6 {
             if maps[i].tickAddDone {
-                
+
                 let fadeout = SKAction.fadeOutWithDuration(1.5)
                 let moveup = SKAction.moveByX(0, y: 100 * framescale, duration: 1.5)
                 let group = SKAction.group([fadeout, moveup])
