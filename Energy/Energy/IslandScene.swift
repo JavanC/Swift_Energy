@@ -50,11 +50,12 @@ class IslandScene: SKScene {
 
             // Map Layer
             let mapLayerSize = CGSizeMake(tilesScaleSize.width * midTileSize.width, tilesScaleSize.height * midTileSize.height)
-            for count in 0..<maps.count {
-                maps[count].position = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
-                maps[count].setScale(framescale)
-                maps[count].zPosition = 1
-                addChild(maps[count])
+            for map in maps {
+                map.position = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
+                map.setScale(framescale)
+                map.hidden = true
+                map.zPosition = 1
+                addChild(map)
             }
             info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
 
@@ -159,7 +160,7 @@ class IslandScene: SKScene {
     
     func changeTouchTypeAndShowPage(touchType: TouchType, duration: Double = 0.0) {
         self.touchType = touchType
-        maps[nowMapNumber].runAction(SKAction.unhide())
+        maps[nowMapNumber].hidden = false
         bottomLayer.pageBuild.closeSelectInformation()
         if duration == 0 {
             buildingSelectLayer.showPage(false, duration: 0)
@@ -190,7 +191,6 @@ class IslandScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         let nodes = nodesAtPoint(location)
@@ -264,8 +264,6 @@ class IslandScene: SKScene {
                 for _ in 1...100 {
                     tickUpdata()
                 }
-//                for count in 0..<6 { maps[count].hidden = true }
-//                maps[nowMapNumber].hidden = false
                 
             // Energy Page
             case bottomLayer.pageEnergy.energy_ProgressBack:
@@ -482,7 +480,7 @@ class IslandScene: SKScene {
         } else {
             boostLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.waitForDuration(0.2), SKAction.hide()]))
         }
-        
+
         // Updata text imformation
         topLayer.moneyLabel.text = "Money: \(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd, isInt: false))"
         topLayer.researchLabel.text = "Research: \(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd, isInt: false))"
@@ -493,6 +491,7 @@ class IslandScene: SKScene {
     }
     
     func tickUpdata() {
+        
         if isBoost { return }
         if isPause { return }
         

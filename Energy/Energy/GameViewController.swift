@@ -161,7 +161,7 @@ class GameViewController: UIViewController {
                 for _ in 0..<pastSeconds {
                     ++boostTimeLess
                     ++spendTime
-                    for i in 0...1 {
+                    for i in 0..<6 {
                         // Update map data
                         maps[i].Update()
                         // Calculate money and research

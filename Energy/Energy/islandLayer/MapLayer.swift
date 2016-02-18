@@ -128,7 +128,7 @@ class BuildingMapLayer: SKSpriteNode {
         self.color = SKColor.whiteColor()
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
         self.anchorPoint = CGPoint(x: 0, y: 1)
-        self.name = "MapLayer"
+        self.name = "MapLayer \(mapNumber)"
         
         // Initialization map
         for _ in 0 ..< Int(mapSize.height) {
