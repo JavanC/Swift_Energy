@@ -21,6 +21,7 @@ class IslandsScene: SKScene {
     var mapsRange: [SKShapeNode] = []
     var selectMaps: [SKSpriteNode] = []
     var nowSelectNum: Int = 0
+    var lockeds: [SKShapeNode] = []
     
     var isShowTickAdd: Bool = false
     var isFirstShowTickAdd: Bool = true
@@ -84,6 +85,21 @@ class IslandsScene: SKScene {
             map6.position = CGPoint(x: 410 * framescale, y: 720 * framescale)
             addChild(map6)
             mapsRange.append(map6)
+            
+            for i in 0..<6 {
+                let locked = SKShapeNode(circleOfRadius: 30 * framescale)
+                locked.name = "locked \(i)"
+                locked.hidden = mapUnlockeds[i]
+                locked.fillColor = SKColor.grayColor()
+                locked.strokeColor = SKColor.whiteColor()
+                locked.lineWidth = 5 * framescale
+                locked.position = mapsRange[i].position
+                let img = SKSpriteNode(texture: iconAtlas.textureNamed("locked"))
+                img.size = CGSizeMake(40, 40)
+                locked.addChild(img)
+//                addChild(locked)
+                lockeds.append(locked)
+            }
             
             infoButton = SKSpriteNode(texture: iconAtlas.textureNamed("button_info"))
             infoButton.setScale(framescale)

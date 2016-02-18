@@ -43,6 +43,7 @@ var isSoundMute: Bool = false
 var isMusicMute: Bool = false
 var boostTime: Double = 1
 var boostTimeLess: Double = 1
+var mapUnlockeds = [Bool]()
 
 class MenuScene: SKScene {
     
@@ -61,9 +62,11 @@ class MenuScene: SKScene {
             
             let startGameButton = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             startGameButton.text = "touch to continute"
-            startGameButton.fontSize = 30 * framescale
+            startGameButton.fontSize = 40 * framescale
             startGameButton.fontColor = SKColor.blackColor()
-            startGameButton.position = CGPoint(x: 0, y: 0)
+            startGameButton.position = CGPoint(x: 0, y: -frame.height * 2 / 6)
+            let fadeinfadeout = SKAction.sequence([SKAction.fadeOutWithDuration(0.5), SKAction.fadeInWithDuration(0.5)])
+            startGameButton.runAction(SKAction.repeatActionForever(fadeinfadeout))
             background.addChild(startGameButton)
             
             contentCreated = true

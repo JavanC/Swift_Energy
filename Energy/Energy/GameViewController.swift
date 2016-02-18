@@ -124,6 +124,12 @@ class GameViewController: UIViewController {
         money     = 1000000000000000
         research  = 1000000000000000
         
+        // load maps unlocked
+        for count in 0..<6 {
+            mapUnlockeds.append(defaults.boolForKey("map\(count)_unlocked"))
+        }
+        mapUnlockeds[0] = true
+
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
             upgradeLevel[UpgradeType(rawValue: count)!] = defaults.integerForKey("upgradeData_\(count)")
@@ -185,6 +191,11 @@ class GameViewController: UIViewController {
         defaults.setInteger(spendTime, forKey: "spendTime")
         defaults.setBool(isPause, forKey: "isPause")
         defaults.setBool(isRebuild, forKey: "isRebuild")
+        
+        // save maps unlocked
+        for count in 0..<mapUnlockeds.count {
+            defaults.setBool(mapUnlockeds[count], forKey: "map\(count)_unlocked")
+        }
         
         // save upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
