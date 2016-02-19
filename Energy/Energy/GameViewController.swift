@@ -121,7 +121,8 @@ class GameViewController: UIViewController {
         isRebuild = defaults.boolForKey("isRebuild")
 
         //1000000000000000
-        money     = 1000000000000000
+        money     = 1000
+//        money     = 1000000000000000
         research  = 1000000000000000
         
         // load maps unlocked

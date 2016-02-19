@@ -23,9 +23,12 @@ class IslandsScene: SKScene {
     var nowSelectNum: Int = 0
     var lockeds: [SKShapeNode] = []
     
+    var confirmBubble: ConfirmBubble!
+    
     var isShowTickAdd: Bool = false
     var isFirstShowTickAdd: Bool = true
     var spentTimeLabel: SKLabelNode!
+    var moneyLabel: SKLabelNode!
     
     override func didMoveToView(view: SKView) {
         
@@ -87,19 +90,27 @@ class IslandsScene: SKScene {
             mapsRange.append(map6)
             
             for i in 0..<6 {
-                let locked = SKShapeNode(circleOfRadius: 30 * framescale)
+                let locked = SKShapeNode(circleOfRadius: 20 * framescale)
                 locked.name = "locked \(i)"
                 locked.hidden = mapUnlockeds[i]
                 locked.fillColor = SKColor.grayColor()
                 locked.strokeColor = SKColor.whiteColor()
-                locked.lineWidth = 5 * framescale
-                locked.position = mapsRange[i].position
-                let img = SKSpriteNode(texture: iconAtlas.textureNamed("locked"))
-                img.size = CGSizeMake(40, 40)
+                locked.lineWidth = 3 * framescale
+                locked.zPosition = 10
+                locked.position = CGPoint(x: mapsRange[i].position.x + 40 * framescale, y: mapsRange[i].position.y - 40 * framescale)
+                let img = SKSpriteNode(texture: iconAtlas.textureNamed("locked2"))
+                img.size = CGSizeMake(18 * framescale, 18 * framescale)
                 locked.addChild(img)
-//                addChild(locked)
+                addChild(locked)
                 lockeds.append(locked)
             }
+            
+            confirmBubble = ConfirmBubble(bubbleSize: CGSizeMake(frame.width * 0.8, frame.width * 0.5))
+            confirmBubble.alpha = 0
+            confirmBubble.hidden = true
+            confirmBubble.zPosition = 100
+            confirmBubble.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            self.addChild(confirmBubble)
             
             infoButton = SKSpriteNode(texture: iconAtlas.textureNamed("button_info"))
             infoButton.setScale(framescale)
@@ -109,7 +120,7 @@ class IslandsScene: SKScene {
             infoLayer = InfoLayer(frameSize: frame.size)
             infoLayer.alpha = 0
             infoLayer.hidden = true
-            infoLayer.zPosition = 10
+            infoLayer.zPosition = 100
             infoLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             self.addChild(infoLayer)
 
@@ -121,9 +132,18 @@ class IslandsScene: SKScene {
             settingLayer = SettingLayer(frameSize: frame.size)
             settingLayer.alpha = 0
             settingLayer.hidden = true
-            settingLayer.zPosition = 10
+            settingLayer.zPosition = 100
             settingLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             self.addChild(settingLayer)
+            
+            moneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+            moneyLabel.name = "money label"
+            moneyLabel.text = "0"
+            moneyLabel.fontSize = 40 * framescale
+            moneyLabel.fontColor = colorMoney
+            moneyLabel.horizontalAlignmentMode = .Left
+            moneyLabel.position = CGPoint(x: 20 * framescale, y: 20 * framescale)
+            addChild(moneyLabel)
             
             let label = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
             label.name = "spentTimeLabel"
@@ -145,6 +165,7 @@ class IslandsScene: SKScene {
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
                 self.settingLayer.containsPoint(CGPoint(x: 0, y: 0))
                 self.infoLayer.containsPoint(CGPoint(x: 0,y: 0))
+                self.confirmBubble.containsPoint(CGPoint(x: 0, y:0))
             }
             // remove first load  delay
             print("load 2")
@@ -156,6 +177,8 @@ class IslandsScene: SKScene {
         RunAfterDelay(3) {
             self.isShowTickAdd = true
         }
+        print("load 6")
+        
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else { return }
@@ -172,6 +195,7 @@ class IslandsScene: SKScene {
                         print("sound off")
                     } else {
                         settingLayer.soundButton.on()
+                        if !isSoundMute{ runAction(soundTap) }
                         print("sount on")
                     }
                 }
@@ -179,15 +203,18 @@ class IslandsScene: SKScene {
                     isMusicMute = !isMusicMute
                     if isMusicMute {
                         settingLayer.musicButton.off()
+                        if !isSoundMute{ runAction(soundTap) }
                         backgroundMusicPlayer.pause()
                         print("music off")
                     } else {
                         settingLayer.musicButton.on()
+                        if !isSoundMute{ runAction(soundTap) }
                         backgroundMusicPlayer.play()
                         print("music on")
                     }
                 }
                 if node == settingLayer.saveButton {
+                    if !isSoundMute{ runAction(soundTap) }
                     settingLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
                 }
             }
@@ -198,7 +225,27 @@ class IslandsScene: SKScene {
             for node in nodes {
                 if node.hidden { return }
                 if node == infoLayer.saveButton {
+                    if !isSoundMute{ runAction(soundTap) }
                     infoLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
+                }
+            }
+            return
+        }
+        
+        if confirmBubble.hidden == false {
+            for node in nodes {
+                if node.hidden { return }
+                if node == confirmBubble.OKButton || node == confirmBubble.cancelButton {
+                    confirmBubble.hideBubble()
+                    runAction(soundTap)
+                }
+                if node == confirmBubble.buyButton {
+                    confirmBubble.alpha = 0
+                    confirmBubble.hidden = true
+                    money -= confirmBubble.buyPrice
+                    mapUnlockeds[confirmBubble.islandNum] = true
+                    lockeds[confirmBubble.islandNum].hidden = true
+                    runAction(soundSell)
                 }
             }
             return
@@ -223,7 +270,7 @@ class IslandsScene: SKScene {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         
-        if settingLayer.hidden == false || infoLayer.hidden == false { return }
+        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false { return }
         
         var inMap = false
         for i in 0...5 {
@@ -253,16 +300,21 @@ class IslandsScene: SKScene {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         
-        if settingLayer.hidden == false || infoLayer.hidden == false { return }
+        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false { return }
         
         for i in 0...5 {
             if mapsRange[i].containsPoint(location) {
-                print("Map\(i+1)")
                 mapHighlight(0)
-                nowMapNumber = i
+                print("Map\(i+1)")
                 if !isSoundMute{ runAction(soundAction) }
-                let doors = SKTransition.fadeWithDuration(2)
-                self.view?.presentScene(islandScene, transition: doors)
+                
+                if !mapUnlockeds[i] {
+                    confirmBubble.showBubble(i)
+                } else {
+                    nowMapNumber = i
+                    let doors = SKTransition.fadeWithDuration(2)
+                    self.view?.presentScene(islandScene, transition: doors)
+                }
             }
         }
         
@@ -388,6 +440,8 @@ class IslandsScene: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         spentTimeLabel.text = hourToString(spendTime)
+        moneyLabel.text = numberToString(money, isInt: true)
         if isShowTickAdd { showTickAdd() }
+        confirmBubble.update()
     }
 }

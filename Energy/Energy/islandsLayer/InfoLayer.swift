@@ -10,9 +10,6 @@
 import SpriteKit
 
 class InfoLayer: SKNode {
-//    var soundButton: SwitchButton!
-//    var musicButton: SwitchButton!
-//    var resetButton: SKLabelNode!
     var saveButton: SKSpriteNode!
     
     init(frameSize: CGSize) {

@@ -1,0 +1,152 @@
+//
+//  confirmBubble.swift
+//  Energy
+//
+//  Created by javan.chen on 2016/2/19.
+//  Copyright © 2016年 Javan chen. All rights reserved.
+//
+
+import SpriteKit
+
+class ConfirmBubble: SKNode {
+    var islandName: SKLabelNode!
+    var islandNum: Int = 1
+    var buyPrice: Double = 0
+    var priceLabel: SKLabelNode!
+    var buyInfoLabel: SKLabelNode!
+    var OKButton: SKShapeNode!
+    var cancelButton: SKShapeNode!
+    var buyButton: SKShapeNode!
+    
+    init(bubbleSize: CGSize) {
+        super.init()
+        
+        let gap = bubbleSize.height / 10
+        
+        let bg = SKShapeNode(rectOfSize: bubbleSize, cornerRadius: 10 * framescale)
+        bg.name = "background"
+        bg.fillColor = colorBlue4
+        bg.strokeColor = colorBlue2
+        bg.lineWidth = 5 * framescale
+        bg.alpha = 0.9
+        addChild(bg)
+
+        islandName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        islandName.name = "islaneName"
+        islandName.text = "Small island"
+        islandName.fontSize = 35 * framescale
+        islandName.verticalAlignmentMode = .Center
+        islandName.position = CGPoint(x: 0, y: gap * 3.7)
+        addChild(islandName)
+        
+        let line1 = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width - 40, 0.5 * framescale))
+        line1.name = "line1"
+        line1.alpha = 0.5
+        line1.fillColor = SKColor.whiteColor()
+        line1.position = CGPoint(x: 0, y: gap * 2.8)
+        addChild(line1)
+        
+        priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        priceLabel.name = "priceLabel"
+        priceLabel.text = "10000"
+        priceLabel.fontColor = colorMoney
+        priceLabel.fontSize = 35 * framescale
+        priceLabel.verticalAlignmentMode = .Center
+        priceLabel.position = CGPoint(x: 0, y: gap * 1.2)
+        addChild(priceLabel)
+        
+        buyInfoLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        buyInfoLabel.name = "buyLabel"
+        buyInfoLabel.text = "You don't have enough money."
+        buyInfoLabel.fontSize = 25 * framescale
+        buyInfoLabel.verticalAlignmentMode = .Center
+        buyInfoLabel.position = CGPoint(x: 0, y: gap * -0.6)
+        addChild(buyInfoLabel)
+        
+        OKButton = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width - 40 * framescale, gap * 4 - 40 * framescale), cornerRadius: 5 * framescale)
+        OKButton.name = "OKButton"
+        OKButton.fillColor = colorBlue2
+        OKButton.lineWidth = 0
+        OKButton.position = CGPoint(x: 0, y: gap * -3)
+        let OKLabel = SKLabelNode(fontNamed: (fontNamed: "SanFranciscoRounded-Black"))
+        OKLabel.name = "OKLabel"
+        OKLabel.text = "OK"
+        OKLabel.fontSize = 40 * framescale
+        OKLabel.verticalAlignmentMode = .Center
+        OKButton.addChild(OKLabel)
+        addChild(OKButton)
+        
+        cancelButton = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width / 2 - 30 * framescale, gap * 4 - 40 * framescale), cornerRadius: 5 * framescale)
+        cancelButton.name = "cancelButton"
+        cancelButton.fillColor = colorCancel
+        cancelButton.lineWidth = 0
+        cancelButton.position = CGPoint(x: -bubbleSize.width / 4 + 5 * framescale, y: gap * -3)
+        let cancelLabel = SKLabelNode(fontNamed: (fontNamed: "SanFranciscoRounded-Black"))
+        cancelLabel.name = "cancelLabel"
+        cancelLabel.text = "Cancel"
+        cancelLabel.fontSize = 40 * framescale
+        cancelLabel.verticalAlignmentMode = .Center
+        cancelButton.addChild(cancelLabel)
+        addChild(cancelButton)
+        
+        buyButton = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width / 2 - 30 * framescale, gap * 4 - 40 * framescale), cornerRadius: 5 * framescale)
+        buyButton.name = "buyButton"
+        buyButton.fillColor = colorResearch
+        buyButton.lineWidth = 0
+        buyButton.position = CGPoint(x: bubbleSize.width / 4 - 5 * framescale, y: gap * -3)
+        let buyLabel = SKLabelNode(fontNamed: (fontNamed: "SanFranciscoRounded-Black"))
+        buyLabel.name = "buyLabel"
+        buyLabel.text = "Buy"
+        buyLabel.fontSize = 40 * framescale
+        buyLabel.verticalAlignmentMode = .Center
+        buyButton.addChild(buyLabel)
+        addChild(buyButton)
+    }
+    
+    func showBubble(islandNum: Int) {
+        self.islandNum = islandNum
+        switch islandNum {
+        case 0:
+            buyPrice = 1
+            islandName.text = "Small island"
+        case 1:
+            buyPrice = 10
+            islandName.text = "island 2"
+        case 2:
+            buyPrice = 100
+            islandName.text = "island 3"
+        case 3:
+            buyPrice = 1000
+            islandName.text = "island 4"
+        case 4:
+            buyPrice = 10000
+            islandName.text = "island 5"
+        case 5:
+            buyPrice = 100000
+            islandName.text = "island 6"
+        default: break
+        }
+        priceLabel.text = "\(numberToString(buyPrice, isInt: true))"
+
+        self.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+    }
+    func hideBubble() {
+        self.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
+    }
+    func update() {
+        if money < buyPrice {
+            buyInfoLabel.text = "You don't have enough money."
+            OKButton.hidden = false
+            cancelButton.hidden = true
+            buyButton.hidden = true
+        } else {
+            buyInfoLabel.text = "Buy the island to building."
+            OKButton.hidden = true
+            cancelButton.hidden = false
+            buyButton.hidden = false
+        }
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
