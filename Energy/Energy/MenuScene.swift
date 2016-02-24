@@ -71,11 +71,19 @@ class MenuScene: SKScene {
             background.addChild(startGameButton)
             
             contentCreated = true
-            
+            // remove first touch delay
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+                self.background.containsPoint(CGPoint(x: 0, y: 0))
+            }
             // first load remove delay
             print("load 1")
             self.view?.presentScene(islandsScene)
         }
+//        RunAfterDelay(5) {
+//        }
+        print("load 6")
+//        let doors = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 3)
+//        self.view?.presentScene(islandsScene, transition: doors)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

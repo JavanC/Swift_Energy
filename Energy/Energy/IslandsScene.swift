@@ -138,14 +138,14 @@ class IslandsScene: SKScene {
             
             moneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             moneyLabel.name = "money label"
-            moneyLabel.text = "0"
+            moneyLabel.text = numberToString(money, isInt: true)
             moneyLabel.fontSize = 40 * framescale
             moneyLabel.fontColor = colorMoney
             moneyLabel.horizontalAlignmentMode = .Left
             moneyLabel.position = CGPoint(x: 20 * framescale, y: 20 * framescale)
             addChild(moneyLabel)
             
-            let label = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            let label = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             label.name = "spentTimeLabel"
             label.text = "SPEND  TIME"
             label.fontSize = 20 * framescale
@@ -153,7 +153,7 @@ class IslandsScene: SKScene {
             label.position = CGPoint(x: frame.width / 2, y: frame.height / 8)
 //            addChild(label)
             
-            spentTimeLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            spentTimeLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             spentTimeLabel.name = "spentTimeLabel"
             spentTimeLabel.fontSize = 30 * framescale
             spentTimeLabel.fontColor = SKColor.whiteColor()
@@ -177,8 +177,7 @@ class IslandsScene: SKScene {
         RunAfterDelay(3) {
             self.isShowTickAdd = true
         }
-        print("load 6")
-        
+        print("load 7")
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else { return }
@@ -412,7 +411,7 @@ class IslandsScene: SKScene {
                 let tickAction = SKAction.sequence([group, SKAction.removeFromParent()])
                 
                 if maps[i].money_TickAdd != 0 {
-                    let addMoney = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+                    let addMoney = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
                     addMoney.name = "add Money"
                     addMoney.text = "+\(numberToString(maps[i].money_TickAdd))"
                     addMoney.fontColor = colorMoney
@@ -423,7 +422,7 @@ class IslandsScene: SKScene {
                 }
                 
                 if maps[i].research_TickAdd != 0 {
-                    let addResearch = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+                    let addResearch = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
                     addResearch.name = "add research"
                     addResearch.text = "+\(numberToString(maps[i].research_TickAdd))"
                     addResearch.fontColor = colorResearch
@@ -439,9 +438,9 @@ class IslandsScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        spentTimeLabel.text = hourToString(spendTime)
-        moneyLabel.text = numberToString(money, isInt: true)
+//        spentTimeLabel.text = hourToString(spendTime)
+//        moneyLabel.text = numberToString(money, isInt: true)
         if isShowTickAdd { showTickAdd() }
-        confirmBubble.update()
+//        confirmBubble.update()
     }
 }

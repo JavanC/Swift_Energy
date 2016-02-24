@@ -416,6 +416,7 @@ class UpgradeScene: SKScene {
             self.view?.presentScene(researchScene)
         }
         updateElement()
+        print("load 9")
     }
 
     func updateElement() {

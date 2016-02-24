@@ -423,8 +423,8 @@ class ResearchScene: SKScene {
             print("load 5")
             self.view?.presentScene(menuScene)
         }
-        
         updateElement()
+        print("load 10")
     }
     
     func updateElement() {

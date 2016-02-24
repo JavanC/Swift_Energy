@@ -137,6 +137,7 @@ class IslandScene: SKScene {
         } else {
             bottomLayer.pageBuild.rebuildOff()
         }
+        print("load 8")
     }
     
     func drawBoostTimeCircle(percent: Double) {
