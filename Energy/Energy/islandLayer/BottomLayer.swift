@@ -15,14 +15,14 @@ class InformationLabel: SKNode {
     init(title: String, fontSize: CGFloat, valueColor: SKColor) {
         
         super.init()
-        titleLabel                         = SKLabelNode(fontNamed: "ArialMT")
+        titleLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         titleLabel.name                    = "title"
         titleLabel.text                    = "\(title) :"
         titleLabel.fontSize                = fontSize
         titleLabel.fontColor               = SKColor.whiteColor()
         titleLabel.horizontalAlignmentMode = .Left
         addChild(titleLabel)
-        valueLabel                         = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        valueLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         valueLabel.name                    = "value"
         valueLabel.text                    = ""
         valueLabel.fontSize                = fontSize
@@ -449,14 +449,14 @@ class PageEnergy: SKSpriteNode {
         energy_ProgressFront.position              = CGPoint(x: 0, y: size.height / 2)
         addChild(energy_ProgressFront)
 
-        energyLabel                                = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        energyLabel                                = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         energyLabel.name                           = "EnergyLabel"
         energyLabel.fontColor                      = SKColor.whiteColor()
         energyLabel.fontSize                       = size.height / 7
         energyLabel.position                       = CGPoint(x: size.width / 2, y: size.height * 3 / 4)
         addChild(energyLabel)
 
-        energyTickAddLabel                         = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        energyTickAddLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         energyTickAddLabel.name                    = "energyTickAddLabel"
         energyTickAddLabel.fontColor               = colorEnergy
         energyTickAddLabel.fontSize                = size.height / 7
@@ -464,7 +464,7 @@ class PageEnergy: SKSpriteNode {
         energyTickAddLabel.position                = CGPoint(x: size.width - size.height / 7, y: size.height * 3 / 4)
         addChild(energyTickAddLabel)
 
-        let label                                  = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        let label                                  = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         label.name                                 = "ExplanationLabel"
         label.text                                 = "TOUCH  TO  SELL  ENERGY"
         label.fontColor                            = colorBlue2

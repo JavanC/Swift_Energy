@@ -238,7 +238,7 @@ class UpgradeElement: SKNode {
         addChild(image)
     
         // name
-        let upgradeName = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let upgradeName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         upgradeName.name = "upgradeName"
         upgradeName.text = name
         upgradeName.fontColor = SKColor.whiteColor()
@@ -249,7 +249,7 @@ class UpgradeElement: SKNode {
         addChild(upgradeName)
     
         // comment
-        let commentLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let commentLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         commentLabel.name = "commentLabel"
         commentLabel.text = comment
         commentLabel.fontColor = SKColor.lightGrayColor()
@@ -260,7 +260,7 @@ class UpgradeElement: SKNode {
         addChild(commentLabel)
         
         // level and money label
-        let infoLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let infoLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         infoLabel.name = "levelLabel"
         infoLabel.text = "Lv.     Price:"
         infoLabel.fontColor = SKColor.lightGrayColor()
@@ -271,7 +271,7 @@ class UpgradeElement: SKNode {
         addChild(infoLabel)
         
         // level
-        let levelLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let levelLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         levelLabel.name = "levelValue"
         levelLabel.text = "\(level)"
         levelLabel.fontColor = colorBlue1
@@ -282,7 +282,7 @@ class UpgradeElement: SKNode {
         addChild(levelLabel)
     
         // price
-        let priceLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         priceLabel.name = "priceLabel"
         priceLabel.text = numberToString(upgradePrice)
         priceLabel.fontColor = colorMoney
@@ -332,7 +332,6 @@ class UpgradeElement: SKNode {
 class UpgradeScene: SKScene {
     
     var contentCreated: Bool = false
-    var firstLoad: Bool = true
     var backButton: SKSpriteNode!
     var nowPage: Int = 1
     var maxPage: Int = 1
@@ -364,7 +363,7 @@ class UpgradeScene: SKScene {
             upgradeImage.position = topCenter
             addChild(upgradeImage)
             
-            moneyLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            moneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             moneyLabel.name = "top label"
             moneyLabel.fontSize = unitHeight * 0.2
             moneyLabel.fontColor = colorMoney
@@ -374,7 +373,7 @@ class UpgradeScene: SKScene {
             moneyLabel.position = CGPoint(x: frame.size.width * 0.05, y: frame.size.height - unitHeight * 0.9)
             addChild(moneyLabel)
             
-            itemLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            itemLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             itemLabel.name = "item label"
             itemLabel.fontSize = unitHeight * 0.2
             itemLabel.fontColor = colorMoney
@@ -409,21 +408,14 @@ class UpgradeScene: SKScene {
             upgradeLayer.position = CGPoint(x: 0, y: unitHeight)
             addChild(upgradeLayer)
             
-            updateElement()
-            
             contentCreated = true
             
-            // remove first touch delay
-            upgradeLayer.containsPoint(CGPoint(x: 0, y: 0))
             // remove first load delay
             print("load 3")
             self.view?.presentScene(islandScene)
         }
-        if firstLoad {
-            firstLoad = false
-        } else {
-            updateElement()
-        }
+        
+        updateElement()
         print("load 9")
     }
 

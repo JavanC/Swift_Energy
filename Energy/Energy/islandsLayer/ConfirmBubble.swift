@@ -68,7 +68,7 @@ class ConfirmBubble: SKNode {
         OKButton.fillColor = colorBlue2
         OKButton.lineWidth = 0
         OKButton.position = CGPoint(x: 0, y: gap * -3)
-        let OKLabel = SKLabelNode(fontNamed: (fontNamed: "SanFranciscoRounded-Black"))
+        let OKLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         OKLabel.name = "OKLabel"
         OKLabel.text = "OK"
         OKLabel.fontSize = 40 * framescale
@@ -81,7 +81,7 @@ class ConfirmBubble: SKNode {
         cancelButton.fillColor = colorCancel
         cancelButton.lineWidth = 0
         cancelButton.position = CGPoint(x: -bubbleSize.width / 4 + 5 * framescale, y: gap * -3)
-        let cancelLabel = SKLabelNode(fontNamed: (fontNamed: "SanFranciscoRounded-Black"))
+        let cancelLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         cancelLabel.name = "cancelLabel"
         cancelLabel.text = "Cancel"
         cancelLabel.fontSize = 40 * framescale
@@ -94,7 +94,7 @@ class ConfirmBubble: SKNode {
         buyButton.fillColor = colorResearch
         buyButton.lineWidth = 0
         buyButton.position = CGPoint(x: bubbleSize.width / 4 - 5 * framescale, y: gap * -3)
-        let buyLabel = SKLabelNode(fontNamed: (fontNamed: "SanFranciscoRounded-Black"))
+        let buyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         buyLabel.name = "buyLabel"
         buyLabel.text = "Buy"
         buyLabel.fontSize = 40 * framescale

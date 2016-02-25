@@ -28,7 +28,7 @@ class BuildingSelectElement: SKNode {
         image.position                       = CGPoint(x: gap + image.size.width / 2, y: size.height / 2)
         addChild(image)
 
-        let buildingName                     = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let buildingName                     = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         buildingName.name                    = "buildingName"
         buildingName.text                    = "\(BuildingData(buildType: buildType).name)"
         buildingName.fontColor               = SKColor.whiteColor()

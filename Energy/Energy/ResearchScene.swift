@@ -256,7 +256,7 @@ class ResearchElement: SKNode {
         addChild(image)
         
         // name
-        let researchName = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let researchName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         researchName.name = "researchName"
         researchName.text = name
         researchName.fontColor = SKColor.whiteColor()
@@ -267,7 +267,7 @@ class ResearchElement: SKNode {
         addChild(researchName)
         
         // comment
-        let commentLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let commentLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         commentLabel.name = "commentLabel"
         commentLabel.text = comment
         commentLabel.fontColor = SKColor.lightGrayColor()
@@ -278,7 +278,7 @@ class ResearchElement: SKNode {
         addChild(commentLabel)
         
         // research
-        let researchLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         researchLabel.name = "researchLabel"
         researchLabel.text = "Research:"
         researchLabel.fontColor = SKColor.lightGrayColor()
@@ -289,7 +289,7 @@ class ResearchElement: SKNode {
         addChild(researchLabel)
         
         // price
-        let priceLabel = SKLabelNode(fontNamed: "SanFranciscoDisplay-Semibold")
+        let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         priceLabel.name = "priceLabel"
         priceLabel.text = numberToString(researchPrice)
         priceLabel.fontColor = colorResearch
@@ -339,7 +339,6 @@ class ResearchElement: SKNode {
 class ResearchScene: SKScene {
     
     var contentCreated: Bool = false
-    var firstLoad: Bool = true
     var backButton: SKSpriteNode!
     var nowPage: Int = 1
     var maxPage: Int = 1
@@ -372,7 +371,7 @@ class ResearchScene: SKScene {
             researchImage.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI_2), duration: 5)))
             addChild(researchImage)
             
-            researchLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             researchLabel.name = "top label"
             researchLabel.fontSize = unitHeight * 0.2
             researchLabel.fontColor = colorResearch
@@ -382,7 +381,7 @@ class ResearchScene: SKScene {
             researchLabel.position = CGPoint(x: frame.size.width * 0.05, y: frame.size.height - unitHeight * 0.9)
             addChild(researchLabel)
             
-            itemLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            itemLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             itemLabel.name = "item label"
             itemLabel.fontSize = unitHeight * 0.2
             itemLabel.fontColor = colorResearch
@@ -417,20 +416,14 @@ class ResearchScene: SKScene {
             researchdeLayer.position = CGPoint(x: 0, y: unitHeight)
             addChild(researchdeLayer)
             
-            updateElement()
-            
             contentCreated = true
-            // remove first touch delay
-            researchdeLayer.containsPoint(CGPoint(x: 0, y: 0))
+            
             // remove first load delay
             print("load 2")
             self.view?.presentScene(upgradeScene)
         }
-        if firstLoad {
-            firstLoad = false
-        } else {
-            updateElement()
-        }
+        
+        updateElement()
         print("load 10")
     }
     

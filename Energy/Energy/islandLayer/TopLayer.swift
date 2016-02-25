@@ -41,7 +41,7 @@ class TopLayer: SKSpriteNode {
         addChild(buttonPlayPause)
 
         let labelsize                         = (self.size.height) * 2 / 7
-        moneyLabel                            = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        moneyLabel                            = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         moneyLabel.name                       = "MoneyLabel"
         moneyLabel.fontColor                  = colorMoney
         moneyLabel.fontSize                   = labelsize
@@ -50,7 +50,7 @@ class TopLayer: SKSpriteNode {
         moneyLabel.position                   = CGPoint(x: tilesScaleSize.width + gap * 2, y: size.height * 5 / 7)
         addChild(moneyLabel)
 
-        researchLabel                         = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        researchLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         researchLabel.name                    = "ResearchLabel"
         researchLabel.fontColor               = colorResearch
         researchLabel.fontSize                = labelsize

@@ -22,7 +22,7 @@ class InfoLayer: SKNode {
         bg.alpha = 0.8
         addChild(bg)
         
-        let energyLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        let energyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         energyLabel.name = "energyLabel"
         energyLabel.text = "Energy"
         energyLabel.fontSize = 80 * framescale
@@ -30,7 +30,7 @@ class InfoLayer: SKNode {
         energyLabel.position = CGPoint(x: 0, y: gap * 7)
         addChild(energyLabel)
         
-        let developerLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        let developerLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         developerLabel.name = "developerLabel"
         developerLabel.text = "Developer"
         developerLabel.fontSize = 30 * framescale
@@ -38,7 +38,7 @@ class InfoLayer: SKNode {
         developerLabel.position = CGPoint(x: 0, y: gap * 3)
         addChild(developerLabel)
         
-        let developerNameLabel = SKLabelNode(fontNamed: "SanFranciscoText-LightItalic")
+        let developerNameLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Thin")
         developerNameLabel.name = "developerNameLabel"
         developerNameLabel.text = "Javan Chen"
         developerNameLabel.fontSize = 25 * framescale
@@ -53,7 +53,7 @@ class InfoLayer: SKNode {
         line1.position = CGPoint(x: 0, y: gap * 1)
         addChild(line1)
         
-        let artDesignLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        let artDesignLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         artDesignLabel.name = "artDesignLabel"
         artDesignLabel.text = "Art Design"
         artDesignLabel.fontSize = 30 * framescale
@@ -61,7 +61,7 @@ class InfoLayer: SKNode {
         artDesignLabel.position = CGPoint(x: 0, y: gap * 0)
         addChild(artDesignLabel)
         
-        let artDesignNameLabel = SKLabelNode(fontNamed: "SanFranciscoText-LightItalic")
+        let artDesignNameLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Thin")
         artDesignNameLabel.name = "artDesignNameLabel"
         artDesignNameLabel.text = "Javan Chen"
         artDesignNameLabel.fontSize = 25 * framescale
@@ -76,7 +76,7 @@ class InfoLayer: SKNode {
         line2.position = CGPoint(x: 0, y: gap * -2)
         addChild(line2)
         
-        let musicDesignLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+        let musicDesignLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         musicDesignLabel.name = "musicDesignLabel"
         musicDesignLabel.text = "Music Design"
         musicDesignLabel.fontSize = 30 * framescale
@@ -84,7 +84,7 @@ class InfoLayer: SKNode {
         musicDesignLabel.position = CGPoint(x: 0, y: gap * -3)
         addChild(musicDesignLabel)
         
-        let musicDesignNameLabel = SKLabelNode(fontNamed: "SanFranciscoText-LightItalic")
+        let musicDesignNameLabel = SKLabelNode(fontNamed: "SanFranciscoText-Thin")
         musicDesignNameLabel.name = "musicDesignNameLabel"
         musicDesignNameLabel.text = "Music Atelier Amacha"
         musicDesignNameLabel.fontSize = 25 * framescale

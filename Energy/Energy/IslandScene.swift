@@ -8,7 +8,6 @@
 
 import SpriteKit
 
-
 class IslandScene: SKScene {
     
     var contentCreated: Bool = false
@@ -91,14 +90,14 @@ class IslandScene: SKScene {
             boostBG.name = "boostBG"
             boostBG.alpha = 0.7
             boostLayer.addChild(boostBG)
-            let boostLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            let boostLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             boostLabel.name = "boostLabel"
             boostLabel.text = "TIME  REPLY"
             boostLabel.fontColor = SKColor.whiteColor()
             boostLabel.fontSize = 50 * framescale
             boostLabel.verticalAlignmentMode = .Center
             boostLayer.addChild(boostLabel)
-            let boostPSLabel = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            let boostPSLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             boostPSLabel.name = "boostPSLabel"
             boostPSLabel.text = "Max reply one hour."
             boostPSLabel.fontColor = SKColor.whiteColor()
@@ -111,26 +110,27 @@ class IslandScene: SKScene {
             contentCreated = true
             // remove first touch delay
 //            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
-                self.buildingSelectLayer.containsPoint(CGPoint(x: 0, y: 0))
+//                self.topLayer.containsPoint(CGPoint(x: 0, y: 0))
+//                self.bottomLayer.containsPoint(CGPoint(x: 0, y: 0))
+//                self.buildingSelectLayer.containsPoint(CGPoint(x: 0, y: 0))
 //            }
             // remove first load delay
             print("load 4")
             self.view?.presentScene(islandsScene)
         }
-        
         // Only show now map
         for count in 0..<6 { maps[count].hidden = true }
         maps[nowMapNumber].hidden = false
-        
+
         // back to Energy type
         changeTouchTypeAndShowPage(.Energy, duration: 0)
-        
+
         // update build page image show
         bottomLayer.pageBuild.updateImageShow()
         
         // update boostLayer hidden
         boostLayer.hidden = !isBoost
-        
+
         // update rebuild button
         if isRebuild {
             bottomLayer.pageBuild.rebuildOn()
@@ -174,12 +174,12 @@ class IslandScene: SKScene {
             bottomLayer.showPage(BottomLayer.PageType.PageInformation, duration: duration)
             
         case .Energy:
+            bottomLayer.showPage(BottomLayer.PageType.PageEnergy, duration: duration)
             if duration == 0 {
                 buttonLayer.beginButtonEnergy()
             } else {
                 buttonLayer.tapButtonEnergy(duration)
             }
-            bottomLayer.showPage(BottomLayer.PageType.PageEnergy, duration: duration)
             
         case .Builded:
             buttonLayer.tapButtonBuild(duration)
@@ -201,9 +201,7 @@ class IslandScene: SKScene {
                 if node.hidden { return }
                 if node == topLayer.buttonMenu {
                     print("Menu Button")
-                    changeTouchTypeAndShowPage(touchType)
-                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Left, duration: 0.3)
-                    self.view?.presentScene(islandsScene, transition: doors)
+                    self.view?.presentScene(islandsScene, transition: door_Fade)
                 }
             }
             return
@@ -216,7 +214,6 @@ class IslandScene: SKScene {
             case topLayer.buttonMenu:
                 print("Menu Button")
                 if !isSoundMute{ runAction(soundTap) }
-                changeTouchTypeAndShowPage(touchType)
                 self.view?.presentScene(islandsScene, transition: door_Fade)
                 
             case topLayer.buttonPlayPause:

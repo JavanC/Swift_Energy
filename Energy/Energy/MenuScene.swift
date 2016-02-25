@@ -65,7 +65,7 @@ class MenuScene: SKScene {
             background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(background)
             
-            let startGameButton = SKLabelNode(fontNamed: "SanFranciscoText-BoldItalic")
+            let startGameButton = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             startGameButton.text = "touch to continute"
             startGameButton.fontSize = 40 * framescale
             startGameButton.fontColor = SKColor.blackColor()
