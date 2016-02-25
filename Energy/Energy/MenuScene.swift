@@ -18,6 +18,9 @@ var colorBlue3 = UIColor(red: 0.067, green: 0.310, blue: 0.490, alpha: 1.000)
 var colorBlue4 = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000) // #02374B
 var colorBoost = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000) // #FF9800
 var colorCancel = UIColor(red: 0.898, green: 0.224, blue: 0.282, alpha: 1.000)
+let door_Up = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 3)
+let door_Fade = SKTransition.fadeWithDuration(2)
+let door_Float = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
 
 // Game Data
 enum BuildingType: Int {
@@ -48,6 +51,7 @@ var mapUnlockeds = [Bool]()
 
 class MenuScene: SKScene {
     
+    var firstLoad: Bool = true
     var contentCreated: Bool = false
     var background: SKSpriteNode!
     
@@ -72,18 +76,24 @@ class MenuScene: SKScene {
             
             contentCreated = true
             // remove first touch delay
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+            
                 self.background.containsPoint(CGPoint(x: 0, y: 0))
-            }
+//            }
             // first load remove delay
             print("load 1")
-            self.view?.presentScene(islandsScene)
+            self.view?.presentScene(researchScene)
         }
-//        RunAfterDelay(5) {
-//        }
-        print("load 6")
-//        let doors = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 3)
-//        self.view?.presentScene(islandsScene, transition: doors)
+        if firstLoad {
+            print("load 6")
+            firstLoad = false
+        } else {
+            print("load 11")
+            RunAfterDelay(1){
+                print("load atlas done!")
+                self.view?.presentScene(islandsScene, transition: door_Up)
+            }
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

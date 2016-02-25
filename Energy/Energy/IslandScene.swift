@@ -110,12 +110,12 @@ class IslandScene: SKScene {
             
             contentCreated = true
             // remove first touch delay
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
                 self.buildingSelectLayer.containsPoint(CGPoint(x: 0, y: 0))
-            }
+//            }
             // remove first load delay
-            print("load 3")
-            self.view?.presentScene(upgradeScene)
+            print("load 4")
+            self.view?.presentScene(islandsScene)
         }
         
         // Only show now map
@@ -212,14 +212,12 @@ class IslandScene: SKScene {
         for node in nodes {
             if node.hidden { return }
             switch node {
-                
             // Button
             case topLayer.buttonMenu:
                 print("Menu Button")
                 if !isSoundMute{ runAction(soundTap) }
                 changeTouchTypeAndShowPage(touchType)
-                let doors = SKTransition.fadeWithDuration(2)
-                self.view?.presentScene(islandsScene, transition: doors)
+                self.view?.presentScene(islandsScene, transition: door_Fade)
                 
             case topLayer.buttonPlayPause:
                 print("Pause: \(isPause)")
@@ -247,8 +245,7 @@ class IslandScene: SKScene {
                 if !isSoundMute{ runAction(soundClick) }
                 buttonLayer.tapButtonUpgrade()
                 RunAfterDelay(0.8) {
-                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
-                    self.view?.presentScene(upgradeScene, transition: doors)
+                    self.view?.presentScene(upgradeScene, transition: door_Float)
                 }
                 
             case buttonLayer.buttonResearch:
@@ -256,8 +253,7 @@ class IslandScene: SKScene {
                 if !isSoundMute{ runAction(soundClick) }
                 buttonLayer.tapButtonResearch()
                 RunAfterDelay(0.8) {
-                    let doors = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
-                    self.view?.presentScene(researchScene, transition: doors)
+                    self.view?.presentScene(researchScene, transition: door_Float)
                 }
                 
             // GMMMMM

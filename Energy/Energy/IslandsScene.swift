@@ -162,14 +162,14 @@ class IslandsScene: SKScene {
             
             contentCreated = true
             // remove first touch delay
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
                 self.settingLayer.containsPoint(CGPoint(x: 0, y: 0))
                 self.infoLayer.containsPoint(CGPoint(x: 0,y: 0))
                 self.confirmBubble.containsPoint(CGPoint(x: 0, y:0))
-            }
+//            }
             // remove first load  delay
-            print("load 2")
-            self.view?.presentScene(islandScene)
+            print("load 5")
+            self.view?.presentScene(menuScene)
         }
         
         isShowTickAdd = false
@@ -311,8 +311,7 @@ class IslandsScene: SKScene {
                     confirmBubble.showBubble(i)
                 } else {
                     nowMapNumber = i
-                    let doors = SKTransition.fadeWithDuration(2)
-                    self.view?.presentScene(islandScene, transition: doors)
+                    self.view?.presentScene(islandScene, transition: door_Fade)
                 }
             }
         }
@@ -438,9 +437,9 @@ class IslandsScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-//        spentTimeLabel.text = hourToString(spendTime)
-//        moneyLabel.text = numberToString(money, isInt: true)
+        spentTimeLabel.text = hourToString(spendTime)
+        moneyLabel.text = numberToString(money, isInt: true)
         if isShowTickAdd { showTickAdd() }
-//        confirmBubble.update()
+        confirmBubble.update()
     }
 }

@@ -339,6 +339,7 @@ class ResearchElement: SKNode {
 class ResearchScene: SKScene {
     
     var contentCreated: Bool = false
+    var firstLoad: Bool = true
     var backButton: SKSpriteNode!
     var nowPage: Int = 1
     var maxPage: Int = 1
@@ -416,14 +417,20 @@ class ResearchScene: SKScene {
             researchdeLayer.position = CGPoint(x: 0, y: unitHeight)
             addChild(researchdeLayer)
             
+            updateElement()
+            
             contentCreated = true
             // remove first touch delay
             researchdeLayer.containsPoint(CGPoint(x: 0, y: 0))
             // remove first load delay
-            print("load 5")
-            self.view?.presentScene(menuScene)
+            print("load 2")
+            self.view?.presentScene(upgradeScene)
         }
-        updateElement()
+        if firstLoad {
+            firstLoad = false
+        } else {
+            updateElement()
+        }
         print("load 10")
     }
     

@@ -332,6 +332,7 @@ class UpgradeElement: SKNode {
 class UpgradeScene: SKScene {
     
     var contentCreated: Bool = false
+    var firstLoad: Bool = true
     var backButton: SKSpriteNode!
     var nowPage: Int = 1
     var maxPage: Int = 1
@@ -408,14 +409,21 @@ class UpgradeScene: SKScene {
             upgradeLayer.position = CGPoint(x: 0, y: unitHeight)
             addChild(upgradeLayer)
             
+            updateElement()
+            
             contentCreated = true
+            
             // remove first touch delay
             upgradeLayer.containsPoint(CGPoint(x: 0, y: 0))
             // remove first load delay
-            print("load 4")
-            self.view?.presentScene(researchScene)
+            print("load 3")
+            self.view?.presentScene(islandScene)
         }
-        updateElement()
+        if firstLoad {
+            firstLoad = false
+        } else {
+            updateElement()
+        }
         print("load 9")
     }
 

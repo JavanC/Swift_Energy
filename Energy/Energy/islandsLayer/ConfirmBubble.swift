@@ -134,17 +134,17 @@ class ConfirmBubble: SKNode {
         self.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
     }
     func update() {
-//        if money < buyPrice {
-//            buyInfoLabel.text = "You don't have enough money."
-//            OKButton.hidden = false
-//            cancelButton.hidden = true
-//            buyButton.hidden = true
-//        } else {
-//            buyInfoLabel.text = "Buy the island to building."
-//            OKButton.hidden = true
-//            cancelButton.hidden = false
-//            buyButton.hidden = false
-//        }
+        if money < buyPrice {
+            buyInfoLabel.text = "You don't have enough money."
+            OKButton.hidden = false
+            cancelButton.hidden = true
+            buyButton.hidden = true
+        } else {
+            buyInfoLabel.text = "Buy the island to building."
+            OKButton.hidden = true
+            cancelButton.hidden = false
+            buyButton.hidden = false
+        }
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
