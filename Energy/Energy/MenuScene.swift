@@ -90,7 +90,6 @@ class MenuScene: SKScene {
         } else {
             print("load 11")
             RunAfterDelay(1){
-                print("load atlas done!")
                 self.view?.presentScene(islandsScene, transition: door_Up)
             }
         }

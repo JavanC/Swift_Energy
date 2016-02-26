@@ -236,18 +236,19 @@ class UpgradeElement: SKNode {
         let image = BuildingData(buildType: imageType).image("image")
         image.position = CGPoint(x: size.height / 2, y: gap + image.size.width / 2)
         addChild(image)
-    
+        
         // name
         let upgradeName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         upgradeName.name = "upgradeName"
         upgradeName.text = name
         upgradeName.fontColor = SKColor.whiteColor()
         upgradeName.fontSize = image.size.height * 2 / 5
+        
         upgradeName.horizontalAlignmentMode = .Left
         upgradeName.verticalAlignmentMode = .Top
         upgradeName.position = CGPoint(x: image.size.width + gap * 2, y: size.height - gap)
         addChild(upgradeName)
-    
+
         // comment
         let commentLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         commentLabel.name = "commentLabel"
@@ -258,7 +259,7 @@ class UpgradeElement: SKNode {
         commentLabel.verticalAlignmentMode = .Bottom
         commentLabel.position = CGPoint(x: image.size.width + gap * 2, y: (image.size.height - upgradeName.fontSize) / 2 + gap)
         addChild(commentLabel)
-        
+
         // level and money label
         let infoLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         infoLabel.name = "levelLabel"
@@ -269,7 +270,8 @@ class UpgradeElement: SKNode {
         infoLabel.verticalAlignmentMode = .Bottom
         infoLabel.position = CGPoint(x: image.size.width + gap * 2, y: gap)
         addChild(infoLabel)
-        
+        print("load .")
+
         // level
         let levelLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         levelLabel.name = "levelValue"
@@ -277,9 +279,10 @@ class UpgradeElement: SKNode {
         levelLabel.fontColor = colorBlue1
         levelLabel.fontSize = infoLabel.fontSize
         levelLabel.horizontalAlignmentMode = .Left
-        levelLabel.verticalAlignmentMode = .Center
-        levelLabel.position = CGPoint(x: image.size.width + gap * 2 + 20 * framescale, y: gap + infoLabel.frame.height / 2)
+        levelLabel.verticalAlignmentMode = .Bottom
+        levelLabel.position = CGPoint(x: image.size.width + gap * 2 + 20 * framescale, y: gap)
         addChild(levelLabel)
+        print("load ..")
     
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
@@ -288,10 +291,11 @@ class UpgradeElement: SKNode {
         priceLabel.fontColor = colorMoney
         priceLabel.fontSize = infoLabel.fontSize
         priceLabel.horizontalAlignmentMode = .Left
-        priceLabel.verticalAlignmentMode = .Center
-        priceLabel.position = CGPoint(x: infoLabel.position.x + infoLabel.frame.width, y: gap + infoLabel.frame.height / 2)
+        priceLabel.verticalAlignmentMode = .Bottom
+        priceLabel.position = CGPoint(x: infoLabel.position.x + 90 * framescale, y: gap)
         addChild(priceLabel)
-        
+        print("load ...")
+  
         // Upgrade Button
         let color = (money > upgradePrice ? colorBlue2 : SKColor.lightGrayColor())
         buttonUpgrade = SKShapeNode(rectOfSize: CGSizeMake(tilesScaleSize.width, tilesScaleSize.height), cornerRadius: 10 * framescale)
@@ -304,6 +308,7 @@ class UpgradeElement: SKNode {
         buttonUpgrade.addChild(levelupImage)
         addChild(buttonUpgrade)
 
+        print("load ....")
         // Degrade Button
         buttonDegrade = SKShapeNode(rectOfSize: CGSizeMake(tilesScaleSize.width, tilesScaleSize.height), cornerRadius: 10 * framescale)
         buttonDegrade.name = "Degrade"
@@ -316,6 +321,8 @@ class UpgradeElement: SKNode {
         buttonDegrade.addChild(leveldownImage)
         buttonDegrade.hidden = (level > 0 ? false : true)
         addChild(buttonDegrade)
+        print("load .....")
+        
     }
     
     func checkUpgradeAndDegrade() {

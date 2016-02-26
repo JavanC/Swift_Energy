@@ -17,13 +17,12 @@ class IslandsScene: SKScene {
     var settingButton: SKSpriteNode!
     var settingHighlightFlag: Bool = false
     var settingLayer: SettingLayer!
+    var confirmBubble: ConfirmBubble!
     
     var mapsRange: [SKShapeNode] = []
     var selectMaps: [SKSpriteNode] = []
     var nowSelectNum: Int = 0
     var lockeds: [SKShapeNode] = []
-    
-    var confirmBubble: ConfirmBubble!
     
     var isShowTickAdd: Bool = false
     var isFirstShowTickAdd: Bool = true
@@ -162,11 +161,11 @@ class IslandsScene: SKScene {
             
             contentCreated = true
             // remove first touch delay
-//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
                 self.settingLayer.containsPoint(CGPoint(x: 0, y: 0))
                 self.infoLayer.containsPoint(CGPoint(x: 0,y: 0))
                 self.confirmBubble.containsPoint(CGPoint(x: 0, y:0))
-//            }
+            }
             // remove first load  delay
             print("load 5")
             self.view?.presentScene(menuScene)
