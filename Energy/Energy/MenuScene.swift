@@ -18,7 +18,7 @@ var colorBlue3 = UIColor(red: 0.067, green: 0.310, blue: 0.490, alpha: 1.000)
 var colorBlue4 = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000) // #02374B
 var colorBoost = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000) // #FF9800
 var colorCancel = UIColor(red: 0.898, green: 0.224, blue: 0.282, alpha: 1.000)
-let door_Up = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 3)
+let door_Up = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 5)
 let door_Fade = SKTransition.fadeWithDuration(2)
 let door_Float = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
 
@@ -53,33 +53,27 @@ class MenuScene: SKScene {
     
     var firstLoad: Bool = true
     var contentCreated: Bool = false
-    var background: SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
         if !contentCreated {
 
             self.backgroundColor = SKColor.whiteColor()
         
-            background = SKSpriteNode(color: SKColor.whiteColor(), size: frame.size)
-            background.name = "background"
+            let background = SKSpriteNode(imageNamed: "Launch_background")
+            background.name = "Launch_background"
+            background.size = frame.size
             background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(background)
             
-            let startGameButton = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
-            startGameButton.text = "touch to continute"
-            startGameButton.fontSize = 40 * framescale
-            startGameButton.fontColor = SKColor.blackColor()
-            startGameButton.position = CGPoint(x: 0, y: -frame.height * 2 / 6)
-            let fadeinfadeout = SKAction.sequence([SKAction.fadeOutWithDuration(0.5), SKAction.fadeInWithDuration(0.5)])
-            startGameButton.runAction(SKAction.repeatActionForever(fadeinfadeout))
-            background.addChild(startGameButton)
+            let emitter = SKEmitterNode(fileNamed: "Starfield.sks")!
+            emitter.setScale(framescale)
+            emitter.position = CGPoint(x: frame.width / 2, y: frame.height - 400 * framescale)
+            emitter.advanceSimulationTime(40)
+            emitter.zPosition = 1
+            addChild(emitter)
             
             contentCreated = true
-            // remove first touch delay
-//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
             
-                self.background.containsPoint(CGPoint(x: 0, y: 0))
-//            }
             // first load remove delay
             print("load 1")
             self.view?.presentScene(researchScene)
@@ -89,19 +83,14 @@ class MenuScene: SKScene {
             firstLoad = false
         } else {
             print("load 11")
-            RunAfterDelay(1){
+            RunAfterDelay(3){
                 self.view?.presentScene(islandsScene, transition: door_Up)
             }
         }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let location = touch.locationInNode(self)
-        if background.containsPoint(location) {
-            let doors = SKTransition.pushWithDirection(SKTransitionDirection.Up, duration: 3)
-            self.view?.presentScene(islandsScene, transition: doors)
-        }
+        
     }
     
     override func update(currentTime: CFTimeInterval) {
