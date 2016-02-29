@@ -19,10 +19,12 @@ class IslandsScene: SKScene {
     var settingLayer: SettingLayer!
     var confirmBubble: ConfirmBubble!
     
+    var clouds: [SKSpriteNode] = []
     var mapsRange: [SKShapeNode] = []
     var selectMaps: [SKSpriteNode] = []
+    var lockMaps: [SKSpriteNode] = []
+    var lockSelectMaps: [SKSpriteNode] = []
     var nowSelectNum: Int = 0
-    var lockeds: [SKShapeNode] = []
     
     var isShowTickAdd: Bool = false
     var isFirstShowTickAdd: Bool = true
@@ -33,46 +35,76 @@ class IslandsScene: SKScene {
         
         if !contentCreated {
 
-            let background = SKSpriteNode(texture: backgroundAtlas.textureNamed("Maps"))
-            background.name = "background"
+            let background = SKSpriteNode(texture: backgroundAtlas.textureNamed("Maps_background"))
+            background.name = "Maps_background"
             background.size = frame.size
-            background.zPosition = -1
+            background.zPosition = -6
             background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(background)
             
+            let mountain = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_mountain"))
+            mountain.name = "Maps_mountain"
+            mountain.size = frame.size
+            mountain.zPosition = -4
+            mountain.position = background.position
+            addChild(mountain)
+            
+            for i in 1...4 {
+                let cloud = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_cloud\(i)"))
+                cloud.name = "Maps_cloud\(i)"
+                cloud.size = frame.size
+                if i == 3 { cloud.zPosition = -5 }
+                if i == 2 { cloud.zPosition = -3 }
+                if i == 4 { cloud.zPosition = -2 }
+                if i == 1 { cloud.zPosition = -1 }
+                cloud.position = background.position
+                addChild(cloud)
+                clouds.append(cloud)
+            }
+            
             for i in 1...6 {
-                let selectMap = SKSpriteNode(texture: backgroundAtlas.textureNamed("selectMap\(i)"))
-                selectMap.name = "selectMap\(i)"
+                let selectMap = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_unlocked_select\(i)"))
+                selectMap.name = "Maps_unlocked_select\(i)"
                 selectMap.size = frame.size
                 selectMap.hidden = true
                 selectMap.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
                 addChild(selectMap)
                 selectMaps.append(selectMap)
             }
+            
+            for i in 1...6 {
+                let lockMap = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_locked_unselect\(i)"))
+                lockMap.name = "Maps_locked_unselect\(i)"
+                lockMap.size = frame.size
+                lockMap.hidden = mapUnlockeds[i-1]
+                lockMap.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+                addChild(lockMap)
+                lockMaps.append(lockMap)
+            }
+            
 
             let map1 = SKShapeNode(circleOfRadius: 60 * framescale)
             map1.name = "map1Range"
             map1.lineWidth = 0
-            map1.position = CGPoint(x: 120 * framescale, y: 160 * framescale)
+            map1.position = CGPoint(x: 110 * framescale, y: 160 * framescale)
             addChild(map1)
             mapsRange.append(map1)
             let map2 = SKShapeNode(circleOfRadius: 80 * framescale)
             map2.name = "map2Range"
             map2.lineWidth = 0
-            map2.position = CGPoint(x: 410 * framescale, y: 220 * framescale)
+            map2.position = CGPoint(x: 420 * framescale, y: 220 * framescale)
             addChild(map2)
             mapsRange.append(map2)
             let map3 = SKShapeNode(circleOfRadius: 80 * framescale)
             map3.name = "map3Range"
             map3.lineWidth = 0
-            map3.strokeColor = SKColor.blackColor()
-            map3.position = CGPoint(x: 95 * framescale, y: 400 * framescale)
+            map3.position = CGPoint(x: 100 * framescale, y: 400 * framescale)
             addChild(map3)
             mapsRange.append(map3)
             let map4 = SKShapeNode(circleOfRadius: 90 * framescale)
             map4.name = "map4Range"
             map4.lineWidth = 0
-            map4.position = CGPoint(x: 450 * framescale, y: 500 * framescale)
+            map4.position = CGPoint(x: 460 * framescale, y: 500 * framescale)
             addChild(map4)
             mapsRange.append(map4)
             let map5 = SKShapeNode(circleOfRadius: 90 * framescale)
@@ -84,25 +116,9 @@ class IslandsScene: SKScene {
             let map6 = SKShapeNode(circleOfRadius: 90 * framescale)
             map6.name = "map6Range"
             map6.lineWidth = 0
-            map6.position = CGPoint(x: 410 * framescale, y: 720 * framescale)
+            map6.position = CGPoint(x: 380 * framescale, y: 720 * framescale)
             addChild(map6)
             mapsRange.append(map6)
-            
-            for i in 0..<6 {
-                let locked = SKShapeNode(circleOfRadius: 20 * framescale)
-                locked.name = "locked \(i)"
-                locked.hidden = mapUnlockeds[i]
-                locked.fillColor = SKColor.grayColor()
-                locked.strokeColor = SKColor.whiteColor()
-                locked.lineWidth = 3 * framescale
-                locked.zPosition = 10
-                locked.position = CGPoint(x: mapsRange[i].position.x + 40 * framescale, y: mapsRange[i].position.y - 40 * framescale)
-                let img = SKSpriteNode(texture: iconAtlas.textureNamed("locked2"))
-                img.size = CGSizeMake(18 * framescale, 18 * framescale)
-                locked.addChild(img)
-                addChild(locked)
-                lockeds.append(locked)
-            }
             
             confirmBubble = ConfirmBubble(bubbleSize: CGSizeMake(frame.width * 0.8, frame.width * 0.5))
             confirmBubble.alpha = 0
@@ -176,9 +192,82 @@ class IslandsScene: SKScene {
         RunAfterDelay(3) {
             self.isShowTickAdd = true
         }
+        cloudsMove()
         print("load 7")
     }
+    
+    func cloudsMove() {
+        let p1 = CGPoint(x: 150 * framescale, y: frame.height / 2)
+        let p2 = CGPoint(x: 0, y: frame.height / 2)
+        let p3 = CGPoint(x: frame.width, y: frame.height / 2)
+        let p4 = CGPoint(x: frame.width - 150 * framescale, y: frame.height / 2)
+        for i in 0...3 {
+            clouds[i].removeAllActions()
+        }
+        clouds[0].position = CGPoint(x: 250 * framescale, y: frame.height / 2)
+        clouds[1].position = CGPoint(x: -200 * framescale, y: frame.height / 2)
+        clouds[2].position = CGPoint(x: frame.width / 2 + 100 * framescale, y: frame.height / 2)
+        clouds[3].position = CGPoint(x: 0 * framescale, y: frame.height / 2)
+        clouds[0].runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.moveByX(700 * framescale, y: 0, duration: 80), SKAction.moveTo(p1, duration: 0)])))
+        clouds[1].runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.moveByX(900 * framescale, y: 0,
+            duration: 120), SKAction.moveTo(p2, duration: 0)])))
+        clouds[2].runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.moveByX(-700 * framescale, y: 0, duration: 160), SKAction.moveTo(p3, duration: 0)])))
+        clouds[3].runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.moveByX(-700 * framescale, y: 0,
+            duration: 100), SKAction.moveTo(p4, duration: 0)])))
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let location = touch.locationInNode(self)
+        
+        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false { return }
+        
+        for i in 0...5 {
+            if mapsRange[i].containsPoint(location) {
+                mapHighlight(i+1)
+            }
+        }
+        
+        if settingButton.containsPoint(location) {
+            settingButtonHighlight(true)
+        }
+        
+        if infoButton.containsPoint(location) {
+            infoButtonHighlight(true)
+        }
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let location = touch.locationInNode(self)
+        
+        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false { return }
+        
+        var inMap = false
+        for i in 0...5 {
+            if mapsRange[i].containsPoint(location) {
+                inMap = true
+                mapHighlight(i+1)
+            }
+        }
+        if inMap == false {
+            mapHighlight(0)
+        }
+        
+        if settingButton.containsPoint(location) {
+            settingButtonHighlight(true)
+        } else {
+            settingButtonHighlight(false)
+        }
+        
+        if infoButton.containsPoint(location) {
+            infoButtonHighlight(true)
+        } else {
+            infoButtonHighlight(false)
+        }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         let nodes = nodesAtPoint(location)
@@ -242,63 +331,12 @@ class IslandsScene: SKScene {
                     confirmBubble.hidden = true
                     money -= confirmBubble.buyPrice
                     mapUnlockeds[confirmBubble.islandNum] = true
-                    lockeds[confirmBubble.islandNum].hidden = true
+                    lockMaps[confirmBubble.islandNum].hidden = true
                     runAction(soundSell)
                 }
             }
             return
         }
-        
-        for i in 0...5 {
-            if mapsRange[i].containsPoint(location) {
-                mapHighlight(i+1)
-            }
-        }
-        
-        if settingButton.containsPoint(location) {
-            settingButtonHighlight(true)
-        }
-        
-        if infoButton.containsPoint(location) {
-            infoButtonHighlight(true)
-        }
-    }
-    
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let location = touch.locationInNode(self)
-        
-        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false { return }
-        
-        var inMap = false
-        for i in 0...5 {
-            if mapsRange[i].containsPoint(location) {
-                inMap = true
-                mapHighlight(i+1)
-            }
-        }
-        if inMap == false {
-            mapHighlight(0)
-        }
-        
-        if settingButton.containsPoint(location) {
-            settingButtonHighlight(true)
-        } else {
-            settingButtonHighlight(false)
-        }
-        
-        if infoButton.containsPoint(location) {
-            infoButtonHighlight(true)
-        } else {
-            infoButtonHighlight(false)
-        }
-    }
-    
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let location = touch.locationInNode(self)
-        
-        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false { return }
         
         for i in 0...5 {
             if mapsRange[i].containsPoint(location) {

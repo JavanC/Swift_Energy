@@ -13,7 +13,6 @@
 		65361A731C61A30D006C3E18 /* levelup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6C1C61A30D006C3E18 /* levelup.wav */; };
 		65361A741C61A30D006C3E18 /* placing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6D1C61A30D006C3E18 /* placing.wav */; };
 		65361A751C61A30D006C3E18 /* sell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6E1C61A30D006C3E18 /* sell.wav */; };
-		65361A761C61A30D006C3E18 /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6F1C61A30D006C3E18 /* tap.wav */; };
 		65361A781C61D572006C3E18 /* slide.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A771C61D571006C3E18 /* slide.wav */; };
 		65361A7A1C61D886006C3E18 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A791C61D886006C3E18 /* click.wav */; };
 		65361A7C1C61D93A006C3E18 /* select.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A7B1C61D93A006C3E18 /* select.wav */; };
@@ -41,8 +40,10 @@
 		658BA2361C76B10F0033051A /* ConfirmBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2351C76B10F0033051A /* ConfirmBubble.swift */; };
 		65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6C1C608A8B008E0BB5 /* Explode.sks */; };
 		65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6D1C608A8B008E0BB5 /* spark.png */; };
+		8D8AF5731C843716006541AD /* maps.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 8D8AF5721C843716006541AD /* maps.atlas */; };
+		8D8AF5751C84384A006541AD /* background.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 8D8AF5741C84384A006541AD /* background.atlas */; };
+		8D8AF5781C843FA6006541AD /* tap.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8D8AF5771C843FA6006541AD /* tap.mp3 */; };
 		8DDC91321C66307300476BCD /* SettingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDC91311C66307300476BCD /* SettingLayer.swift */; };
-		8DDC91381C672CB100476BCD /* background.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 8DDC91371C672CB100476BCD /* background.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,7 +53,6 @@
 		65361A6C1C61A30D006C3E18 /* levelup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = levelup.wav; path = Content/levelup.wav; sourceTree = "<group>"; };
 		65361A6D1C61A30D006C3E18 /* placing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = placing.wav; path = Content/placing.wav; sourceTree = "<group>"; };
 		65361A6E1C61A30D006C3E18 /* sell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sell.wav; path = Content/sell.wav; sourceTree = "<group>"; };
-		65361A6F1C61A30D006C3E18 /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tap.wav; path = Content/tap.wav; sourceTree = "<group>"; };
 		65361A771C61D571006C3E18 /* slide.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = slide.wav; path = Content/slide.wav; sourceTree = "<group>"; };
 		65361A791C61D886006C3E18 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = click.wav; path = Content/click.wav; sourceTree = "<group>"; };
 		65361A7B1C61D93A006C3E18 /* select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = select.wav; path = Content/select.wav; sourceTree = "<group>"; };
@@ -82,8 +82,10 @@
 		658BA2351C76B10F0033051A /* ConfirmBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBubble.swift; sourceTree = "<group>"; };
 		65ED1E6C1C608A8B008E0BB5 /* Explode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Explode.sks; path = Content/Explode.sks; sourceTree = "<group>"; };
 		65ED1E6D1C608A8B008E0BB5 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Content/spark.png; sourceTree = "<group>"; };
+		8D8AF5721C843716006541AD /* maps.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = maps.atlas; sourceTree = "<group>"; };
+		8D8AF5741C84384A006541AD /* background.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = background.atlas; sourceTree = "<group>"; };
+		8D8AF5771C843FA6006541AD /* tap.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = tap.mp3; path = Content/tap.mp3; sourceTree = "<group>"; };
 		8DDC91311C66307300476BCD /* SettingLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingLayer.swift; sourceTree = "<group>"; };
-		8DDC91371C672CB100476BCD /* background.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = background.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,9 +132,10 @@
 				657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */,
 				658352A31C44F2CA00317FFD /* Helper.swift */,
 				658352A11C44CB8A00317FFD /* Assets.xcassets */,
-				8DDC91371C672CB100476BCD /* background.atlas */,
 				655BCC0C1C48A67B007A8079 /* building.atlas */,
 				655BCC0D1C48A67B007A8079 /* icon.atlas */,
+				8D8AF5721C843716006541AD /* maps.atlas */,
+				8D8AF5741C84384A006541AD /* background.atlas */,
 				65386E161C2CD8A500D08B41 /* Main.storyboard */,
 				65386E1B1C2CD8A500D08B41 /* LaunchScreen.storyboard */,
 				65386E1E1C2CD8A500D08B41 /* Info.plist */,
@@ -166,7 +169,7 @@
 				65361A771C61D571006C3E18 /* slide.wav */,
 				65361A791C61D886006C3E18 /* click.wav */,
 				65361A7B1C61D93A006C3E18 /* select.wav */,
-				65361A6F1C61A30D006C3E18 /* tap.wav */,
+				8D8AF5771C843FA6006541AD /* tap.mp3 */,
 			);
 			name = Content;
 			sourceTree = "<group>";
@@ -243,14 +246,15 @@
 				65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */,
 				65361A711C61A30D006C3E18 /* backgroundMusic.mp3 in Resources */,
 				655BCC0E1C48A67B007A8079 /* building.atlas in Resources */,
+				8D8AF5731C843716006541AD /* maps.atlas in Resources */,
 				65361A721C61A30D006C3E18 /* explosion.mp3 in Resources */,
+				8D8AF5781C843FA6006541AD /* tap.mp3 in Resources */,
 				65361A731C61A30D006C3E18 /* levelup.wav in Resources */,
 				65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */,
 				65361A7C1C61D93A006C3E18 /* select.wav in Resources */,
+				8D8AF5751C84384A006541AD /* background.atlas in Resources */,
 				65361A701C61A30D006C3E18 /* action.wav in Resources */,
-				65361A761C61A30D006C3E18 /* tap.wav in Resources */,
 				658352A21C44CB8A00317FFD /* Assets.xcassets in Resources */,
-				8DDC91381C672CB100476BCD /* background.atlas in Resources */,
 				65361A741C61A30D006C3E18 /* placing.wav in Resources */,
 				65361A7A1C61D886006C3E18 /* click.wav in Resources */,
 				65361A751C61A30D006C3E18 /* sell.wav in Resources */,
