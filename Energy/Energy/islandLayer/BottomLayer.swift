@@ -13,9 +13,8 @@ class InformationLabel: SKNode {
     var valueLabel: SKLabelNode!
     
     init(title: String, fontSize: CGFloat, valueColor: SKColor) {
-        
         super.init()
-        titleLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        titleLabel                         = SKLabelNode(fontNamed: "ArialMT")
         titleLabel.name                    = "title"
         titleLabel.text                    = "\(title) :"
         titleLabel.fontSize                = fontSize

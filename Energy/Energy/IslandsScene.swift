@@ -14,6 +14,7 @@ class IslandsScene: SKScene {
     var loadingNum: Int = 0
     var islandsLayer: SKNode!
     var skyBackground: SKSpriteNode!
+    
     var infoButton: SKSpriteNode!
     var infoHighlightFlag: Bool = false
     var infoLayer: InfoLayer!
@@ -101,7 +102,6 @@ class IslandsScene: SKScene {
                 islandsLayer.addChild(lockMap)
                 lockMaps.append(lockMap)
             }
-            
 
             let map1 = SKShapeNode(circleOfRadius: 60 * framescale)
             map1.name = "map1Range"
@@ -214,8 +214,8 @@ class IslandsScene: SKScene {
         case 1:
             print("load 9")
             RunAfterDelay(2){
-                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 5)
-                let wait = SKAction.waitForDuration(5)
+                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 4)
+                let wait = SKAction.waitForDuration(4)
                 let hide = SKAction.hide()
                 self.islandsLayer.runAction(SKAction.sequence([move]))
                 self.skyBackground.runAction(SKAction.sequence([wait, hide]))
@@ -223,7 +223,7 @@ class IslandsScene: SKScene {
             isShowTickAdd = false
             isFirstShowTickAdd = true
             cloudsMove()
-            RunAfterDelay(5) {
+            RunAfterDelay(9) {
                 self.isShowTickAdd = true
             }
             print("load 10")
@@ -290,6 +290,8 @@ class IslandsScene: SKScene {
         
         var inMap = false
         for node in nodes {
+            if node.hidden { return }
+            
             for i in 0...5 {
                 if node == mapsRange[i] {
                     inMap = true
@@ -422,7 +424,7 @@ class IslandsScene: SKScene {
             }
         }
         if isHighlight {
-            infoButton.setScale(framescale * 1.1)
+            infoButton.setScale(framescale * 1.2)
         } else {
             infoButton.setScale(framescale)
         }
@@ -437,7 +439,7 @@ class IslandsScene: SKScene {
             }
         }
         if isHighlight {
-            settingButton.setScale(framescale * 1.1)
+            settingButton.setScale(framescale * 1.2)
         } else {
             settingButton.setScale(framescale)
         }

@@ -69,9 +69,11 @@ class IslandScene: SKScene {
             let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - mapLayerSize.height - buttonLayer.size.height)
             let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
             bottomLayer = BottomLayer()
+            
             bottomLayer.configureAtPosition(bottomLayerPosition, size: bottomLayerSize)
             bottomLayer.zPosition = 100
             addChild(bottomLayer)
+            
 
             // Building Select Layer
             let buildingSelectLayerSize = mapLayerSize

@@ -270,7 +270,6 @@ class UpgradeElement: SKNode {
         infoLabel.verticalAlignmentMode = .Bottom
         infoLabel.position = CGPoint(x: image.size.width + gap * 2, y: gap)
         addChild(infoLabel)
-        print("load .")
 
         // level
         let levelLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
@@ -280,9 +279,8 @@ class UpgradeElement: SKNode {
         levelLabel.fontSize = infoLabel.fontSize
         levelLabel.horizontalAlignmentMode = .Left
         levelLabel.verticalAlignmentMode = .Bottom
-        levelLabel.position = CGPoint(x: image.size.width + gap * 2 + 20 * framescale, y: gap)
+        levelLabel.position = CGPoint(x: image.size.width + gap * 2 + 22 * framescale, y: gap)
         addChild(levelLabel)
-        print("load ..")
     
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
@@ -292,9 +290,8 @@ class UpgradeElement: SKNode {
         priceLabel.fontSize = infoLabel.fontSize
         priceLabel.horizontalAlignmentMode = .Left
         priceLabel.verticalAlignmentMode = .Bottom
-        priceLabel.position = CGPoint(x: infoLabel.position.x + 90 * framescale, y: gap)
+        priceLabel.position = CGPoint(x: infoLabel.position.x + infoLabel.frame.width, y: gap)
         addChild(priceLabel)
-        print("load ...")
   
         // Upgrade Button
         let color = (money > upgradePrice ? colorBlue2 : SKColor.lightGrayColor())
@@ -308,7 +305,6 @@ class UpgradeElement: SKNode {
         buttonUpgrade.addChild(levelupImage)
         addChild(buttonUpgrade)
 
-        print("load ....")
         // Degrade Button
         buttonDegrade = SKShapeNode(rectOfSize: CGSizeMake(tilesScaleSize.width, tilesScaleSize.height), cornerRadius: 10 * framescale)
         buttonDegrade.name = "Degrade"
@@ -321,8 +317,6 @@ class UpgradeElement: SKNode {
         buttonDegrade.addChild(leveldownImage)
         buttonDegrade.hidden = (level > 0 ? false : true)
         addChild(buttonDegrade)
-        print("load .....")
-        
     }
     
     func checkUpgradeAndDegrade() {

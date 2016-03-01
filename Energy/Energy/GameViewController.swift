@@ -11,7 +11,6 @@ import SpriteKit
 import AVFoundation
 
 // Game Scene
-var menuScene: SKScene!
 var islandsScene: SKScene!
 var islandScene: SKScene!
 var upgradeScene: SKScene!
@@ -106,14 +105,12 @@ class GameViewController: UIViewController {
             framescale                 = size.width / (9 * 64)
             tilesScaleSize             = CGSize(width: 64 * framescale, height: 64 * framescale)
 
-            menuScene                  = MenuScene(size: size)
             islandsScene               = IslandsScene(size: size)
             islandScene                = IslandScene(size: size)
             upgradeScene               = UpgradeScene(size: size)
             researchScene              = ResearchScene(size: size)
 
             // Configure the view
-            menuScene.scaleMode        = .AspectFill
             islandsScene.scaleMode     = .AspectFill
             islandScene.scaleMode      = .AspectFill
             upgradeScene.scaleMode     = .AspectFill
