@@ -11,6 +11,9 @@ import SpriteKit
 class IslandsScene: SKScene {
     
     var contentCreated: Bool = false
+    var loadingNum: Int = 0
+    var islandsLayer: SKNode!
+    var skyBackground: SKSpriteNode!
     var infoButton: SKSpriteNode!
     var infoHighlightFlag: Bool = false
     var infoLayer: InfoLayer!
@@ -35,19 +38,36 @@ class IslandsScene: SKScene {
         
         if !contentCreated {
 
-            let background = SKSpriteNode(texture: backgroundAtlas.textureNamed("Maps_background"))
-            background.name = "Maps_background"
-            background.size = frame.size
-            background.zPosition = -6
-            background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-            addChild(background)
+            islandsLayer = SKNode()
+            islandsLayer.position = CGPoint(x: 0, y: -frame.height)
+            addChild(islandsLayer)
+            
+            skyBackground = SKSpriteNode(imageNamed: "Launch_background")
+            skyBackground.name = "skyBackground"
+            skyBackground.size = frame.size
+            skyBackground.position = CGPoint(x: frame.width / 2, y: frame.height * 3 / 2)
+            islandsLayer.addChild(skyBackground)
+            
+            let emitter = SKEmitterNode(fileNamed: "Starfield.sks")!
+            emitter.setScale(framescale)
+            emitter.position = CGPoint(x: 0, y: frame.height / 2 - 400 * framescale)
+            emitter.advanceSimulationTime(40)
+            emitter.zPosition = 1
+            skyBackground.addChild(emitter)
+            
+            let islandsBackground = SKSpriteNode(texture: backgroundAtlas.textureNamed("Maps_background"))
+            islandsBackground.name = "Maps_background"
+            islandsBackground.size = frame.size
+            islandsBackground.zPosition = -6
+            islandsBackground.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            islandsLayer.addChild(islandsBackground)
             
             let mountain = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_mountain"))
             mountain.name = "Maps_mountain"
             mountain.size = frame.size
             mountain.zPosition = -4
-            mountain.position = background.position
-            addChild(mountain)
+            mountain.position = islandsBackground.position
+            islandsLayer.addChild(mountain)
             
             for i in 1...4 {
                 let cloud = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_cloud\(i)"))
@@ -57,8 +77,8 @@ class IslandsScene: SKScene {
                 if i == 2 { cloud.zPosition = -3 }
                 if i == 4 { cloud.zPosition = -2 }
                 if i == 1 { cloud.zPosition = -1 }
-                cloud.position = background.position
-                addChild(cloud)
+                cloud.position = islandsBackground.position
+                islandsLayer.addChild(cloud)
                 clouds.append(cloud)
             }
             
@@ -68,7 +88,7 @@ class IslandsScene: SKScene {
                 selectMap.size = frame.size
                 selectMap.hidden = true
                 selectMap.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-                addChild(selectMap)
+                islandsLayer.addChild(selectMap)
                 selectMaps.append(selectMap)
             }
             
@@ -78,7 +98,7 @@ class IslandsScene: SKScene {
                 lockMap.size = frame.size
                 lockMap.hidden = mapUnlockeds[i-1]
                 lockMap.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-                addChild(lockMap)
+                islandsLayer.addChild(lockMap)
                 lockMaps.append(lockMap)
             }
             
@@ -87,37 +107,37 @@ class IslandsScene: SKScene {
             map1.name = "map1Range"
             map1.lineWidth = 0
             map1.position = CGPoint(x: 110 * framescale, y: 160 * framescale)
-            addChild(map1)
+            islandsLayer.addChild(map1)
             mapsRange.append(map1)
             let map2 = SKShapeNode(circleOfRadius: 80 * framescale)
             map2.name = "map2Range"
             map2.lineWidth = 0
             map2.position = CGPoint(x: 420 * framescale, y: 220 * framescale)
-            addChild(map2)
+            islandsLayer.addChild(map2)
             mapsRange.append(map2)
             let map3 = SKShapeNode(circleOfRadius: 80 * framescale)
             map3.name = "map3Range"
             map3.lineWidth = 0
             map3.position = CGPoint(x: 100 * framescale, y: 400 * framescale)
-            addChild(map3)
+            islandsLayer.addChild(map3)
             mapsRange.append(map3)
             let map4 = SKShapeNode(circleOfRadius: 90 * framescale)
             map4.name = "map4Range"
             map4.lineWidth = 0
             map4.position = CGPoint(x: 460 * framescale, y: 500 * framescale)
-            addChild(map4)
+            islandsLayer.addChild(map4)
             mapsRange.append(map4)
             let map5 = SKShapeNode(circleOfRadius: 90 * framescale)
             map5.name = "map5Range"
             map5.lineWidth = 0
             map5.position = CGPoint(x: 100 * framescale, y: 610 * framescale)
-            addChild(map5)
+            islandsLayer.addChild(map5)
             mapsRange.append(map5)
             let map6 = SKShapeNode(circleOfRadius: 90 * framescale)
             map6.name = "map6Range"
             map6.lineWidth = 0
             map6.position = CGPoint(x: 380 * framescale, y: 720 * framescale)
-            addChild(map6)
+            islandsLayer.addChild(map6)
             mapsRange.append(map6)
             
             confirmBubble = ConfirmBubble(bubbleSize: CGSizeMake(frame.width * 0.8, frame.width * 0.5))
@@ -125,31 +145,31 @@ class IslandsScene: SKScene {
             confirmBubble.hidden = true
             confirmBubble.zPosition = 100
             confirmBubble.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-            self.addChild(confirmBubble)
+            islandsLayer.addChild(confirmBubble)
             
             infoButton = SKSpriteNode(texture: iconAtlas.textureNamed("button_info"))
             infoButton.setScale(framescale)
             infoButton.position = CGPoint(x: frame.width - (52 + 64 + 10) * framescale, y: frame.height - 52 * framescale)
-            self.addChild(infoButton)
+            islandsLayer.addChild(infoButton)
             
             infoLayer = InfoLayer(frameSize: frame.size)
             infoLayer.alpha = 0
             infoLayer.hidden = true
             infoLayer.zPosition = 100
             infoLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-            self.addChild(infoLayer)
+            islandsLayer.addChild(infoLayer)
 
             settingButton = SKSpriteNode(texture: iconAtlas.textureNamed("setting"))
             settingButton.setScale(framescale)
             settingButton.position = CGPoint(x: frame.width - 52 * framescale, y: frame.height - 52 * framescale)
-            self.addChild(settingButton)
+            islandsLayer.addChild(settingButton)
             
             settingLayer = SettingLayer(frameSize: frame.size)
             settingLayer.alpha = 0
             settingLayer.hidden = true
             settingLayer.zPosition = 100
             settingLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-            self.addChild(settingLayer)
+            islandsLayer.addChild(settingLayer)
             
             moneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             moneyLabel.name = "money label"
@@ -158,7 +178,7 @@ class IslandsScene: SKScene {
             moneyLabel.fontColor = colorMoney
             moneyLabel.horizontalAlignmentMode = .Left
             moneyLabel.position = CGPoint(x: 20 * framescale, y: 20 * framescale)
-            addChild(moneyLabel)
+            islandsLayer.addChild(moneyLabel)
             
             let label = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             label.name = "spentTimeLabel"
@@ -183,17 +203,40 @@ class IslandsScene: SKScene {
                 self.confirmBubble.containsPoint(CGPoint(x: 0, y:0))
             }
             // remove first load  delay
-            print("load 5")
-            self.view?.presentScene(menuScene)
+            print("load 1")
+            self.view?.presentScene(researchScene)
         }
         
-        isShowTickAdd = false
-        isFirstShowTickAdd = true
-        RunAfterDelay(3) {
-            self.isShowTickAdd = true
+        switch loadingNum {
+        case 0:
+            print("load 5")
+            loadingNum = 1
+        case 1:
+            print("load 9")
+            RunAfterDelay(2){
+                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 5)
+                let wait = SKAction.waitForDuration(5)
+                let hide = SKAction.hide()
+                self.islandsLayer.runAction(SKAction.sequence([move]))
+                self.skyBackground.runAction(SKAction.sequence([wait, hide]))
+            }
+            isShowTickAdd = false
+            isFirstShowTickAdd = true
+            cloudsMove()
+            RunAfterDelay(5) {
+                self.isShowTickAdd = true
+            }
+            print("load 10")
+            loadingNum = 2
+        default:
+            isShowTickAdd = false
+            isFirstShowTickAdd = true
+            cloudsMove()
+            RunAfterDelay(3) {
+                self.isShowTickAdd = true
+            }
+            print("load 10")
         }
-        cloudsMove()
-        print("load 7")
     }
     
     func cloudsMove() {
@@ -219,51 +262,55 @@ class IslandsScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
+        let nodes = nodesAtPoint(location)
         
-        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false { return }
+        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false || skyBackground.hidden == false { return }
         
-        for i in 0...5 {
-            if mapsRange[i].containsPoint(location) {
-                mapHighlight(i+1)
+        for node in nodes {
+            for i in 0...5 {
+                if node == mapsRange[i] {
+                    mapHighlight(i+1)
+                }
             }
-        }
-        
-        if settingButton.containsPoint(location) {
-            settingButtonHighlight(true)
-        }
-        
-        if infoButton.containsPoint(location) {
-            infoButtonHighlight(true)
+            if node == settingButton {
+                settingButtonHighlight(true)
+            }
+            if node == infoButton {
+                infoButtonHighlight(true)
+            }
         }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
+        let nodes = nodesAtPoint(location)
         
-        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false { return }
+        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false || skyBackground.hidden == false { return }
         
         var inMap = false
-        for i in 0...5 {
-            if mapsRange[i].containsPoint(location) {
-                inMap = true
-                mapHighlight(i+1)
+        for node in nodes {
+            for i in 0...5 {
+                if node == mapsRange[i] {
+                    inMap = true
+                    mapHighlight(i+1)
+                }
             }
-        }
-        if inMap == false {
-            mapHighlight(0)
-        }
-        
-        if settingButton.containsPoint(location) {
-            settingButtonHighlight(true)
-        } else {
-            settingButtonHighlight(false)
-        }
-        
-        if infoButton.containsPoint(location) {
-            infoButtonHighlight(true)
-        } else {
-            infoButtonHighlight(false)
+            if inMap == false {
+                mapHighlight(0)
+            }
+            
+            if node == settingButton {
+                settingButtonHighlight(true)
+            } else {
+                settingButtonHighlight(false)
+            }
+            
+            if node == infoButton {
+                infoButtonHighlight(true)
+            } else {
+                infoButtonHighlight(false)
+            }
         }
     }
     
@@ -272,6 +319,7 @@ class IslandsScene: SKScene {
         let location = touch.locationInNode(self)
         let nodes = nodesAtPoint(location)
         
+        if skyBackground.hidden == false { return }
         if settingLayer.hidden == false {
             for node in nodes {
                 if node.hidden { return }
@@ -337,30 +385,31 @@ class IslandsScene: SKScene {
             }
             return
         }
-        
-        for i in 0...5 {
-            if mapsRange[i].containsPoint(location) {
-                mapHighlight(0)
-                print("Map\(i+1)")
-                if !isSoundMute{ runAction(soundAction) }
-                
-                if !mapUnlockeds[i] {
-                    confirmBubble.showBubble(i)
-                } else {
-                    nowMapNumber = i
-                    self.view?.presentScene(islandScene, transition: door_Fade)
+        for node in nodes {
+            for i in 0...5 {
+                if node == mapsRange[i] {
+                    mapHighlight(0)
+                    print("Map\(i+1)")
+                    if !isSoundMute{ runAction(soundAction) }
+                    
+                    if !mapUnlockeds[i] {
+                        confirmBubble.showBubble(i)
+                    } else {
+                        nowMapNumber = i
+                        self.view?.presentScene(islandScene, transition: door_Fade)
+                    }
                 }
             }
-        }
-        
-        if settingButton.containsPoint(location) {
-            settingButtonHighlight(false)
-            settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
-        }
-        
-        if infoButton.containsPoint(location) {
-            infoButtonHighlight(false)
-            infoLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+            
+            if node == settingButton {
+                settingButtonHighlight(false)
+                settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+            }
+            
+            if node == infoButton {
+                infoButtonHighlight(false)
+                infoLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+            }
         }
     }
     

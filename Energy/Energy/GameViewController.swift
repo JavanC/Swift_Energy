@@ -10,18 +10,27 @@ import UIKit
 import SpriteKit
 import AVFoundation
 
-var tilesScaleSize: CGSize!
-var framescale: CGFloat!
-var backgroundMusicPlayer: AVAudioPlayer!
+// Game Scene
 var menuScene: SKScene!
 var islandsScene: SKScene!
 var islandScene: SKScene!
 var upgradeScene: SKScene!
 var researchScene: SKScene!
+
+// Game UI Data
+var tilesScaleSize: CGSize!
+var framescale: CGFloat!
+let door_Fade = SKTransition.fadeWithDuration(2)
+let door_Float = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
+
+// Game Atlas
 let buildingAtlas = SKTextureAtlas(named: "building")
 let iconAtlas = SKTextureAtlas(named: "icon")
 let mapsAtlas = SKTextureAtlas(named: "maps")
 let backgroundAtlas = SKTextureAtlas(named: "background")
+
+// Game Sound
+var backgroundMusicPlayer: AVAudioPlayer!
 let soundTap = SKAction.playSoundFileNamed("tap.mp3", waitForCompletion: false)
 let soundSell = SKAction.playSoundFileNamed("sell.wav", waitForCompletion: false)
 let soundPlacing = SKAction.playSoundFileNamed("placing.wav", waitForCompletion: false)
@@ -31,6 +40,45 @@ let soundSlide = SKAction.playSoundFileNamed("slide.wav", waitForCompletion: fal
 let soundClick = SKAction.playSoundFileNamed("click.wav", waitForCompletion: false)
 let soundSelect = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
 let soundAction = SKAction.playSoundFileNamed("action.wav", waitForCompletion: false)
+
+// Game Color
+var colorMoney = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000) // #DAD74E
+var colorResearch = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
+var colorEnergy = UIColor(red: 0.000, green: 0.698, blue: 0.875, alpha: 1.000)
+var colorBlue1 = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
+var colorBlue2 = UIColor(red: 0.208, green: 0.455, blue: 0.635, alpha: 1.000) // #3474A2
+var colorBlue3 = UIColor(red: 0.067, green: 0.310, blue: 0.490, alpha: 1.000)
+var colorBlue4 = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000) // #02374B
+var colorBoost = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000) // #FF9800
+var colorCancel = UIColor(red: 0.898, green: 0.224, blue: 0.282, alpha: 1.000)
+
+// Game Level
+enum BuildingType: Int {
+    case WindTurbine, SolarCell, CoalBurner, WaveCell, GasBurner, NuclearCell, FusionCell, SmallGenerator, MediumGenerator, LargeGenerator, BoilerHouse, LargeBoilerHouse, Isolation, Battery, HeatExchanger, HeatSink, HeatInlet, HeatOutlet, WaterPump, GroundwaterPump, WaterPipe, SmallOffice, MediumOffice, LargeOffice, Bank, ResearchCenter, AdvancedResearchCenter, Library, Ocean, Land, BuildingTypeLength
+}
+enum UpgradeType: Int {
+    case OfficeSellEnergy, BankEffectiveness, ResearchCenterEffectiveness, LibraryEffectiveness, BoilerHouseMaxHeat, BoilerHouseSellAmount, GeneratorMaxHeat, GeneratorEffectiveness, HeatExchangerMaxHeat, HeatSinkMaxHeat, EnergyBatterySize, IsolationEffectiveness, WaterPumpProduction, GroundwaterPumpProduction, WaterElementMaxWater, GeneratorMaxWater, HeatInletOutletMaxHeat, HeatInletMaxTransfer, FusionCellEffectiveness, FusionCellLifetime, NuclearCellEffectiveness, NuclearCellLifetime, GasBurnerEffectiveness, GasBurnerLifetime, WaveCellEffectiveness, WaveCellLifetime, CoalBurnerEffectiveness, CoalBurnerLifetime, SolarCellEffectiveness, SolarCellLifetime, WindTurbineEffectiveness, WindTurbineLifetime, UpgradeTypeLength
+}
+enum ResearchType: Int {
+    case ResearchCenterResearch, AdvancedResearchCenterResearch, LibraryResearch, SmallOfficeResearch, MediumOfficeResearch, LargeOfficeResearch, BankResearch, SmallGeneratorResearch, MediumGeneratorResearch, LargeGeneratorResearch, BoilerHouseResearch, LargeBoilerHouseResearch, WaterPumpResearch, GroundwaterPumpResearch, WaterPipeResearch, BatteryResearch, IsolationResearch, HeatExchangerResearch, HeatSinkResearch, HeatInletResearch, HeatOutletResearch, FusionCellResearch, FusionCellRebuild, NuclearCellResearch, NuclearCellRebuild, GasBurnerResearch, GasBurnerRebuild, WaveCellResearch, WaveCellRebuild, CoalBurnerResearch, CoalBurnerRebuild, SolarCellResearch, SolarCellRebuild, WindTurbineResearch, WindTurbineRebuild, ResearchTypeLength
+}
+
+// User Data
+var money: Double = 10
+var research: Double = 10
+var spendTime: Int = 0
+var upgradeLevel = [UpgradeType: Int]()
+var researchLevel = [ResearchType: Int]()
+var maps = [BuildingMapLayer]()
+var nowMapNumber: Int = 0
+var isPause: Bool = false
+var isRebuild: Bool = true
+var isBoost: Bool = false
+var isSoundMute: Bool = false
+var isMusicMute: Bool = false
+var boostTime: Double = 1
+var boostTimeLess: Double = 1
+var mapUnlockeds = [Bool]()
 
 class GameViewController: UIViewController {
     
@@ -73,7 +121,7 @@ class GameViewController: UIViewController {
             skView.showsFPS            = true
             skView.showsNodeCount      = true
             skView.ignoresSiblingOrder = true
-            skView.presentScene(menuScene)
+            skView.presentScene(islandsScene)
         }
     }
 

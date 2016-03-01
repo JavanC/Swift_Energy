@@ -423,7 +423,7 @@ class UpgradeScene: SKScene {
         }
         
         updateElement()
-        print("load 9")
+        print("load 7")
     }
 
     func updateElement() {

@@ -424,7 +424,7 @@ class ResearchScene: SKScene {
         }
         
         updateElement()
-        print("load 10")
+        print("load 8")
     }
     
     func updateElement() {
