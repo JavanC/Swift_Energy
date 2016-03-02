@@ -78,7 +78,7 @@ class ButtonLayer: SKSpriteNode {
         buttonResearch.name      = "ButtonResearch"
         buttonResearch.position  = CGPoint(x: size.width * 9 / 10, y: size.height / 2)
         buttonResearch.zPosition = 1
-        let researchImage        = SKSpriteNode(texture: iconAtlas.textureNamed("research"))
+        let researchImage        = SKSpriteNode(texture: iconAtlas.textureNamed("atoms"))
         researchImage.name       = "ButtonResearchImage"
         researchImage.setScale(framescale * 0.6)
         researchImage.position   = CGPoint(x: 0, y: -3)

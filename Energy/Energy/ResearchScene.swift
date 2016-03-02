@@ -364,7 +364,7 @@ class ResearchScene: SKScene {
             line.position = CGPoint(x: size.width / 2, y: frame.size.height - unitHeight)
             addChild(line)
             
-            let researchImage = SKSpriteNode(texture: iconAtlas.textureNamed("research"))
+            let researchImage = SKSpriteNode(texture: iconAtlas.textureNamed("atoms"))
             researchImage.name = "researchImage"
             researchImage.setScale(0.9 * framescale)
             researchImage.position = topCenter

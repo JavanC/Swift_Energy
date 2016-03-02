@@ -16,10 +16,8 @@ class IslandsScene: SKScene {
     var skyBackground: SKSpriteNode!
     
     var infoButton: SKSpriteNode!
-    var infoHighlightFlag: Bool = false
     var infoLayer: InfoLayer!
     var settingButton: SKSpriteNode!
-    var settingHighlightFlag: Bool = false
     var settingLayer: SettingLayer!
     var confirmBubble: ConfirmBubble!
     
@@ -262,21 +260,37 @@ class IslandsScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
-        let nodes = nodesAtPoint(location)
         
-        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false || skyBackground.hidden == false { return }
+        if skyBackground.hidden == false { return }
         
-        for node in nodes {
-            for i in 0...5 {
-                if node == mapsRange[i] {
-                    mapHighlight(i+1)
-                }
-            }
-            if node == settingButton {
-                settingButtonHighlight(true)
-            }
-            if node == infoButton {
-                infoButtonHighlight(true)
+        if infoLayer.hidden == false {
+            let NodePosition = convertPoint(location, toNode: infoLayer)
+            if infoLayer.saveButton.containsPoint(NodePosition) { infoLayer.saveButton.alpha = 0.7 }
+            return
+        }
+        if settingLayer.hidden == false {
+            let NodePosition = convertPoint(location, toNode: settingLayer)
+            if settingLayer.soundButton.containsPoint(NodePosition) { settingLayer.soundButton.alpha = 0.7 }
+            if settingLayer.musicButton.containsPoint(NodePosition) { settingLayer.musicButton.alpha = 0.7 }
+            if settingLayer.saveButton.containsPoint(NodePosition) { settingLayer.saveButton.alpha = 0.7 }
+            return
+        }
+        if confirmBubble.hidden == false {
+            let NodePosition = convertPoint(location, toNode: confirmBubble)
+            if confirmBubble.OKButton.containsPoint(NodePosition) { confirmBubble.OKButton.alpha = 0.7 }
+            if confirmBubble.cancelButton.containsPoint(NodePosition) { confirmBubble.cancelButton.alpha = 0.7 }
+            if confirmBubble.buyButton.containsPoint(NodePosition) { confirmBubble.buyButton.alpha = 0.7 }
+            return
+        }
+        if settingButton.containsPoint(location) {
+            settingButton.alpha = 0.7
+        }
+        if infoButton.containsPoint(location) {
+            infoButton.alpha = 0.7
+        }
+        for i in 0...5 {
+            if mapsRange[i].containsPoint(location) {
+                mapHighlight(i+1)
             }
         }
     }
@@ -284,35 +298,41 @@ class IslandsScene: SKScene {
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
-        let nodes = nodesAtPoint(location)
         
-        if settingLayer.hidden == false || infoLayer.hidden == false || confirmBubble.hidden == false || skyBackground.hidden == false { return }
+        if skyBackground.hidden == false { return }
+        
+        if infoLayer.hidden == false {
+            let NodePosition = convertPoint(location, toNode: infoLayer)
+            infoLayer.saveButton.alpha = infoLayer.saveButton.containsPoint(NodePosition) ? 0.7 : 1
+            return
+        }
+        if settingLayer.hidden == false {
+            let NodePosition = convertPoint(location, toNode: settingLayer)
+            settingLayer.soundButton.alpha = settingLayer.soundButton.containsPoint(NodePosition) ? 0.7 : 1
+            settingLayer.musicButton.alpha = settingLayer.musicButton.containsPoint(NodePosition) ? 0.7 : 1
+            settingLayer.saveButton.alpha = settingLayer.saveButton.containsPoint(NodePosition) ? 0.7 : 1
+            return
+        }
+        if confirmBubble.hidden == false {
+            let NodePosition = convertPoint(location, toNode: confirmBubble)
+            confirmBubble.OKButton.alpha = confirmBubble.OKButton.containsPoint(NodePosition) ? 0.7 : 1
+            confirmBubble.cancelButton.alpha = confirmBubble.cancelButton.containsPoint(NodePosition) ? 0.7 : 1
+            confirmBubble.buyButton.alpha = confirmBubble.buyButton.containsPoint(NodePosition) ? 0.7 : 1
+            return
+        }
+        
+        settingButton.alpha = settingButton.containsPoint(location) ? 0.7 : 1
+        infoButton.alpha = infoButton.containsPoint(location) ? 0.7 : 1
         
         var inMap = false
-        for node in nodes {
-            if node.hidden { return }
-            
-            for i in 0...5 {
-                if node == mapsRange[i] {
-                    inMap = true
-                    mapHighlight(i+1)
-                }
+        for i in 0...5 {
+            if mapsRange[i].containsPoint(location) {
+                inMap = true
+                mapHighlight(i+1)
             }
-            if inMap == false {
-                mapHighlight(0)
-            }
-            
-            if node == settingButton {
-                settingButtonHighlight(true)
-            } else {
-                settingButtonHighlight(false)
-            }
-            
-            if node == infoButton {
-                infoButtonHighlight(true)
-            } else {
-                infoButtonHighlight(false)
-            }
+        }
+        if inMap == false {
+            mapHighlight(0)
         }
     }
     
@@ -322,10 +342,23 @@ class IslandsScene: SKScene {
         let nodes = nodesAtPoint(location)
         
         if skyBackground.hidden == false { return }
+        
+        if infoLayer.hidden == false {
+            for node in nodes {
+                if node.hidden { return }
+                if node == infoLayer.saveButton {
+                    infoLayer.saveButton.alpha = 1
+                    if !isSoundMute{ runAction(soundTap) }
+                    infoLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
+                }
+            }
+            return
+        }
         if settingLayer.hidden == false {
             for node in nodes {
                 if node.hidden { return }
-                if node == settingLayer.soundButton.shape {
+                if node == settingLayer.soundButton {
+                    settingLayer.soundButton.alpha = 1
                     isSoundMute = !isSoundMute
                     if isSoundMute {
                         settingLayer.soundButton.off()
@@ -336,7 +369,8 @@ class IslandsScene: SKScene {
                         print("sount on")
                     }
                 }
-                if node == settingLayer.musicButton.shape {
+                if node == settingLayer.musicButton {
+                    settingLayer.musicButton.alpha = 1
                     isMusicMute = !isMusicMute
                     if isMusicMute {
                         settingLayer.musicButton.off()
@@ -351,33 +385,28 @@ class IslandsScene: SKScene {
                     }
                 }
                 if node == settingLayer.saveButton {
+                    settingLayer.saveButton.alpha = 1
                     if !isSoundMute{ runAction(soundTap) }
                     settingLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
                 }
             }
             return
         }
-        
-        if infoLayer.hidden == false {
-            for node in nodes {
-                if node.hidden { return }
-                if node == infoLayer.saveButton {
-                    if !isSoundMute{ runAction(soundTap) }
-                    infoLayer.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
-                }
-            }
-            return
-        }
-        
         if confirmBubble.hidden == false {
             for node in nodes {
                 if node.hidden { return }
                 if node == confirmBubble.OKButton || node == confirmBubble.cancelButton {
+                    confirmBubble.OKButton.alpha = 1
+                    confirmBubble.cancelButton.alpha = 1
+                    confirmBubble.buyButton.alpha = 1
                     confirmBubble.hideBubble()
                     runAction(soundTap)
                 }
                 if node == confirmBubble.buyButton {
-                    confirmBubble.alpha = 0
+                    confirmBubble.OKButton.alpha = 1
+                    confirmBubble.cancelButton.alpha = 1
+                    confirmBubble.buyButton.alpha = 1
+                    confirmBubble.alpha = 1
                     confirmBubble.hidden = true
                     money -= confirmBubble.buyPrice
                     mapUnlockeds[confirmBubble.islandNum] = true
@@ -387,61 +416,29 @@ class IslandsScene: SKScene {
             }
             return
         }
-        for node in nodes {
-            for i in 0...5 {
-                if node == mapsRange[i] {
-                    mapHighlight(0)
-                    print("Map\(i+1)")
-                    if !isSoundMute{ runAction(soundAction) }
-                    
-                    if !mapUnlockeds[i] {
-                        confirmBubble.showBubble(i)
-                    } else {
-                        nowMapNumber = i
-                        self.view?.presentScene(islandScene, transition: door_Fade)
-                    }
+        
+        if settingButton.containsPoint(location) {
+            settingButton.alpha = 1
+            settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+        }
+        
+        if infoButton.containsPoint(location) {
+            infoButton.alpha = 1
+            infoLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+        }
+        for i in 0...5 {
+            if mapsRange[i].containsPoint(location) {
+                mapHighlight(0)
+                print("Map\(i+1)")
+                if !isSoundMute{ runAction(soundAction) }
+                
+                if !mapUnlockeds[i] {
+                    confirmBubble.showBubble(i)
+                } else {
+                    nowMapNumber = i
+                    self.view?.presentScene(islandScene, transition: door_Fade)
                 }
             }
-            
-            if node == settingButton {
-                settingButtonHighlight(false)
-                settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
-            }
-            
-            if node == infoButton {
-                infoButtonHighlight(false)
-                infoLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
-            }
-        }
-    }
-    
-    func infoButtonHighlight(isHighlight: Bool) {
-        if infoHighlightFlag != isHighlight {
-            infoHighlightFlag = isHighlight
-            print("now select info button \(isHighlight)")
-            if infoHighlightFlag == true {
-                runAction(soundClick)
-            }
-        }
-        if isHighlight {
-            infoButton.setScale(framescale * 1.2)
-        } else {
-            infoButton.setScale(framescale)
-        }
-    }
-    
-    func settingButtonHighlight(isHighlight: Bool) {
-        if settingHighlightFlag != isHighlight {
-            settingHighlightFlag = isHighlight
-            print("now select setting button \(isHighlight)")
-            if settingHighlightFlag == true {
-                runAction(soundClick)
-            }
-        }
-        if isHighlight {
-            settingButton.setScale(framescale * 1.2)
-        } else {
-            settingButton.setScale(framescale)
         }
     }
     
