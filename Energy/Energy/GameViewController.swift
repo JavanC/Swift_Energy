@@ -30,7 +30,7 @@ let backgroundAtlas = SKTextureAtlas(named: "background")
 
 // Game Sound
 var backgroundMusicPlayer: AVAudioPlayer!
-let soundTap = SKAction.playSoundFileNamed("tap.mp3", waitForCompletion: false)
+let soundTap = SKAction.playSoundFileNamed("tap.wav", waitForCompletion: false)
 let soundSell = SKAction.playSoundFileNamed("sell.wav", waitForCompletion: false)
 let soundPlacing = SKAction.playSoundFileNamed("placing.wav", waitForCompletion: false)
 let soundExplosion = SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false)

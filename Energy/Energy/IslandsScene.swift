@@ -169,13 +169,20 @@ class IslandsScene: SKScene {
             settingLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             islandsLayer.addChild(settingLayer)
             
+            let moneyImg = SKSpriteNode(texture: iconAtlas.textureNamed("coint"))
+            moneyImg.name = "money image"
+            moneyImg.size = CGSizeMake(50 * framescale, 50 * framescale)
+            moneyImg.position = CGPoint(x: 30 * framescale, y: 30 * framescale)
+            islandsLayer.addChild(moneyImg)
+            
             moneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             moneyLabel.name = "money label"
             moneyLabel.text = numberToString(money, isInt: true)
             moneyLabel.fontSize = 40 * framescale
             moneyLabel.fontColor = colorMoney
             moneyLabel.horizontalAlignmentMode = .Left
-            moneyLabel.position = CGPoint(x: 20 * framescale, y: 20 * framescale)
+            moneyLabel.verticalAlignmentMode = .Center
+            moneyLabel.position = CGPoint(x: 60 * framescale, y: 30 * framescale)
             islandsLayer.addChild(moneyLabel)
             
             let label = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
@@ -447,7 +454,7 @@ class IslandsScene: SKScene {
             nowSelectNum = mapNum
             print("now select \(nowSelectNum)")
             if nowSelectNum >= 1 && nowSelectNum <= 6 {
-                runAction(soundClick)
+                runAction(soundSelect)
             }
         }
         for i in 0...5 {

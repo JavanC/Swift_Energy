@@ -26,6 +26,7 @@
 		65386E3B1C2D19ED00D08B41 /* ButtonLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E3A1C2D19ED00D08B41 /* ButtonLayer.swift */; };
 		65386E3D1C2D1A0400D08B41 /* BottomLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E3C1C2D1A0400D08B41 /* BottomLayer.swift */; };
 		65386E3F1C2D1B0300D08B41 /* BuildingSelectLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65386E3E1C2D1B0300D08B41 /* BuildingSelectLayer.swift */; };
+		653E36721C86E8DB00AE0900 /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 653E36711C86E8DB00AE0900 /* tap.wav */; };
 		65572A861C30DFC200461802 /* MapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A851C30DFC200461802 /* MapLayer.swift */; };
 		65572A881C31058C00461802 /* UpgradeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A871C31058C00461802 /* UpgradeScene.swift */; };
 		65572A8A1C31318E00461802 /* ResearchScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A891C31318E00461802 /* ResearchScene.swift */; };
@@ -45,7 +46,6 @@
 		8D042CEE1C84933900DF434C /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8D042CED1C84933900DF434C /* Starfield.sks */; };
 		8D8AF5731C843716006541AD /* maps.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 8D8AF5721C843716006541AD /* maps.atlas */; };
 		8D8AF5751C84384A006541AD /* background.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 8D8AF5741C84384A006541AD /* background.atlas */; };
-		8D8AF5781C843FA6006541AD /* tap.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8D8AF5771C843FA6006541AD /* tap.mp3 */; };
 		8DDC91321C66307300476BCD /* SettingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDC91311C66307300476BCD /* SettingLayer.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +71,7 @@
 		65386E3A1C2D19ED00D08B41 /* ButtonLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonLayer.swift; sourceTree = "<group>"; };
 		65386E3C1C2D1A0400D08B41 /* BottomLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomLayer.swift; sourceTree = "<group>"; };
 		65386E3E1C2D1B0300D08B41 /* BuildingSelectLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingSelectLayer.swift; sourceTree = "<group>"; };
+		653E36711C86E8DB00AE0900 /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tap.wav; path = Content/tap.wav; sourceTree = "<group>"; };
 		65572A851C30DFC200461802 /* MapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLayer.swift; sourceTree = "<group>"; };
 		65572A871C31058C00461802 /* UpgradeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeScene.swift; sourceTree = "<group>"; };
 		65572A891C31318E00461802 /* ResearchScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchScene.swift; sourceTree = "<group>"; };
@@ -90,7 +91,6 @@
 		8D042CED1C84933900DF434C /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Starfield.sks; path = Content/Starfield.sks; sourceTree = "<group>"; };
 		8D8AF5721C843716006541AD /* maps.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = maps.atlas; sourceTree = "<group>"; };
 		8D8AF5741C84384A006541AD /* background.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = background.atlas; sourceTree = "<group>"; };
-		8D8AF5771C843FA6006541AD /* tap.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = tap.mp3; path = Content/tap.mp3; sourceTree = "<group>"; };
 		8DDC91311C66307300476BCD /* SettingLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingLayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -175,7 +175,7 @@
 				65361A771C61D571006C3E18 /* slide.wav */,
 				65361A791C61D886006C3E18 /* click.wav */,
 				65361A7B1C61D93A006C3E18 /* select.wav */,
-				8D8AF5771C843FA6006541AD /* tap.mp3 */,
+				653E36711C86E8DB00AE0900 /* tap.wav */,
 				8D042CE21C8486B100DF434C /* Launch_background.png */,
 				8D042CE31C8486B100DF434C /* Launch_background@3x.png */,
 				8D042CE41C8486B100DF434C /* Launch_background@2x.png */,
@@ -251,13 +251,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653E36721C86E8DB00AE0900 /* tap.wav in Resources */,
 				65386E1D1C2CD8A500D08B41 /* LaunchScreen.storyboard in Resources */,
 				65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */,
 				65361A711C61A30D006C3E18 /* backgroundMusic.mp3 in Resources */,
 				655BCC0E1C48A67B007A8079 /* building.atlas in Resources */,
 				8D8AF5731C843716006541AD /* maps.atlas in Resources */,
 				65361A721C61A30D006C3E18 /* explosion.mp3 in Resources */,
-				8D8AF5781C843FA6006541AD /* tap.mp3 in Resources */,
 				65361A731C61A30D006C3E18 /* levelup.wav in Resources */,
 				8D042CE91C8486B100DF434C /* Launch_background@3x.png in Resources */,
 				8D042CEE1C84933900DF434C /* Starfield.sks in Resources */,
