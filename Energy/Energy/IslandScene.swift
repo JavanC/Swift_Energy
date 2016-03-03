@@ -478,8 +478,8 @@ class IslandScene: SKScene {
         }
 
         // Updata text imformation
-        topLayer.moneyLabel.text = "Money: \(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd, isInt: false))"
-        topLayer.researchLabel.text = "Research: \(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd, isInt: false))"
+//        topLayer.moneyLabel.text = "\(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd, isInt: false))"
+//        topLayer.researchLabel.text = "\(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd, isInt: false))"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
         bottomLayer.pageEnergy.energyLabel.text = "\(numberToString(maps[nowMapNumber].energy)) / \(numberToString(maps[nowMapNumber].energyMax))"

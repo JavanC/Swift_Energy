@@ -169,21 +169,32 @@ class IslandsScene: SKScene {
             settingLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             islandsLayer.addChild(settingLayer)
             
+            let moneyInfo = SKNode()
+            moneyInfo.position = CGPoint(x: 110 * framescale, y: 40 * framescale)
+            islandsLayer.addChild(moneyInfo)
+            
+            let moneyBG = SKShapeNode(rectOfSize: CGSizeMake(140 * framescale, 50 * framescale), cornerRadius: 10 * framescale)
+            moneyBG.fillColor = SKColor.blackColor()
+            moneyBG.lineWidth = 0
+            moneyBG.alpha = 0.3
+            moneyInfo.addChild(moneyBG)
+            
             let moneyImg = SKSpriteNode(texture: iconAtlas.textureNamed("coint"))
             moneyImg.name = "money image"
-            moneyImg.size = CGSizeMake(50 * framescale, 50 * framescale)
-            moneyImg.position = CGPoint(x: 30 * framescale, y: 30 * framescale)
-            islandsLayer.addChild(moneyImg)
+//            moneyImg.setScale(framescale)
+            moneyImg.size = CGSizeMake(60 * framescale, 60 * framescale)
+            moneyImg.position = CGPoint(x: -70 * framescale, y: 0)
+            moneyInfo.addChild(moneyImg)
             
             moneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             moneyLabel.name = "money label"
             moneyLabel.text = numberToString(money, isInt: true)
             moneyLabel.fontSize = 40 * framescale
             moneyLabel.fontColor = colorMoney
-            moneyLabel.horizontalAlignmentMode = .Left
+            moneyLabel.horizontalAlignmentMode = .Center
             moneyLabel.verticalAlignmentMode = .Center
-            moneyLabel.position = CGPoint(x: 60 * framescale, y: 30 * framescale)
-            islandsLayer.addChild(moneyLabel)
+            moneyLabel.position = CGPoint(x: 10 * framescale, y: 0)
+            moneyInfo.addChild(moneyLabel)
             
             let label = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             label.name = "spentTimeLabel"
