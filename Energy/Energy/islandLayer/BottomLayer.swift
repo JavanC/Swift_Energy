@@ -39,6 +39,7 @@ class PageInformation: SKSpriteNode {
 
     var infoImage: SKSpriteNode!
     var info = [SKLabelNode]()
+    var infoLine: SKSpriteNode!
     
     var positions = [CGPoint]()
     
@@ -69,15 +70,21 @@ class PageInformation: SKSpriteNode {
         self.name = "PageInformation"
         self.anchorPoint = CGPoint(x: 0, y: 0)
         self.isSellInfo = isSellInfo
+
+        infoLine = SKSpriteNode(color: colorBlue1, size: CGSizeMake(size.width, 8 * framescale))
+        infoLine.alpha = 0.8
+        infoLine.anchorPoint = CGPoint(x: 0.5, y: 0)
+        infoLine.position = CGPoint(x: size.width / 2, y: 0)
+        addChild(infoLine)
         
         infoImage = BuildingData(buildType: .Land).image("infoImage")
         infoImage.position = CGPoint(x: infoImage.size.width, y: size.height / 2)
         addChild(infoImage)
         
         let infogap: CGFloat = size.height * 0.08
-        let infoSize = (size.height - 5 * infogap) / 4
+        let infoSize = (size.height - 5 * infogap - 8 * framescale) / 4
         for i in 1...4 {
-            positions.append(CGPoint(x: infoImage.size.width * 2, y: infogap * CGFloat(5 - i) + infoSize * CGFloat(4 - i)))
+            positions.append(CGPoint(x: infoImage.size.width * 2, y: 8 * framescale + infogap * CGFloat(5 - i) + infoSize * CGFloat(4 - i)))
         }
 
         infoTicksNode           = InformationLabel(title: "Ticks", fontSize: infoSize, valueColor: SKColor.whiteColor())
@@ -119,6 +126,11 @@ class PageInformation: SKSpriteNode {
     }
     
     func changeInformation(buildingData: BuildingData) {
+        
+        // change color
+        let colors = [colorBlue1, colorCancel, SKColor.orangeColor(), colorMoney, SKColor.lightGrayColor()]
+        let buildKind = buildingData.buildType.hashValue / 7
+        infoLine.color = colors[buildKind]
         
         // Image
         infoImage.runAction(SKAction.setTexture(buildingAtlas.textureNamed(buildingData.imageName)))
@@ -228,12 +240,13 @@ class PageBuild: SKSpriteNode {
     
     var selectNumber: Int = 1
     var imagePosition = [CGPoint]()
+    var buildLine: SKNode!
     var buildMenu: [BuildingType] = [BuildingType.WindTurbine, BuildingType.SmallGenerator, BuildingType.HeatExchanger, BuildingType.SmallOffice]
     var images = [SKSpriteNode]()
     var selectBox: SKShapeNode!
     var selectBoxArrow: SKSpriteNode!
     var selectInfo = PageInformation()
-    var rebuildButton: SKShapeNode!
+    var rebuildButton: SKNode!
     var checkButton: SKSpriteNode!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
@@ -242,10 +255,23 @@ class PageBuild: SKSpriteNode {
         self.name        = "PageBuild"
         self.anchorPoint = CGPoint(x: 0, y: 0)
 
-        let gap          = (size.width - 5 * tilesScaleSize.width) / 6
         for i in 1...5 {
-            imagePosition.append(CGPoint(x: gap * CGFloat(i) + tilesScaleSize.width * (0.5 + CGFloat(i - 1)), y: size.height / 2))
+            let odd = CGFloat(i - 1) * 2 + 1
+            imagePosition.append(CGPoint(x: size.width * odd / 10, y: size.height / 2))
         }
+        
+        buildLine = SKNode()
+        let colors = [colorBlue1, colorCancel, SKColor.orangeColor(), colorMoney, SKColor.lightGrayColor()]
+        for i in 1...5 {
+            let bg = SKSpriteNode(color: colors[i-1], size: CGSizeMake(size.width / 5, 8 * framescale))
+            bg.anchorPoint = CGPoint(x: 0.5, y: 0)
+            bg.alpha = 0.8
+            bg.position = CGPoint(x: imagePosition[i - 1].x, y: 0)
+            bg.zPosition = 2
+            buildLine.addChild(bg)
+        }
+        addChild(buildLine)
+        
         for i in 1...4 {
         let image        = BuildingData(buildType: buildMenu[i - 1]).image("SelectImage\(i)")
         image.position   = imagePosition[i - 1]
@@ -255,9 +281,16 @@ class PageBuild: SKSpriteNode {
         }
         updateImageShow()
         
-        rebuildButton           = SKShapeNode(rectOfSize: tilesScaleSize, cornerRadius: 10 * framescale)
-        rebuildButton.name      = "SelectImage5"
-        rebuildButton.position  = imagePosition[4]
+        rebuildButton = SKNode()
+        rebuildButton.name = "SelectImage5"
+        rebuildButton.position = imagePosition[4]
+        rebuildButton.zPosition = 1
+        addChild(rebuildButton)
+        let rebuildBG           = SKShapeNode(rectOfSize: CGSizeMake(size.width / 5, size.height))
+        rebuildBG.name = "rebuildBG"
+        rebuildBG.lineWidth = 0
+        rebuildBG.alpha = 0.7
+        rebuildButton.addChild(rebuildBG)
         let buildingiImage      = SKSpriteNode(texture: iconAtlas.textureNamed("building"))
         buildingiImage.name     = "buildingImage"
         buildingiImage.setScale(0.4 * framescale)
@@ -266,18 +299,12 @@ class PageBuild: SKSpriteNode {
         refreshImage.name       = "refreshImage"
         refreshImage.setScale(framescale)
         rebuildButton.addChild(refreshImage)
-        addChild(rebuildButton)
-        if isRebuild {
-            rebuildOn()
-        } else {
-            rebuildOff()
-        }
+        rebuildOn(isRebuild)
 
-        selectBox               = SKShapeNode(rectOfSize: tilesScaleSize, cornerRadius: 10 * framescale)
+        selectBox               = SKShapeNode(rectOfSize: CGSizeMake(size.width / 5, size.height))
         selectBox.name          = "selectBox"
-        selectBox.setScale(1.1)
         selectBox.fillColor     = colorBlue2
-        selectBox.strokeColor   = colorBlue2
+        selectBox.lineWidth     = 0
         selectBox.position      = imagePosition[0]
         selectBox.zPosition     = 1
         addChild(selectBox)
@@ -285,6 +312,7 @@ class PageBuild: SKSpriteNode {
         selectBoxArrow          = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_up"))
         selectBoxArrow.name     = "selectBoxArrow"
         selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50)
+        selectBoxArrow.zPosition = 2
         let upAction            = SKAction.sequence([SKAction.moveByX(0, y: 5, duration: 0.5), SKAction.moveByX(0, y: -5, duration: 0.5)])
         selectBoxArrow.runAction(SKAction.repeatActionForever(upAction))
         addChild(selectBoxArrow)
@@ -305,19 +333,16 @@ class PageBuild: SKSpriteNode {
         addChild(checkButton)
     }
     
-    func rebuildOn() {
-        
-        rebuildButton.fillColor   = colorBlue2
-        rebuildButton.strokeColor = colorBlue2
-        let action                = SKAction.rotateByAngle(CGFloat(M_PI), duration: 2)
-        rebuildButton.childNodeWithName("refreshImage")!.removeAllActions()
-        rebuildButton.childNodeWithName("refreshImage")!.runAction(SKAction.repeatActionForever(action))
-    }
-    
-    func rebuildOff() {
-        rebuildButton.fillColor   = SKColor.grayColor()
-        rebuildButton.strokeColor = SKColor.grayColor()
-        rebuildButton.childNodeWithName("refreshImage")!.removeAllActions()
+    func rebuildOn(isRebuild: Bool) {
+        if isRebuild {
+            (rebuildButton.childNodeWithName("rebuildBG") as! SKShapeNode).fillColor   = colorBlue2
+            let action                = SKAction.rotateByAngle(CGFloat(M_PI), duration: 2)
+            rebuildButton.childNodeWithName("refreshImage")!.removeAllActions()
+            rebuildButton.childNodeWithName("refreshImage")!.runAction(SKAction.repeatActionForever(action))
+        } else {
+            (rebuildButton.childNodeWithName("rebuildBG") as! SKShapeNode).fillColor   = SKColor.grayColor()
+            rebuildButton.childNodeWithName("refreshImage")!.removeAllActions()
+        }
     }
     
     func changeSelectNumber(selectNumber: Int) {
@@ -340,6 +365,7 @@ class PageBuild: SKSpriteNode {
         // Remove Action
         childNodeWithName("SelectImage\(selectNumber)")?.removeAllActions()
         // Hide
+        buildLine.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
         selectBox.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
         selectBoxArrow.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
         for i in 1...5 {
@@ -371,6 +397,7 @@ class PageBuild: SKSpriteNode {
         childNodeWithName("SelectImage\(selectNumber)")?.runAction(SKAction.moveTo(pos, duration: 0.2))
         // Show
         let seq = SKAction.sequence([SKAction.unhide(), SKAction.waitForDuration(0.2), SKAction.fadeInWithDuration(0.2)])
+        buildLine.runAction(seq)
         selectBox.runAction(seq)
         selectBoxArrow.runAction(seq)
         for i in 1...5 {

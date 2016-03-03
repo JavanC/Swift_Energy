@@ -258,9 +258,9 @@ class IslandsScene: SKScene {
         case 1:
             print("load 9")
             RunAfterDelay(2){
-                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 0)
-//                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 4)
-                let wait = SKAction.waitForDuration(4)
+                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 5)
+                move.timingMode = SKActionTimingMode.EaseInEaseOut
+                let wait = SKAction.waitForDuration(5)
                 let hide = SKAction.hide()
                 self.islandsLayer.runAction(SKAction.sequence([move]))
                 self.skyBackground.runAction(SKAction.sequence([wait, hide]))
@@ -268,7 +268,7 @@ class IslandsScene: SKScene {
             isShowTickAdd = false
             isFirstShowTickAdd = true
             cloudsMove()
-            RunAfterDelay(9) {
+            RunAfterDelay(10) {
                 self.isShowTickAdd = true
             }
             print("load 10")

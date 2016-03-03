@@ -134,11 +134,8 @@ class IslandScene: SKScene {
         boostLayer.hidden = !isBoost
 
         // update rebuild button
-        if isRebuild {
-            bottomLayer.pageBuild.rebuildOn()
-        } else {
-            bottomLayer.pageBuild.rebuildOff()
-        }
+        bottomLayer.pageBuild.rebuildOn(isRebuild)
+
         print("load 6")
     }
     
@@ -300,16 +297,12 @@ class IslandScene: SKScene {
                 print("rebuild button")
                 if !isSoundMute{ runAction(soundSelect) }
                 isRebuild = !isRebuild
-                if isRebuild {
-                    bottomLayer.pageBuild.rebuildOn()
-                } else {
-                    bottomLayer.pageBuild.rebuildOff()
-                }
+                bottomLayer.pageBuild.rebuildOn(isRebuild)
                 
             case bottomLayer.pageBuild.selectInfo:
                 print("Builded select info")
                 if !isSoundMute{ runAction(soundSelect) }
-                changeTouchTypeAndShowPage(.Builded)
+                changeTouchTypeAndShowPage(.Builded, duration: 0.1)
                 
             // Build Select Page
             case buildingSelectLayer:
@@ -478,8 +471,8 @@ class IslandScene: SKScene {
         }
 
         // Updata text imformation
-//        topLayer.moneyLabel.text = "\(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd, isInt: false))"
-//        topLayer.researchLabel.text = "\(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd, isInt: false))"
+        topLayer.moneyLabel.text = "\(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd, isInt: false))"
+        topLayer.researchLabel.text = "\(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd, isInt: false))"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
         bottomLayer.pageEnergy.energyLabel.text = "\(numberToString(maps[nowMapNumber].energy)) / \(numberToString(maps[nowMapNumber].energyMax))"
