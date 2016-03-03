@@ -104,7 +104,6 @@ class GameViewController: UIViewController {
             let size                   = CGSizeMake(skView.frame.width * scale, skView.frame.height * scale)
             framescale                 = size.width / (9 * 64)
             tilesScaleSize             = CGSize(width: 64 * framescale, height: 64 * framescale)
-
             islandsScene               = IslandsScene(size: size)
             islandScene                = IslandScene(size: size)
             upgradeScene               = UpgradeScene(size: size)
@@ -170,7 +169,7 @@ class GameViewController: UIViewController {
         //1000000000000000
 //        money     = 1000
         money     = 888000000000000
-        research  = 100000000000000
+        research  = 888000000000000
         
         // load maps unlocked
         for count in 0..<6 {

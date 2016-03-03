@@ -32,6 +32,7 @@ class IslandsScene: SKScene {
     var isFirstShowTickAdd: Bool = true
     var spentTimeLabel: SKLabelNode!
     var moneyLabel: SKLabelNode!
+    var researchLabel: SKLabelNode!
     
     override func didMoveToView(view: SKView) {
         
@@ -170,46 +171,73 @@ class IslandsScene: SKScene {
             islandsLayer.addChild(settingLayer)
             
             let moneyInfo = SKNode()
-            moneyInfo.position = CGPoint(x: 110 * framescale, y: 40 * framescale)
+            moneyInfo.position = CGPoint(x: 84 * framescale, y: 40 * framescale)
             islandsLayer.addChild(moneyInfo)
-            
-            let moneyBG = SKShapeNode(rectOfSize: CGSizeMake(140 * framescale, 50 * framescale), cornerRadius: 10 * framescale)
+            let moneyBG = SKShapeNode(rectOfSize: CGSizeMake(130 * framescale, 45 * framescale), cornerRadius: 10 * framescale)
             moneyBG.fillColor = SKColor.blackColor()
             moneyBG.lineWidth = 0
             moneyBG.alpha = 0.3
             moneyInfo.addChild(moneyBG)
-            
             let moneyImg = SKSpriteNode(texture: iconAtlas.textureNamed("coint"))
             moneyImg.name = "money image"
-//            moneyImg.setScale(framescale)
-            moneyImg.size = CGSizeMake(60 * framescale, 60 * framescale)
-            moneyImg.position = CGPoint(x: -70 * framescale, y: 0)
+            moneyImg.size = CGSizeMake(50 * framescale, 50 * framescale)
+            moneyImg.position = CGPoint(x: -45 * framescale, y: 0)
             moneyInfo.addChild(moneyImg)
-            
             moneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             moneyLabel.name = "money label"
             moneyLabel.text = numberToString(money, isInt: true)
-            moneyLabel.fontSize = 40 * framescale
+            moneyLabel.fontSize = 30 * framescale
             moneyLabel.fontColor = colorMoney
             moneyLabel.horizontalAlignmentMode = .Center
             moneyLabel.verticalAlignmentMode = .Center
-            moneyLabel.position = CGPoint(x: 10 * framescale, y: 0)
+            moneyLabel.position = CGPoint(x: 20 * framescale, y: 0)
             moneyInfo.addChild(moneyLabel)
             
-            let label = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
-            label.name = "spentTimeLabel"
-            label.text = "SPEND  TIME"
-            label.fontSize = 20 * framescale
-            label.fontColor = SKColor.whiteColor()
-            label.position = CGPoint(x: frame.width / 2, y: frame.height / 8)
-//            addChild(label)
-            
+            let researchInfo = SKNode()
+            researchInfo.position = CGPoint(x: 233 * framescale, y: 40 * framescale)
+            islandsLayer.addChild(researchInfo)
+            let researchBG = SKShapeNode(rectOfSize: CGSizeMake(130 * framescale, 45 * framescale), cornerRadius: 10 * framescale)
+            researchBG.fillColor = SKColor.blackColor()
+            researchBG.lineWidth = 0
+            researchBG.alpha = 0.3
+            researchInfo.addChild(researchBG)
+            let researchImg = SKSpriteNode(texture: iconAtlas.textureNamed("research"))
+            researchImg.name = "research image"
+            researchImg.size = CGSizeMake(60 * framescale, 60 * framescale)
+            researchImg.position = CGPoint(x: -45 * framescale, y: 0)
+            researchInfo.addChild(researchImg)
+            researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+            researchLabel.name = "research label"
+            researchLabel.text = numberToString(research, isInt: true)
+            researchLabel.fontSize = 30 * framescale
+            researchLabel.fontColor = colorResearch
+            researchLabel.horizontalAlignmentMode = .Center
+            researchLabel.verticalAlignmentMode = .Center
+            researchLabel.position = CGPoint(x: 20 * framescale, y: 0)
+            researchInfo.addChild(researchLabel)
+    
+            let timeInfo = SKNode()
+            timeInfo.position = CGPoint(x: 437 * framescale, y: 40 * framescale)
+            islandsLayer.addChild(timeInfo)
+            let timeBG = SKShapeNode(rectOfSize: CGSizeMake(240 * framescale, 45 * framescale), cornerRadius: 10 * framescale)
+            timeBG.fillColor = SKColor.blackColor()
+            timeBG.lineWidth = 0
+            timeBG.alpha = 0.3
+            timeInfo.addChild(timeBG)
+            let timeImg = SKSpriteNode(texture: iconAtlas.textureNamed("clock"))
+            timeImg.name = "time image"
+            timeImg.size = CGSizeMake(45 * framescale, 45 * framescale)
+            timeImg.position = CGPoint(x: -100 * framescale, y: 0)
+            timeInfo.addChild(timeImg)
             spentTimeLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
-            spentTimeLabel.name = "spentTimeLabel"
+            spentTimeLabel.name = "time label"
+            spentTimeLabel.text = hourToString(spendTime)
             spentTimeLabel.fontSize = 30 * framescale
             spentTimeLabel.fontColor = SKColor.whiteColor()
-            spentTimeLabel.position = CGPoint(x: frame.width / 2, y: label.position.y - 50 * framescale)
-//            self.addChild(spentTimeLabel)
+            spentTimeLabel.horizontalAlignmentMode = .Left
+            spentTimeLabel.verticalAlignmentMode = .Center
+            spentTimeLabel.position = CGPoint(x: -70 * framescale, y: 0)
+            timeInfo.addChild(spentTimeLabel)
             
             contentCreated = true
             // remove first touch delay
@@ -230,7 +258,8 @@ class IslandsScene: SKScene {
         case 1:
             print("load 9")
             RunAfterDelay(2){
-                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 4)
+                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 0)
+//                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 4)
                 let wait = SKAction.waitForDuration(4)
                 let hide = SKAction.hide()
                 self.islandsLayer.runAction(SKAction.sequence([move]))
@@ -484,7 +513,7 @@ class IslandsScene: SKScene {
         
         var timeString = ""
         if day > 0 {
-            timeString += "\(day) day" + (day == 1 ? " " : "s ")
+            timeString += "\(day)8D "
         }
         if hour < 10 { timeString += "0" }
         timeString += "\(hour):"
@@ -542,6 +571,7 @@ class IslandsScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         spentTimeLabel.text = hourToString(spendTime)
         moneyLabel.text = numberToString(money, isInt: true)
+        researchLabel.text = numberToString(research, isInt: true)
         if isShowTickAdd { showTickAdd() }
         confirmBubble.update()
     }
