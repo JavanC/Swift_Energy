@@ -78,13 +78,13 @@ class PageInformation: SKSpriteNode {
         addChild(infoLine)
         
         infoImage = BuildingData(buildType: .Land).image("infoImage")
-        infoImage.position = CGPoint(x: infoImage.size.width, y: size.height / 2)
+        infoImage.position = CGPoint(x: size.width / 10, y: size.height / 2)
         addChild(infoImage)
         
         let infogap: CGFloat = size.height * 0.08
         let infoSize = (size.height - 5 * infogap - 8 * framescale) / 4
         for i in 1...4 {
-            positions.append(CGPoint(x: infoImage.size.width * 2, y: 8 * framescale + infogap * CGFloat(5 - i) + infoSize * CGFloat(4 - i)))
+            positions.append(CGPoint(x: size.width / 5 , y: 8 * framescale + infogap * CGFloat(5 - i) + infoSize * CGFloat(4 - i)))
         }
 
         infoTicksNode           = InformationLabel(title: "Ticks", fontSize: infoSize, valueColor: SKColor.whiteColor())
@@ -360,12 +360,11 @@ class PageBuild: SKSpriteNode {
     
     func openSelectInformation() {
         if selectNumber > 4 || selectNumber < 1 { return }
-        let pos = CGPoint(x: tilesScaleSize.width, y: size.height / 2)
         
         // Remove Action
         childNodeWithName("SelectImage\(selectNumber)")?.removeAllActions()
         // Hide
-        buildLine.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
+        buildLine.runAction(SKAction.sequence([SKAction.waitForDuration(0.3), SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
         selectBox.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
         selectBoxArrow.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
         for i in 1...5 {
@@ -374,7 +373,7 @@ class PageBuild: SKSpriteNode {
             }
         }
         // Move
-        let move = SKAction.moveTo(pos, duration: 0.2)
+        let move = SKAction.moveTo(imagePosition[0], duration: 0.2)
         let seq = SKAction.sequence([move, SKAction.waitForDuration(0.2), SKAction.hide()])
         childNodeWithName("SelectImage\(selectNumber)")?.runAction(seq)
         // Show
@@ -397,7 +396,7 @@ class PageBuild: SKSpriteNode {
         childNodeWithName("SelectImage\(selectNumber)")?.runAction(SKAction.moveTo(pos, duration: 0.2))
         // Show
         let seq = SKAction.sequence([SKAction.unhide(), SKAction.waitForDuration(0.2), SKAction.fadeInWithDuration(0.2)])
-        buildLine.runAction(seq)
+        buildLine.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.4)]))
         selectBox.runAction(seq)
         selectBoxArrow.runAction(seq)
         for i in 1...5 {
@@ -444,7 +443,6 @@ class PageSell: SKSpriteNode {
         self.size        = size
         self.name        = "PageSell"
         self.anchorPoint = CGPoint(x: 0, y: 0)
-
         let gap          = Int(20 * framescale)
         sellLabel        = SKMultilineLabel(text: "Touch buildings on the map to sell it. \n Notice: Produce energy building can not be recycled money.", labelWidth: Int(size.width) - Int(80 * framescale), pos: CGPoint(x: size.width / 2, y: size.height - CGFloat(gap)), fontName: "ArialMT", fontSize: (size.height - CGFloat(gap) * 2 - CGFloat(gap)) / 3, fontColor: colorMoney, leading: Int((size.height - CGFloat(gap) * 2) / 3),  shouldShowBorder: false)
         addChild(sellLabel)
@@ -494,9 +492,9 @@ class PageEnergy: SKSpriteNode {
         label.name                                 = "ExplanationLabel"
         label.text                                 = "TOUCH  TO  SELL  ENERGY"
         label.fontColor                            = colorBlue2
-        label.fontSize                             = size.height / 4
-        label.verticalAlignmentMode                = .Center
-        label.position                             = CGPoint(x: size.width / 2, y: size.height / 2)
+        label.fontSize                             = size.height / 5
+        label.horizontalAlignmentMode              = .Left
+        label.position                             = CGPoint(x: 20 * framescale, y: 20 * framescale)
         let fadeInFadeOut                          = SKAction.sequence([SKAction.fadeInWithDuration(1), SKAction.fadeOutWithDuration(1)])
         label.runAction(SKAction.repeatActionForever(fadeInFadeOut))
         addChild(label)
@@ -524,14 +522,14 @@ class BottomLayer: SKSpriteNode {
         self.color       = colorBlue4
         self.name        = "BottomLayer"
         self.anchorPoint = CGPoint(x: 0, y: 0)
+    
+        pageBuild        = PageBuild()
+        pageBuild.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
+        addChild(pageBuild)
         
         pageInformation  = PageInformation()
         pageInformation.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageInformation)
-        
-        pageBuild        = PageBuild()
-        pageBuild.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
-        addChild(pageBuild)
 
         pageEnergy       = PageEnergy()
         pageEnergy.configureAtPosition(CGPoint(x: 0, y: 0), size: size)

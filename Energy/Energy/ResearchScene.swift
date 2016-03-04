@@ -358,8 +358,9 @@ class ResearchScene: SKScene {
             let unitHeight = size.height / 10
             let topCenter = CGPoint(x: size.width / 2, y: frame.size.height - unitHeight / 2)
             
-            let line = SKShapeNode(rectOfSize: CGSizeMake(frame.size.width * 0.9, 2 * framescale))
+            let line = SKShapeNode(rectOfSize: CGSizeMake(frame.size.width * 0.9, 3 * framescale))
             line.name = "line"
+            line.lineWidth = 0
             line.fillColor = SKColor.whiteColor()
             line.position = CGPoint(x: size.width / 2, y: frame.size.height - unitHeight)
             addChild(line)

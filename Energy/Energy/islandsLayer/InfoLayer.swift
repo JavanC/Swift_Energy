@@ -46,9 +46,9 @@ class InfoLayer: SKNode {
         developerNameLabel.position = CGPoint(x: 0, y: gap * 2)
         addChild(developerNameLabel)
         
-        let line1 = SKShapeNode(rectOfSize: CGSizeMake(frameSize.width * 0.4, 0.5 * framescale))
+        let line1 = SKShapeNode(rectOfSize: CGSizeMake(frameSize.width * 0.4, 1 * framescale))
         line1.name = "line1"
-        line1.alpha = 0.5
+        line1.lineWidth = 0
         line1.fillColor = SKColor.whiteColor()
         line1.position = CGPoint(x: 0, y: gap * 1)
         addChild(line1)
@@ -69,9 +69,9 @@ class InfoLayer: SKNode {
         artDesignNameLabel.position = CGPoint(x: 0, y: gap * -1)
         addChild(artDesignNameLabel)
         
-        let line2 = SKShapeNode(rectOfSize: CGSizeMake(frameSize.width * 0.4, 0.5 * framescale))
+        let line2 = SKShapeNode(rectOfSize: CGSizeMake(frameSize.width * 0.4, 1 * framescale))
         line2.name = "line2"
-        line2.alpha = 0.5
+        line2.lineWidth = 0
         line2.fillColor = SKColor.whiteColor()
         line2.position = CGPoint(x: 0, y: gap * -2)
         addChild(line2)

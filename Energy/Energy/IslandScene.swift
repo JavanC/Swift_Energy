@@ -74,7 +74,6 @@ class IslandScene: SKScene {
             bottomLayer.zPosition = 100
             addChild(bottomLayer)
             
-
             // Building Select Layer
             let buildingSelectLayerSize = mapLayerSize
             let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)

@@ -83,8 +83,8 @@ class IslandsScene: SKScene {
             }
             
             for i in 1...6 {
-                let selectMap = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_unlocked_select\(i)"))
-                selectMap.name = "Maps_unlocked_select\(i)"
+                let selectMap = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_select\(i)"))
+                selectMap.name = "Maps_select\(i)"
                 selectMap.size = frame.size
                 selectMap.hidden = true
                 selectMap.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
@@ -92,9 +92,10 @@ class IslandsScene: SKScene {
                 selectMaps.append(selectMap)
             }
             
-            for i in 1...6 {
-                let lockMap = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_locked_unselect\(i)"))
-                lockMap.name = "Maps_locked_unselect\(i)"
+            lockMaps.append(SKSpriteNode())
+            for i in 2...6 {
+                let lockMap = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_locked\(i)"))
+                lockMap.name = "Maps_locked\(i)"
                 lockMap.size = frame.size
                 lockMap.hidden = mapUnlockeds[i-1]
                 lockMap.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
