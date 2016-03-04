@@ -476,25 +476,26 @@ class PageEnergy: SKSpriteNode {
         energyLabel                                = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         energyLabel.name                           = "EnergyLabel"
         energyLabel.fontColor                      = SKColor.whiteColor()
-        energyLabel.fontSize                       = size.height / 7
-        energyLabel.position                       = CGPoint(x: size.width / 2, y: size.height * 3 / 4)
+        energyLabel.fontSize                       = size.height / 6
+        energyLabel.horizontalAlignmentMode        = .Right
+        energyLabel.position                       = CGPoint(x: size.width - 5 * framescale, y: 5 * framescale)
         addChild(energyLabel)
 
         energyTickAddLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         energyTickAddLabel.name                    = "energyTickAddLabel"
         energyTickAddLabel.fontColor               = colorEnergy
-        energyTickAddLabel.fontSize                = size.height / 7
+        energyTickAddLabel.fontSize                = size.height / 6
         energyTickAddLabel.horizontalAlignmentMode = .Right
-        energyTickAddLabel.position                = CGPoint(x: size.width - size.height / 7, y: size.height * 3 / 4)
+        energyTickAddLabel.position                = CGPoint(x: size.width - 5 * framescale, y: size.height / 6 + 10 * framescale)
         addChild(energyTickAddLabel)
 
         let label                                  = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         label.name                                 = "ExplanationLabel"
         label.text                                 = "TOUCH  TO  SELL  ENERGY"
         label.fontColor                            = colorBlue2
-        label.fontSize                             = size.height / 5
-        label.horizontalAlignmentMode              = .Left
-        label.position                             = CGPoint(x: 20 * framescale, y: 20 * framescale)
+        label.fontSize                             = size.height / 4
+        label.verticalAlignmentMode                = .Center
+        label.position                             = CGPoint(x: size.width / 2, y: size.height / 2)
         let fadeInFadeOut                          = SKAction.sequence([SKAction.fadeInWithDuration(1), SKAction.fadeOutWithDuration(1)])
         label.runAction(SKAction.repeatActionForever(fadeInFadeOut))
         addChild(label)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65070DAB1C8960BB00A2D5D4 /* WorldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65070DAA1C8960BB00A2D5D4 /* WorldLayer.swift */; };
 		65361A701C61A30D006C3E18 /* action.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A691C61A30D006C3E18 /* action.wav */; };
 		65361A711C61A30D006C3E18 /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */; };
 		65361A721C61A30D006C3E18 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6B1C61A30D006C3E18 /* explosion.mp3 */; };
@@ -50,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65070DAA1C8960BB00A2D5D4 /* WorldLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldLayer.swift; sourceTree = "<group>"; };
 		65361A691C61A30D006C3E18 /* action.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = action.wav; path = Content/action.wav; sourceTree = "<group>"; };
 		65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = backgroundMusic.mp3; path = Content/backgroundMusic.mp3; sourceTree = "<group>"; };
 		65361A6B1C61A30D006C3E18 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = explosion.mp3; path = Content/explosion.mp3; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				8DDC91311C66307300476BCD /* SettingLayer.swift */,
 				658BA2331C72C1920033051A /* InfoLayer.swift */,
 				658BA2351C76B10F0033051A /* ConfirmBubble.swift */,
+				65070DAA1C8960BB00A2D5D4 /* WorldLayer.swift */,
 			);
 			path = islandsLayer;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				658BA2361C76B10F0033051A /* ConfirmBubble.swift in Sources */,
 				65386E331C2D0F8A00D08B41 /* TopLayer.swift in Sources */,
 				65386E3D1C2D1A0400D08B41 /* BottomLayer.swift in Sources */,
+				65070DAB1C8960BB00A2D5D4 /* WorldLayer.swift in Sources */,
 				65572A8A1C31318E00461802 /* ResearchScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
