@@ -77,10 +77,10 @@ class IslandsScene: SKScene {
             loadingNum = 1
         case 1:
             print("load 9")
-            RunAfterDelay(2){
-                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 5)
+            RunAfterDelay(3){
+                let move = SKAction.moveTo(CGPoint(x: 0, y:0), duration: 4)
                 move.timingMode = SKActionTimingMode.EaseInEaseOut
-                let wait = SKAction.waitForDuration(5)
+                let wait = SKAction.waitForDuration(4)
                 let hide = SKAction.hide()
                 self.worldLayer.runAction(SKAction.sequence([move]))
                 self.worldLayer.skyBackground.runAction(SKAction.sequence([wait, hide]))
@@ -119,6 +119,9 @@ class IslandsScene: SKScene {
             let NodePosition = convertPoint(location, toNode: settingLayer)
             if settingLayer.soundButton.containsPoint(NodePosition) { settingLayer.soundButton.alpha = 0.7 }
             if settingLayer.musicButton.containsPoint(NodePosition) { settingLayer.musicButton.alpha = 0.7 }
+            if settingLayer.resetButton.containsPoint(NodePosition) { settingLayer.resetButton.alpha = 0.7 }
+            if settingLayer.resetNoButton.containsPoint(NodePosition) { settingLayer.resetNoButton.alpha = 0.7 }
+            if settingLayer.resetYesButton.containsPoint(NodePosition) { settingLayer.resetYesButton.alpha = 0.7 }
             if settingLayer.saveButton.containsPoint(NodePosition) { settingLayer.saveButton.alpha = 0.7 }
             return
         }
@@ -157,6 +160,9 @@ class IslandsScene: SKScene {
             let NodePosition = convertPoint(location, toNode: settingLayer)
             settingLayer.soundButton.alpha = settingLayer.soundButton.containsPoint(NodePosition) ? 0.7 : 1
             settingLayer.musicButton.alpha = settingLayer.musicButton.containsPoint(NodePosition) ? 0.7 : 1
+            settingLayer.resetButton.alpha = settingLayer.resetButton.containsPoint(NodePosition) ? 0.7 : 1
+            settingLayer.resetNoButton.alpha = settingLayer.resetNoButton.containsPoint(NodePosition) ? 0.7 : 1
+            settingLayer.resetYesButton.alpha = settingLayer.resetYesButton.containsPoint(NodePosition) ? 0.7 : 1
             settingLayer.saveButton.alpha = settingLayer.saveButton.containsPoint(NodePosition) ? 0.7 : 1
             return
         }
@@ -231,6 +237,23 @@ class IslandsScene: SKScene {
                         print("music on")
                     }
                 }
+                if node == settingLayer.resetButton {
+                    settingLayer.resetNoButton.alpha = 1
+                    settingLayer.resetYesButton.alpha = 1
+                    settingLayer.showResetConfirm(true)
+                }
+                if node == settingLayer.resetNoButton {
+                    settingLayer.resetButton.alpha = 0
+                    settingLayer.resetNoButton.alpha = 1
+                    settingLayer.resetYesButton.alpha = 1
+                    settingLayer.showResetConfirm(false)
+                }
+                if node == settingLayer.resetYesButton {
+                    settingLayer.resetButton.alpha = 0
+                    settingLayer.resetNoButton.alpha = 1
+                    settingLayer.resetYesButton.alpha = 1
+                    resetAllData()
+                }
                 if node == settingLayer.saveButton {
                     settingLayer.saveButton.alpha = 1
                     if !isSoundMute{ runAction(soundTap) }
@@ -266,6 +289,7 @@ class IslandsScene: SKScene {
         
         if settingButton.containsPoint(location) {
             settingButton.alpha = 1
+            settingLayer.showResetConfirm(false, duration: 0)
             settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
         }
         
@@ -296,9 +320,8 @@ class IslandsScene: SKScene {
         let sec = value % 60
         
         var timeString = ""
-        if day > 0 {
-            timeString += "\(day)D "
-        }
+        if day < 10 { timeString += " "}
+        timeString += day > 0 ? "\(day)D " : "    "
         if hour < 10 { timeString += "0" }
         timeString += "\(hour):"
         if min < 10 { timeString += "0" }
@@ -306,6 +329,57 @@ class IslandsScene: SKScene {
         if sec < 10 { timeString += "0" }
         timeString += "\(sec)"
         return timeString
+    }
+    
+    func resetAllData() {
+        let black = SKSpriteNode(color: SKColor.blackColor(), size: frame.size)
+        black.alpha = 0
+        black.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+        black.zPosition = 1000
+        let fadeIn = SKAction.fadeInWithDuration(1)
+        let wait = SKAction.waitForDuration(0.5)
+        let fadeOut = SKAction.fadeOutWithDuration(2)
+        let remove = SKAction.removeFromParent()
+        black.runAction(SKAction.sequence([fadeIn, wait, fadeOut, remove]))
+        addChild(black)
+        
+        RunAfterDelay(1) {
+            // hide setting layer
+            self.settingLayer.alpha = 0
+            self.settingLayer.hidden = true
+            // reset loading number and world position
+            self.worldLayer.position = CGPoint(x: 0, y: -self.frame.height)
+            self.worldLayer.skyBackground.hidden = false
+            self.loadingNum = 1
+            self.view?.presentScene(islandsScene)
+            // reset game data
+            money = 1
+            research = 0
+            spendTime = 0
+            isPause = false
+            isRebuild = false
+            isSoundMute = false
+            isMusicMute = false
+            // reset mapUnlocked
+            mapUnlockeds[0] = true
+            self.worldLayer.mapsLock[0].hidden = true
+            for i in 1..<6 {
+                mapUnlockeds[i] = false
+                self.worldLayer.mapsLock[i].hidden = false
+            }
+            // reset upgrade and research level
+            for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
+                upgradeLevel[UpgradeType(rawValue: count)!] = 0
+            }
+            for count in 0..<ResearchType.ResearchTypeLength.hashValue {
+                researchLevel[ResearchType(rawValue: count)!] = 0
+            }
+            researchLevel[ResearchType.WindTurbineResearch] = 1
+            // reset maps data
+            for map in maps {
+                map.initialMapData()
+            }
+        }
     }
     
     override func update(currentTime: CFTimeInterval) {

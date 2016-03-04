@@ -358,6 +358,13 @@ class PageBuild: SKSpriteNode {
         images[selectNumber - 1].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildType).imageName)))
     }
     
+    func resetBuildMenu() {
+        buildMenu = [BuildingType.WindTurbine, BuildingType.SmallGenerator, BuildingType.HeatExchanger, BuildingType.SmallOffice]
+        for i in 0..<4 {
+            images[i].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildMenu[i]).imageName)))
+        }
+    }
+    
     func openSelectInformation() {
         if selectNumber > 4 || selectNumber < 1 { return }
         

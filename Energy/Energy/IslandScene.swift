@@ -126,6 +126,9 @@ class IslandScene: SKScene {
         // back to Energy type
         changeTouchTypeAndShowPage(.Energy, duration: 0)
 
+        // reset bottom build page build menu
+        bottomLayer.pageBuild.resetBuildMenu()
+        
         // update build page image show
         bottomLayer.pageBuild.updateImageShow()
         

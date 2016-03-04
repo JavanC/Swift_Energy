@@ -165,6 +165,8 @@ class GameViewController: UIViewController {
         spendTime = defaults.integerForKey("spendTime")
         isPause   = defaults.boolForKey("isPause")
         isRebuild = defaults.boolForKey("isRebuild")
+        isSoundMute = defaults.boolForKey("isSoundMute")
+        isMusicMute = defaults.boolForKey("isMusicMute")
 
         //1000000000000000
 //        money     = 1000
@@ -238,6 +240,8 @@ class GameViewController: UIViewController {
         defaults.setInteger(spendTime, forKey: "spendTime")
         defaults.setBool(isPause, forKey: "isPause")
         defaults.setBool(isRebuild, forKey: "isRebuild")
+        defaults.setBool(isSoundMute, forKey: "isSoundMute")
+        defaults.setBool(isMusicMute, forKey: "isMusicMute")
         
         // save maps unlocked
         for count in 0..<mapUnlockeds.count {

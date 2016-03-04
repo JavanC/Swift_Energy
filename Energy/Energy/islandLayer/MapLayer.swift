@@ -134,18 +134,7 @@ class BuildingMapLayer: SKSpriteNode {
         for _ in 0 ..< Int(mapSize.height) {
             buildings.append(Array(count: Int(mapSize.width), repeatedValue: nil))
         }
-        for y in 0 ..< Int(mapSize.height) {
-            for x in 0 ..< Int(mapSize.width) {
-                let coord = CGPoint(x: x, y: y)
-                setTileMapElement(coord: coord, buildType: .Land)
-            }
-        }
-        for y in 0 ..< 3 {
-            for x in 0 ..< 9 {
-                let coord = CGPoint(x: x, y: y)
-                setTileMapElement(coord: coord, buildType: .Ocean)
-            }
-        }
+        initialMapData()
     }
     
     // MARK: Coord transfer to position
@@ -192,6 +181,22 @@ class BuildingMapLayer: SKSpriteNode {
             building.configureAtCoord(coord, buildType: buildType)
             building.position = coord2Position(coord)
             addChild(building)
+        }
+    }
+    
+    // MARK: Reset Map Data
+    func initialMapData() {
+        for y in 0 ..< Int(mapSize.height) {
+            for x in 0 ..< Int(mapSize.width) {
+                let coord = CGPoint(x: x, y: y)
+                setTileMapElement(coord: coord, buildType: .Land)
+            }
+        }
+        for y in 0 ..< 3 {
+            for x in 0 ..< 9 {
+                let coord = CGPoint(x: x, y: y)
+                setTileMapElement(coord: coord, buildType: .Ocean)
+            }
         }
     }
     
