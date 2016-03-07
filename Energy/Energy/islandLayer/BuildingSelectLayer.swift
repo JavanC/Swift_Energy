@@ -72,8 +72,8 @@ class BuildingSelectLayer: SKNode {
         }
         buildingSelectElements  = [BuildingSelectElement]()
         for count in 0..<28 {
-        let element             = BuildingSelectElement(buildType: BuildingType(rawValue: count)!, size: elementsize)
-        element.hidden          = true
+            let element         = BuildingSelectElement(buildType: BuildingType(rawValue: count)!, size: elementsize)
+            element.hidden      = true
             selectLayer.addChild(element)
             buildingSelectElements.append(element)
         }
@@ -97,6 +97,8 @@ class BuildingSelectLayer: SKNode {
                 let color = ((pageFirstPositionNumber % 7) % 2 == 0 ? colorBlue3 : colorBlue4)
                 buildingSelectElements[count].background.color = color
                 ++pageFirstPositionNumber
+            } else {
+                buildingSelectElements[count].hidden = true
             }
         }
     }
