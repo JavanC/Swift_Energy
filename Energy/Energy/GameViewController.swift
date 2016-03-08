@@ -11,9 +11,9 @@ import SpriteKit
 import AVFoundation
 
 // Game Scene
-var islandsScene: SKScene!
-var islandScene: SKScene!
-var upgradeScene: SKScene!
+var islandsScene:  SKScene!
+var islandScene:   SKScene!
+var upgradeScene:  SKScene!
 var researchScene: SKScene!
 
 // Game UI Data
