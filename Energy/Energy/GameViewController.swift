@@ -18,9 +18,9 @@ var researchScene: SKScene!
 
 // Game UI Data
 var tilesScaleSize: CGSize!
-var framescale: CGFloat!
-let door_Fade = SKTransition.fadeWithDuration(2)
-let door_Float = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
+var framescale:     CGFloat!
+let door_Fade     = SKTransition.fadeWithDuration(2)
+let door_Float    = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
 
 // Game Atlas
 let buildingAtlas = SKTextureAtlas(named: "building")
