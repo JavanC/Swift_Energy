@@ -23,9 +23,9 @@ let door_Fade     = SKTransition.fadeWithDuration(2)
 let door_Float    = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
 
 // Game Atlas
-let buildingAtlas = SKTextureAtlas(named: "building")
-let iconAtlas = SKTextureAtlas(named: "icon")
-let mapsAtlas = SKTextureAtlas(named: "maps")
+let buildingAtlas   = SKTextureAtlas(named: "building")
+let iconAtlas       = SKTextureAtlas(named: "icon")
+let mapsAtlas       = SKTextureAtlas(named: "maps")
 let backgroundAtlas = SKTextureAtlas(named: "background")
 
 // Game Sound
