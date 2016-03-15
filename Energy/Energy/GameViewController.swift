@@ -19,8 +19,8 @@ var researchScene: SKScene!
 // Game UI Data
 var tilesScaleSize: CGSize!
 var framescale:     CGFloat!
-let door_Fade     = SKTransition.fadeWithDuration(2)
-let door_Float    = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
+let door_Fade       = SKTransition.fadeWithDuration(2)
+let door_Float      = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
 
 // Game Atlas
 let buildingAtlas   = SKTextureAtlas(named: "building")
@@ -30,15 +30,15 @@ let backgroundAtlas = SKTextureAtlas(named: "background")
 
 // Game Sound
 var backgroundMusicPlayer: AVAudioPlayer!
-let soundTap    = SKAction.playSoundFileNamed("tap.wav", waitForCompletion: false)
-let soundSell = SKAction.playSoundFileNamed("sell.wav", waitForCompletion: false)
-let soundPlacing = SKAction.playSoundFileNamed("placing.wav", waitForCompletion: false)
-let soundExplosion = SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false)
-let soundLevelup = SKAction.playSoundFileNamed("levelup.wav", waitForCompletion: false)
-let soundSlide = SKAction.playSoundFileNamed("slide.wav", waitForCompletion: false)
-let soundClick = SKAction.playSoundFileNamed("click.wav", waitForCompletion: false)
-let soundSelect = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
-let soundAction = SKAction.playSoundFileNamed("action.wav", waitForCompletion: false)
+let soundTap        = SKAction.playSoundFileNamed("tap.wav", waitForCompletion: false)
+let soundSell       = SKAction.playSoundFileNamed("sell.wav", waitForCompletion: false)
+let soundPlacing    = SKAction.playSoundFileNamed("placing.wav", waitForCompletion: false)
+let soundExplosion  = SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false)
+let soundLevelup    = SKAction.playSoundFileNamed("levelup.wav", waitForCompletion: false)
+let soundSlide      = SKAction.playSoundFileNamed("slide.wav", waitForCompletion: false)
+let soundClick      = SKAction.playSoundFileNamed("click.wav", waitForCompletion: false)
+let soundSelect     = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
+let soundAction     = SKAction.playSoundFileNamed("action.wav", waitForCompletion: false)
 
 // Game Color
 var colorMoney = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000) // #DAD74E
