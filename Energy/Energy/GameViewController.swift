@@ -41,15 +41,15 @@ let soundSelect     = SKAction.playSoundFileNamed("select.wav", waitForCompletio
 let soundAction     = SKAction.playSoundFileNamed("action.wav", waitForCompletion: false)
 
 // Game Color
-var colorMoney = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000) // #DAD74E
-var colorResearch = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
-var colorEnergy = UIColor(red: 0.000, green: 0.698, blue: 0.875, alpha: 1.000)
-var colorBlue1 = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
-var colorBlue2 = UIColor(red: 0.208, green: 0.455, blue: 0.635, alpha: 1.000) // #3474A2
-var colorBlue3 = UIColor(red: 0.067, green: 0.310, blue: 0.490, alpha: 1.000)
-var colorBlue4 = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000) // #02374B
-var colorBoost = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000) // #FF9800
-var colorCancel = UIColor(red: 0.898, green: 0.224, blue: 0.282, alpha: 1.000)
+var colorMoney      = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000) // #DAD74E
+var colorResearch   = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
+var colorEnergy     = UIColor(red: 0.000, green: 0.698, blue: 0.875, alpha: 1.000)
+var colorBlue1      = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
+var colorBlue2      = UIColor(red: 0.208, green: 0.455, blue: 0.635, alpha: 1.000) // #3474A2
+var colorBlue3      = UIColor(red: 0.067, green: 0.310, blue: 0.490, alpha: 1.000)
+var colorBlue4      = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000) // #02374B
+var colorBoost      = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000) // #FF9800
+var colorCancel     = UIColor(red: 0.898, green: 0.224, blue: 0.282, alpha: 1.000)
 
 // Game Level
 enum BuildingType: Int {
