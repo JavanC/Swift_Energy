@@ -42,7 +42,7 @@ class SettingLayer: SKNode {
     var confirmNode: SKNode!
     var resetYesButton: SKShapeNode!
     var resetNoButton: SKShapeNode!
-    var saveButton: SKSpriteNode!
+    var saveButton: SKShapeNode!
     
     init(frameSize: CGSize) {
         super.init()
@@ -148,10 +148,15 @@ class SettingLayer: SKNode {
         noAdLabel.position = CGPoint(x: 0, y: gap * -4.5)
         addChild(noAdLabel)
         
-        saveButton = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
+        saveButton = SKShapeNode(circleOfRadius: 40 * framescale)
         saveButton.name = "saveButton"
-        saveButton.size = CGSizeMake(80 * framescale, 80 * framescale)
+        saveButton.fillColor = SKColor.clearColor()
+        saveButton.strokeColor = SKColor.whiteColor()
+        saveButton.lineWidth = 3 * framescale
         saveButton.position = CGPoint(x: 0, y: gap * -8)
+        let checkImg = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
+        checkImg.size = CGSizeMake(40 * framescale, 40 * framescale)
+        saveButton.addChild(checkImg)
         addChild(saveButton)
     }
     

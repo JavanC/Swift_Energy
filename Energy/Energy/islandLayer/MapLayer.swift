@@ -186,6 +186,7 @@ class BuildingMapLayer: SKSpriteNode {
     
     // MARK: Reset Map Data
     func initialMapData() {
+        self.energy = 0
         for y in 0 ..< Int(mapSize.height) {
             for x in 0 ..< Int(mapSize.width) {
                 let coord = CGPoint(x: x, y: y)

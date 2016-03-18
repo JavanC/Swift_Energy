@@ -247,7 +247,7 @@ class PageBuild: SKSpriteNode {
     var selectBoxArrow: SKSpriteNode!
     var selectInfo = PageInformation()
     var rebuildButton: SKNode!
-    var checkButton: SKSpriteNode!
+    var checkButton: SKShapeNode!
     
     func configureAtPosition(position: CGPoint, size: CGSize) {
         self.position    = position
@@ -279,6 +279,7 @@ class PageBuild: SKSpriteNode {
             images.append(image)
             addChild(image)
         }
+        
         updateImageShow()
         
         rebuildButton = SKNode()
@@ -324,12 +325,17 @@ class PageBuild: SKSpriteNode {
         selectInfo.hidden       = true
         addChild(selectInfo)
 
-        checkButton             = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
-        checkButton.name        = "checkButton"
-        checkButton.setScale(framescale)
-        checkButton.position    = imagePosition[4]
+        checkButton = SKShapeNode(circleOfRadius: 30 * framescale)
+        checkButton.name = "checkButton"
+        checkButton.fillColor = SKColor.clearColor()
+        checkButton.strokeColor = SKColor.whiteColor()
+        checkButton.lineWidth = 2 * framescale
         checkButton.hidden      = true
         checkButton.alpha       = 0
+        checkButton.position = imagePosition[4]
+        let checkImg = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
+        checkImg.size = CGSizeMake(30 * framescale, 30 * framescale)
+        checkButton.addChild(checkImg)
         addChild(checkButton)
     }
     
@@ -359,6 +365,7 @@ class PageBuild: SKSpriteNode {
     }
     
     func resetBuildMenu() {
+        changeSelectNumber(1)
         buildMenu = [BuildingType.WindTurbine, BuildingType.SmallGenerator, BuildingType.HeatExchanger, BuildingType.SmallOffice]
         for i in 0..<4 {
             images[i].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildMenu[i]).imageName)))

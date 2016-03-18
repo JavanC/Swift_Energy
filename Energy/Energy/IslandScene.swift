@@ -119,6 +119,7 @@ class IslandScene: SKScene {
             print("load 4")
             self.view?.presentScene(islandsScene)
         }
+        
         // Only show now map
         for count in 0..<6 { maps[count].hidden = true }
         maps[nowMapNumber].hidden = false
@@ -139,6 +140,7 @@ class IslandScene: SKScene {
         bottomLayer.pageBuild.rebuildOn(isRebuild)
 
         print("load 6")
+        
     }
     
     func drawBoostTimeCircle(percent: Double) {

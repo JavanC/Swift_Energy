@@ -10,7 +10,7 @@
 import SpriteKit
 
 class InfoLayer: SKNode {
-    var saveButton: SKSpriteNode!
+    var saveButton: SKShapeNode!
     
     init(frameSize: CGSize) {
         super.init()
@@ -92,10 +92,15 @@ class InfoLayer: SKNode {
         musicDesignNameLabel.position = CGPoint(x: 0, y: gap * -4)
         addChild(musicDesignNameLabel)
 
-        saveButton = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
+        saveButton = SKShapeNode(circleOfRadius: 40 * framescale)
         saveButton.name = "saveButton"
-        saveButton.size = CGSizeMake(80 * framescale, 80 * framescale)
+        saveButton.fillColor = SKColor.clearColor()
+        saveButton.strokeColor = SKColor.whiteColor()
+        saveButton.lineWidth = 3 * framescale
         saveButton.position = CGPoint(x: 0, y: gap * -8)
+        let checkImg = SKSpriteNode(texture: iconAtlas.textureNamed("check"))
+        checkImg.size = CGSizeMake(40 * framescale, 40 * framescale)
+        saveButton.addChild(checkImg)
         addChild(saveButton)
     }
     
