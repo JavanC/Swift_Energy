@@ -164,6 +164,7 @@ class IslandScene: SKScene {
     
     func changeTouchTypeAndShowPage(touchType: TouchType, duration: Double = 0.0) {
         self.touchType = touchType
+        maps[nowMapNumber].removeAllActions()
         maps[nowMapNumber].hidden = false
         bottomLayer.pageBuild.closeSelectInformation()
         if duration == 0 {
