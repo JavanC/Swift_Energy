@@ -63,21 +63,21 @@ enum ResearchType: Int {
 }
 
 // User Data
-var money: Double = 10
-var research: Double = 10
-var spendTime: Int = 0
-var upgradeLevel = [UpgradeType: Int]()
-var researchLevel = [ResearchType: Int]()
-var maps = [BuildingMapLayer]()
-var nowMapNumber: Int = 0
-var isPause: Bool = false
-var isRebuild: Bool = true
-var isBoost: Bool = false
-var isSoundMute: Bool = false
-var isMusicMute: Bool = false
-var boostTime: Double = 1
-var boostTimeLess: Double = 1
-var mapUnlockeds = [Bool]()
+var money: Double           = 10
+var research: Double        = 10
+var spendTime: Int          = 0
+var upgradeLevel            = [UpgradeType: Int]()
+var researchLevel           = [ResearchType: Int]()
+var maps                    = [BuildingMapLayer]()
+var nowMapNumber: Int       = 0
+var isPause: Bool           = false
+var isRebuild: Bool         = true
+var isBoost: Bool           = false
+var isSoundMute: Bool       = false
+var isMusicMute: Bool       = false
+var boostTime: Double       = 1
+var boostTimeLess: Double   = 1
+var mapUnlockeds            = [Bool]()
 
 class GameViewController: UIViewController {
     
