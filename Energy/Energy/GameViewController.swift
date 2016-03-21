@@ -41,14 +41,14 @@ let soundSelect     = SKAction.playSoundFileNamed("select.wav", waitForCompletio
 let soundAction     = SKAction.playSoundFileNamed("action.wav", waitForCompletion: false)
 
 // Game Color
-var colorMoney      = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000) // #DAD74E
+var colorMoney      = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000)// #DAD74E
 var colorResearch   = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
 var colorEnergy     = UIColor(red: 0.000, green: 0.698, blue: 0.875, alpha: 1.000)
 var colorBlue1      = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
-var colorBlue2      = UIColor(red: 0.208, green: 0.455, blue: 0.635, alpha: 1.000) // #3474A2
+var colorBlue2      = UIColor(red: 0.208, green: 0.455, blue: 0.635, alpha: 1.000)// #3474A2
 var colorBlue3      = UIColor(red: 0.067, green: 0.310, blue: 0.490, alpha: 1.000)
-var colorBlue4      = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000) // #02374B
-var colorBoost      = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000) // #FF9800
+var colorBlue4      = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000)// #02374B
+var colorBoost      = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000)// #FF9800
 var colorCancel     = UIColor(red: 0.898, green: 0.224, blue: 0.282, alpha: 1.000)
 
 // Game Level
@@ -63,21 +63,21 @@ enum ResearchType: Int {
 }
 
 // User Data
-var money: Double           = 10
-var research: Double        = 10
-var spendTime: Int          = 0
-var upgradeLevel            = [UpgradeType: Int]()
-var researchLevel           = [ResearchType: Int]()
-var maps                    = [BuildingMapLayer]()
-var nowMapNumber: Int       = 0
-var isPause: Bool           = false
-var isRebuild: Bool         = true
-var isBoost: Bool           = false
-var isSoundMute: Bool       = false
-var isMusicMute: Bool       = false
-var boostTime: Double       = 1
-var boostTimeLess: Double   = 1
-var mapUnlockeds            = [Bool]()
+var money: Double         = 10
+var research: Double      = 10
+var spendTime: Int        = 0
+var upgradeLevel          = [UpgradeType: Int]()
+var researchLevel         = [ResearchType: Int]()
+var maps                  = [BuildingMapLayer]()
+var nowMapNumber: Int     = 0
+var isPause: Bool         = false
+var isRebuild: Bool       = true
+var isBoost: Bool         = false
+var isSoundMute: Bool     = false
+var isMusicMute: Bool     = false
+var boostTime: Double     = 1
+var boostTimeLess: Double = 1
+var mapUnlockeds          = [Bool]()
 
 class GameViewController: UIViewController {
     
@@ -160,11 +160,11 @@ class GameViewController: UIViewController {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // load money, research and spendTime
-        money     = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
-        research  = defaults.doubleForKey("Research")
-        spendTime = defaults.integerForKey("spendTime")
-        isPause   = defaults.boolForKey("isPause")
-        isRebuild = defaults.boolForKey("isRebuild")
+        money       = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
+        research    = defaults.doubleForKey("Research")
+        spendTime   = defaults.integerForKey("spendTime")
+        isPause     = defaults.boolForKey("isPause")
+        isRebuild   = defaults.boolForKey("isRebuild")
         isSoundMute = defaults.boolForKey("isSoundMute")
         isMusicMute = defaults.boolForKey("isMusicMute")
 

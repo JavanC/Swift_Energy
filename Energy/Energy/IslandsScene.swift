@@ -238,19 +238,19 @@ class IslandsScene: SKScene {
                     }
                 }
                 if node == settingLayer.resetButton {
-                    settingLayer.resetNoButton.alpha = 1
+                    settingLayer.resetNoButton.alpha  = 1
                     settingLayer.resetYesButton.alpha = 1
                     settingLayer.showResetConfirm(true)
                 }
                 if node == settingLayer.resetNoButton {
-                    settingLayer.resetButton.alpha = 0
-                    settingLayer.resetNoButton.alpha = 1
+                    settingLayer.resetButton.alpha    = 0
+                    settingLayer.resetNoButton.alpha  = 1
                     settingLayer.resetYesButton.alpha = 1
                     settingLayer.showResetConfirm(false)
                 }
                 if node == settingLayer.resetYesButton {
-                    settingLayer.resetButton.alpha = 0
-                    settingLayer.resetNoButton.alpha = 1
+                    settingLayer.resetButton.alpha    = 0
+                    settingLayer.resetNoButton.alpha  = 1
                     settingLayer.resetYesButton.alpha = 1
                     resetAllData()
                 }
@@ -266,17 +266,17 @@ class IslandsScene: SKScene {
             for node in nodes {
                 if node.hidden { return }
                 if node == confirmBubble.OKButton || node == confirmBubble.cancelButton {
-                    confirmBubble.OKButton.alpha = 1
+                    confirmBubble.OKButton.alpha     = 1
                     confirmBubble.cancelButton.alpha = 1
-                    confirmBubble.buyButton.alpha = 1
+                    confirmBubble.buyButton.alpha    = 1
                     confirmBubble.hideBubble()
                     runAction(soundTap)
                 }
                 if node == confirmBubble.buyButton {
-                    confirmBubble.OKButton.alpha = 1
+                    confirmBubble.OKButton.alpha     = 1
                     confirmBubble.cancelButton.alpha = 1
-                    confirmBubble.buyButton.alpha = 1
-                    confirmBubble.alpha = 1
+                    confirmBubble.buyButton.alpha    = 1
+                    confirmBubble.alpha  = 1
                     confirmBubble.hidden = true
                     money -= confirmBubble.buyPrice
                     mapUnlockeds[confirmBubble.islandNum] = true
@@ -353,11 +353,11 @@ class IslandsScene: SKScene {
             self.loadingNum = 1
             self.view?.presentScene(islandsScene)
             // reset game data
-            money = 1
-            research = 1000000
-            spendTime = 0
-            isPause = false
-            isRebuild = false
+            money       = 1
+            research    = 1000000
+            spendTime   = 0
+            isPause     = false
+            isRebuild   = false
             isSoundMute = false
             isMusicMute = false
             // reset mapUnlocked
