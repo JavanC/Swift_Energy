@@ -20,14 +20,14 @@ class IslandScene: SKScene {
     let tilesize = CGSizeMake(64, 64)
     var gameTimer: NSTimer!
     
-    var boostLayer: SKSpriteNode!
-    var boostArc: SKShapeNode!
-    var touchType: TouchType = .Energy
-    var topLayer: TopLayer!
-    var buttonLayer: ButtonLayer!
-    var bottomLayer: BottomLayer!
+    var boostLayer:          SKSpriteNode!
+    var boostArc:            SKShapeNode!
+    var touchType:           TouchType = .Energy
+    var topLayer:            TopLayer!
+    var buttonLayer:         ButtonLayer!
+    var bottomLayer:         BottomLayer!
     var buildingSelectLayer: BuildingSelectLayer!
-    var isShowSelectLayer: Bool = false
+    var isShowSelectLayer:   Bool = false
     
     var info_Building: Building!
     
