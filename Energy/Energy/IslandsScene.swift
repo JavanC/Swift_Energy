@@ -383,9 +383,9 @@ class IslandsScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        worldLayer.timeLabel.text = hourToString(spendTime)
-        worldLayer.moneyLabel.text = numberToString(money, isInt: true)
-        worldLayer.researchLabel.text = numberToString(research, isInt: true)
+        worldLayer.timeLabel.text       = hourToString(spendTime)
+        worldLayer.moneyLabel.text      = numberToString(money, isInt: true)
+        worldLayer.researchLabel.text   = numberToString(research, isInt: true)
         if worldLayer.isShowTickAdd { worldLayer.showTickAdd() }
         confirmBubble.update()
     }
