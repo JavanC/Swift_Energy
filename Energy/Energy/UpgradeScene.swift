@@ -10,11 +10,11 @@ import SpriteKit
 
 class UpgradeElement: SKNode {
     
-    var background: SKSpriteNode!
+    var background:    SKSpriteNode!
     var buttonUpgrade: SKShapeNode!
     var buttonDegrade: SKShapeNode!
-    var upgradeType: UpgradeType!
-    var upgradePrice: Double!
+    var upgradeType:   UpgradeType!
+    var upgradePrice:  Double!
     
     init(upgradeType: UpgradeType, size: CGSize) {
         super.init()
