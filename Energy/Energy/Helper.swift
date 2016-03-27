@@ -51,13 +51,13 @@ func baseToPower(number: Double, base: Double, power: Int) -> Double {
 }
 
 func numberToString(value: Double, isInt: Bool = true) -> String {
-    let number = Int(value)
-    let P = (number / 1000000000000000)
-    let T = (number % 1000000000000000) / 1000000000000
-    let G = (number % 1000000000000) / 1000000000
-    let M = (number % 1000000000) / 1000000
-    let K = (number % 1000000) / 1000
-    let N = (number % 1000)
+    let number = value
+    let P = Int(number/1000000000000000)
+    let T = Int((number%1000000000000000)/1000000000000)
+    let G = Int(number%1000000000000)/1000000000
+    let M = Int(number%1000000000)/1000000
+    let K = Int(number%1000000)/1000
+    let N = Int(number%1000)
     let L = Int((value % 1) * 10)
     
     if P > 0 {

@@ -150,7 +150,7 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.Battery
             name = "Battery Size"
             comment = "Increases max energy storage by 50%"
-            upgradePrice = baseToPower(50, base: 2, power: upgradeLevel[UpgradeType.EnergyBatterySize]!)
+            upgradePrice = baseToPower(50, base: 1.5, power: upgradeLevel[UpgradeType.EnergyBatterySize]!)
             
         case .HeatExchangerMaxHeat:
             imageType = BuildingType.HeatExchanger
