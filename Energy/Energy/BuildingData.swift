@@ -19,7 +19,7 @@ class TimeSystem: NSObject, NSCoding {
         self.rebuild = rebuild
     }
     func tick() -> Bool{
-        if inAmount > 0 { --inAmount }
+        if inAmount > 0 { inAmount -= 1 }
         if inAmount == 0 { return false }
         return true
     }
@@ -266,6 +266,7 @@ class WaterSystem: NSObject, NSCoding {
         return false
     }
     func balanceWithOtherWaterSystem(var waterSystems:[WaterSystem]) {
+        
         var allWater: Double = 0
         for waterSystem in waterSystems {
             allWater += waterSystem.inAmount

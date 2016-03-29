@@ -485,12 +485,12 @@ class UpgradeScene: SKScene {
                     self.view?.presentScene(islandScene, transition: doors)
                 }
                 if nextPage.containsPoint(location) {
-                    nowPage++
+                    nowPage += 1
                     upgradeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
                     if !isSoundMute{ runAction(soundSlide) }
                 }
                 if prevPage.containsPoint(location) {
-                    nowPage--
+                    nowPage -= 1
                     upgradeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
                     if !isSoundMute{ runAction(soundSlide) }
                 }
@@ -499,7 +499,7 @@ class UpgradeScene: SKScene {
                     let price = element.upgradePrice
                     let type = element.upgradeType
                     money -= price
-                    upgradeLevel[type]!++
+                    upgradeLevel[type]! += 1
                     for count in 0..<maps.count {
                         maps[count].reloadMap()
                     }
@@ -511,7 +511,7 @@ class UpgradeScene: SKScene {
                     let price = element.upgradePrice
                     let type = element.upgradeType
                     money += price
-                    upgradeLevel[type]!--
+                    upgradeLevel[type]! -= 1
                     for count in 0..<maps.count {
                         maps[count].reloadMap()
                     }

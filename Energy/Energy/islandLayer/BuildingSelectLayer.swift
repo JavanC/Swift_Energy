@@ -96,7 +96,7 @@ class BuildingSelectLayer: SKNode {
                 buildingSelectElements[count].position = positions[pageFirstPositionNumber]
                 let color = ((pageFirstPositionNumber % 7) % 2 == 0 ? colorBlue3 : colorBlue4)
                 buildingSelectElements[count].background.color = color
-                ++pageFirstPositionNumber
+                pageFirstPositionNumber += 1
             } else {
                 buildingSelectElements[count].hidden = true
             }

@@ -37,7 +37,7 @@ class IslandScene: SKScene {
         if !contentCreated {
             
             // Game Timer
-            gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tickUpdata", userInfo: nil, repeats: true)
+            gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(IslandScene.tickUpdata), userInfo: nil, repeats: true)
             
             // Top Layer
             let topLayerSize = CGSizeMake(frame.size.width, topTileSize.height * tilesScaleSize.height)
@@ -489,7 +489,7 @@ class IslandScene: SKScene {
         if isBoost { return }
         if isPause { return }
         
-        ++spendTime
+        spendTime += 1
         
         for i in 0..<6 {
             // Update map data

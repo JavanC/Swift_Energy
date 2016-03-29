@@ -91,7 +91,7 @@ class GameViewController: UIViewController {
         
         // save game data when app will resign
         let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: "saveGameData", name: UIApplicationWillResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(GameViewController.saveGameData), name: UIApplicationWillResignActiveNotification, object: nil)
     }
     
     override func viewWillLayoutSubviews() {
@@ -169,9 +169,9 @@ class GameViewController: UIViewController {
         isMusicMute = defaults.boolForKey("isMusicMute")
 
         //1000000000000000
-        money     = 1
+        money     = 10000
 //        money     = 888000000000000
-        research  = 0
+        research  = 10000
 //        research  = 888000000000000
         
         // load maps unlocked
@@ -215,8 +215,8 @@ class GameViewController: UIViewController {
                 boostTimeLess = 0
                 print("Boost seconds: \(pastSeconds)")
                 for _ in 0..<pastSeconds {
-                    ++boostTimeLess
-                    ++spendTime
+                    boostTimeLess += 1
+                    spendTime += 1
                     for i in 0..<6 {
                         // Update map data
                         maps[i].Update()

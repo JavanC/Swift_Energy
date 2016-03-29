@@ -465,7 +465,7 @@ class ResearchScene: SKScene {
         for count in 0..<elements.count {
             let researchElement = ResearchElement(researchType: elements[count], size: elementsize)
             if researchElement.researchDone {
-                ++researchDoneNumber
+                researchDoneNumber += 1
                 researchElement.childNodeWithName("researchLabel")?.hidden = true
                 researchElement.childNodeWithName("priceLabel")?.hidden = true
             }
@@ -494,12 +494,12 @@ class ResearchScene: SKScene {
                     self.view?.presentScene(islandScene, transition: doors)
                 }
                 if nextPage.containsPoint(location) {
-                    nowPage++
+                    nowPage += 1
                     researchdeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
                     if !isSoundMute{ runAction(soundSlide) }
                 }
                 if prevPage.containsPoint(location) {
-                    nowPage--
+                    nowPage -= 1
                     researchdeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
                     if !isSoundMute{ runAction(soundSlide) }
                 }
@@ -509,7 +509,7 @@ class ResearchScene: SKScene {
                     let type = element.researchType
                     if type == ResearchType.ResearchCenterResearch {
                         money -= price
-                        researchLevel[type]!++
+                        researchLevel[type]! += 1
                         updateElement()
                         if !isSoundMute{ runAction(soundLevelup) }
                     } else {
@@ -517,7 +517,7 @@ class ResearchScene: SKScene {
                             isRebuild = true
                         }
                         research -= price
-                        researchLevel[type]!++
+                        researchLevel[type]! += 1
                         for count in 0..<maps.count {
                             maps[count].reloadMap()
                         }
