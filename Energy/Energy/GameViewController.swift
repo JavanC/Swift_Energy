@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import AVFoundation
+import GoogleMobileAds
 
 // Game Scene
 var islandsScene:  SKScene!
@@ -81,6 +82,8 @@ var mapUnlockeds          = [Bool]()
 
 class GameViewController: UIViewController {
     
+    @IBOutlet weak var bannerView: GADBannerView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // load game data
@@ -92,6 +95,22 @@ class GameViewController: UIViewController {
         // save game data when app will resign
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: #selector(GameViewController.saveGameData), name: UIApplicationWillResignActiveNotification, object: nil)
+        
+        // google mobile ad
+        self.bannerView.adUnitID = "ca-app-pub-6777277453719401/5818649975"
+        self.bannerView.rootViewController = self
+        var request: GADRequest = GADRequest()
+//        request.testDevices = ["d868130e73c7b6a9e776f9a6706450bd11fe77d7"]
+        self.bannerView.loadRequest(request)
+        notificationCenter.addObserver(self, selector: #selector(GameViewController.hideBannerView), name: "hideAd", object: nil)
+        notificationCenter.addObserver(self, selector: #selector(GameViewController.showBannerView), name: "showAd", object: nil)
+        // NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+    }
+    func hideBannerView(){
+        self.bannerView.hidden = true
+    }
+    func showBannerView(){
+        self.bannerView.hidden = true
     }
     
     override func viewWillLayoutSubviews() {

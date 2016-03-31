@@ -287,7 +287,7 @@ class IslandsScene: SKScene {
             return
         }
         
-        if settingButton.containsPoint(location) {
+        if settingButton.containsPoint(location) {            
             settingButton.alpha = 1
             settingLayer.showResetConfirm(false, duration: 0)
             settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
