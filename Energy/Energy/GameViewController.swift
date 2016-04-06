@@ -105,6 +105,7 @@ class GameViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(GameViewController.hideBannerView), name: "hideAd", object: nil)
         notificationCenter.addObserver(self, selector: #selector(GameViewController.showBannerView), name: "showAd", object: nil)
         // NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+        hideBannerView()
     }
     func hideBannerView(){
         self.bannerView.hidden = true
