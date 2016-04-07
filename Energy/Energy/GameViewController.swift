@@ -99,7 +99,7 @@ class GameViewController: UIViewController {
         // google mobile ad
         self.bannerView.adUnitID = "ca-app-pub-6777277453719401/5818649975"
         self.bannerView.rootViewController = self
-        let request: GADRequest = GADRequest()
+        let request: GADRequest  = GADRequest()
 //        request.testDevices = ["d868130e73c7b6a9e776f9a6706450bd11fe77d7"]
         self.bannerView.loadRequest(request)
         notificationCenter.addObserver(self, selector: #selector(GameViewController.hideBannerView), name: "hideAd", object: nil)
