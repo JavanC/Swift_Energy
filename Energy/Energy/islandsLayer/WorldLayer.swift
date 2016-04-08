@@ -182,7 +182,7 @@ class WorldLayer: SKNode {
         timeBG.lineWidth = 0
         timeBG.alpha = 0.3
         timeInfo.addChild(timeBG)
-        let timeImg = SKSpriteNode(texture: iconAtlas.textureNamed("clock"))
+        let timeImg = SKSpriteNode(texture: iconAtlas.textureNamed("clock2"))
         timeImg.name = "time image"
         timeImg.size = CGSizeMake(45 * framescale, 45 * framescale)
         timeImg.position = CGPoint(x: -100 * framescale, y: 0)

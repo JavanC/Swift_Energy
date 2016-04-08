@@ -23,25 +23,31 @@ class TopLayer: SKSpriteNode {
         self.color                            = colorBlue4
         self.name                             = "TopLayer"
         self.anchorPoint                      = CGPoint(x: 0, y: 0)
-
-        let gap                               = (size.height - tilesScaleSize.height) / 2
         
         buttonMenu = SKSpriteNode(color: colorBlue3, size: CGSizeMake(size.height, size.height))
         buttonMenu.name = "buttonMenu"
         buttonMenu.position = CGPoint(x: size.height / 2, y: size.height / 2)
         buttonMenu.zPosition = 500
-        let backImage                            = SKSpriteNode(texture: iconAtlas.textureNamed("map"))
-        backImage.name                       = "backImage"
+        let backImage                         = SKSpriteNode(texture: iconAtlas.textureNamed("map"))
+        backImage.name                        = "backImage"
         backImage.setScale(framescale)
         buttonMenu.addChild(backImage)
         addChild(buttonMenu)
 
-        buttonPlayPause                       = SKSpriteNode(texture: iconAtlas.textureNamed(isPause ? "button_pause" : "button_play"))
+        buttonPlayPause = SKSpriteNode(color: isPause ? colorCancel : colorBlue3, size: CGSizeMake(size.height, size.height))
         buttonPlayPause.name                  = "buttonPlayPause"
-        buttonPlayPause.setScale(0.6 * framescale)
-        buttonPlayPause.anchorPoint           = CGPoint(x: 1, y: 0.5)
-        buttonPlayPause.position              = CGPoint(x: size.width - gap, y: size.height / 2)
+        buttonPlayPause.position              = CGPoint(x: size.width - size.height / 2, y: size.height / 2)
+        buttonPlayPause.zPosition = 500
+        let clockImage = SKSpriteNode(texture: iconAtlas.textureNamed("clock"))
+        clockImage.name = "clockImage"
+        clockImage.setScale(framescale)
+        buttonPlayPause.addChild(clockImage)
+        let pointerImage = SKSpriteNode(texture: iconAtlas.textureNamed("clock-pointer"))
+        pointerImage.name = "pointerImage"
+        pointerImage.setScale(framescale)
+        buttonPlayPause.addChild(pointerImage)
         addChild(buttonPlayPause)
+        isPauseChange()
 
         let labelsize                         = (self.size.height) * 2 / 7
         let mingap = size.height / 7
@@ -92,6 +98,13 @@ class TopLayer: SKSpriteNode {
     }
     
     func isPauseChange() {
-        buttonPlayPause.runAction(SKAction.setTexture(iconAtlas.textureNamed(isPause ? "button_pause" : "button_play")))
+        buttonPlayPause.color = isPause ? colorCancel : colorBlue3
+        if isPause {
+            buttonPlayPause.childNodeWithName("pointerImage")!.removeAllActions()
+        } else {
+            let action = SKAction.rotateByAngle(CGFloat(-M_PI), duration: 8)
+            buttonPlayPause.childNodeWithName("pointerImage")!.removeAllActions()
+            buttonPlayPause.childNodeWithName("pointerImage")!.runAction(SKAction.repeatActionForever(action))
+        }
     }
 }
