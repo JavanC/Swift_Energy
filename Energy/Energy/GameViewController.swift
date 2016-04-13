@@ -189,9 +189,9 @@ class GameViewController: UIViewController {
         isMusicMute = defaults.boolForKey("isMusicMute")
 
         //1000000000000000
-        money     = 1000000
+        money     = 10000000
 //        money     = 888000000000000
-        research  = 1000000
+        research  = 10000000
 //        research  = 888000000000000
         
         // load maps unlocked
