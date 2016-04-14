@@ -541,6 +541,8 @@ class BottomLayer: SKSpriteNode {
         pageBuild        = PageBuild()
         pageBuild.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageBuild)
+        // update rebuild button
+        pageBuild.rebuildOn(isRebuild)
         
         pageInformation  = PageInformation()
         pageInformation.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)

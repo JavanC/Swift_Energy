@@ -136,9 +136,6 @@ class IslandScene: SKScene {
         // update boostLayer hidden
         boostLayer.hidden = !isBoost
 
-        // update rebuild button
-        bottomLayer.pageBuild.rebuildOn(isRebuild)
-
         print("load 6")
         
     }

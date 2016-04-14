@@ -265,7 +265,8 @@ class WaterSystem: NSObject, NSCoding {
         }
         return false
     }
-    func balanceWithOtherWaterSystem(var waterSystems:[WaterSystem]) {
+    func balanceWithOtherWaterSystem(waterSystems:[WaterSystem]) {
+        var waterSystems = waterSystems
         
         var allWater: Double = 0
         for waterSystem in waterSystems {
