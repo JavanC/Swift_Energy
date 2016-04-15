@@ -222,6 +222,26 @@ class IslandScene: SKScene {
                 if !isSoundMute{ runAction(soundTap) }
                 isPause = !isPause
                 topLayer.isPauseChange()
+ 
+                /////// try resize AD
+                let midheight = tilesScaleSize.height * midTileSize.height
+                let midscale = (midheight - 100) / midheight
+                print(midscale)
+                if isPause {
+                    for map in maps {
+                        map.runAction(SKAction.scaleYTo(midscale, duration: 0.5))
+                    }
+                    bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: 0.5))
+                    buttonLayer.runAction(SKAction.moveToY(100, duration: 0.5))
+                    NSNotificationCenter.defaultCenter().postNotificationName("showAd", object: nil)
+                } else {
+                    for map in maps {
+                        map.runAction(SKAction.scaleYTo(framescale, duration: 0.5))
+                    }
+                    bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height, duration: 0.5))
+                    buttonLayer.runAction(SKAction.moveToY(0, duration: 0.5))
+                    NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+                }
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
