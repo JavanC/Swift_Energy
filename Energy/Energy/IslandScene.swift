@@ -138,6 +138,28 @@ class IslandScene: SKScene {
 
         print("load 6")
         
+        showAdSpace(0)
+    }
+    
+    func showAdSpace(duration: Double = 0.5) {
+        let midheight = tilesScaleSize.height * midTileSize.height
+        let midscale = (midheight - 100) / midheight
+        for map in maps {
+            map.runAction(SKAction.scaleYTo(framescale * midscale, duration: duration))
+        }
+        bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: duration))
+        buttonLayer.runAction(SKAction.moveToY(100, duration: duration)) {
+            NSNotificationCenter.defaultCenter().postNotificationName("showAd", object: nil)
+        }
+    }
+    func hideAdSpace(duration: Double = 0.5) {
+        for map in maps {
+            map.runAction(SKAction.scaleYTo(framescale, duration: duration))
+        }
+        bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height, duration: duration))
+        buttonLayer.runAction(SKAction.moveToY(0, duration: duration)) {
+            NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+        }
     }
     
     func drawBoostTimeCircle(percent: Double) {
@@ -215,6 +237,7 @@ class IslandScene: SKScene {
             case topLayer.buttonMenu:
                 print("Menu Button")
                 if !isSoundMute{ runAction(soundTap) }
+                self.hideAdSpace(0)
                 self.view?.presentScene(islandsScene, transition: door_Fade)
                 
             case topLayer.buttonPlayPause:
@@ -226,10 +249,9 @@ class IslandScene: SKScene {
                 /////// try resize AD
                 let midheight = tilesScaleSize.height * midTileSize.height
                 let midscale = (midheight - 100) / midheight
-                print(midscale)
                 if isPause {
                     for map in maps {
-                        map.runAction(SKAction.scaleYTo(midscale, duration: 0.5))
+                        map.runAction(SKAction.scaleYTo(framescale * midscale, duration: 0.5))
                     }
                     bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: 0.5))
                     buttonLayer.runAction(SKAction.moveToY(100, duration: 0.5))
@@ -263,6 +285,7 @@ class IslandScene: SKScene {
                 if !isSoundMute{ runAction(soundClick) }
                 buttonLayer.tapButtonUpgrade()
                 RunAfterDelay(0.8) {
+                    self.hideAdSpace(0)
                     self.view?.presentScene(upgradeScene, transition: door_Float)
                 }
                 
@@ -271,6 +294,7 @@ class IslandScene: SKScene {
                 if !isSoundMute{ runAction(soundClick) }
                 buttonLayer.tapButtonResearch()
                 RunAfterDelay(0.8) {
+                    self.hideAdSpace(0)
                     self.view?.presentScene(researchScene, transition: door_Float)
                 }
                 
