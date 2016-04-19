@@ -11,6 +11,7 @@ import SpriteKit
 class IslandScene: SKScene {
     
     var contentCreated: Bool = false
+    var firstLoad: Bool = true
     enum TouchType: Int {
         case Information, Energy, Builded, Sell
     }
@@ -138,13 +139,16 @@ class IslandScene: SKScene {
 
         print("load 6")
         
-        if Reachability.isConnectedToNetwork() {
-            print("have internet")
-            showAdSpace(0)
+        // if not first load and is connect network, show AD
+        if firstLoad {
+            firstLoad = false
         } else {
-            print("no internet")
+            if Reachability.isConnectedToNetwork() {
+                showAdSpace(0)
+            } else {
+                hideAdSpace(0)
+            }
         }
-
     }
     
     func showAdSpace(duration: Double = 0.5) {
@@ -154,18 +158,19 @@ class IslandScene: SKScene {
             map.runAction(SKAction.scaleYTo(framescale * midscale, duration: duration))
         }
         bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: duration))
-        buttonLayer.runAction(SKAction.moveToY(100, duration: duration)) {
+        buttonLayer.runAction(SKAction.moveToY(100, duration: duration))
+        RunAfterDelay(2) {
+            print("show AD")
             NSNotificationCenter.defaultCenter().postNotificationName("showAd", object: nil)
         }
     }
     func hideAdSpace(duration: Double = 0.5) {
+        NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
         for map in maps {
             map.runAction(SKAction.scaleYTo(framescale, duration: duration))
         }
         bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height, duration: duration))
-        buttonLayer.runAction(SKAction.moveToY(0, duration: duration)) {
-            NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
-        }
+        buttonLayer.runAction(SKAction.moveToY(0, duration: duration))
     }
     
     func drawBoostTimeCircle(percent: Double) {
@@ -243,7 +248,6 @@ class IslandScene: SKScene {
             case topLayer.buttonMenu:
                 print("Menu Button")
                 if !isSoundMute{ runAction(soundTap) }
-                self.hideAdSpace(0)
                 self.view?.presentScene(islandsScene, transition: door_Fade)
                 
             case topLayer.buttonPlayPause:
@@ -253,23 +257,7 @@ class IslandScene: SKScene {
                 topLayer.isPauseChange()
  
                 /////// try resize AD
-                let midheight = tilesScaleSize.height * midTileSize.height
-                let midscale = (midheight - 100) / midheight
-                if isPause {
-                    for map in maps {
-                        map.runAction(SKAction.scaleYTo(framescale * midscale, duration: 0.5))
-                    }
-                    bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: 0.5))
-                    buttonLayer.runAction(SKAction.moveToY(100, duration: 0.5))
-                    NSNotificationCenter.defaultCenter().postNotificationName("showAd", object: nil)
-                } else {
-                    for map in maps {
-                        map.runAction(SKAction.scaleYTo(framescale, duration: 0.5))
-                    }
-                    bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height, duration: 0.5))
-                    buttonLayer.runAction(SKAction.moveToY(0, duration: 0.5))
-                    NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
-                }
+                hideAdSpace(0.5)
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
@@ -291,7 +279,6 @@ class IslandScene: SKScene {
                 if !isSoundMute{ runAction(soundClick) }
                 buttonLayer.tapButtonUpgrade()
                 RunAfterDelay(0.8) {
-                    self.hideAdSpace(0)
                     self.view?.presentScene(upgradeScene, transition: door_Float)
                 }
                 
@@ -300,7 +287,6 @@ class IslandScene: SKScene {
                 if !isSoundMute{ runAction(soundClick) }
                 buttonLayer.tapButtonResearch()
                 RunAfterDelay(0.8) {
-                    self.hideAdSpace(0)
                     self.view?.presentScene(researchScene, transition: door_Float)
                 }
                 

@@ -424,7 +424,10 @@ class ResearchScene: SKScene {
             self.view?.presentScene(upgradeScene)
         }
         
+        // update element
         updateElement()
+        // hide AD
+        NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
         print("load 8")
     }
     

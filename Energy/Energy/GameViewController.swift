@@ -102,10 +102,10 @@ class GameViewController: UIViewController {
         let request: GADRequest  = GADRequest()
 //        request.testDevices = ["d868130e73c7b6a9e776f9a6706450bd11fe77d7"]
         self.bannerView.loadRequest(request)
+        self.bannerView.hidden = true
         notificationCenter.addObserver(self, selector: #selector(GameViewController.hideBannerView), name: "hideAd", object: nil)
         notificationCenter.addObserver(self, selector: #selector(GameViewController.showBannerView), name: "showAd", object: nil)
         // NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
-//        hideBannerView()
     }
     func hideBannerView(){
         self.bannerView.hidden = true

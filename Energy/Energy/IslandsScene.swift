@@ -91,6 +91,7 @@ class IslandsScene: SKScene {
             RunAfterDelay(10) {
                 self.worldLayer.isShowTickAdd = true
             }
+            NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
             print("load 10")
             loadingNum = 2
         default:
@@ -100,6 +101,7 @@ class IslandsScene: SKScene {
             RunAfterDelay(3) {
                 self.worldLayer.isShowTickAdd = true
             }
+            NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
             print("load 10")
         }
     }

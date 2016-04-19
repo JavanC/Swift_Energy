@@ -417,7 +417,11 @@ class UpgradeScene: SKScene {
             self.view?.presentScene(islandScene)
         }
         
+        // update element
         updateElement()
+        // hide AD
+        NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+        
         print("load 7")
     }
 
