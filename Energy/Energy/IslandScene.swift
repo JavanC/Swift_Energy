@@ -138,7 +138,13 @@ class IslandScene: SKScene {
 
         print("load 6")
         
-        showAdSpace(0)
+        if Reachability.isConnectedToNetwork() {
+            print("have internet")
+            showAdSpace(0)
+        } else {
+            print("no internet")
+        }
+
     }
     
     func showAdSpace(duration: Double = 0.5) {

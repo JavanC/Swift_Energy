@@ -39,6 +39,7 @@
 		658352A41C44F2CA00317FFD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658352A31C44F2CA00317FFD /* Helper.swift */; };
 		658BA2341C72C1920033051A /* InfoLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2331C72C1920033051A /* InfoLayer.swift */; };
 		658BA2361C76B10F0033051A /* ConfirmBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2351C76B10F0033051A /* ConfirmBubble.swift */; };
+		65B5208B1CC5C8F600875B7F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B5208A1CC5C8F600875B7F /* Reachability.swift */; };
 		65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6C1C608A8B008E0BB5 /* Explode.sks */; };
 		65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6D1C608A8B008E0BB5 /* spark.png */; };
 		8D042CE81C8486B100DF434C /* Launch_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D042CE21C8486B100DF434C /* Launch_background.png */; };
@@ -98,6 +99,7 @@
 		658352A31C44F2CA00317FFD /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		658BA2331C72C1920033051A /* InfoLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoLayer.swift; sourceTree = "<group>"; };
 		658BA2351C76B10F0033051A /* ConfirmBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBubble.swift; sourceTree = "<group>"; };
+		65B5208A1CC5C8F600875B7F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		65ED1E6C1C608A8B008E0BB5 /* Explode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Explode.sks; path = Content/Explode.sks; sourceTree = "<group>"; };
 		65ED1E6D1C608A8B008E0BB5 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Content/spark.png; sourceTree = "<group>"; };
 		8D042CE21C8486B100DF434C /* Launch_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Launch_background.png; path = Content/Launch_background.png; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				65386E141C2CD8A500D08B41 /* GameViewController.swift */,
 				657283CE1C3DFACD00B0B98F /* SKMultilineLabel.swift */,
 				658352A31C44F2CA00317FFD /* Helper.swift */,
+				65B5208A1CC5C8F600875B7F /* Reachability.swift */,
 				658352A11C44CB8A00317FFD /* Assets.xcassets */,
 				655BCC0C1C48A67B007A8079 /* building.atlas */,
 				655BCC0D1C48A67B007A8079 /* icon.atlas */,
@@ -349,6 +352,7 @@
 			files = (
 				65386E251C2CE1A400D08B41 /* IslandsScene.swift in Sources */,
 				65386E291C2CEC7F00D08B41 /* IslandScene.swift in Sources */,
+				65B5208B1CC5C8F600875B7F /* Reachability.swift in Sources */,
 				658352A41C44F2CA00317FFD /* Helper.swift in Sources */,
 				657283CF1C3DFACD00B0B98F /* SKMultilineLabel.swift in Sources */,
 				65386E3B1C2D19ED00D08B41 /* ButtonLayer.swift in Sources */,
