@@ -76,11 +76,12 @@ var isRebuild: Bool       = true
 var isBoost: Bool         = false
 var isSoundMute: Bool     = false
 var isMusicMute: Bool     = false
+var hasTouchAd: Bool      = false
 var boostTime: Double     = 1
 var boostTimeLess: Double = 1
 var mapUnlockeds          = [Bool]()
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, GADBannerViewDelegate {
     
     @IBOutlet weak var bannerView: GADBannerView!
     
@@ -98,6 +99,7 @@ class GameViewController: UIViewController {
         
         // google mobile ad
         self.bannerView.adUnitID = "ca-app-pub-6777277453719401/5818649975"
+        self.bannerView.delegate = self
         self.bannerView.rootViewController = self
         let request: GADRequest  = GADRequest()
 //        request.testDevices = ["d868130e73c7b6a9e776f9a6706450bd11fe77d7"]
@@ -106,6 +108,11 @@ class GameViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(GameViewController.hideBannerView), name: "hideAd", object: nil)
         notificationCenter.addObserver(self, selector: #selector(GameViewController.showBannerView), name: "showAd", object: nil)
         // NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+    }
+    func adViewWillLeaveApplication(bannerView: GADBannerView!) {
+        print("has touch ad")
+        hasTouchAd = true
+        NSNotificationCenter.defaultCenter().postNotificationName("hideAdSpace", object: nil)
     }
     func hideBannerView(){
         self.bannerView.hidden = true

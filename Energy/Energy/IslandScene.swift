@@ -37,6 +37,10 @@ class IslandScene: SKScene {
         // First initial
         if !contentCreated {
             
+            // Add hide ad notification
+            let notificationCenter = NSNotificationCenter.defaultCenter()
+            notificationCenter.addObserver(self, selector: #selector(IslandScene.hideAdSpace), name: "hideAdSpace", object: nil)
+            
             // Game Timer
             gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(IslandScene.tickUpdata), userInfo: nil, repeats: true)
             
@@ -143,34 +147,34 @@ class IslandScene: SKScene {
         if firstLoad {
             firstLoad = false
         } else {
-            if Reachability.isConnectedToNetwork() {
-                showAdSpace(0)
+            if Reachability.isConnectedToNetwork() && !hasTouchAd {
+                showAdSpace()
             } else {
-                hideAdSpace(0)
+                hideAdSpace()
             }
         }
     }
     
-    func showAdSpace(duration: Double = 0.5) {
+    func showAdSpace() {
         let midheight = tilesScaleSize.height * midTileSize.height
         let midscale = (midheight - 100) / midheight
         for map in maps {
-            map.runAction(SKAction.scaleYTo(framescale * midscale, duration: duration))
+            map.runAction(SKAction.scaleYTo(framescale * midscale, duration: 0))
         }
-        bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: duration))
-        buttonLayer.runAction(SKAction.moveToY(100, duration: duration))
+        bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: 0))
+        buttonLayer.runAction(SKAction.moveToY(100, duration: 0))
         RunAfterDelay(2) {
             print("show AD")
             NSNotificationCenter.defaultCenter().postNotificationName("showAd", object: nil)
         }
     }
-    func hideAdSpace(duration: Double = 0.5) {
+    func hideAdSpace() {
         NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
         for map in maps {
-            map.runAction(SKAction.scaleYTo(framescale, duration: duration))
+            map.runAction(SKAction.scaleYTo(framescale, duration: 0.5))
         }
-        bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height, duration: duration))
-        buttonLayer.runAction(SKAction.moveToY(0, duration: duration))
+        bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height, duration: 0.5))
+        buttonLayer.runAction(SKAction.moveToY(0, duration: 0.5))
     }
     
     func drawBoostTimeCircle(percent: Double) {
@@ -257,7 +261,7 @@ class IslandScene: SKScene {
                 topLayer.isPauseChange()
  
                 /////// try resize AD
-                hideAdSpace(0.5)
+                hideAdSpace()
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
