@@ -485,8 +485,7 @@ class UpgradeScene: SKScene {
                 if node.hidden { return }
                 if backButton.containsPoint(location) {
                     if !isSoundMute{ runAction(soundTap) }
-                    let doors = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.3)
-                    self.view?.presentScene(islandScene, transition: doors)
+                    self.view?.presentScene(islandScene, transition: door_reveal)
                 }
                 if nextPage.containsPoint(location) {
                     nowPage += 1

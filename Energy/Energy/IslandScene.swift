@@ -163,7 +163,7 @@ class IslandScene: SKScene {
         }
         bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: 0))
         buttonLayer.runAction(SKAction.moveToY(100, duration: 0))
-        RunAfterDelay(2) {
+        RunAfterDelay(1) {
             print("show AD")
             NSNotificationCenter.defaultCenter().postNotificationName("showAd", object: nil)
         }

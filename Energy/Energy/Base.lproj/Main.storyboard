@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
@@ -24,18 +25,32 @@
                                     <constraint firstAttribute="height" constant="50" id="Cw9-d1-wVT"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X hide Ad" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ypv-9X-gt2">
+                                <rect key="frame" x="369" y="693" width="45" height="18"/>
+                                <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="Td2-5k-xYQ"/>
+                                    <constraint firstAttribute="width" constant="45" id="id0-ep-huB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ypv-9X-gt2" secondAttribute="trailing" id="6C6-yF-0dc"/>
                             <constraint firstAttribute="trailing" secondItem="ykY-pd-ZW9" secondAttribute="trailing" id="83d-gh-L64"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="ykY-pd-ZW9" secondAttribute="bottom" id="PZ8-fV-8r4"/>
                             <constraint firstItem="ykY-pd-ZW9" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="lbp-dQ-Nkd"/>
-                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="ykY-pd-ZW9" secondAttribute="bottom" id="vHd-Dc-6vn"/>
                             <constraint firstItem="ykY-pd-ZW9" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="vOm-ck-TNe"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="ypv-9X-gt2" secondAttribute="bottom" constant="25" id="wi6-SR-6sk"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="bannerView" destination="ykY-pd-ZW9" id="3D0-Hd-ewb"/>
+                        <outlet property="hideAdLabel" destination="ypv-9X-gt2" id="OWn-HC-L4e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>

@@ -21,7 +21,8 @@ var researchScene: SKScene!
 var tilesScaleSize: CGSize!
 var framescale:     CGFloat!
 let door_Fade       = SKTransition.fadeWithDuration(2)
-let door_Float      = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.3)
+let door_Float      = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
+let door_reveal     = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
 
 // Game Atlas
 let buildingAtlas   = SKTextureAtlas(named: "building")
@@ -84,6 +85,7 @@ var mapUnlockeds          = [Bool]()
 class GameViewController: UIViewController, GADBannerViewDelegate {
     
     @IBOutlet weak var bannerView: GADBannerView!
+    @IBOutlet weak var hideAdLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +100,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         notificationCenter.addObserver(self, selector: #selector(GameViewController.saveGameData), name: UIApplicationWillResignActiveNotification, object: nil)
         
         // google mobile ad
+        self.hideAdLabel.hidden = true
         self.bannerView.adUnitID = "ca-app-pub-6777277453719401/5818649975"
         self.bannerView.delegate = self
         self.bannerView.rootViewController = self
@@ -115,9 +118,11 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName("hideAdSpace", object: nil)
     }
     func hideBannerView(){
+        self.hideAdLabel.hidden = true
         self.bannerView.hidden = true
     }
     func showBannerView(){
+        self.hideAdLabel.hidden = false
         self.bannerView.hidden = false
     }
     
