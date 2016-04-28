@@ -355,8 +355,8 @@ class IslandsScene: SKScene {
             self.loadingNum = 1
             self.view?.presentScene(islandsScene)
             // reset game data
-            money       = 1000000
-            research    = 1000000
+            money       = 1
+            research    = 1
             spendTime   = 0
             isPause     = false
             isRebuild   = false

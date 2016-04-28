@@ -296,9 +296,11 @@ class IslandScene: SKScene {
                 
             // GMMMMM
             case bottomLayer.pageSell:
-                for _ in 1...100 {
-                    tickUpdata()
-                }
+                money = money * 10
+                research = research * 10
+//                for _ in 1...100 {
+//                    tickUpdata()
+//                }
                 
             // Energy Page
             case bottomLayer.pageEnergy.energy_ProgressBack:
