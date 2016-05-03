@@ -298,6 +298,7 @@ class IslandScene: SKScene {
             case bottomLayer.pageSell:
                 money = money * 10
                 research = research * 10
+                
 //                for _ in 1...100 {
 //                    tickUpdata()
 //                }
