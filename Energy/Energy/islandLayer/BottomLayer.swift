@@ -566,6 +566,10 @@ class BottomLayer: SKSpriteNode {
     }
     
     func showPage(pageType: PageType, duration: Double = 0.0) {
+        pageInformation.removeAllActions()
+        pageBuild.removeAllActions()
+        pageSell.removeAllActions()
+        pageEnergy.removeAllActions()
         let moveDown = SKAction.moveToY(-50, duration: duration)
         let fadeOut  = SKAction.fadeOutWithDuration(duration)
         let group1   = SKAction.group([moveDown, fadeOut])

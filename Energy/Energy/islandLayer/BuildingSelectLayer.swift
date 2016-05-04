@@ -51,6 +51,7 @@ class BuildingSelectLayer: SKNode {
     var selectLayer: SKSpriteNode!
     var positions = [CGPoint]()
     var buildingSelectElements = [BuildingSelectElement]()
+    var selectBox: SKSpriteNode!
     
     init(position: CGPoint, midSize: CGSize) {
         super.init()
@@ -79,6 +80,7 @@ class BuildingSelectLayer: SKNode {
             }
         }
         
+        // add building select elements
         buildingSelectElements  = [BuildingSelectElement]()
         for count in 0..<28 {
             let element         = BuildingSelectElement(buildType: BuildingType(rawValue: count)!, size: elementsize)
@@ -87,12 +89,25 @@ class BuildingSelectLayer: SKNode {
             buildingSelectElements.append(element)
         }
         
+        // add select sprite
+        selectBox = SKSpriteNode()
+        selectBox.name = "selectBox"
+        selectBox.position = positions[0]
+        let square = SKSpriteNode(color: colorBlue1, size: CGSizeMake(10 * framescale, elementsize.height))
+        square.anchorPoint = CGPoint(x: 0, y: 0)
+        selectBox.addChild(square)
+        let square2 = SKSpriteNode(color: colorBlue1, size: CGSizeMake(10 * framescale, elementsize.height))
+        square2.anchorPoint = CGPoint(x: 0, y: 0)
+        square2.position = CGPoint(x: elementsize.width - square2.size.width, y: 0)
+        selectBox.addChild(square2)
+        selectLayer.addChild(selectBox)
+        
+        // add top and down line
         let lineTop = SKShapeNode(rectOfSize: CGSizeMake(midSize.width * 4, 2 * framescale))
         lineTop.fillColor = SKColor.lightGrayColor()
         lineTop.lineWidth = 0
         lineTop.position = CGPoint(x: midSize.width * 2, y: 0)
         selectLayer.addChild(lineTop)
-        
         let lineDown = SKShapeNode(rectOfSize: CGSizeMake(midSize.width * 4, 2 * framescale))
         lineDown.fillColor = SKColor.lightGrayColor()
         lineDown.lineWidth = 0
@@ -123,6 +138,12 @@ class BuildingSelectLayer: SKNode {
                 buildingSelectElements[count].hidden = true
             }
         }
+    }
+    
+    // Change select box position
+    func changeSelectBox(buildType: BuildingType, duration: Double = 0.1) {
+        selectBox.removeAllActions()
+        selectBox.runAction(SKAction.moveTo(buildingSelectElements[buildType.hashValue].position, duration: duration))
     }
     
     // Show page

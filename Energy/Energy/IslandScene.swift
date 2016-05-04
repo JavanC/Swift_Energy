@@ -191,8 +191,13 @@ class IslandScene: SKScene {
     }
     
     func showBuildSelectPage() {
+        // update and change now select building color
         buildingSelectLayer.updateSelectLayer()
         buildingSelectLayer.changePage(bottomLayer.pageBuild.selectNumber)
+        let buildType = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
+        buildingSelectLayer.changeSelectBox(buildType, duration: 0)
+        
+        // hide map and show building select page
         maps[nowMapNumber].runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.hide()]))
         bottomLayer.pageBuild.openSelectInformation()
         buildingSelectLayer.showPage(true)
@@ -360,6 +365,7 @@ class IslandScene: SKScene {
                         if !isSoundMute{ runAction(soundSelect) }
                         let buildType = (node.parent as! BuildingSelectElement).buildType
                         bottomLayer.pageBuild.changeSelectBuildType(buildType)
+                        buildingSelectLayer.changeSelectBox(buildType)
                     }
                 }
                 
