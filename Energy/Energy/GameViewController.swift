@@ -111,6 +111,10 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         notificationCenter.addObserver(self, selector: #selector(GameViewController.hideBannerView), name: "hideAd", object: nil)
         notificationCenter.addObserver(self, selector: #selector(GameViewController.showBannerView), name: "showAd", object: nil)
         // NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+        
+        // hide Ad Label
+        hideAdLabel.layer.borderWidth = 1
+        hideAdLabel.layer.borderColor = UIColor.whiteColor().CGColor
     }
     func adViewWillLeaveApplication(bannerView: GADBannerView!) {
         print("has touch ad")

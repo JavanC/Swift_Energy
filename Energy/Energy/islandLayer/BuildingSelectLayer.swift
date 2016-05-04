@@ -57,19 +57,28 @@ class BuildingSelectLayer: SKNode {
         self.position           = position
         selectLayer             = SKSpriteNode(color: colorBlue4, size: CGSizeMake(midSize.width * 4, midSize.height))
         selectLayer.name        = "buildingSelectLayer"
-        selectLayer.anchorPoint = CGPoint(x: 0, y: 0)
-        selectLayer.position    = CGPoint(x: 0, y: -selectLayer.size.height)
+        selectLayer.anchorPoint = CGPoint(x: 0, y: 1)
         selectLayer.hidden      = true
         addChild(selectLayer)
+        
+        // add Field
+        for x in 0..<4 {
+            let field = SKSpriteNode(color: colorBlue3, size: CGSizeMake(midSize.width * 4, midSize.height / 7))
+            field.name = "field\(x)"
+            field.anchorPoint = CGPoint(x: 0, y: 1)
+            field.position = CGPoint(x: 0, y: -(CGFloat(x) * midSize.height * 2 + 1) / 7)
+            selectLayer.addChild(field)
+        }
 
         // Caculae Position
         let num: CGFloat        = 7
         let elementsize         = CGSizeMake(midSize.width , midSize.height / num )
         for x in 0..<4 {
             for y in 0..<Int(num) {
-                positions.append(CGPoint(x: selectLayer.size.width / 4 * CGFloat(x), y: selectLayer.size.height - elementsize.height * CGFloat(y + 1)))
+                positions.append(CGPoint(x: selectLayer.size.width / 4 * CGFloat(x), y: -elementsize.height * CGFloat(y + 1)))
             }
         }
+        
         buildingSelectElements  = [BuildingSelectElement]()
         for count in 0..<28 {
             let element         = BuildingSelectElement(buildType: BuildingType(rawValue: count)!, size: elementsize)
@@ -77,6 +86,19 @@ class BuildingSelectLayer: SKNode {
             selectLayer.addChild(element)
             buildingSelectElements.append(element)
         }
+        
+        let lineTop = SKShapeNode(rectOfSize: CGSizeMake(midSize.width * 4, 2 * framescale))
+        lineTop.fillColor = SKColor.lightGrayColor()
+        lineTop.lineWidth = 0
+        lineTop.position = CGPoint(x: midSize.width * 2, y: 0)
+        selectLayer.addChild(lineTop)
+        
+        let lineDown = SKShapeNode(rectOfSize: CGSizeMake(midSize.width * 4, 2 * framescale))
+        lineDown.fillColor = SKColor.lightGrayColor()
+        lineDown.lineWidth = 0
+        lineDown.position = CGPoint(x: midSize.width * 2, y: -midSize.height)
+        selectLayer.addChild(lineDown)
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -92,10 +114,10 @@ class BuildingSelectLayer: SKNode {
                 pageFirstPositionNumber = count
             }
             if researchLevel[page1ShowTypesCheck[count]] > 0 {
-                buildingSelectElements[count].hidden = false
                 buildingSelectElements[count].position = positions[pageFirstPositionNumber]
                 let color = ((pageFirstPositionNumber % 7) % 2 == 0 ? colorBlue3 : colorBlue4)
                 buildingSelectElements[count].background.color = color
+                buildingSelectElements[count].hidden = false
                 pageFirstPositionNumber += 1
             } else {
                 buildingSelectElements[count].hidden = true

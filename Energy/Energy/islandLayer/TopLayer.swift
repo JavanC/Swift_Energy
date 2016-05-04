@@ -95,6 +95,8 @@ class TopLayer: SKSpriteNode {
         researchLabel.verticalAlignmentMode   = .Center
         researchLabel.position                = CGPoint(x: size.height * 4 / 3 + mingap * 1.5, y: size.height * 2 / 7)
         addChild(researchLabel)
+        
+
     }
     
     func isPauseChange() {

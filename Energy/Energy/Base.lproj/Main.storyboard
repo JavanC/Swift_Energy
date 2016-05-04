@@ -26,13 +26,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X hide Ad" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ypv-9X-gt2">
-                                <rect key="frame" x="369" y="693" width="45" height="18"/>
+                                <rect key="frame" x="359" y="696" width="55" height="20"/>
                                 <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="18" id="Td2-5k-xYQ"/>
-                                    <constraint firstAttribute="width" constant="45" id="id0-ep-huB"/>
+                                    <constraint firstAttribute="height" constant="20" id="Td2-5k-xYQ"/>
+                                    <constraint firstAttribute="width" constant="55" id="id0-ep-huB"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -44,7 +44,7 @@
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="ykY-pd-ZW9" secondAttribute="bottom" id="PZ8-fV-8r4"/>
                             <constraint firstItem="ykY-pd-ZW9" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="lbp-dQ-Nkd"/>
                             <constraint firstItem="ykY-pd-ZW9" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="vOm-ck-TNe"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="ypv-9X-gt2" secondAttribute="bottom" constant="25" id="wi6-SR-6sk"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="ypv-9X-gt2" secondAttribute="bottom" constant="20" id="wi6-SR-6sk"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>

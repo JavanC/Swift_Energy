@@ -460,6 +460,12 @@ class PageSell: SKSpriteNode {
         let gap          = Int(20 * framescale)
         sellLabel        = SKMultilineLabel(text: "Touch buildings on the map to sell it. \n Notice: Produce energy building can not be recycled money.", labelWidth: Int(size.width) - Int(80 * framescale), pos: CGPoint(x: size.width / 2, y: size.height - CGFloat(gap)), fontName: "ArialMT", fontSize: (size.height - CGFloat(gap) * 2 - CGFloat(gap)) / 3, fontColor: colorMoney, leading: Int((size.height - CGFloat(gap) * 2) / 3),  shouldShowBorder: false)
         addChild(sellLabel)
+        
+        let line = SKShapeNode(rectOfSize: CGSizeMake(size.width, 2 * framescale))
+        line.fillColor = SKColor.lightGrayColor()
+        line.lineWidth = 0
+        line.position = CGPoint(x: size.width / 2, y: 0)
+        addChild(line)
     }
 }
 

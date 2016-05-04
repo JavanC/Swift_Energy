@@ -81,7 +81,7 @@ class IslandScene: SKScene {
             
             // Building Select Layer
             let buildingSelectLayerSize = mapLayerSize
-            let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height - buildingSelectLayerSize.height)
+            let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
             buildingSelectLayer = BuildingSelectLayer(position: buildingSelectLayerPosition, midSize: buildingSelectLayerSize)
             buildingSelectLayer.zPosition = 50
             addChild(buildingSelectLayer)
@@ -161,6 +161,7 @@ class IslandScene: SKScene {
         for map in maps {
             map.runAction(SKAction.scaleYTo(framescale * midscale, duration: 0))
         }
+        buildingSelectLayer.runAction(SKAction.scaleYTo(midscale, duration: 0))
         bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: 0))
         buttonLayer.runAction(SKAction.moveToY(100, duration: 0))
         RunAfterDelay(1) {
@@ -173,6 +174,7 @@ class IslandScene: SKScene {
         for map in maps {
             map.runAction(SKAction.scaleYTo(framescale, duration: 0.5))
         }
+        buildingSelectLayer.runAction(SKAction.scaleYTo(1, duration: 0.5))
         bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height, duration: 0.5))
         buttonLayer.runAction(SKAction.moveToY(0, duration: 0.5))
     }
