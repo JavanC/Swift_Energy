@@ -28,6 +28,7 @@ class IslandScene: SKScene {
     var buttonLayer:         ButtonLayer!
     var bottomLayer:         BottomLayer!
     var buildingSelectLayer: BuildingSelectLayer!
+    var teachLayer:          TeachLayer!
     var isShowSelectLayer:   Bool = false
     
     var info_Building: Building!
@@ -113,6 +114,12 @@ class IslandScene: SKScene {
             boostLayer.addChild(boostPSLabel)
             addChild(boostLayer)
             
+            // Teach Layer
+            teachLayer = TeachLayer()
+            teachLayer.configureAtPosition(CGPoint(x: frame.width / 2, y: frame.height / 2), size: frame.size)
+            teachLayer.zPosition = 800
+            addChild(teachLayer)
+            
             contentCreated = true
             // remove first touch delay
 //            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
@@ -147,7 +154,7 @@ class IslandScene: SKScene {
         if firstLoad {
             firstLoad = false
         } else {
-            if Reachability.isConnectedToNetwork() && !hasTouchAd {
+            if isHaveTeach && Reachability.isConnectedToNetwork() && !hasTouchAd {
                 showAdSpace()
             } else {
                 hideAdSpace()

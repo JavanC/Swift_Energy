@@ -72,6 +72,7 @@ var upgradeLevel          = [UpgradeType: Int]()
 var researchLevel         = [ResearchType: Int]()
 var maps                  = [BuildingMapLayer]()
 var nowMapNumber: Int     = 0
+var isHaveTeach: Bool     = false
 var isPause: Bool         = false
 var isRebuild: Bool       = true
 var isBoost: Bool         = false
@@ -199,6 +200,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         money       = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
         research    = defaults.doubleForKey("Research")
         spendTime   = defaults.integerForKey("spendTime")
+        isHaveTeach = defaults.boolForKey("isHaveTeach")
         isPause     = defaults.boolForKey("isPause")
         isRebuild   = defaults.boolForKey("isRebuild")
         isSoundMute = defaults.boolForKey("isSoundMute")
@@ -275,6 +277,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         defaults.setDouble(money, forKey: "Money")
         defaults.setDouble(research, forKey: "Research")
         defaults.setInteger(spendTime, forKey: "spendTime")
+        defaults.setBool(isHaveTeach, forKey: "isHaveTeach")
         defaults.setBool(isPause, forKey: "isPause")
         defaults.setBool(isRebuild, forKey: "isRebuild")
         defaults.setBool(isSoundMute, forKey: "isSoundMute")

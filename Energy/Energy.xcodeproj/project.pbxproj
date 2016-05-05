@@ -39,6 +39,7 @@
 		658352A41C44F2CA00317FFD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658352A31C44F2CA00317FFD /* Helper.swift */; };
 		658BA2341C72C1920033051A /* InfoLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2331C72C1920033051A /* InfoLayer.swift */; };
 		658BA2361C76B10F0033051A /* ConfirmBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2351C76B10F0033051A /* ConfirmBubble.swift */; };
+		658D87C71CDAEC8900D5C22B /* TrachLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658D87C61CDAEC8900D5C22B /* TrachLayer.swift */; };
 		65B5208B1CC5C8F600875B7F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B5208A1CC5C8F600875B7F /* Reachability.swift */; };
 		65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6C1C608A8B008E0BB5 /* Explode.sks */; };
 		65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6D1C608A8B008E0BB5 /* spark.png */; };
@@ -99,6 +100,7 @@
 		658352A31C44F2CA00317FFD /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		658BA2331C72C1920033051A /* InfoLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoLayer.swift; sourceTree = "<group>"; };
 		658BA2351C76B10F0033051A /* ConfirmBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBubble.swift; sourceTree = "<group>"; };
+		658D87C61CDAEC8900D5C22B /* TrachLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrachLayer.swift; sourceTree = "<group>"; };
 		65B5208A1CC5C8F600875B7F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		65ED1E6C1C608A8B008E0BB5 /* Explode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Explode.sks; path = Content/Explode.sks; sourceTree = "<group>"; };
 		65ED1E6D1C608A8B008E0BB5 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Content/spark.png; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				65386E3A1C2D19ED00D08B41 /* ButtonLayer.swift */,
 				65386E3E1C2D1B0300D08B41 /* BuildingSelectLayer.swift */,
 				65572A851C30DFC200461802 /* MapLayer.swift */,
+				658D87C61CDAEC8900D5C22B /* TrachLayer.swift */,
 			);
 			path = islandLayer;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				65386E331C2D0F8A00D08B41 /* TopLayer.swift in Sources */,
 				65386E3D1C2D1A0400D08B41 /* BottomLayer.swift in Sources */,
 				65070DAB1C8960BB00A2D5D4 /* WorldLayer.swift in Sources */,
+				658D87C71CDAEC8900D5C22B /* TrachLayer.swift in Sources */,
 				65572A8A1C31318E00461802 /* ResearchScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

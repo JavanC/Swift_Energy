@@ -27,7 +27,7 @@ class TopLayer: SKSpriteNode {
         buttonMenu = SKSpriteNode(color: colorBlue3, size: CGSizeMake(size.height, size.height))
         buttonMenu.name = "buttonMenu"
         buttonMenu.position = CGPoint(x: size.height / 2, y: size.height / 2)
-        buttonMenu.zPosition = 500
+        buttonMenu.zPosition = 400
         let backImage                         = SKSpriteNode(texture: iconAtlas.textureNamed("map"))
         backImage.name                        = "backImage"
         backImage.setScale(framescale)
@@ -37,7 +37,6 @@ class TopLayer: SKSpriteNode {
         buttonPlayPause = SKSpriteNode(color: isPause ? colorCancel : colorBlue3, size: CGSizeMake(size.height, size.height))
         buttonPlayPause.name                  = "buttonPlayPause"
         buttonPlayPause.position              = CGPoint(x: size.width - size.height / 2, y: size.height / 2)
-        buttonPlayPause.zPosition = 500
         let clockImage = SKSpriteNode(texture: iconAtlas.textureNamed("clock"))
         clockImage.name = "clockImage"
         clockImage.setScale(framescale)
