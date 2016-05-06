@@ -20,31 +20,24 @@ class TeachLayer: SKSpriteNode {
         self.size     = size
         self.name     = "TeachLayer"
         
-        background = SKSpriteNode(color: SKColor.blackColor(), size: size)
+        background = SKSpriteNode(color: SKColor.greenColor(), size: size)
         background.name = "teachLayerBackground"
-        background.alpha = 0.7
+//        background.alpha = 0.7
         
-//        addChild(background)
-        
-        let masknode = SKSpriteNode(color: SKColor.blackColor(), size: size)
         let circle = SKShapeNode(circleOfRadius: 100)
-        masknode.addChild(circle)
+        circle.lineWidth = 29
+        circle.strokeColor = SKColor.blueColor()
+        circle.fillColor = SKColor.blackColor()
+        circle.blendMode = SKBlendMode.Subtract
+        background.addChild(circle)
+        addChild(background)
 //
-        let cropNode = SKCropNode()
-        cropNode.maskNode = SKSpriteNode(texture: masknode.texture)
-        cropNode.alpha = 0.7
-        cropNode.addChild(background)
-        addChild(cropNode)
+//        let crop = SKCropNode()
+//        crop.addChild(background)
+//        crop.maskNode = SKSpriteNode(color: SKColor.greenColor(), size: CGSizeMake(200, 200))
+//
+//        addChild(crop)
         
-//        let path = CGPathCreateMutable()
-//        CGPathAddArc(path, nil, 0, 0, framescale * 200, CGFloat(M_PI_2), CGFloat(M_PI_2 - M_PI * 2 * Double(percent)), true)
-//        backgroundMask = SKShapeNode(path: path)
-//        backgroundMask.lineWidth = framescale * 10
-//        boostLayer.addChild(boostArc)
-        
-//        let cropNode = SKCropNode()
-//        cropNode.position = CGPoint(x: siize.width / 2, y: size.height / 2)
-//        cropNode.maskNode = SKSpriteNode(color: SKColor.redColor(), size: CGSizeMake(100, 100))
         
         OKButton = SKShapeNode(rectOfSize: CGSizeMake(80 * framescale, 50 * framescale), cornerRadius: 10 * framescale)
         OKButton.name = "OKButton"
