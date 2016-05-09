@@ -30,6 +30,7 @@ class IslandScene: SKScene {
     var buildingSelectLayer: BuildingSelectLayer!
     var teachLayer:          TeachLayer!
     var isShowSelectLayer:   Bool = false
+    var teachStep:           Int = 0
     
     var info_Building: Building!
     
@@ -115,10 +116,13 @@ class IslandScene: SKScene {
             addChild(boostLayer)
             
             // Teach Layer
-            teachLayer = TeachLayer()
-            teachLayer.configureAtPosition(CGPoint(x: frame.width / 2, y: frame.height / 2), size: frame.size)
-            teachLayer.zPosition = 800
-            addChild(teachLayer)
+            if !isHaveTeach {
+                teachLayer = TeachLayer()
+                teachLayer.configureAtPosition(CGPoint(x: frame.width / 2, y: frame.height / 2), size: frame.size)
+                teachLayer.zPosition = 800
+                addChild(teachLayer)
+                teachStep = 1
+            }
             
             contentCreated = true
             // remove first touch delay
@@ -137,7 +141,7 @@ class IslandScene: SKScene {
         maps[nowMapNumber].hidden = false
 
         // back to Energy type
-        changeTouchTypeAndShowPage(.Energy, duration: 0)
+        changeTouchTypeAndShowPage((isHaveTeach ?.Energy : .Builded), duration: 0)
 
         // reset bottom build page build menu
         bottomLayer.pageBuild.resetBuildMenu()
@@ -247,6 +251,15 @@ class IslandScene: SKScene {
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         let nodes = nodesAtPoint(location)
+        
+        if !isHaveTeach {
+            for node in nodes {
+                if node.hidden { return }
+                
+            }
+            
+            return
+        }
         
         if isBoost {
             for node in nodes {
