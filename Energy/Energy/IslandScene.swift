@@ -122,6 +122,7 @@ class IslandScene: SKScene {
                 teachLayer.zPosition = 800
                 addChild(teachLayer)
                 teachStep = 1
+                teachLayer.changeTeachStep(teachStep)
             }
             
             contentCreated = true
@@ -141,7 +142,7 @@ class IslandScene: SKScene {
         maps[nowMapNumber].hidden = false
 
         // back to Energy type
-        changeTouchTypeAndShowPage((isHaveTeach ?.Energy : .Builded), duration: 0)
+        changeTouchTypeAndShowPage(.Energy, duration: 0)
 
         // reset bottom build page build menu
         bottomLayer.pageBuild.resetBuildMenu()
@@ -255,6 +256,27 @@ class IslandScene: SKScene {
         if !isHaveTeach {
             for node in nodes {
                 if node.hidden { return }
+                if teachStep == 1 && node == teachLayer.OKButton {
+                    teachStep = 2
+                    teachLayer.changeTeachStep(teachStep)
+                    teachLayer.OKButton.hidden = true
+                    buttonLayer.buttonBuild.zPosition = 500
+                }
+                if teachStep == 2 && node == buttonLayer.buttonBuild {
+                    buttonLayer.buttonBuild.zPosition = buttonLayer.buttonSell.zPosition
+                    teachStep = 3
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
+                    changeTouchTypeAndShowPage(.Builded, duration: 0.1)
+                    bottomLayer.zPosition = 900
+                }
+                if teachStep == 3 && node == bottomLayer.pageBuild.images[0] {
+                    teachStep = 4
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundSelect) }
+                    showBuildSelectPage()
+                    buildingSelectLayer.zPosition = 850
+                }
                 
             }
             
