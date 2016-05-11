@@ -31,6 +31,7 @@ class TeachLayer: SKSpriteNode {
             label.fontSize = 30 * framescale
             label.fontColor = SKColor.whiteColor()
             label.position = CGPoint(x: 0, y: 60 - i * 60)
+            label.zPosition = 950
             addChild(label)
             labels.append(label)
         }
@@ -57,13 +58,27 @@ class TeachLayer: SKSpriteNode {
             labels[0].text = "Welcome to the first play!"
             labels[1].text = "Let me teach you how to play."
         case 2:
-            labels[1].text = "Click to switch to page construction"
+            labels[1].text = "Tap to switch to page construction."
         case 3:
-            labels[1].text = "Click to open the building menu"
+            labels[1].text = "Tap to open the building menu."
         case 4:
             labels[0].text = "At this stage,"
-            labels[1].text = "you can only select Wind Turbine"
-            labels[2].text = "Click OK to close the building menu"
+            labels[1].text = "you can only select Wind Turbine."
+            labels[2].text = "Click OK to close the building menu."
+        case 5:
+            labels[1].text = "Now tap on the map to build buildings."
+        case 6:
+            labels[0].text = "Congratulations!"
+            labels[1].text = "You built the first building."
+            labels[2].text = "Now please switch to energy page."
+        case 7:
+            labels[0].text = "Total energy you have."
+            labels[1].text = "Increase energy per second."
+            labels[2].text = "Now Tap energy area to sell energy."
+        case 8:
+            labels[1].text = "Continue to sell the energy to make money."
+            labels[2].text = "Then upgrade and research buildings."
+            
         default: break
         }
     }

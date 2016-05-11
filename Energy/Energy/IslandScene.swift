@@ -275,11 +275,44 @@ class IslandScene: SKScene {
                     teachLayer.changeTeachStep(teachStep)
                     if !isSoundMute{ runAction(soundSelect) }
                     showBuildSelectPage()
-                    buildingSelectLayer.zPosition = 850
+                    buildingSelectLayer.buildingSelectElements[0].zPosition = 850
                 }
-                
+                if teachStep == 4 && node == bottomLayer.pageBuild.selectInfo {
+                    buildingSelectLayer.buildingSelectElements[0].zPosition = 0
+                    teachStep = 5
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundSelect) }
+                    changeTouchTypeAndShowPage(.Builded, duration: 0.1)
+                    maps[0].buildingForCoord(CGPoint(x: 4, y: 8))!.buildingNode.zPosition = 900
+                }
+                if teachStep == 5 && node == maps[0].buildingForCoord(CGPoint(x: 4, y: 8))!.buildingNode {
+                    teachStep = 6
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundPlacing) }
+                    maps[nowMapNumber].setTileMapElement(coord: CGPoint(x: 4, y: 8), buildType: .WindTurbine)
+                    money -= 1
+                    buttonLayer.buttonEnergy.zPosition = 900
+                }
+                if teachStep == 6 && node == buttonLayer.buttonEnergy {
+                    buttonLayer.buttonEnergy.zPosition = buttonLayer.buttonSell.zPosition
+                    maps[0].buildingForCoord(CGPoint(x: 4, y: 8))!.buildingNode.zPosition = 0
+                    teachStep = 7
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
+                    changeTouchTypeAndShowPage(.Energy, duration: 0.1)
+                }
+                if teachStep == 7 && node == bottomLayer.pageEnergy.energy_ProgressBack {
+                    teachStep = 8
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundSell) }
+                    money += maps[nowMapNumber].energy
+                    teachLayer.labels[0].text = "You sell energy to get \(maps[nowMapNumber].energy)$"
+                    maps[nowMapNumber].energy = 0
+                    // draw energy circle
+                    let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
+                    buttonLayer.drawEnergyCircle(percent)
+                }
             }
-            
             return
         }
         
@@ -487,6 +520,7 @@ class IslandScene: SKScene {
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if !isHaveTeach { return }
         if isBoost { return }
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
