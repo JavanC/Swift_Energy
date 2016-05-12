@@ -496,7 +496,7 @@ class PageEnergy: SKSpriteNode {
         energyLabel                                = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         energyLabel.name                           = "EnergyLabel"
         energyLabel.fontColor                      = SKColor.whiteColor()
-        energyLabel.fontSize                       = size.height / 6
+        energyLabel.fontSize                       = size.height / 5
         energyLabel.horizontalAlignmentMode        = .Right
         energyLabel.position                       = CGPoint(x: size.width - 5 * framescale, y: 5 * framescale)
         addChild(energyLabel)
@@ -504,9 +504,9 @@ class PageEnergy: SKSpriteNode {
         energyTickAddLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         energyTickAddLabel.name                    = "energyTickAddLabel"
         energyTickAddLabel.fontColor               = colorEnergy
-        energyTickAddLabel.fontSize                = size.height / 6
+        energyTickAddLabel.fontSize                = size.height / 5
         energyTickAddLabel.horizontalAlignmentMode = .Right
-        energyTickAddLabel.position                = CGPoint(x: size.width - 5 * framescale, y: size.height / 6 + 10 * framescale)
+        energyTickAddLabel.position                = CGPoint(x: size.width - 5 * framescale, y: size.height / 5 + 10 * framescale)
         addChild(energyTickAddLabel)
 
         let label                                  = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")

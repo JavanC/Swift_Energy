@@ -70,14 +70,22 @@ class TeachLayer: SKSpriteNode {
         case 6:
             labels[0].text = "Congratulations!"
             labels[1].text = "You built the first building."
-            labels[2].text = "Now please switch to energy page."
+            labels[2].text = "Now tap the building to see information."
         case 7:
+            labels[0].text = "Currently Wind Turbine can be produced"
+            labels[1].text = "20 times and each produce 0.1 Energy."
+            labels[2].text = "Now please switch to energy page."
+        case 8:
             labels[0].text = "Total energy you have."
             labels[1].text = "Increase energy per second."
-            labels[2].text = "Now Tap energy area to sell energy."
-        case 8:
+            labels[2].text = "Tap energy area to sell energy."
+        case 9:
             labels[1].text = "Continue to sell the energy to make money."
             labels[2].text = "Then upgrade and research buildings."
+        case 10:
+            labels[0].text = "maps   pause"
+            labels[1].text = "Building Sales"
+            labels[2].text = "Upgrade building   Research building"
             
         default: break
         }

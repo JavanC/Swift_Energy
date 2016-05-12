@@ -115,8 +115,12 @@ class IslandScene: SKScene {
             boostLayer.addChild(boostPSLabel)
             addChild(boostLayer)
             
+            //testestestestestestestestestestestest
+            isHaveTeach = true
+            
             // Teach Layer
             if !isHaveTeach {
+                hasTouchAd = true
                 teachLayer = TeachLayer()
                 teachLayer.configureAtPosition(CGPoint(x: frame.width / 2, y: frame.height / 2), size: frame.size)
                 teachLayer.zPosition = 800
@@ -260,7 +264,7 @@ class IslandScene: SKScene {
                     teachStep = 2
                     teachLayer.changeTeachStep(teachStep)
                     teachLayer.OKButton.hidden = true
-                    buttonLayer.buttonBuild.zPosition = 500
+                    buttonLayer.buttonBuild.zPosition = 900
                 }
                 if teachStep == 2 && node == buttonLayer.buttonBuild {
                     buttonLayer.buttonBuild.zPosition = buttonLayer.buttonSell.zPosition
@@ -290,19 +294,30 @@ class IslandScene: SKScene {
                     teachLayer.changeTeachStep(teachStep)
                     if !isSoundMute{ runAction(soundPlacing) }
                     maps[nowMapNumber].setTileMapElement(coord: CGPoint(x: 4, y: 8), buildType: .WindTurbine)
+                    maps[0].buildingForCoord(CGPoint(x: 4, y: 8))!.buildingNode.zPosition = 900
                     money -= 1
+                    return
+                }
+                if teachStep == 6 && node == maps[0].buildingForCoord(CGPoint(x: 4, y: 8))!.buildingNode {
+                    teachStep = 7
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
+                    info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 4, y: 8))
+                    bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
+                    changeTouchTypeAndShowPage(.Information, duration: 0.1)
                     buttonLayer.buttonEnergy.zPosition = 900
                 }
-                if teachStep == 6 && node == buttonLayer.buttonEnergy {
+                if teachStep == 7 && node == buttonLayer.buttonEnergy {
                     buttonLayer.buttonEnergy.zPosition = buttonLayer.buttonSell.zPosition
                     maps[0].buildingForCoord(CGPoint(x: 4, y: 8))!.buildingNode.zPosition = 0
-                    teachStep = 7
+                    teachStep = 8
                     teachLayer.changeTeachStep(teachStep)
                     if !isSoundMute{ runAction(soundClick) }
                     changeTouchTypeAndShowPage(.Energy, duration: 0.1)
                 }
-                if teachStep == 7 && node == bottomLayer.pageEnergy.energy_ProgressBack {
-                    teachStep = 8
+                if teachStep == 8 && node == bottomLayer.pageEnergy.energy_ProgressBack {
+                    bottomLayer.zPosition = 100
+                    teachStep = 9
                     teachLayer.changeTeachStep(teachStep)
                     if !isSoundMute{ runAction(soundSell) }
                     money += maps[nowMapNumber].energy
@@ -311,6 +326,16 @@ class IslandScene: SKScene {
                     // draw energy circle
                     let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
                     buttonLayer.drawEnergyCircle(percent)
+                    teachLayer.OKButton.hidden = false
+                }
+                if teachStep == 9 && node == teachLayer.OKButton {
+                    teachStep = 10
+                    teachLayer.changeTeachStep(teachStep)
+                    return
+                }
+                if teachStep == 10 && node == teachLayer.OKButton {
+                    teachLayer.hidden = true
+                    isHaveTeach = true
                 }
             }
             return
