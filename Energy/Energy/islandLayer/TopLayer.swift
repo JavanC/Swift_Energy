@@ -11,6 +11,7 @@ import SpriteKit
 class TopLayer: SKSpriteNode {
     
     var buttonMenu: SKSpriteNode!
+    var buttonTips: SKSpriteNode!
     var buttonPlayPause: SKSpriteNode!
     var moneyLabel: SKLabelNode!
     var researchLabel: SKLabelNode!
@@ -33,6 +34,15 @@ class TopLayer: SKSpriteNode {
         backImage.setScale(framescale)
         buttonMenu.addChild(backImage)
         addChild(buttonMenu)
+        
+        buttonTips = SKSpriteNode(color: colorBlue3, size: CGSizeMake(size.height, size.height))
+        buttonTips.name = "buttonTips"
+        buttonTips.position = CGPoint(x: size.width - size.height * 3 / 2 - 2 * framescale, y: size.height / 2)
+        let questionImage = SKSpriteNode(texture: iconAtlas.textureNamed("question"))
+        questionImage.name = "questionImage"
+        questionImage.setScale(framescale * 0.9)
+        buttonTips.addChild(questionImage)
+        addChild(buttonTips)
 
         buttonPlayPause = SKSpriteNode(color: isPause ? colorCancel : colorBlue3, size: CGSizeMake(size.height, size.height))
         buttonPlayPause.name                  = "buttonPlayPause"
@@ -49,13 +59,13 @@ class TopLayer: SKSpriteNode {
         isPauseChange()
 
         let labelsize                         = (self.size.height) * 2 / 7
-        let mingap = size.height / 7
+        let mingap                            = size.height / 7
         
-        let line1 = SKShapeNode(rectOfSize: CGSizeMake(220 * framescale, 5 * framescale), cornerRadius: 5 * framescale)
+        let line1 = SKShapeNode(rectOfSize: CGSizeMake(size.width - size.height * 3 - 30 * framescale, 5 * framescale), cornerRadius: 5 * framescale)
         line1.fillColor = SKColor.grayColor()
         line1.alpha = 0.5
         line1.lineWidth = 0
-        line1.position = CGPoint(x: size.height + mingap + 110 * framescale, y: size.height * 5 / 7 - 10 * framescale)
+        line1.position = CGPoint(x: size.height + (size.width - size.height * 3) / 2, y: size.height * 5 / 7 - 10 * framescale)
         addChild(line1)
         let moneyImg = SKSpriteNode(texture: iconAtlas.textureNamed("coint"))
         moneyImg.name = "Money Image"
@@ -73,11 +83,11 @@ class TopLayer: SKSpriteNode {
         moneyLabel.position                   = CGPoint(x: size.height * 4 / 3 + mingap * 1.5, y: size.height * 5 / 7)
         addChild(moneyLabel)
         
-        let line2 = SKShapeNode(rectOfSize: CGSizeMake(220 * framescale, 5 * framescale), cornerRadius: 5 * framescale)
+        let line2 = SKShapeNode(rectOfSize: CGSizeMake(size.width - size.height * 3 - 30 * framescale, 5 * framescale), cornerRadius: 5 * framescale)
         line2.fillColor = SKColor.grayColor()
         line2.alpha = 0.5
         line2.lineWidth = 0
-        line2.position = CGPoint(x: size.height + mingap + 110 * framescale, y: size.height * 2 / 7 - 10 * framescale)
+        line2.position = CGPoint(x: size.height + (size.width - size.height * 3) / 2, y: size.height * 2 / 7 - 10 * framescale)
         addChild(line2)
         let researchImg = SKSpriteNode(texture: iconAtlas.textureNamed("research"))
         researchImg.name = "research Image"
@@ -94,8 +104,6 @@ class TopLayer: SKSpriteNode {
         researchLabel.verticalAlignmentMode   = .Center
         researchLabel.position                = CGPoint(x: size.height * 4 / 3 + mingap * 1.5, y: size.height * 2 / 7)
         addChild(researchLabel)
-        
-
     }
     
     func isPauseChange() {
