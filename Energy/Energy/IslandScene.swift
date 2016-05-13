@@ -21,7 +21,7 @@ class IslandScene: SKScene {
     let tilesize = CGSizeMake(64, 64)
     var gameTimer: NSTimer!
     
-    var boostLayer:          SKSpriteNode!
+    var boostLayer:          BoostLayer!
     var boostArc:            SKShapeNode!
     var touchType:           TouchType = .Energy
     var topLayer:            TopLayer!
@@ -89,30 +89,11 @@ class IslandScene: SKScene {
             addChild(buildingSelectLayer)
             
             // Boost Layer
-            boostLayer = SKSpriteNode()
+            boostLayer = BoostLayer(size: frame.size)
             boostLayer.name = "BoostLayer"
             boostLayer.hidden = !isBoost
             boostLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             boostLayer.zPosition = 300
-            let boostBG = SKSpriteNode(color: SKColor.blackColor(), size: frame.size)
-            boostBG.name = "boostBG"
-            boostBG.alpha = 0.7
-            boostLayer.addChild(boostBG)
-            let boostLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
-            boostLabel.name = "boostLabel"
-            boostLabel.text = "TIME  REPLY"
-            boostLabel.fontColor = SKColor.whiteColor()
-            boostLabel.fontSize = 50 * framescale
-            boostLabel.verticalAlignmentMode = .Center
-            boostLayer.addChild(boostLabel)
-            let boostPSLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
-            boostPSLabel.name = "boostPSLabel"
-            boostPSLabel.text = "Max reply one hour."
-            boostPSLabel.fontColor = SKColor.whiteColor()
-            boostPSLabel.fontSize = 20 * framescale
-            boostPSLabel.verticalAlignmentMode = .Center
-            boostPSLabel.position = CGPoint(x: 0, y: -frame.height / 4)
-            boostLayer.addChild(boostPSLabel)
             addChild(boostLayer)
             
             //testestestestestestestestestestestest

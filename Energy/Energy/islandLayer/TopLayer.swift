@@ -38,10 +38,10 @@ class TopLayer: SKSpriteNode {
         buttonTips = SKSpriteNode(color: colorBlue3, size: CGSizeMake(size.height, size.height))
         buttonTips.name = "buttonTips"
         buttonTips.position = CGPoint(x: size.width - size.height * 3 / 2 - 2 * framescale, y: size.height / 2)
-        let questionImage = SKSpriteNode(texture: iconAtlas.textureNamed("question"))
-        questionImage.name = "questionImage"
-        questionImage.setScale(framescale * 0.9)
-        buttonTips.addChild(questionImage)
+        let tipsImage = SKSpriteNode(texture: iconAtlas.textureNamed("tips"))
+        tipsImage.name = "tipsImage"
+        tipsImage.setScale(framescale * 0.9)
+        buttonTips.addChild(tipsImage)
         addChild(buttonTips)
 
         buttonPlayPause = SKSpriteNode(color: isPause ? colorCancel : colorBlue3, size: CGSizeMake(size.height, size.height))
@@ -55,6 +55,8 @@ class TopLayer: SKSpriteNode {
         pointerImage.name = "pointerImage"
         pointerImage.setScale(framescale)
         buttonPlayPause.addChild(pointerImage)
+        let action = SKAction.sequence([SKAction.rotateByAngle(CGFloat(-M_PI / 4), duration: 0.1), SKAction.waitForDuration(0.9)])
+        pointerImage.runAction(SKAction.repeatActionForever(action))
         addChild(buttonPlayPause)
         isPauseChange()
 
@@ -108,12 +110,6 @@ class TopLayer: SKSpriteNode {
     
     func isPauseChange() {
         buttonPlayPause.color = isPause ? colorCancel : colorBlue3
-        if isPause {
-            buttonPlayPause.childNodeWithName("pointerImage")!.removeAllActions()
-        } else {
-            let action = SKAction.rotateByAngle(CGFloat(-M_PI), duration: 8)
-            buttonPlayPause.childNodeWithName("pointerImage")!.removeAllActions()
-            buttonPlayPause.childNodeWithName("pointerImage")!.runAction(SKAction.repeatActionForever(action))
-        }
+        buttonPlayPause.childNodeWithName("pointerImage")!.paused = isPause
     }
 }

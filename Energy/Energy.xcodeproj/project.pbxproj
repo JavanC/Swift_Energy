@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		65070DAB1C8960BB00A2D5D4 /* WorldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65070DAA1C8960BB00A2D5D4 /* WorldLayer.swift */; };
+		652CD9E31CE57D8F00905069 /* BoostLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CD9E21CE57D8F00905069 /* BoostLayer.swift */; };
 		65361A701C61A30D006C3E18 /* action.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A691C61A30D006C3E18 /* action.wav */; };
 		65361A711C61A30D006C3E18 /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */; };
 		65361A721C61A30D006C3E18 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6B1C61A30D006C3E18 /* explosion.mp3 */; };
@@ -67,6 +68,7 @@
 
 /* Begin PBXFileReference section */
 		65070DAA1C8960BB00A2D5D4 /* WorldLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldLayer.swift; sourceTree = "<group>"; };
+		652CD9E21CE57D8F00905069 /* BoostLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoostLayer.swift; sourceTree = "<group>"; };
 		65361A691C61A30D006C3E18 /* action.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = action.wav; path = Content/action.wav; sourceTree = "<group>"; };
 		65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = backgroundMusic.mp3; path = Content/backgroundMusic.mp3; sourceTree = "<group>"; };
 		65361A6B1C61A30D006C3E18 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = explosion.mp3; path = Content/explosion.mp3; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				65386E3E1C2D1B0300D08B41 /* BuildingSelectLayer.swift */,
 				65572A851C30DFC200461802 /* MapLayer.swift */,
 				658D87C61CDAEC8900D5C22B /* TrachLayer.swift */,
+				652CD9E21CE57D8F00905069 /* BoostLayer.swift */,
 			);
 			path = islandLayer;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				8DDC91321C66307300476BCD /* SettingLayer.swift in Sources */,
 				65572A861C30DFC200461802 /* MapLayer.swift in Sources */,
 				65572A881C31058C00461802 /* UpgradeScene.swift in Sources */,
+				652CD9E31CE57D8F00905069 /* BoostLayer.swift in Sources */,
 				65386E0F1C2CD8A500D08B41 /* AppDelegate.swift in Sources */,
 				657283CD1C3B600F00B0B98F /* BuildingData.swift in Sources */,
 				658BA2361C76B10F0033051A /* ConfirmBubble.swift in Sources */,
