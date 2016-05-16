@@ -30,9 +30,9 @@ class BoostLayer: SKNode {
         boostPSLabel.name = "boostPSLabel"
         boostPSLabel.text = "Max reply one hour."
         boostPSLabel.fontColor = SKColor.whiteColor()
-        boostPSLabel.fontSize = 20 * framescale
+        boostPSLabel.fontSize = 25 * framescale
         boostPSLabel.verticalAlignmentMode = .Center
-        boostPSLabel.position = CGPoint(x: 0, y: -frame.height / 4)
+        boostPSLabel.position = CGPoint(x: 0, y: -50 * framescale)
         addChild(boostPSLabel)
     }
     

@@ -243,6 +243,7 @@ class PageBuild: SKSpriteNode {
     var buildLine: SKNode!
     var buildMenu: [BuildingType] = [BuildingType.WindTurbine, BuildingType.SmallGenerator, BuildingType.HeatExchanger, BuildingType.SmallOffice]
     var images = [SKSpriteNode]()
+    var priceLabels = [SKLabelNode]()
     var selectBox: SKShapeNode!
     var selectBoxArrow: SKSpriteNode!
     var selectInfo = PageInformation()
@@ -273,11 +274,22 @@ class PageBuild: SKSpriteNode {
         addChild(buildLine)
         
         for i in 1...4 {
-        let image        = BuildingData(buildType: buildMenu[i - 1]).image("SelectImage\(i)")
-        image.position   = imagePosition[i - 1]
-        image.zPosition  = 10
+            let image        = BuildingData(buildType: buildMenu[i - 1]).image("SelectImage\(i)")
+            image.position   = imagePosition[i - 1]
+            image.zPosition  = 10
             images.append(image)
             addChild(image)
+            
+            let price = BuildingData.init(buildType: buildMenu[i - 1]).buildPrice
+            let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+            priceLabel.name = "price label \(i)"
+            priceLabel.text = numberToString(price)
+            priceLabel.fontSize = 16 * framescale
+            priceLabel.fontColor = colorMoney
+            priceLabel.position = CGPoint(x: imagePosition[i - 1].x, y: 12 * framescale)
+            priceLabel.zPosition = 10
+            priceLabels.append(priceLabel)
+            addChild(priceLabel)
         }
         
         updateImageShow()
@@ -309,7 +321,7 @@ class PageBuild: SKSpriteNode {
         selectBox.position      = imagePosition[0]
         selectBox.zPosition     = 1
         addChild(selectBox)
-
+        
         selectBoxArrow          = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_up"))
         selectBoxArrow.name     = "selectBoxArrow"
         selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50)
@@ -358,10 +370,14 @@ class PageBuild: SKSpriteNode {
         selectInfo.changeInformation(BuildingData(buildType: buildMenu[selectNumber - 1]))
     }
     
+    
     func changeSelectBuildType(buildType: BuildingType) {
         buildMenu[selectNumber - 1] = buildType
         selectInfo.changeInformation(BuildingData(buildType: buildType))
         images[selectNumber - 1].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildType).imageName)))
+        priceLabels[selectNumber - 1].text = numberToString(BuildingData.init(buildType: buildType).buildPrice)
+        
+        
     }
     
     func resetBuildMenu() {
@@ -369,6 +385,7 @@ class PageBuild: SKSpriteNode {
         buildMenu = [BuildingType.WindTurbine, BuildingType.SmallGenerator, BuildingType.HeatExchanger, BuildingType.SmallOffice]
         for i in 0..<4 {
             images[i].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildMenu[i]).imageName)))
+            priceLabels[i].text = numberToString(BuildingData.init(buildType: buildMenu[i]).buildPrice)
         }
     }
     
@@ -386,6 +403,10 @@ class PageBuild: SKSpriteNode {
                 childNodeWithName("SelectImage\(i)")?.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
             }
         }
+        for priceLabel in priceLabels {
+            priceLabel.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
+        }
+            
         // Move
         let move = SKAction.moveTo(imagePosition[0], duration: 0.2)
         let seq = SKAction.sequence([move, SKAction.waitForDuration(0.2), SKAction.hide()])
@@ -418,20 +439,30 @@ class PageBuild: SKSpriteNode {
                 childNodeWithName("SelectImage\(i)")?.runAction(seq)
             }
         }
+        for priceLabel in priceLabels {
+            priceLabel.runAction(seq)
+        }
     }
     
     func updateImageShow() {
+        for i in 1..<4 {
+            let pos = CGPoint(x: imagePosition[i].x, y: 12 * framescale)
+            priceLabels[i].position = pos
+        }
         for i in 2...5 {
             let pos = imagePosition[i - 1]
             childNodeWithName("SelectImage\(i)")?.position = pos
             if i == 2 && researchLevel[.BatteryResearch] == 0 && researchLevel[.SmallGeneratorResearch] == 0 {
                 childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
+                priceLabels[i - 1].position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
             }
             if i == 3 && researchLevel[.HeatExchangerResearch] == 0 {
                 childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
+                priceLabels[i - 1].position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
             }
             if i == 4 && researchLevel[.ResearchCenterResearch] == 0 {
                 childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
+                priceLabels[i - 1].position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
             }
             if i == 5 && researchLevel[.WindTurbineRebuild] == 0 {
                 childNodeWithName("SelectImage\(i)")?.position = CGPoint(x: -tilesScaleSize.width, y: pos.y)
@@ -439,10 +470,12 @@ class PageBuild: SKSpriteNode {
         }
         if researchLevel[.SmallGeneratorResearch] == 0 {
             buildMenu[1] = .Battery
+            priceLabels[1].text = numberToString(BuildingData.init(buildType: buildMenu[1]).buildPrice)
             childNodeWithName("SelectImage\(2)")?.runAction(SKAction.setTexture(buildingAtlas.textureNamed("Battery")))
         }
         if researchLevel[.SmallOfficeResearch] == 0 {
             buildMenu[3] = .ResearchCenter
+            priceLabels[3].text = numberToString(BuildingData.init(buildType: buildMenu[3]).buildPrice)
             childNodeWithName("SelectImage\(4)")?.runAction(SKAction.setTexture(buildingAtlas.textureNamed("ResearchCenter")))
         }
     }
