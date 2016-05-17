@@ -107,7 +107,7 @@ class IslandScene: SKScene {
             addChild(tipsLayer)
             
             //testestestestestestestestestestestest
-            isHaveTeach = true
+            isHaveTeach = false
             
             // Teach Layer
             if !isHaveTeach {
