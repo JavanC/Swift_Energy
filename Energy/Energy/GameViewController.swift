@@ -304,7 +304,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         }
         
         // save now date
-        let now = NSDate(timeInterval: -3600000, sinceDate: NSDate())
+        let now = NSDate(timeInterval: -3600, sinceDate: NSDate())
         defaults.setObject(now, forKey: "Date")
     }
 }

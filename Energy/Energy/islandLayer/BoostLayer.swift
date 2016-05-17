@@ -8,7 +8,6 @@
 
 import SpriteKit
 
-
 class BoostLayer: SKNode {
     init(size: CGSize) {
         super.init()
@@ -28,11 +27,11 @@ class BoostLayer: SKNode {
         
         let boostPSLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         boostPSLabel.name = "boostPSLabel"
-        boostPSLabel.text = "Max reply one hour."
+        boostPSLabel.text = "- Max reply one hour -"
         boostPSLabel.fontColor = SKColor.whiteColor()
-        boostPSLabel.fontSize = 25 * framescale
+        boostPSLabel.fontSize = 30 * framescale
         boostPSLabel.verticalAlignmentMode = .Center
-        boostPSLabel.position = CGPoint(x: 0, y: -50 * framescale)
+        boostPSLabel.position = CGPoint(x: 0, y: -60 * framescale)
         addChild(boostPSLabel)
     }
     

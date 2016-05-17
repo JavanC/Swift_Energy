@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		65070DAB1C8960BB00A2D5D4 /* WorldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65070DAA1C8960BB00A2D5D4 /* WorldLayer.swift */; };
 		652CD9E31CE57D8F00905069 /* BoostLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CD9E21CE57D8F00905069 /* BoostLayer.swift */; };
+		652CD9ED1CEB0EA600905069 /* Tips.png in Resources */ = {isa = PBXBuildFile; fileRef = 652CD9EA1CEB0EA600905069 /* Tips.png */; };
+		652CD9EE1CEB0EA600905069 /* Tips@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 652CD9EB1CEB0EA600905069 /* Tips@2x.png */; };
+		652CD9EF1CEB0EA600905069 /* Tips@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 652CD9EC1CEB0EA600905069 /* Tips@3x.png */; };
+		652CD9F11CEB0F7800905069 /* TipsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652CD9F01CEB0F7800905069 /* TipsLayer.swift */; };
 		65361A701C61A30D006C3E18 /* action.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65361A691C61A30D006C3E18 /* action.wav */; };
 		65361A711C61A30D006C3E18 /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */; };
 		65361A721C61A30D006C3E18 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 65361A6B1C61A30D006C3E18 /* explosion.mp3 */; };
@@ -40,7 +44,7 @@
 		658352A41C44F2CA00317FFD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658352A31C44F2CA00317FFD /* Helper.swift */; };
 		658BA2341C72C1920033051A /* InfoLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2331C72C1920033051A /* InfoLayer.swift */; };
 		658BA2361C76B10F0033051A /* ConfirmBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2351C76B10F0033051A /* ConfirmBubble.swift */; };
-		658D87C71CDAEC8900D5C22B /* TrachLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658D87C61CDAEC8900D5C22B /* TrachLayer.swift */; };
+		658D87C71CDAEC8900D5C22B /* TeachLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658D87C61CDAEC8900D5C22B /* TeachLayer.swift */; };
 		65B5208B1CC5C8F600875B7F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B5208A1CC5C8F600875B7F /* Reachability.swift */; };
 		65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6C1C608A8B008E0BB5 /* Explode.sks */; };
 		65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6D1C608A8B008E0BB5 /* spark.png */; };
@@ -69,6 +73,10 @@
 /* Begin PBXFileReference section */
 		65070DAA1C8960BB00A2D5D4 /* WorldLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldLayer.swift; sourceTree = "<group>"; };
 		652CD9E21CE57D8F00905069 /* BoostLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoostLayer.swift; sourceTree = "<group>"; };
+		652CD9EA1CEB0EA600905069 /* Tips.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tips.png; path = Content/Tips.png; sourceTree = "<group>"; };
+		652CD9EB1CEB0EA600905069 /* Tips@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Tips@2x.png"; path = "Content/Tips@2x.png"; sourceTree = "<group>"; };
+		652CD9EC1CEB0EA600905069 /* Tips@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Tips@3x.png"; path = "Content/Tips@3x.png"; sourceTree = "<group>"; };
+		652CD9F01CEB0F7800905069 /* TipsLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipsLayer.swift; sourceTree = "<group>"; };
 		65361A691C61A30D006C3E18 /* action.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = action.wav; path = Content/action.wav; sourceTree = "<group>"; };
 		65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = backgroundMusic.mp3; path = Content/backgroundMusic.mp3; sourceTree = "<group>"; };
 		65361A6B1C61A30D006C3E18 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = explosion.mp3; path = Content/explosion.mp3; sourceTree = "<group>"; };
@@ -102,7 +110,7 @@
 		658352A31C44F2CA00317FFD /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		658BA2331C72C1920033051A /* InfoLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoLayer.swift; sourceTree = "<group>"; };
 		658BA2351C76B10F0033051A /* ConfirmBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBubble.swift; sourceTree = "<group>"; };
-		658D87C61CDAEC8900D5C22B /* TrachLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrachLayer.swift; sourceTree = "<group>"; };
+		658D87C61CDAEC8900D5C22B /* TeachLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeachLayer.swift; sourceTree = "<group>"; };
 		65B5208A1CC5C8F600875B7F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		65ED1E6C1C608A8B008E0BB5 /* Explode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Explode.sks; path = Content/Explode.sks; sourceTree = "<group>"; };
 		65ED1E6D1C608A8B008E0BB5 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Content/spark.png; sourceTree = "<group>"; };
@@ -202,8 +210,9 @@
 				65386E3A1C2D19ED00D08B41 /* ButtonLayer.swift */,
 				65386E3E1C2D1B0300D08B41 /* BuildingSelectLayer.swift */,
 				65572A851C30DFC200461802 /* MapLayer.swift */,
-				658D87C61CDAEC8900D5C22B /* TrachLayer.swift */,
+				658D87C61CDAEC8900D5C22B /* TeachLayer.swift */,
 				652CD9E21CE57D8F00905069 /* BoostLayer.swift */,
+				652CD9F01CEB0F7800905069 /* TipsLayer.swift */,
 			);
 			path = islandLayer;
 			sourceTree = "<group>";
@@ -230,6 +239,9 @@
 				8D042CE21C8486B100DF434C /* Launch_background.png */,
 				8D042CE31C8486B100DF434C /* Launch_background@3x.png */,
 				8D042CE41C8486B100DF434C /* Launch_background@2x.png */,
+				652CD9EA1CEB0EA600905069 /* Tips.png */,
+				652CD9EB1CEB0EA600905069 /* Tips@2x.png */,
+				652CD9EC1CEB0EA600905069 /* Tips@3x.png */,
 			);
 			name = Content;
 			sourceTree = "<group>";
@@ -320,6 +332,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				652CD9ED1CEB0EA600905069 /* Tips.png in Resources */,
 				653E36721C86E8DB00AE0900 /* tap.wav in Resources */,
 				65386E1D1C2CD8A500D08B41 /* LaunchScreen.storyboard in Resources */,
 				65ED1E6F1C608A8B008E0BB5 /* spark.png in Resources */,
@@ -328,6 +341,7 @@
 				8D8AF5731C843716006541AD /* maps.atlas in Resources */,
 				65361A721C61A30D006C3E18 /* explosion.mp3 in Resources */,
 				65361A731C61A30D006C3E18 /* levelup.wav in Resources */,
+				652CD9EF1CEB0EA600905069 /* Tips@3x.png in Resources */,
 				8D042CE91C8486B100DF434C /* Launch_background@3x.png in Resources */,
 				8D042CEE1C84933900DF434C /* Starfield.sks in Resources */,
 				65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */,
@@ -339,6 +353,7 @@
 				658352A21C44CB8A00317FFD /* Assets.xcassets in Resources */,
 				65361A741C61A30D006C3E18 /* placing.wav in Resources */,
 				8D042CEA1C8486B100DF434C /* Launch_background@2x.png in Resources */,
+				652CD9EE1CEB0EA600905069 /* Tips@2x.png in Resources */,
 				65361A7A1C61D886006C3E18 /* click.wav in Resources */,
 				65361A751C61A30D006C3E18 /* sell.wav in Resources */,
 				655BCC0F1C48A67B007A8079 /* icon.atlas in Resources */,
@@ -375,8 +390,9 @@
 				65386E331C2D0F8A00D08B41 /* TopLayer.swift in Sources */,
 				65386E3D1C2D1A0400D08B41 /* BottomLayer.swift in Sources */,
 				65070DAB1C8960BB00A2D5D4 /* WorldLayer.swift in Sources */,
-				658D87C71CDAEC8900D5C22B /* TrachLayer.swift in Sources */,
+				658D87C71CDAEC8900D5C22B /* TeachLayer.swift in Sources */,
 				65572A8A1C31318E00461802 /* ResearchScene.swift in Sources */,
+				652CD9F11CEB0F7800905069 /* TipsLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

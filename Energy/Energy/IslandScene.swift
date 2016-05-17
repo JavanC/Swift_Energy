@@ -29,7 +29,9 @@ class IslandScene: SKScene {
     var bottomLayer:         BottomLayer!
     var buildingSelectLayer: BuildingSelectLayer!
     var teachLayer:          TeachLayer!
+    var tipsLayer:           TipsLayer!
     var isShowSelectLayer:   Bool = false
+    var isShowTips:          Bool = false
     var teachStep:           Int = 0
     
     var info_Building: Building!
@@ -95,6 +97,14 @@ class IslandScene: SKScene {
             boostLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             boostLayer.zPosition = 300
             addChild(boostLayer)
+            
+            // Tips Layer
+            tipsLayer = TipsLayer(size: frame.size)
+            tipsLayer.name = "tips layer"
+            tipsLayer.hidden = true
+            tipsLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            tipsLayer.zPosition = 700
+            addChild(tipsLayer)
             
             //testestestestestestestestestestestest
             isHaveTeach = true
@@ -333,6 +343,18 @@ class IslandScene: SKScene {
             return
         }
         
+        if isShowTips {
+            for node in nodes {
+                if node.hidden { return }
+                if node == tipsLayer.OKButton {
+                    print("tips ok button")
+                    isShowTips = false
+                    tipsLayer.showLayer(isShowTips)
+                }
+            }
+            return
+        }
+        
         for node in nodes {
             if node.hidden { return }
             switch node {
@@ -341,6 +363,12 @@ class IslandScene: SKScene {
                 print("Menu Button")
                 if !isSoundMute{ runAction(soundTap) }
                 self.view?.presentScene(islandsScene, transition: door_Fade)
+                
+            case topLayer.buttonTips:
+                print("Tips Button")
+                if !isSoundMute{ runAction(soundTap) }
+                isShowTips = true
+                tipsLayer.showLayer(isShowTips)
                 
             case topLayer.buttonPlayPause:
                 print("Pause: \(isPause)")
