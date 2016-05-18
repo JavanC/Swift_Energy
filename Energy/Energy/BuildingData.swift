@@ -350,6 +350,10 @@ class BuildingData: NSObject, NSCoding {
         case .Ocean:
             imageName = "Ocean"
             buildPrice = 0
+            
+        case .Rock:
+            imageName = "Rock"
+            buildPrice = 0
 
         case .WindTurbine:
             imageName = "WindTurbine"

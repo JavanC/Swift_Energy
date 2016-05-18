@@ -28,7 +28,7 @@ class Building: SKNode {
         buildingNode.anchorPoint = CGPoint(x: 0, y: 1)
         addChild(buildingNode)
         
-        if buildType == .Land || buildType == .Ocean {
+        if buildType == .Land || buildType == .Ocean || buildType == .Rock {
             activate = false
         }
         
@@ -50,7 +50,7 @@ class Building: SKNode {
             buildingNode.alpha = activate ? 1 : 0.5
         }
         
-        if buildingData.buildType == .Land || buildingData.buildType == .Ocean {
+        if buildingData.buildType == .Land || buildingData.buildType == .Ocean || buildingData.buildType == .Rock {
             activate = false
         }
         
@@ -198,6 +198,11 @@ class BuildingMapLayer: SKSpriteNode {
                 let coord = CGPoint(x: x, y: y)
                 setTileMapElement(coord: coord, buildType: .Ocean)
             }
+        }
+        
+        for x in 0..<9 {
+            let coord = CGPoint(x: x, y: 5)
+            setTileMapElement(coord: coord, buildType: .Rock)
         }
     }
     

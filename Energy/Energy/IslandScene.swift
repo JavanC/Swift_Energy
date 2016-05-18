@@ -107,7 +107,7 @@ class IslandScene: SKScene {
             addChild(tipsLayer)
             
             //testestestestestestestestestestestest
-            isHaveTeach = false
+            isHaveTeach = true
             
             // Teach Layer
             if !isHaveTeach {
@@ -511,7 +511,7 @@ class IslandScene: SKScene {
                                 }
                             }
                         } else {
-                            if coordType != .Ocean && coordType != .WaveCell {
+                            if coordType != .Ocean && coordType != .WaveCell && coordType != .Rock {
                                 if money >= price {
                                     if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
@@ -537,7 +537,7 @@ class IslandScene: SKScene {
                             maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
                         }
                     } else {
-                        if coordType != .Land && coordType != .Ocean {
+                        if coordType != .Land && coordType != .Ocean && coordType != .Rock {
                             if coordType == .WaveCell {
                                 maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Ocean)
                             } else {
@@ -582,7 +582,7 @@ class IslandScene: SKScene {
                                 }
                             }
                         } else {
-                            if coordType != .Ocean && coordType != .WaveCell {
+                            if coordType != .Ocean && coordType != .WaveCell && coordType != .Rock {
                                 if money >= price {
                                     if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
@@ -607,7 +607,7 @@ class IslandScene: SKScene {
                             maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Land)
                         }
                     } else {
-                        if coordType != .Land && coordType != .Ocean {
+                        if coordType != .Land && coordType != .Ocean && coordType != .Rock {
                             if coordType == .WaveCell {
                                 maps[nowMapNumber].setTileMapElement(coord: coord, buildType: .Ocean)
                             } else {
