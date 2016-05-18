@@ -133,8 +133,7 @@ class IslandScene: SKScene {
         }
         
         // Only show now map
-        for count in 0..<6 { maps[count].hidden = true }
-        maps[nowMapNumber].hidden = false
+        for count in 0..<6 { maps[count].hidden = count == nowMapNumber ? false : true }
 
         // back to Energy type
         changeTouchTypeAndShowPage(.Energy, duration: 0)
