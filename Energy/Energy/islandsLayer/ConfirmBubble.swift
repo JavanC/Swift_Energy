@@ -108,22 +108,22 @@ class ConfirmBubble: SKNode {
         switch islandNum {
         case 0:
             buyPrice = 1
-            islandName.text = "Small island"
+            islandName.text = "Small Island"
         case 1:
             buyPrice = 10
-            islandName.text = "island 2"
+            islandName.text = "Tree Island"
         case 2:
             buyPrice = 100
-            islandName.text = "island 3"
+            islandName.text = "Canyon Island"
         case 3:
             buyPrice = 1000
-            islandName.text = "island 4"
+            islandName.text = "Coconut Island"
         case 4:
             buyPrice = 10000
-            islandName.text = "island 5"
+            islandName.text = "Sand Island"
         case 5:
             buyPrice = 100000
-            islandName.text = "island 6"
+            islandName.text = "Mainland"
         default: break
         }
         priceLabel.text = "\(numberToString(buyPrice, isInt: true))"

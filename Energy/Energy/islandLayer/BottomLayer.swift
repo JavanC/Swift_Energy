@@ -292,8 +292,6 @@ class PageBuild: SKSpriteNode {
             addChild(priceLabel)
         }
         
-        updateImageShow()
-        
         rebuildButton = SKNode()
         rebuildButton.name = "SelectImage5"
         rebuildButton.position = imagePosition[4]
@@ -313,6 +311,8 @@ class PageBuild: SKSpriteNode {
         refreshImage.setScale(framescale)
         rebuildButton.addChild(refreshImage)
         rebuildOn(isRebuild)
+        
+        updateImageShow()
 
         selectBox               = SKShapeNode(rectOfSize: CGSizeMake(size.width / 5, size.height))
         selectBox.name          = "selectBox"
@@ -378,15 +378,6 @@ class PageBuild: SKSpriteNode {
         priceLabels[selectNumber - 1].text = numberToString(BuildingData.init(buildType: buildType).buildPrice)
         
         
-    }
-    
-    func resetBuildMenu() {
-        changeSelectNumber(1)
-        buildMenu = [BuildingType.WindTurbine, BuildingType.SmallGenerator, BuildingType.HeatExchanger, BuildingType.SmallOffice]
-        for i in 0..<4 {
-            images[i].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildMenu[i]).imageName)))
-            priceLabels[i].text = numberToString(BuildingData.init(buildType: buildMenu[i]).buildPrice)
-        }
     }
     
     func openSelectInformation() {
@@ -478,6 +469,19 @@ class PageBuild: SKSpriteNode {
             priceLabels[3].text = numberToString(BuildingData.init(buildType: buildMenu[3]).buildPrice)
             childNodeWithName("SelectImage\(4)")?.runAction(SKAction.setTexture(buildingAtlas.textureNamed("ResearchCenter")))
         }
+        
+        rebuildOn(isRebuild)
+    }
+    
+    func resetBuildMenu() {
+        changeSelectNumber(1)
+        buildMenu = [BuildingType.WindTurbine, BuildingType.SmallGenerator, BuildingType.HeatExchanger, BuildingType.SmallOffice]
+        for i in 0..<4 {
+            images[i].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildMenu[i]).imageName)))
+            priceLabels[i].text = numberToString(BuildingData.init(buildType: buildMenu[i]).buildPrice)
+        }
+        
+        updateImageShow()
     }
 }
 

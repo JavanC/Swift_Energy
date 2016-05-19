@@ -141,9 +141,6 @@ class IslandScene: SKScene {
         // reset bottom build page build menu
         bottomLayer.pageBuild.resetBuildMenu()
         
-        // update build page image show
-        bottomLayer.pageBuild.updateImageShow()
-        
         // update boostLayer hidden
         boostLayer.hidden = !isBoost
 
@@ -614,7 +611,7 @@ class IslandScene: SKScene {
                             }
                         }
                     }
-                    
+                
                 default : break
                 }
             }

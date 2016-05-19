@@ -359,15 +359,14 @@ class IslandsScene: SKScene {
             research    = 1
             spendTime   = 0
             isPause     = false
-            isRebuild   = false
+            isRebuild   = true
             isSoundMute = false
             isMusicMute = false
+            
             // reset mapUnlocked
-            mapUnlockeds[0] = true
-            self.worldLayer.mapsLock[0].hidden = true
             for i in 1..<6 {
-                mapUnlockeds[i] = false
-                self.worldLayer.mapsLock[i].hidden = false
+                mapUnlockeds[i] = i == 0 ? true : false
+                self.worldLayer.mapsLock[i].hidden = i == 0 ? true : false
             }
             // reset upgrade and research level
             for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
