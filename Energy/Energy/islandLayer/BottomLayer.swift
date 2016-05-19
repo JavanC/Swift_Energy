@@ -284,6 +284,7 @@ class PageBuild: SKSpriteNode {
             let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
             priceLabel.name = "price label \(i)"
             priceLabel.text = numberToString(price)
+            priceLabel.hidden = i == selectNumber ? false : true
             priceLabel.fontSize = 16 * framescale
             priceLabel.fontColor = colorMoney
             priceLabel.position = CGPoint(x: imagePosition[i].x, y: 12 * framescale)
@@ -368,6 +369,9 @@ class PageBuild: SKSpriteNode {
         selectBox.position      = imagePosition[selectNumber]
         selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50)
         selectInfo.changeInformation(BuildingData(buildType: buildMenu[selectNumber]))
+        for i in 0...3 {
+            priceLabels[i].hidden = i == selectNumber ? false : true
+        }
     }
     
     
@@ -393,7 +397,7 @@ class PageBuild: SKSpriteNode {
             }
         }
         for priceLabel in priceLabels {
-            priceLabel.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
+            priceLabel.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.2)]))
         }
             
         // Move
@@ -429,7 +433,7 @@ class PageBuild: SKSpriteNode {
             }
         }
         for priceLabel in priceLabels {
-            priceLabel.runAction(seq)
+            priceLabel.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.fadeInWithDuration(0.2)]))
         }
     }
     
