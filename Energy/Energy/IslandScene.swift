@@ -197,7 +197,7 @@ class IslandScene: SKScene {
         // update and change now select building color
         buildingSelectLayer.updateSelectLayer()
         buildingSelectLayer.changePage(bottomLayer.pageBuild.selectNumber)
-        let buildType = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
+        let buildType = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber]
         buildingSelectLayer.changeSelectBox(buildType, duration: 0)
         
         // hide map and show building select page
@@ -429,26 +429,26 @@ class IslandScene: SKScene {
             case bottomLayer.pageBuild.images[0]:
                 print("Builded image1")
                 if !isSoundMute{ runAction(soundSelect) }
-                if bottomLayer.pageBuild.selectNumber == 1 { showBuildSelectPage() }
-                bottomLayer.pageBuild.changeSelectNumber(1)
+                if bottomLayer.pageBuild.selectNumber == 0 { showBuildSelectPage() }
+                bottomLayer.pageBuild.changeSelectNumber(0)
                 
             case bottomLayer.pageBuild.images[1]:
                 print("Builded image2")
                 if !isSoundMute{ runAction(soundSelect) }
-                if bottomLayer.pageBuild.selectNumber == 2 { showBuildSelectPage() }
-                bottomLayer.pageBuild.changeSelectNumber(2)
+                if bottomLayer.pageBuild.selectNumber == 1 { showBuildSelectPage() }
+                bottomLayer.pageBuild.changeSelectNumber(1)
                 
             case bottomLayer.pageBuild.images[2]:
                 print("Builded image3")
                 if !isSoundMute{ runAction(soundSelect) }
-                if bottomLayer.pageBuild.selectNumber == 3 { showBuildSelectPage() }
-                bottomLayer.pageBuild.changeSelectNumber(3)
+                if bottomLayer.pageBuild.selectNumber == 2 { showBuildSelectPage() }
+                bottomLayer.pageBuild.changeSelectNumber(2)
                 
             case bottomLayer.pageBuild.images[3]:
                 print("Builded image4")
                 if !isSoundMute{ runAction(soundSelect) }
-                if bottomLayer.pageBuild.selectNumber == 4 { showBuildSelectPage() }
-                bottomLayer.pageBuild.changeSelectNumber(4)
+                if bottomLayer.pageBuild.selectNumber == 3 { showBuildSelectPage() }
+                bottomLayer.pageBuild.changeSelectNumber(3)
                 
             case bottomLayer.pageBuild.rebuildButton:
                 print("rebuild button")
@@ -495,7 +495,7 @@ class IslandScene: SKScene {
                         bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
                         changeTouchTypeAndShowPage(.Information, duration: 0.1)
                     } else {
-                        let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
+                        let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber]
                         let price = BuildingData.init(buildType: building).buildPrice
                         let coordType = maps[nowMapNumber].buildingForCoord(coord)?.buildingData.buildType
                         if building == BuildingType.WaveCell {
@@ -566,7 +566,7 @@ class IslandScene: SKScene {
                 switch touchType {
                 case .Builded:
                     if !maps[nowMapNumber].buildingForCoord(coord)!.activate {
-                        let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber - 1]
+                        let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber]
                         let price = BuildingData.init(buildType: building).buildPrice
                         let coordType = maps[nowMapNumber].buildingForCoord(coord)?.buildingData.buildType
                         if building == BuildingType.WaveCell {

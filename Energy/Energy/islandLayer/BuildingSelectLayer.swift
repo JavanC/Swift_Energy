@@ -160,6 +160,6 @@ class BuildingSelectLayer: SKNode {
     }
     func changePage(page: Int) {
         let frameWidth = selectLayer.size.width / 4
-        selectLayer.runAction(SKAction.moveToX(-CGFloat(page - 1) * frameWidth, duration: 0))
+        selectLayer.runAction(SKAction.moveToX(-CGFloat(page) * frameWidth, duration: 0))
     }
 }
