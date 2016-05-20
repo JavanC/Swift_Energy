@@ -267,6 +267,20 @@ class BuildingMapLayer: SKSpriteNode {
         return data
     }
     
+    // MARK: Return Around BuildingDatas Matrix
+    func aroundBuildingDataMatrix() -> [[[BuildingData]]] {
+        var matrix:[[[BuildingData]]] = [[[BuildingData]]]()
+        for y in 0..<11 {
+            var row:[[BuildingData]] = [[BuildingData]]()
+            for x in 0..<9 {
+                let buildingDatas = aroundCoordBuildingData(coord: CGPoint(x: x, y: y))
+                row.append(buildingDatas)
+            }
+            matrix.append(row)
+        }
+        return matrix
+    }
+    
     // MARK: Explode Emitter
     func explodeBuilding(building: SKNode) {
         let emitter = SKEmitterNode(fileNamed: "Explode.sks")!
@@ -285,6 +299,10 @@ class BuildingMapLayer: SKSpriteNode {
         energy_TickAdd = 0
         money_TickAdd = 0
         energyMax = 100
+        
+        
+        
+        
         
         var heatSystemElements       = [Building]()
         var timeSysTemElements       = [Building]()

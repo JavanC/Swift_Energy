@@ -374,6 +374,10 @@ class IslandScene: SKScene {
  
                 /////// try resize AD
                 hideAdSpace()
+                let datamaps = maps[0].aroundBuildingDataMatrix()[0][0]
+                for data in datamaps {
+                    print(data.buildType)
+                }
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
