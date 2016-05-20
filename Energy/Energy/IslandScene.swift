@@ -551,6 +551,7 @@ class IslandScene: SKScene {
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if !isHaveTeach { return }
+        if isShowTips { return }
         if isBoost { return }
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)

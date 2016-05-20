@@ -371,7 +371,7 @@ class BuildingData: NSObject, NSCoding {
             comment = "Produced heat by the solar."
             buildPrice = 100
             progress = .Time
-            let size = baseToPower(40, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            let size = baseToPower(40, base: 1.5, power: upgradeLevel[UpgradeType.SolarCellLifetime]!)
             timeSystem = TimeSystem(size: size, rebuild: false)
             heatSystem = HeatSystem(size: 10, produce: 3, output: true)
             
@@ -381,7 +381,7 @@ class BuildingData: NSObject, NSCoding {
             comment = "Produce heat by burning coal."
             buildPrice = 10000
             progress = .Time
-            let size = baseToPower(120, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            let size = baseToPower(120, base: 1.5, power: upgradeLevel[UpgradeType.CoalBurnerLifetime]!)
             timeSystem = TimeSystem(size: size, rebuild: false)
             heatSystem = HeatSystem(size: 10, produce: 100, output: true)
             
@@ -391,7 +391,7 @@ class BuildingData: NSObject, NSCoding {
             comment = "Produced energy by the ocean wave. Must be placed in water."
             buildPrice = 1000000
             progress = .Time
-            let size = baseToPower(400, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            let size = baseToPower(400, base: 1.5, power: upgradeLevel[UpgradeType.WaveCellLifetime]!)
             timeSystem = TimeSystem(size: size, rebuild: false)
             energySystem = EnergySystem(initAmount: 10, produce: 2700)
             
@@ -401,7 +401,7 @@ class BuildingData: NSObject, NSCoding {
             comment = "Produce heat by burning gas."
             buildPrice = 100000000
             progress = .Time
-            let size = baseToPower(600, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            let size = baseToPower(600, base: 1.5, power: upgradeLevel[UpgradeType.GasBurnerLifetime]!)
             timeSystem = TimeSystem(size: size, rebuild: false)
             heatSystem = HeatSystem(size: 10, produce: 200000, output: true)
             
@@ -411,7 +411,7 @@ class BuildingData: NSObject, NSCoding {
             comment = "Produce heat by nuclear fission."
             buildPrice = 100000000
             progress = .Time
-            let size = baseToPower(1200, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            let size = baseToPower(1200, base: 1.5, power: upgradeLevel[UpgradeType.NuclearCellLifetime]!)
             timeSystem = TimeSystem(size: size, rebuild: false)
             heatSystem = HeatSystem(size: 10, produce: 10000000, output: true)
             
@@ -421,7 +421,7 @@ class BuildingData: NSObject, NSCoding {
             comment = "Produce heat by nuclear fusion."
             buildPrice = 100000000
             progress = .Time
-            let size = baseToPower(1600, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            let size = baseToPower(1600, base: 1.5, power: upgradeLevel[UpgradeType.FusionCellLifetime]!)
             timeSystem = TimeSystem(size: size, rebuild: false)
             heatSystem = HeatSystem(size: 10, produce: 2000000000, output: true)
             
@@ -616,7 +616,7 @@ class BuildingData: NSObject, NSCoding {
             
         case .SolarCell:
             heatSystem.produce = baseToPower(3, base: 1.25, power: upgradeLevel[UpgradeType.SolarCellEffectiveness]!)
-            timeSystem.size = baseToPower(40, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            timeSystem.size = baseToPower(40, base: 1.5, power: upgradeLevel[UpgradeType.SolarCellLifetime]!)
             timeSystem.rebuild = (researchLevel[ResearchType.SolarCellRebuild] > 0 ? true : false)
             
         case .CoalBurner:
