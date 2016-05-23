@@ -81,7 +81,6 @@ var isMusicMute: Bool     = false
 var hasTouchAd: Bool      = false
 var boostTime: Double     = 1
 var boostTimeLess: Double = 1
-//var mapUnlockeds          = [Bool]()
 
 class GameViewController: UIViewController, GADBannerViewDelegate {
     
@@ -211,12 +210,6 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
 //        money     = 888000000000000
         research  = 10000000
 //        research  = 888000000000000
-        
-//        // load maps unlocked
-//        for count in 0..<6 {
-//            mapUnlockeds.append(defaults.boolForKey("map\(count)_unlocked"))
-//        }
-//        mapUnlockeds[0] = true
 
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
@@ -231,10 +224,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         for count in 0..<6 {
             let buildingMapLayer = BuildingMapLayer()
             buildingMapLayer.configureAtPosition(CGPoint(x: 0, y: 0), mapNumber: count)
+            buildingMapLayer.loadMapData()
             maps.append(buildingMapLayer)
-        }
-        for map in maps {
-            map.loadMapData()
         }
         maps[0].isSold = true
         // Boost lost time
@@ -285,11 +276,6 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         defaults.setBool(isRebuild, forKey: "isRebuild")
         defaults.setBool(isSoundMute, forKey: "isSoundMute")
         defaults.setBool(isMusicMute, forKey: "isMusicMute")
-        
-//        // save maps unlocked
-//        for count in 0..<mapUnlockeds.count {
-//            defaults.setBool(mapUnlockeds[count], forKey: "map\(count)_unlocked")
-//        }
         
         // save upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

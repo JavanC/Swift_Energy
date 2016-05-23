@@ -121,12 +121,6 @@ class IslandScene: SKScene {
             }
             
             contentCreated = true
-            // remove first touch delay
-//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
-//                self.topLayer.containsPoint(CGPoint(x: 0, y: 0))
-//                self.bottomLayer.containsPoint(CGPoint(x: 0, y: 0))
-//                self.buildingSelectLayer.containsPoint(CGPoint(x: 0, y: 0))
-//            }
             // remove first load delay
             print("load 4")
             self.view?.presentScene(islandsScene)
@@ -550,9 +544,7 @@ class IslandScene: SKScene {
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if !isHaveTeach { return }
-        if isShowTips { return }
-        if isBoost { return }
+        if !isHaveTeach || isShowTips || isBoost { return }
         guard let touch = touches.first else { return }
         let location = touch.locationInNode(self)
         let nodes = nodesAtPoint(location)
@@ -642,8 +634,7 @@ class IslandScene: SKScene {
     
     func tickUpdata() {
         
-        if isBoost { return }
-        if isPause { return }
+        if isBoost || isPause { return }
         
         spendTime += 1
         

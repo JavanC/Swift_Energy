@@ -282,7 +282,6 @@ class IslandsScene: SKScene {
                     confirmBubble.hidden = true
                     money -= confirmBubble.buyPrice
                     maps[confirmBubble.islandNum].isSold = true
-//                    mapUnlockeds[confirmBubble.islandNum] = true
                     worldLayer.mapsLock[confirmBubble.islandNum].hidden = true
                     runAction(soundSell)
                 }

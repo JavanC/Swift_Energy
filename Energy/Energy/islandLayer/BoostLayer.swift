@@ -19,19 +19,19 @@ class BoostLayer: SKNode {
         
         let boostLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         boostLabel.name = "boostLabel"
-        boostLabel.text = "TIME  REPLY"
+        boostLabel.text = "TIME RECOVER"
         boostLabel.fontColor = SKColor.whiteColor()
-        boostLabel.fontSize = 50 * framescale
+        boostLabel.fontSize = 44 * framescale
         boostLabel.verticalAlignmentMode = .Center
         addChild(boostLabel)
         
         let boostPSLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         boostPSLabel.name = "boostPSLabel"
-        boostPSLabel.text = "- Max reply one hour -"
+        boostPSLabel.text = "- Max recover one hour -"
         boostPSLabel.fontColor = SKColor.whiteColor()
         boostPSLabel.fontSize = 30 * framescale
         boostPSLabel.verticalAlignmentMode = .Center
-        boostPSLabel.position = CGPoint(x: 0, y: -60 * framescale)
+        boostPSLabel.position = CGPoint(x: 0, y: -52 * framescale)
         addChild(boostPSLabel)
     }
     
