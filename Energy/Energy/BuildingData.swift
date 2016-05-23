@@ -204,14 +204,6 @@ class HeatSystem: NSObject, NSCoding {
             inAmount = 0
         }
     }
-    func coolingHeatToHeatSink(heatSystems:[HeatSystem]) {
-        if heatSystems.count == 0 { return }
-        let outputHeat = inAmount / Double(heatSystems.count + 1)
-        for HeatSystem in heatSystems {
-            HeatSystem.inAmount += outputHeat
-        }
-        inAmount = outputHeat
-    }
     func coolingHeat() {
         inAmount = inAmount * (1 - coolingRate)
     }

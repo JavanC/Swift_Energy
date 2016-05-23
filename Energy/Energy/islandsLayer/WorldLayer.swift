@@ -84,7 +84,7 @@ class WorldLayer: SKNode {
             let lockMap = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_locked\(i)"))
             lockMap.name = "Maps_locked\(i)"
             lockMap.size = frameSize
-            lockMap.hidden = mapUnlockeds[i-1]
+            lockMap.hidden = maps[i-1].isSold
             lockMap.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
             addChild(lockMap)
             mapsLock.append(lockMap)

@@ -281,7 +281,8 @@ class IslandsScene: SKScene {
                     confirmBubble.alpha  = 1
                     confirmBubble.hidden = true
                     money -= confirmBubble.buyPrice
-                    mapUnlockeds[confirmBubble.islandNum] = true
+                    maps[confirmBubble.islandNum].isSold = true
+//                    mapUnlockeds[confirmBubble.islandNum] = true
                     worldLayer.mapsLock[confirmBubble.islandNum].hidden = true
                     runAction(soundSell)
                 }
@@ -305,7 +306,7 @@ class IslandsScene: SKScene {
                 print("Map\(i+1)")
                 if !isSoundMute{ runAction(soundAction) }
                 
-                if !mapUnlockeds[i] {
+                if !maps[i].isSold {
                     confirmBubble.showBubble(i)
                 } else {
                     nowMapNumber = i
@@ -365,7 +366,7 @@ class IslandsScene: SKScene {
             
             // reset mapUnlocked
             for i in 1..<6 {
-                mapUnlockeds[i] = i == 0 ? true : false
+                maps[i].isSold = i == 0 ? true : false
                 self.worldLayer.mapsLock[i].hidden = i == 0 ? true : false
             }
             // reset upgrade and research level

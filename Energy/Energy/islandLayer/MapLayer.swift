@@ -111,6 +111,7 @@ class Building: SKNode {
 class BuildingMapLayer: SKSpriteNode {
     
     var mapNumber: Int!
+    var isSold: Bool = false
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 11)
     var buildings = Array<Array<Building?>>()
@@ -124,6 +125,7 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, mapNumber: Int) {
         self.mapNumber = mapNumber
+        self.isSold = mapNumber == 0
         self.position = position
         self.color = SKColor.whiteColor()
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
@@ -232,6 +234,7 @@ class BuildingMapLayer: SKSpriteNode {
     
     // MARK: Save Map Data
     func saveMapData() {
+        NSUserDefaults.standardUserDefaults().setBool(isSold, forKey: "map\(mapNumber)_isSold")
         NSUserDefaults.standardUserDefaults().setDouble(energy, forKey: "map\(mapNumber)_Energy")
         for y in 0..<11 {
             for x in 0..<9 {
@@ -244,6 +247,7 @@ class BuildingMapLayer: SKSpriteNode {
     
     // MARK: Load Map Data
     func loadMapData() {
+        isSold = NSUserDefaults.standardUserDefaults().boolForKey("map\(mapNumber)_isSold")
         energy = NSUserDefaults.standardUserDefaults().doubleForKey("map\(mapNumber)_Energy")
         for y in 0..<11 {
             for x in 0..<9 {
@@ -267,20 +271,6 @@ class BuildingMapLayer: SKSpriteNode {
         return data
     }
     
-    // MARK: Return Around BuildingDatas Matrix
-    func aroundBuildingDataMatrix() -> [[[BuildingData]]] {
-        var matrix:[[[BuildingData]]] = [[[BuildingData]]]()
-        for y in 0..<11 {
-            var row:[[BuildingData]] = [[BuildingData]]()
-            for x in 0..<9 {
-                let buildingDatas = aroundCoordBuildingData(coord: CGPoint(x: x, y: y))
-                row.append(buildingDatas)
-            }
-            matrix.append(row)
-        }
-        return matrix
-    }
-    
     // MARK: Explode Emitter
     func explodeBuilding(building: SKNode) {
         let emitter = SKEmitterNode(fileNamed: "Explode.sks")!
@@ -300,10 +290,6 @@ class BuildingMapLayer: SKSpriteNode {
         money_TickAdd = 0
         energyMax = 100
         
-        
-        
-        
-        
         var heatSystemElements       = [Building]()
         var timeSysTemElements       = [Building]()
         
@@ -311,11 +297,11 @@ class BuildingMapLayer: SKSpriteNode {
         var waterProduceElements     = [Building]()
         var watertransportElements   = [Building]()
 
+        var heatIsolationElements    = [Building]()
         var heatProduceElements      = [Building]()
         var heatInletHeatElements    = [Building]()
         var heatOutletHeatSystems    = [HeatSystem]()
         var heatExchangerElements    = [Building]()
-        var heatCoolingElements      = [Building]()
         var heatSinkElements         = [Building]()
         var heatToMoneyElements      = [Building]()
 
@@ -323,7 +309,9 @@ class BuildingMapLayer: SKSpriteNode {
         var energyConversionElements = [Building]()
 
         var officeElements           = [Building]()
+        var bankElements             = [Building]()
         var researchCenterElements   = [Building]()
+        var libraryElements          = [Building]()
         
         for line in buildings {
             for building in line {
@@ -347,11 +335,13 @@ class BuildingMapLayer: SKSpriteNode {
                         
                     case .SmallGenerator, .MediumGenerator, .LargeGenerator:
                         waterSystemElements.append(building!)
-                        heatCoolingElements.append(building!)
                         energyConversionElements.append(building!)
                         
                     case .WindTurbine, .WaveCell:
                         energyProduceElements.append(building!)
+                        
+                    case .Isolation:
+                        heatIsolationElements.append(building!)
                         
                     case .SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell:
                         heatProduceElements.append(building!)
@@ -361,13 +351,11 @@ class BuildingMapLayer: SKSpriteNode {
                         
                     case .HeatOutlet:
                         heatOutletHeatSystems.append(building!.buildingData.heatSystem)
-                        heatCoolingElements.append(building!)
                         
                     case .HeatExchanger:
                         heatExchangerElements.append(building!)
                         
                     case .BoilerHouse, .LargeBoilerHouse:
-                        heatCoolingElements.append(building!)
                         heatToMoneyElements.append(building!)
                         
                     case .HeatSink:
@@ -376,8 +364,14 @@ class BuildingMapLayer: SKSpriteNode {
                     case .SmallOffice, .MediumOffice, .LargeOffice:
                         officeElements.append(building!)
                         
+                    case .Bank:
+                        bankElements.append(building!)
+                        
                     case .ResearchCenter, .AdvancedResearchCenter:
                         researchCenterElements.append(building!)
+                        
+                    case .Library:
+                        libraryElements.append(building!)
                         
                     // Calculate energyMax
                     case .Battery:
@@ -387,6 +381,7 @@ class BuildingMapLayer: SKSpriteNode {
                 }
             }
         }
+      
         
         /*
         // Water System
@@ -417,15 +412,16 @@ class BuildingMapLayer: SKSpriteNode {
         */
         
         // 1. Isolation Multiply and Production Output
-        for element in heatProduceElements {
-            element.buildingData.heatSystem.produceMultiply = 1
+        for element in heatIsolationElements {
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
-                if buildingData.buildType == .Isolation {
-                    element.buildingData.heatSystem.produceMultiply += buildingData.isolationPercent
+                if [.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell].contains(buildingData.buildType) {
+                    buildingData.heatSystem.produceMultiply += element.buildingData.isolationPercent
                 }
             }
-            
+        }
+        for element in heatProduceElements {
             element.buildingData.heatSystem.produceHeat()
+            element.buildingData.heatSystem.produceMultiply = 1
             var heatSystems = [HeatSystem]()
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
                 if buildingData.heatSystem != nil && !buildingData.heatSystem.output{
@@ -448,21 +444,11 @@ class BuildingMapLayer: SKSpriteNode {
             }
             element.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
         }
-        // 4. Heat Cooling transport
-        for element in heatCoolingElements {
-            var heatSystems = [HeatSystem]()
-            for buildingData in aroundCoordBuildingData(coord: element.coord) {
-                if buildingData.buildType == .HeatSink {
-                    heatSystems.append(buildingData.heatSystem)
-                }
-            }
-            element.buildingData.heatSystem.coolingHeatToHeatSink(heatSystems)
-        }
-        // 5. Heat Sink Cooling
+        // 4. Heat Sink Cooling
         for element in heatSinkElements {
             element.buildingData.heatSystem.coolingHeat()
         }
-        // 6. Heat Conversion Money
+        // 5. Heat Conversion Money
         for element in heatToMoneyElements {
             element.buildingData.heatTransformMoney()
             money_TickAdd += element.buildingData.moneySystem.inAmount
@@ -526,24 +512,28 @@ class BuildingMapLayer: SKSpriteNode {
         */
         
         // 1. officeElements
-        for element in officeElements {
-            element.buildingData.moneySystem.multiply = 1
+        for element in bankElements {
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
-                if buildingData.buildType == .Bank {
-                    element.buildingData.moneySystem.multiply += buildingData.bankAddPercent
+                if [.SmallOffice, .MediumOffice, .LargeOffice].contains(buildingData.buildType) {
+                    buildingData.moneySystem.multiply += element.buildingData.bankAddPercent
                 }
             }
+        }
+        for element in officeElements {
             energy2MoneyAmount += element.buildingData.moneySystem.energy2MoneyMultiplyAmount()
+            element.buildingData.moneySystem.multiply = 1
         }
         // 2. researchCenterElements
-        for element in researchCenterElements {
-            element.buildingData.researchSystem.multiply = 1
+        for element in libraryElements {
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
-                if buildingData.buildType == .Library {
-                    element.buildingData.researchSystem.multiply += buildingData.libraryAddPercent
+                if buildingData.buildType == .ResearchCenter || buildingData.buildType == .AdvancedResearchCenter {
+                    buildingData.researchSystem.multiply += element.buildingData.libraryAddPercent
                 }
             }
+        }
+        for element in researchCenterElements {
             research_TickAdd += element.buildingData.researchSystem.researchMultiplyAmount()
+            element.buildingData.researchSystem.multiply = 1
         }
         
         /*

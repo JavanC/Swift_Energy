@@ -374,10 +374,6 @@ class IslandScene: SKScene {
  
                 /////// try resize AD
                 hideAdSpace()
-                let datamaps = maps[0].aroundBuildingDataMatrix()[0][0]
-                for data in datamaps {
-                    print(data.buildType)
-                }
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
@@ -626,6 +622,7 @@ class IslandScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         // Boost Layer
         if isBoost {
+            NSThread.sleepForTimeInterval(0.1)
             boostLayer.alpha = 1
             boostLayer.hidden = false
             let percent = boostTimeLess / boostTime
@@ -651,11 +648,13 @@ class IslandScene: SKScene {
         spendTime += 1
         
         for i in 0..<6 {
-            // Update map data
-            maps[i].Update()
-            // Calculate money and research
-            money       += maps[i].money_TickAdd
-            research    += maps[i].research_TickAdd
+            if maps[i].isSold {
+                // Update map data
+                maps[i].Update()
+                // Calculate money and research
+                money       += maps[i].money_TickAdd
+                research    += maps[i].research_TickAdd
+            }
         }
         
         // Update information

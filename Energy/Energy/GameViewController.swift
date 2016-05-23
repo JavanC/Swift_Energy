@@ -81,7 +81,7 @@ var isMusicMute: Bool     = false
 var hasTouchAd: Bool      = false
 var boostTime: Double     = 1
 var boostTimeLess: Double = 1
-var mapUnlockeds          = [Bool]()
+//var mapUnlockeds          = [Bool]()
 
 class GameViewController: UIViewController, GADBannerViewDelegate {
     
@@ -212,11 +212,11 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         research  = 10000000
 //        research  = 888000000000000
         
-        // load maps unlocked
-        for count in 0..<6 {
-            mapUnlockeds.append(defaults.boolForKey("map\(count)_unlocked"))
-        }
-        mapUnlockeds[0] = true
+//        // load maps unlocked
+//        for count in 0..<6 {
+//            mapUnlockeds.append(defaults.boolForKey("map\(count)_unlocked"))
+//        }
+//        mapUnlockeds[0] = true
 
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
@@ -236,6 +236,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         for map in maps {
             map.loadMapData()
         }
+        maps[0].isSold = true
         // Boost lost time
         if isPause { return }
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
@@ -256,11 +257,13 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
                     boostTimeLess += 1
                     spendTime += 1
                     for i in 0..<6 {
-                        // Update map data
-                        maps[i].Update()
-                        // Calculate money and research
-                        money    += maps[i].money_TickAdd
-                        research += maps[i].research_TickAdd
+                        if maps[i].isSold {
+                            // Update map data
+                            maps[i].Update()
+                            // Calculate money and research
+                            money    += maps[i].money_TickAdd
+                            research += maps[i].research_TickAdd
+                        }
                     }
                 }
             }
@@ -283,10 +286,10 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         defaults.setBool(isSoundMute, forKey: "isSoundMute")
         defaults.setBool(isMusicMute, forKey: "isMusicMute")
         
-        // save maps unlocked
-        for count in 0..<mapUnlockeds.count {
-            defaults.setBool(mapUnlockeds[count], forKey: "map\(count)_unlocked")
-        }
+//        // save maps unlocked
+//        for count in 0..<mapUnlockeds.count {
+//            defaults.setBool(mapUnlockeds[count], forKey: "map\(count)_unlocked")
+//        }
         
         // save upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

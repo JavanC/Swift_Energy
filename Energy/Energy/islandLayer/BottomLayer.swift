@@ -207,7 +207,7 @@ class PageInformation: SKSpriteNode {
         }
         if buildingData.buildType == .Bank {
             infoBankNode.hidden = false
-            infoHeatInletNode.valueLabel.text = "\(Int(buildingData.bankAddPercent * 100))%"
+            infoBankNode.valueLabel.text = "\(Int(buildingData.bankAddPercent * 100))%"
             informationLabels.append(infoBankNode)
         }
         if ([.ResearchCenter, .AdvancedResearchCenter]).contains(buildingData.buildType) {
