@@ -350,7 +350,7 @@ class BuildingData: NSObject, NSCoding {
         case .WindTurbine:
             imageName = "WindTurbine"
             name = "Wind Turbine".localized
-            comment = "Produced energy by the wind."
+            comment = "Produced energy by the wind.".localized
             buildPrice = 1
             progress = .Time
             let size = baseToPower(20, base: 1.5, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
@@ -360,7 +360,7 @@ class BuildingData: NSObject, NSCoding {
         case .SolarCell:
             imageName = "SolarCell"
             name = "Solar Plant".localized
-            comment = "Produced heat by the solar."
+            comment = "Produced heat by the solar. Transfer Heat to the surrounding buildings, Such as a generator.".localized
             buildPrice = 100
             progress = .Time
             let size = baseToPower(40, base: 1.5, power: upgradeLevel[UpgradeType.SolarCellLifetime]!)
@@ -370,7 +370,7 @@ class BuildingData: NSObject, NSCoding {
         case .CoalBurner:
             imageName = "CoalBurner"
             name = "Coal-Fired Plant".localized
-            comment = "Produce heat by burning coal."
+            comment = "Produce heat by burning coal.".localized
             buildPrice = 10000
             progress = .Time
             let size = baseToPower(120, base: 1.5, power: upgradeLevel[UpgradeType.CoalBurnerLifetime]!)
@@ -380,7 +380,7 @@ class BuildingData: NSObject, NSCoding {
         case .WaveCell:
             imageName = "WaveCell"
             name = "Wave Energy".localized
-            comment = "Produced energy by the ocean wave. Must be placed in water."
+            comment = "Produced energy by the ocean wave. Must be placed in water.".localized
             buildPrice = 1000000
             progress = .Time
             let size = baseToPower(400, base: 1.5, power: upgradeLevel[UpgradeType.WaveCellLifetime]!)
@@ -390,7 +390,7 @@ class BuildingData: NSObject, NSCoding {
         case .GasBurner:
             imageName = "GasBurner"
             name = "Gas-Fired Plant".localized
-            comment = "Produce heat by burning gas."
+            comment = "Produce heat by burning gas.".localized
             buildPrice = 100000000
             progress = .Time
             let size = baseToPower(600, base: 1.5, power: upgradeLevel[UpgradeType.GasBurnerLifetime]!)
@@ -400,7 +400,7 @@ class BuildingData: NSObject, NSCoding {
         case .NuclearCell:
             imageName = "NuclearCell"
             name = "Nuclear Plant".localized
-            comment = "Produce heat by nuclear fission."
+            comment = "Produce heat by nuclear fission.".localized
             buildPrice = 10000000000
             progress = .Time
             let size = baseToPower(1200, base: 1.5, power: upgradeLevel[UpgradeType.NuclearCellLifetime]!)
@@ -410,7 +410,7 @@ class BuildingData: NSObject, NSCoding {
         case .FusionCell:
             imageName = "FusionCell"
             name = "Fusion Plant".localized
-            comment = "Produce heat by nuclear fusion."
+            comment = "Produce heat by nuclear fusion.".localized
             buildPrice = 1000000000000
             progress = .Time
             let size = baseToPower(1600, base: 1.5, power: upgradeLevel[UpgradeType.FusionCellLifetime]!)
@@ -420,7 +420,7 @@ class BuildingData: NSObject, NSCoding {
         case .SmallGenerator:
             imageName = "SmallGenerator"
             name = "Small Generator".localized
-            comment = "Converts heat to energy."
+            comment = "Converts heat to energy.".localized
             buildPrice = 300
             progress = .Heat
             energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 3, water2Energy: true)
@@ -430,7 +430,7 @@ class BuildingData: NSObject, NSCoding {
         case .MediumGenerator:
             imageName = "MediumGenerator"
             name = "Medium Generator".localized
-            comment = "Converts more heat to energy."
+            comment = "Converts more heat to energy.".localized
             buildPrice = 200000000
             progress = .Heat
             energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 12, water2Energy: true)
@@ -440,7 +440,7 @@ class BuildingData: NSObject, NSCoding {
         case .LargeGenerator:
             imageName = "LargeGenerator"
             name = "Large Generator".localized
-            comment = "Converts mass heat to energy."
+            comment = "Converts mass heat to energy.".localized
             buildPrice = 5000000000000
             progress = .Heat
             energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 48, water2Energy: true)
@@ -450,7 +450,7 @@ class BuildingData: NSObject, NSCoding {
         case .BoilerHouse:
             imageName = "BoilerHouse"
             name = "Boiler House".localized
-            comment = "Direct sales store heat."
+            comment = "Direct sales store heat.".localized
             buildPrice = 30000
             progress = .Heat
             heatSystem = HeatSystem(size: 2000, initAmount: 0)
@@ -459,7 +459,7 @@ class BuildingData: NSObject, NSCoding {
         case .LargeBoilerHouse:
             imageName = "LargeBoilerHouse"
             name = "Large Boiler House".localized
-            comment = "Direct sales more store heat."
+            comment = "Direct sales more store heat.".localized
             buildPrice = 500000000
             progress = .Heat
             heatSystem = HeatSystem(size: 8000, initAmount: 0)
@@ -468,21 +468,21 @@ class BuildingData: NSObject, NSCoding {
         case .Isolation:
             imageName = "Isolation"
             name = "Isolation".localized
-            comment = "Increases heat produce of adjacent building."
+            comment = "Increases heat produce of adjacent building.".localized
             buildPrice = 1000
             isolationPercent = 0.1
             
         case .Battery:
             imageName = "Battery"
             name = "Battery".localized
-            comment = "Increase the maximum energy that can be stored."
+            comment = "Increase the maximum energy that can be stored.".localized
             buildPrice = 50
             batteryEnergySize = 1000
 
         case .HeatExchanger:
             imageName = "HeatExchanger"
             name = "Heat Exchanger".localized
-            comment = "Balance heat between adjacent components."
+            comment = "Balance heat between adjacent components.".localized
             buildPrice = 50000
             progress = .Heat
             heatSystem = HeatSystem(size: 500, initAmount: 0)
@@ -490,7 +490,7 @@ class BuildingData: NSObject, NSCoding {
         case .HeatSink:
             imageName = "HeatSink"
             name = "Heat Sink".localized
-            comment = "Dissipation heat 10% from store heat. Stable heat source to prevent explosion."
+            comment = "Dissipation heat 10% from store heat. Stable heat source to prevent explosion.".localized
             buildPrice = 50000000
             progress = .Heat
             heatSystem = HeatSystem(size: 500000, coolingRate: 0.1)
@@ -498,7 +498,7 @@ class BuildingData: NSObject, NSCoding {
         case .HeatInlet:
             imageName = "HeatInlet"
             name = "Heat Inlet".localized
-            comment = "Heat distributes evenly to every heat outlet."
+            comment = "Heat distributes evenly to every heat outlet.".localized
             buildPrice = 100000000000000
             progress = .Heat
             heatSystem = HeatSystem(size: 8000000000, initAmount: 0, inletTransfer: 5000000000)
@@ -506,7 +506,7 @@ class BuildingData: NSObject, NSCoding {
         case .HeatOutlet:
             imageName = "HeatOutlet"
             name = "Heat Outlet".localized
-            comment = "Heat transfer from the heat inlet, heat output need heat exchanger or heat sink."
+            comment = "Heat transfer from the heat inlet, heat output need heat exchanger or heat sink.".localized
             buildPrice = 100000000000000
             progress = .Heat
             heatSystem = HeatSystem(size: 8000000000, initAmount: 0)
@@ -514,7 +514,7 @@ class BuildingData: NSObject, NSCoding {
         case .WaterPump:
             imageName = "WaterPump"
             name = "Water Pump".localized
-            comment = "Produce Water to cools generators so they produce much more energy. Must be placed next to water."
+            comment = "Produce Water to cools generators so they produce much more energy. Must be placed next to water.".localized
             buildPrice = 40000000000
             progress = .Water
             waterSystem = WaterSystem(size: 200000, produce: 30000, output: true)
@@ -522,7 +522,7 @@ class BuildingData: NSObject, NSCoding {
         case .GroundwaterPump:
             imageName = "GroundwaterPump"
             name = "Groundwater Pump".localized
-            comment = "Produce Water to cools generators so they produce much more energy."
+            comment = "Produce Water to cools generators so they produce much more energy.".localized
             buildPrice = 10000000000000
             progress = .Water
             waterSystem = WaterSystem(size: 300000, produce: 50000, output: true)
@@ -530,7 +530,7 @@ class BuildingData: NSObject, NSCoding {
         case .WaterPipe:
             imageName = "WaterPipe"
             name = "Water Pipe".localized
-            comment = "Expands water pumps effective area."
+            comment = "Expands water pumps effective area.".localized
             buildPrice = 10000000000
             progress = .Water
             waterSystem = WaterSystem(size: 200000, output: true)
@@ -538,7 +538,7 @@ class BuildingData: NSObject, NSCoding {
         case .SmallOffice:
             imageName = "SmallOffice"
             name = "Small Office".localized
-            comment = "Auto selling store of energy."
+            comment = "Auto selling store of energy.".localized
             buildPrice = 400
             heatSystem = HeatSystem(size: 10)
             moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 5)
@@ -546,7 +546,7 @@ class BuildingData: NSObject, NSCoding {
         case .MediumOffice:
             imageName = "MediumOffice"
             name = "Medium Office".localized
-            comment = "Auto selling more store of energy."
+            comment = "Auto selling more store of energy.".localized
             buildPrice = 4000000
             heatSystem = HeatSystem(size: 10)
             moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 100)
@@ -554,7 +554,7 @@ class BuildingData: NSObject, NSCoding {
         case .LargeOffice:
             imageName = "LargeOffice"
             name = "Large Office".localized
-            comment = "Auto selling mass store of energy."
+            comment = "Auto selling mass store of energy.".localized
             buildPrice = 200000000000
             heatSystem = HeatSystem(size: 10)
             moneySystem = MoneySystem(initAmount: 0, energy2MoneyAmount: 2000)
@@ -562,7 +562,7 @@ class BuildingData: NSObject, NSCoding {
         case .Bank:
             imageName = "Bank"
             name = "Bank".localized
-            comment = "Boosts office salse energy speed."
+            comment = "Boosts office salse energy speed.".localized
             buildPrice = 10000000000000
             heatSystem = HeatSystem(size: 10)
             bankAddPercent = 0.2
@@ -570,7 +570,7 @@ class BuildingData: NSObject, NSCoding {
         case .ResearchCenter:
             imageName = "ResearchCenter"
             name = "Research Center".localized
-            comment = "Production Research points so that you can research new technology."
+            comment = "Production Research points so that you can research new technology.".localized
             buildPrice = 200
             heatSystem = HeatSystem(size: 10)
             researchSystem = ResearchSystem(addAmount: 1)
@@ -578,7 +578,7 @@ class BuildingData: NSObject, NSCoding {
         case .AdvancedResearchCenter:
             imageName = "AdvancedResearchCenter"
             name = "Advanced Research Center".localized
-            comment = "Production more Research points so that you can research new technology."
+            comment = "Production more Research points so that you can research new technology.".localized
             buildPrice = 2000000
             heatSystem = HeatSystem(size: 10)
             researchSystem = ResearchSystem(addAmount: 6)
@@ -586,7 +586,7 @@ class BuildingData: NSObject, NSCoding {
         case .Library:
             imageName = "Library"
             name = "Library".localized
-            comment = "Boosts Research Center production research points speed."
+            comment = "Boosts Research Center production research points speed.".localized
             buildPrice = 400000000000
             heatSystem = HeatSystem(size: 10)
             libraryAddPercent = 0.2
