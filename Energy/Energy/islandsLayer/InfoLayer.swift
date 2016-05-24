@@ -33,7 +33,7 @@ class InfoLayer: SKNode {
         let developerLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         developerLabel.name = "developerLabel"
         developerLabel.text = "Developer"
-        developerLabel.fontSize = 30 * framescale
+        developerLabel.fontSize = 33 * framescale
         developerLabel.verticalAlignmentMode = .Center
         developerLabel.position = CGPoint(x: 0, y: gap * 3)
         addChild(developerLabel)

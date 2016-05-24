@@ -77,3 +77,9 @@ func numberToString(value: Double, isInt: Bool = true) -> String {
     }
     return "\(N)" + (isInt ? "" : (L == 0 ? "" :".\(L)"))
 }
+
+extension String {
+    var localized: String {
+        return NSLocalizedString(self, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: "")
+    }
+}

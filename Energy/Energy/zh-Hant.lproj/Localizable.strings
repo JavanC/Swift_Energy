@@ -1,0 +1,85 @@
+/* 
+  Localizable.strings
+  Energy
+
+  Created by javan.chen on 2016/5/23.
+  Copyright © 2016年 Javan chen. All rights reserved.
+*/
+
+
+/* Setting Layer */
+"Setting" = "設置";
+"Sound" = "音效";
+"Music" = "音樂";
+"Reset All Data" = "重置資料";
+"Confirm reset all data?" = "確認重置所有資料?";
+"Yes" = "是";
+"No" = "否";
+
+/* Boost Layer */
+"TIME RECOVER" = "遺失時間恢復";
+"- Max recover one hour -" = "-最多可累積一小時-";
+
+/* Confirm Bubble */
+"You don't have enough money." = "你沒有足夠的金錢.";
+"Buy the island to building." = "購買該地區來開始使建設.";
+"OK" = "確認";
+"Cancel" = "取消";
+"Buy" = "購買";
+"Small Island" = "小島";
+"Tree Island" = "樹島";
+"Canyon Island" = "峽谷島";
+"Coconut Island" = "椰子島";
+"Sand Island" = "沙漠島";
+"Mainland" = "寬闊草原";
+
+/* Building Information */
+"Ticks" = "生產次數";
+"Heat" = "累積熱量";
+"Water" = "累積水量";
+"Produce Energy" = "能源生產量";
+"Produce Heat" = "熱能生產量";
+"Sells Energy" = "能源銷售量";
+"Converted Energy" = "能源轉換量";
+"Sells Heat" = "熱銷售量";
+"Increases Heat Produce" = "增加產熱效率";
+"Increases Energy Max" = "能源儲存量";
+"Heat transfer amount" = "熱傳輸量";
+"Cooling Heat" = "散熱效率";
+"Produce Water" = "水生產量";
+"Increases Energy Sells" = "增加銷售銷率";
+"Produce Research" = "研究點生產量";
+"Increases Research Produce" = "增加研究效率";
+"Price" = "建造價格";
+
+/* Building Name */
+"Wind Turbine" = "風力發電站";
+"Solar Plant" = "太陽能陣列";
+"Coal-Fired Plant" = "煤炭燃燒廠";
+"Wave Energy" = "波浪發電站";
+"Gas-Fired Plant" = "瓦斯燃燒廠";
+"Nuclear Plant" = "核分裂核心";
+"Fusion Plant" = "核融合核心";
+"Small Generator" = "小型發電機";
+"Medium Generator" = "中型發電機";
+"Large Generator" = "大型發電機";
+"Boiler House" = "小型鍋爐房";
+"Large Boiler House" = "大型鍋爐房";
+"Isolation" = "熱隔離磚";
+"Battery" = "儲能中心";
+"Heat Exchanger" = "熱交換管";
+"Heat Sink" = "散熱器";
+"Heat Inlet" = "地下熱管進口";
+"Heat Outlet" = "地下熱管出口";
+"Water Pump" = "抽水幫浦";
+"Groundwater Pump" = "地下水幫補";
+"Water Pipe" = "水管";
+"Small Office" = "小型銷售公司";
+"Medium Office" = "中型銷售公司";
+"Large Office" = "大型銷售公司";
+"Bank" = "銀行";
+"Research Center" = "研發中心";
+"Advanced Research Center" = "先進研發中心";
+"Library" = "圖書館";
+
+

@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  Energy
+
+  Created by javan.chen on 2016/5/23.
+  Copyright © 2016年 Javan chen. All rights reserved.
+*/
+
+
+/* boost layer time recover label text */
+"TIME RECOVER" = "簡中";

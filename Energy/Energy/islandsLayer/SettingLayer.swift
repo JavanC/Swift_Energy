@@ -55,7 +55,7 @@ class SettingLayer: SKNode {
         
         let settingLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         settingLabel.name = "settingLabel"
-        settingLabel.text = "Setting"
+        settingLabel.text = "Setting".localized
         settingLabel.fontSize = 60 * framescale
         settingLabel.verticalAlignmentMode = .Center
         settingLabel.position = CGPoint(x: 0, y: gap * 8)
@@ -68,7 +68,7 @@ class SettingLayer: SKNode {
         
         let soundLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         soundLabel.name = "soundLabel"
-        soundLabel.text = "Sound"
+        soundLabel.text = "Sound".localized
         soundLabel.fontSize = 20 * framescale
         soundLabel.position = CGPoint(x: frameSize.width / 6, y: gap * 2)
         addChild(soundLabel)
@@ -80,7 +80,7 @@ class SettingLayer: SKNode {
         
         let musicLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         musicLabel.name = "musicLabel"
-        musicLabel.text = "Music"
+        musicLabel.text = "Music".localized
         musicLabel.fontSize = 20 * framescale
         musicLabel.position = CGPoint(x: -frameSize.width / 6, y: gap * 2)
         addChild(musicLabel)
@@ -94,7 +94,7 @@ class SettingLayer: SKNode {
         
         resetButton = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         resetButton.name = "resetButton"
-        resetButton.text = "Reset All Data"
+        resetButton.text = "Reset All Data".localized
         resetButton.fontSize = 30 * framescale
         resetButton.verticalAlignmentMode = .Center
         resetButton.position = CGPoint(x: 0, y: gap * -1)
@@ -105,7 +105,7 @@ class SettingLayer: SKNode {
         addChild(confirmNode)
         let confirmLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         confirmLabel.name = "ConfirmLabel"
-        confirmLabel.text = "Confirm reset all data?"
+        confirmLabel.text = "Confirm reset all data?".localized
         confirmLabel.fontSize = 30 * framescale
         confirmLabel.verticalAlignmentMode = .Center
         confirmLabel.position = CGPoint(x: 0, y: gap * 0)
@@ -116,7 +116,7 @@ class SettingLayer: SKNode {
         resetNoButton.lineWidth = 3 * framescale
         let noLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         noLabel.name = "no Label"
-        noLabel.text = "No"
+        noLabel.text = "No".localized
         noLabel.fontSize = 30 * framescale
         noLabel.verticalAlignmentMode = .Center
         resetNoButton.addChild(noLabel)
@@ -127,7 +127,7 @@ class SettingLayer: SKNode {
         resetYesButton.lineWidth = 3 * framescale
         let yesLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         yesLabel.name = "yes Label"
-        yesLabel.text = "Yes"
+        yesLabel.text = "Yes".localized
         yesLabel.fontSize = 30 * framescale
         yesLabel.verticalAlignmentMode = .Center
         resetYesButton.addChild(yesLabel)

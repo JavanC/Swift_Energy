@@ -57,7 +57,7 @@ class ConfirmBubble: SKNode {
         
         buyInfoLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         buyInfoLabel.name = "buyLabel"
-        buyInfoLabel.text = "You don't have enough money."
+        buyInfoLabel.text = "You don't have enough money.".localized
         buyInfoLabel.fontSize = 25 * framescale
         buyInfoLabel.verticalAlignmentMode = .Center
         buyInfoLabel.position = CGPoint(x: 0, y: gap * -0.6)
@@ -70,7 +70,7 @@ class ConfirmBubble: SKNode {
         OKButton.position = CGPoint(x: 0, y: gap * -3)
         let OKLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         OKLabel.name = "OKLabel"
-        OKLabel.text = "OK"
+        OKLabel.text = "OK".localized
         OKLabel.fontSize = 40 * framescale
         OKLabel.verticalAlignmentMode = .Center
         OKButton.addChild(OKLabel)
@@ -83,7 +83,7 @@ class ConfirmBubble: SKNode {
         cancelButton.position = CGPoint(x: -bubbleSize.width / 4 + 5 * framescale, y: gap * -3)
         let cancelLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         cancelLabel.name = "cancelLabel"
-        cancelLabel.text = "Cancel"
+        cancelLabel.text = "Cancel".localized
         cancelLabel.fontSize = 40 * framescale
         cancelLabel.verticalAlignmentMode = .Center
         cancelButton.addChild(cancelLabel)
@@ -96,7 +96,7 @@ class ConfirmBubble: SKNode {
         buyButton.position = CGPoint(x: bubbleSize.width / 4 - 5 * framescale, y: gap * -3)
         let buyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         buyLabel.name = "buyLabel"
-        buyLabel.text = "Buy"
+        buyLabel.text = "Buy".localized
         buyLabel.fontSize = 40 * framescale
         buyLabel.verticalAlignmentMode = .Center
         buyButton.addChild(buyLabel)
@@ -108,22 +108,22 @@ class ConfirmBubble: SKNode {
         switch islandNum {
         case 0:
             buyPrice = 1
-            islandName.text = "Small Island"
+            islandName.text = "Small Island".localized
         case 1:
             buyPrice = 10
-            islandName.text = "Tree Island"
+            islandName.text = "Tree Island".localized
         case 2:
             buyPrice = 100
-            islandName.text = "Canyon Island"
+            islandName.text = "Canyon Island".localized
         case 3:
             buyPrice = 1000
-            islandName.text = "Coconut Island"
+            islandName.text = "Coconut Island".localized
         case 4:
             buyPrice = 10000
-            islandName.text = "Sand Island"
+            islandName.text = "Sand Island".localized
         case 5:
             buyPrice = 100000
-            islandName.text = "Mainland"
+            islandName.text = "Mainland".localized
         default: break
         }
         priceLabel.text = "\(numberToString(buyPrice, isInt: true))"
@@ -135,12 +135,12 @@ class ConfirmBubble: SKNode {
     }
     func update() {
         if money < buyPrice {
-            buyInfoLabel.text = "You don't have enough money."
+            buyInfoLabel.text = "You don't have enough money.".localized
             OKButton.hidden = false
             cancelButton.hidden = true
             buyButton.hidden = true
         } else {
-            buyInfoLabel.text = "Buy the island to building."
+            buyInfoLabel.text = "Buy the island to building.".localized
             OKButton.hidden = true
             cancelButton.hidden = false
             buyButton.hidden = false
