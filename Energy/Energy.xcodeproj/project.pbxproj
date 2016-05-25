@@ -112,9 +112,11 @@
 		658BA2331C72C1920033051A /* InfoLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoLayer.swift; sourceTree = "<group>"; };
 		658BA2351C76B10F0033051A /* ConfirmBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBubble.swift; sourceTree = "<group>"; };
 		658D87C61CDAEC8900D5C22B /* TeachLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeachLayer.swift; sourceTree = "<group>"; };
+		65ACCDDC1CF589CD001F5EA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65B5208A1CC5C8F600875B7F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		65E5E2C81CF30C8A00066A85 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		65E5E2C91CF30C9500066A85 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		65EB970C1CF579BE00349C77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65ED1E6C1C608A8B008E0BB5 /* Explode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Explode.sks; path = Content/Explode.sks; sourceTree = "<group>"; };
 		65ED1E6D1C608A8B008E0BB5 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Content/spark.png; sourceTree = "<group>"; };
 		8D042CE21C8486B100DF434C /* Launch_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Launch_background.png; path = Content/Launch_background.png; sourceTree = "<group>"; };
@@ -427,6 +429,8 @@
 			children = (
 				65E5E2C81CF30C8A00066A85 /* zh-Hant */,
 				65E5E2C91CF30C9500066A85 /* zh-Hans */,
+				65EB970C1CF579BE00349C77 /* Base */,
+				65ACCDDC1CF589CD001F5EA3 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

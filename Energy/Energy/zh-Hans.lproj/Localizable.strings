@@ -6,6 +6,209 @@
   Copyright © 2016年 Javan chen. All rights reserved.
 */
 
+/* Setting Layer */
+"Setting"                      = "设置";
+"Sound"                        = "音效";
+"Music"                        = "音乐";
+"Reset All Data"               = "重置资料";
+"Confirm reset all data?"      = "确认重置所有资料?";
+"Yes"                          = "是";
+"No"                           = "否";
 
-/* boost layer time recover label text */
-"TIME RECOVER" = "簡中";
+/* Boost Layer */
+"TIME RECOVER"                 = "遗失时间恢复";
+"- Max recover one hour -"     = "-最多可累积一小时-";
+
+/* Confirm Bubble */
+"You don't have enough money." = "你没有足够的金钱.";
+"Buy the island to building."  = "购买该地区来开始使建设.";
+"OK"                           = "确认";
+"Cancel"                       = "取消";
+"Buy"                          = "购买";
+"Small Island"                 = "小岛";
+"Tree Island"                  = "树岛";
+"Canyon Island"                = "峡谷岛";
+"Coconut Island"               = "椰子岛";
+"Sand Island"                  = "沙漠岛";
+"Mainland"                     = "宽阔草原";
+
+/* Sell Page */
+"Touch buildings on the map to sell it."     = "点击地图上的建筑物来出售";
+"Notice: Produce energy building can not be" = "注意：生产能源及生产热能的建筑物";
+"recycled money."                            = "售出时不回收其金钱";
+
+/* Energy Page */
+"TOUCH TO SELL ENERGY"       = "点 击 来 销 售 储 存 能 源";
+
+/* Building Information */
+"Ticks"                      = "生产次数";
+"Heat"                       = "累积热量";
+"Water"                      = "累积水量";
+"Produce Energy"             = "能源生产量";
+"Produce Heat"               = "热能生产量";
+"Sells Energy"               = "能源销售量";
+"Converted Energy"           = "能源转换量";
+"Sells Heat"                 = "热销售量";
+"Increases Heat Produce"     = "增加产热效率";
+"Increases Energy Max"       = "能源储存量";
+"Heat transfer amount"       = "热传输量";
+"Cooling Heat"               = "散热效率";
+"Produce Water"              = "水生产量";
+"Increases Energy Sells"     = "增加销售销率";
+"Produce Research"           = "研究点生产量";
+"Increases Research Produce" = "增加研究效率";
+"Price"                      = "价格";
+
+/* Building Name */
+"Wind Turbine"               = "风力发电站";
+"Solar Plant"                = "太阳能阵列";
+"Coal-Fired Plant"           = "煤炭燃烧厂";
+"Wave Energy"                = "波浪发电站";
+"Gas-Fired Plant"            = "瓦斯燃烧厂";
+"Nuclear Plant"              = "核分裂核心";
+"Fusion Plant"               = "核融合核心";
+"Small Generator"            = "小型发电机";
+"Medium Generator"           = "中型发电机";
+"Large Generator"            = "大型发电机";
+"Boiler House"               = "小型锅炉房";
+"Large Boiler House"         = "大型锅炉房";
+"Isolation"                  = "热隔离砖";
+"Battery"                    = "储能中心";
+"Heat Exchanger"             = "热交换管";
+"Heat Sink"                  = "散热器";
+"Heat Inlet"                 = "地下热管进口";
+"Heat Outlet"                = "地下热管出口";
+"Water Pump"                 = "抽水帮浦";
+"Groundwater Pump"           = "地下水帮浦";
+"Water Pipe"                 = "水管";
+"Small Office"               = "小型销售公司";
+"Medium Office"              = "中型销售公司";
+"Large Office"               = "大型销售公司";
+"Bank"                       = "银行";
+"Research Center"            = "研发中心";
+"Advanced Research Center"   = "先进研发中心";
+"Library"                    = "图书馆";
+
+/* Building Comment */
+"Produced energy by the wind." = "由风力产生能源，最便宜也最干净的能源。";
+"Produced heat by the solar. Transfer Heat to the surrounding buildings, Such as a generator." = "利用太阳能板搜集热能，输出热至周遭建筑，例如发电机。";
+"Produce heat by burning coal." = "燃烧煤炭来产生热能，是便宜但不干净的能源。";
+"Produced energy by the ocean wave. Must be placed in water." = "由海浪发电产生能源，但只能放置在海中。";
+"Produce heat by burning gas." = "新的燃烧瓦斯技术可以更有效的产生热能。";
+"Produce heat by nuclear fission." = "利用核分裂技术产生大量热能。";
+"Produce heat by nuclear fusion." = "利用核融合技术产生环保又干净的热能。";
+"Converts heat to energy." = "把储存的热能转换成能源。";
+"Converts more heat to energy." = "把更多的热能转换成能源，冷却水可以提升转换效率。";
+"Converts mass heat to energy." = "把大量的热能转换成能源，冷却水可以提升转换效率。";
+"Direct sales store heat." = "直接销售储存的热能，小心不要让锅炉炸了。";
+"Direct sales more store heat." = "直接销售更多储存的热能，小心不要让锅炉炸了。";
+"Increases heat produce of adjacent building." = "阻隔逸散的热能，增加周遭产热建筑的效率。";
+"Increase the maximum energy that can be stored." = "可以储存更多的能源，再一次性的卖出。";
+"Balance heat between adjacent components." = "平衡所连接建筑物的热能。";
+"Dissipation heat 10% from store heat. Stable heat source to prevent explosion." = "耗散储存热量的10％，稳定热源以防爆炸。";
+"Heat distributes evenly to every heat outlet." = "平均传输热能至每个地下热管出口。";
+"Heat transfer from the heat inlet, heat output need heat exchanger or heat sink." = "传递地下热管进口的热能，出口只能接热交换管或散热器。";
+"Produce Water to cools generators so they produce much more energy. Must be placed next to water." = "抽取冷却水给发电机增加发电效率，只能建造在水边。";
+"Produce Water to cools generators so they produce much more energy." = "抽取地下水给发电机增加发电效率。";
+"Expands water pumps effective area." = "增加帮浦冷却水的连接范围。";
+"Auto selling store of energy." = "自动贩卖储存的能源。";
+"Auto selling more store of energy." = "自动贩卖更多储存的能源。";
+"Auto selling mass store of energy." = "自动贩卖大量储存的能源。";
+"Boosts office salse energy speed." = "增加在旁销售公司的效率。";
+"Production Research points so that you can research new technology." = "产生研究点，可以使用来解锁新技术及建筑。";
+"Production more Research points so that you can research new technology." = "产生更多研究点，可以使用来解锁新技术及建筑。";
+"Boosts Research Center production research points speed." = "增加在旁研发中心的效率。";
+
+/* Research Name */
+"Research:"                                   = "研发需求：";
+"Wind Turbine Manager"                        = "风力发电站管理员";
+"Solar Manager"                               = "太阳能阵列管理员";
+"Coal-Fired Manager"                          = "煤炭燃烧厂管理员";
+"Wave Energy Manager"                         = "波浪发电站管理员";
+"Gas-Fired Manager"                           = "瓦斯燃烧厂管理员";
+"Nuclear Manager"                             = "核分裂核心管理员";
+"Fusion Manager"                              = "核融合核心管理员";
+
+/* Research Comment */
+"Open Wind turbine technology."               = "研发风力发电站技术。";
+"Wind Turbine are automatically replaced."    = "当风力发电站生产次数用尽，将会自动重建。";
+"Open Solar Plant technology."                = "研发太阳能阵列技术。";
+"Solar Plant are automatically replaced."     = "当太阳能阵列生产次数用尽，将会自动重建。";
+"Open Coal-Fired technology."                 = "研发煤炭燃烧厂技术。";
+"Coal Coal-Fired are automatically replaced." = "当煤炭燃烧厂生产次数用尽，将会自动重建。";
+"Open Wave Energy technology."                = "研发波浪发电站技术。";
+"Wave Energy are automatically replaced."     = "当波浪发电站生产次数用尽，将会自动重建。";
+"Open Gas-Fired Plant technology."            = "研发瓦斯燃烧厂技术。";
+"Gas-Fired are automatically replaced."       = "当瓦斯燃烧厂生产次数用尽，将会自动重建。";
+"Open Nuclear Plant technology."              = "研发核分裂核心技术。";
+"Nuclear are automatically replaced."         = "当核分裂核心生产次数用尽，将会自动重建。";
+"Open Fusion Plant technology."               = "研发核融合核心技术。";
+"Fusion are automatically replaced."          = "当核融合核心生产次数用尽，将会自动重建。";
+"Open Small Generator technology."            = "研发小型发电机技术。";
+"Open Medium Generator technology."           = "研发中型发电机技术。";
+"Open Large Generator technology."            = "研发大型发电机技术。";
+"Open Boiler House technology."               = "研发小型锅炉技术。";
+"Open Large Boiler House technology."         = "研发大型锅炉技术。";
+"Open Isolation technology."                  = "研发热隔离砖建造技术。";
+"Open Battery technology."                    = "研发储能中心建造技术。";
+"Open Heat Exchanger technology."             = "研发热交换管技术。";
+"Open Heat Sink technology."                  = "研发散热器建造技术。";
+"Open Heat Inlet technology."                 = "研发地下热管进口技术。";
+"Open Heat Outlet technology."                = "研发地下热管出口技术。";
+"Open Water Pump technology."                 = "研发抽水帮浦技术。";
+"Open Groundwater Pump technology."           = "研发地下水帮浦技术。";
+"Open Water Pipe technology."                 = "研发水管建造技术。";
+"Open Small Office technology."               = "研发小型销售公司建造技术。";
+"Open Medium Office technology."              = "研发中型销售公司建造技术。";
+"Open Large Office technology."               = "研发大型销售公司建造技术。";
+"Open Bank technology."                       = "研发银行建造技术。";
+"Open Research Center technology."            = "研发研发中心建造技术。";
+"Open Advanced Research Center technology."   = "研发先进研发中心建造技术。";
+"Open Library technology."                    = "研发图书馆建造技术。";
+
+/* Upgrade Name */
+"Lv. Price:"                                  = "Lv. 需求:";
+"Wind Turbine Lifetime"                       = "风力站周期";
+"Solar Lifetime"                              = "太阳能周期";
+"Coal-Fired Lifetime"                         = "煤炭厂周期";
+"Wave Energy Lifetime"                        = "波浪站周期";
+"Gas-Fired Lifetime"                          = "瓦斯厂周期";
+"Nuclear Lifetime"                            = "核分裂周期";
+"Fusion Lifetime"                             = "核融合周期";
+"Generator Effectiveness"                     = "发电机转换效率";
+"Generator Max Heat"                          = "发电机热容量";
+"Boiler House Effectiveness"                  = "锅炉房转换效率";
+"Boiler House Max Heat"                       = "锅炉房热容量";
+"Isolation Effectiveness"                     = "热隔离砖效率";
+"Battery Size"                                = "储能中心储存量";
+"Heat Exchanger Max Heat"                     = "热交换管热容量";
+"Heat Sink Max Heat"                          = "散热器热容量";
+"Heat Inlet,Outlet Max Heat"                  = "地下热管热容量";
+"Heat Inlet Max Transfer"                     = "地下热管传输量";
+"Water Element Max Water"                     = "帮浦、水管水容量";
+"Generator Max Water"                         = "发电机水容量";
+"Office Sell Amount"                          = "销售公司效率";
+"Bank Effectiveness"                          = "银行影响效率";
+"Research Center Effectiveness"               = "研发中心效率";
+"Library Effectiveness"                       = "图书馆影响效率";
+
+/* Upgrade Comment */
+"Increases energy producetion by 50%"         = "能源生产量增加 50%";
+"Increases lifetime producetion by 50%"       = "周期时间增加 50%";
+"Increases heat producetion by 25%"           = "热能生产量增加 25%";
+"Increases energy producetion by 25%"         = "能源生产量增加 25%";
+"Increases heat producetion by 25%"           = "热能生产量增加 25%";
+"Increases heat to energy rate by 25%"        = "热能转换能源量增加 25%";
+"Increases max heat by 50%"                   = "最大热能容量上限增加 50%";
+"Increases heat sell amount by 20%"           = "热能销售量增加 20%";
+"Increases isolation effectiveness by 10%"    = "对周遭建筑的热能生产效率增加 10%";
+"Increases max energy storage by 50%"         = "储能中心能源储存量增加 50%";
+"Increases heat inlet transfer by 50%"        = "地下热管传输量增加 50%";
+"Increases water producetion by 25%"          = "帮浦抽水生产量增加 25%";
+"Increases max water by 50%"                  = "最大储水容量增加 50%";
+"Increases max water by 25%"                  = "最大储水容量增加 25%";
+"Increases energy sell amount by 50%"         = "能源自动销售量增加 50%";
+"Increases bank effectiveness by 10%"         = "对周遭建筑销售能源效率增加 10%";
+"Increases research producetion by 25%"       = "研发中心研究效率增加 25%";
+"Increases library effectiveness by 10%"      = "对周遭建筑研究效率增加 10%";
+

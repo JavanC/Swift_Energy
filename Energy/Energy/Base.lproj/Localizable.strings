@@ -1,0 +1,215 @@
+/*
+ Localizable.strings
+ Energy
+ 
+ Created by javan.chen on 2016/5/23.
+ Copyright © 2016年 Javan chen. All rights reserved.
+ */
+
+
+/* Setting Layer */
+"Setting"                      = "Setting";
+"Sound"                        = "Sound";
+"Music"                        = "Music";
+"Reset All Data"               = "Reset All Data";
+"Confirm reset all data?"      = "Confirm reset all data?";
+"Yes"                          = "Yes";
+"No"                           = "No";
+
+/* Boost Layer */
+"TIME RECOVER"                 = "TIME RECOVER";
+"- Max recover one hour -"     = "- Max recover one hour -";
+
+/* Confirm Bubble */
+"You don't have enough money." = "You don't have enough money.";
+"Buy the island to building."  = "Buy the island to building.";
+"OK"                           = "OK";
+"Cancel"                       = "Cancel";
+"Buy"                          = "Buy";
+"Small Island"                 = "Small Island";
+"Tree Island"                  = "Tree Island";
+"Canyon Island"                = "Canyon Island";
+"Coconut Island"               = "Coconut Island";
+"Sand Island"                  = "Sand Island";
+"Mainland"                     = "Mainland";
+
+/* Sell Page */
+"Touch buildings on the map to sell it."     = "Touch buildings on the map to sell it.";
+"Notice: Produce energy building can not be" = "Notice: Produce energy building can not be";
+"recycled money."                            = "recycled money.";
+
+/* Energy Page */
+"TOUCH  TO  SELL  ENERGY" = "TOUCH  TO  SELL  ENERGY";
+
+/* Building Information */
+"Ticks"                      = "Ticks";
+"Heat"                       = "Heat";
+"Water"                      = "Water";
+"Produce Energy"             = "Produce Energy";
+"Produce Heat"               = "Produce Heat";
+"Sells Energy"               = "Sells Energy";
+"Converted Energy"           = "Converted Energy";
+"Sells Heat"                 = "Sells Heat";
+"Increases Heat Produce"     = "Increases Heat Produce";
+"Increases Energy Max"       = "Increases Energy Max";
+"Heat transfer amount"       = "Heat transfer amount";
+"Cooling Heat"               = "Cooling Heat";
+"Produce Water"              = "Produce Water";
+"Increases Energy Sells"     = "Increases Energy Sells";
+"Produce Research"           = "Produce Research";
+"Increases Research Produce" = "Increases Research Produce";
+"Price"                      = "Price";
+
+/* Building Name */
+"Wind Turbine"               = "Wind Turbine";
+"Solar Plant"                = "Solar Plant";
+"Coal-Fired Plant"           = "Coal-Fired Plant";
+"Wave Energy"                = "Wave Energy";
+"Gas-Fired Plant"            = "Gas-Fired Plant";
+"Nuclear Plant"              = "Nuclear Plant";
+"Fusion Plant"               = "Fusion Plant";
+"Small Generator"            = "Small Generator";
+"Medium Generator"           = "Medium Generator";
+"Large Generator"            = "Large Generator";
+"Boiler House"               = "Boiler House";
+"Large Boiler House"         = "Large Boiler House";
+"Isolation"                  = "Isolation";
+"Battery"                    = "Battery";
+"Heat Exchanger"             = "Heat Exchanger";
+"Heat Sink"                  = "Heat Sink";
+"Heat Inlet"                 = "Heat Inlet";
+"Heat Outlet"                = "Heat Outlet";
+"Water Pump"                 = "Water Pump";
+"Groundwater Pump"           = "Groundwater Pump";
+"Water Pipe"                 = "Water Pipe";
+"Small Office"               = "Small Office";
+"Medium Office"              = "Medium Office";
+"Large Office"               = "Large Office";
+"Bank"                       = "Bank";
+"Research Center"            = "Research Center";
+"Advanced Research Center"   = "Advanced Research Center";
+"Library"                    = "Library";
+
+/* Building Comment */
+"Produced energy by the wind." = "Produced energy by the wind.";
+"Produced heat by the solar. Transfer Heat to the surrounding buildings, Such as a generator." = "Produced heat by the solar. Transfer Heat to the surrounding buildings, Such as a generator.";
+"Produce heat by burning coal." = "Produce heat by burning coal.";
+"Produced energy by the ocean wave. Must be placed in water." = "Produced energy by the ocean wave. Must be placed in water.";
+"Produce heat by burning gas." = "Produce heat by burning gas.";
+"Produce heat by nuclear fission." = "Produce heat by nuclear fission.";
+"Produce heat by nuclear fusion." = "Produce heat by nuclear fusion.";
+"Converts heat to energy." = "Converts heat to energy.";
+"Converts more heat to energy." = "Converts more heat to energy.";
+"Converts mass heat to energy." = "Converts mass heat to energy.";
+"Direct sales store heat." = "Direct sales store heat.";
+"Direct sales more store heat." = "Direct sales more store heat.";
+"Increases heat produce of adjacent building." = "Increases heat produce of adjacent building.";
+"Increase the maximum energy that can be stored." = "Increase the maximum energy that can be stored.";
+"Balance heat between adjacent components." = "Balance heat between adjacent components.";
+"Dissipation heat 10% from store heat. Stable heat source to prevent explosion." = "Dissipation heat 10% from store heat. Stable heat source to prevent explosion.";
+"Heat distributes evenly to every heat outlet." = "Heat distributes evenly to every heat outlet.";
+"Heat transfer from the heat inlet, heat output need heat exchanger or heat sink." = "Heat transfer from the heat inlet, heat output need heat exchanger or heat sink.";
+"Produce Water to cools generators so they produce much more energy. Must be placed next to water." = "Produce Water to cools generators so they produce much more energy. Must be placed next to water.";
+"Produce Water to cools generators so they produce much more energy." = "Produce Water to cools generators so they produce much more energy.";
+"Expands water pumps effective area." = "Expands water pumps effective area.";
+"Auto selling store of energy." = "Auto selling store of energy.";
+"Auto selling more store of energy." = "Auto selling more store of energy.";
+"Auto selling mass store of energy." = "Auto selling mass store of energy.";
+"Boosts office salse energy speed."  = "Boosts office salse energy speed.";
+"Production Research points so that you can research new technology." = "Production Research points so that you can research new technology.";
+"Production more Research points so that you can research new technology." = "Production more Research points so that you can research new technology.";
+"Boosts Research Center production research points speed." = "Boosts Research Center production research points speed.";
+
+/* Research Name */
+"Research:"                                   = "Research:";
+"Wind Turbine Manager"                        = "Wind Turbine Manager";
+"Solar Manager"                               = "Solar Manager";
+"Coal-Fired Manager"                          = "Coal-Fired Manager";
+"Wave Energy Manager"                         = "Wave Energy Manager";
+"Gas-Fired Manager"                           = "Gas-Fired Manager";
+"Nuclear Manager"                             = "Nuclear Manager";
+"Fusion Manager"                              = "Fusion Manager";
+
+/* Research Comment */
+"Open Wind turbine technology."               = "Open Wind turbine technology.";
+"Wind Turbine are automatically replaced."    = "Wind Turbine are automatically replaced.";
+"Open Solar Plant technology."                = "Open Solar Plant technology.";
+"Solar Plant are automatically replaced."     = "Solar Plant are automatically replaced.";
+"Open Coal-Fired technology."                 = "Open Coal-Fired technology.";
+"Coal Coal-Fired are automatically replaced." = "Coal Coal-Fired are automatically replaced.";
+"Open Wave Energy technology."                = "Open Wave Energy technology.";
+"Wave Energy are automatically replaced."     = "Wave Energy are automatically replaced.";
+"Open Gas-Fired Plant technology."            = "Open Gas-Fired Plant technology.";
+"Gas-Fired are automatically replaced."       = "Gas-Fired are automatically replaced.";
+"Open Nuclear Plant technology."              = "Open Nuclear Plant technology.";
+"Nuclear are automatically replaced."         = "Nuclear are automatically replaced.";
+"Open Fusion Plant technology."               = "Open Fusion Plant technology.";
+"Fusion are automatically replaced."          = "Fusion are automatically replaced.";
+"Open Small Generator technology."            = "Open Small Generator technology.";
+"Open Medium Generator technology."           = "Open Medium Generator technology.";
+"Open Large Generator technology."            = "Open Large Generator technology.";
+"Open Boiler House technology."               = "Open Boiler House technology.";
+"Open Large Boiler House technology."         = "Open Large Boiler House technology.";
+"Open Isolation technology."                  = "Open Isolation technology.";
+"Open Battery technology."                    = "Open Battery technology.";
+"Open Heat Exchanger technology."             = "Open Heat Exchanger technology.";
+"Open Heat Sink technology."                  = "Open Heat Sink technology.";
+"Open Heat Inlet technology."                 = "Open Heat Inlet technology.";
+"Open Heat Outlet technology."                = "Open Heat Outlet technology.";
+"Open Water Pump technology."                 = "Open Water Pump technology.";
+"Open Groundwater Pump technology."           = "Open Groundwater Pump technology.";
+"Open Water Pipe technology."                 = "Open Water Pipe technology.";
+"Open Small Office technology."               = "Open Small Office technology.";
+"Open Medium Office technology."              = "Open Medium Office technology.";
+"Open Large Office technology."               = "Open Large Office technology.";
+"Open Bank technology."                       = "Open Bank technology.";
+"Open Research Center technology."            = "Open Research Center technology.";
+"Open Advanced Research Center technology."   = "Open Advanced Research Center technology.";
+"Open Library technology."                    = "Open Library technology.";
+
+/* Upgrade Name */
+"Lv.     Price:"                              = "Lv.     Price:";
+"Wind Turbine Lifetime"                       = "Wind Turbine Lifetime";
+"Solar Lifetime"                              = "Solar Lifetime";
+"Coal-Fired Lifetime"                         = "Coal-Fired Lifetime";
+"Wave Energy Lifetime"                        = "Wave Energy Lifetime";
+"Gas-Fired Lifetime"                          = "Gas-Fired Lifetime";
+"Nuclear Lifetime"                            = "Nuclear Lifetime";
+"Fusion Lifetime"                             = "Fusion Lifetime";
+"Generator Effectiveness"                     = "Generator Effectiveness";
+"Generator Max Heat"                          = "Generator Max Heat";
+"Boiler House Effectiveness"                  = "Boiler House Effectiveness";
+"Boiler House Max Heat"                       = "Boiler House Max Heat";
+"Isolation Effectiveness"                     = "Isolation Effectiveness";
+"Battery Size"                                = "Battery Size";
+"Heat Exchanger Max Heat"                     = "Heat Exchanger Max Heat";
+"Heat Sink Max Heat"                          = "Heat Sink Max Heat";
+"Heat Inlet,Outlet Max Heat"                  = "Heat Inlet,Outlet Max Heat";
+"Heat Inlet Max Transfer"                     = "Heat Inlet Max Transfer";
+"Water Element Max Water"                     = "Water Element Max Water";
+"Generator Max Water"                         = "Generator Max Water";
+"Office Sell Amount"                          = "Office Sell Amount";
+"Bank Effectiveness"                          = "Bank Effectiveness";
+"Research Center Effectiveness"               = "Research Center Effectiveness";
+"Library Effectiveness"                       = "Library Effectiveness";
+
+/* Upgrade Comment */
+"Increases energy producetion by 50%"         = "Increases energy producetion by 50%";
+"Increases lifetime producetion by 50%"       = "Increases lifetime producetion by 50%";
+"Increases heat producetion by 25%"           = "Increases heat producetion by 25%";
+"Increases energy producetion by 25%"         = "Increases energy producetion by 25%";
+"Increases heat producetion by 25%"           = "Increases heat producetion by 25%";
+"Increases heat to energy rate by 25%"        = "Increases heat to energy rate by 25%";
+"Increases max heat by 50%"                   = "Increases max heat by 50%";
+"Increases heat sell amount by 20%"           = "Increases heat sell amount by 20%";
+"Increases isolation effectiveness by 10%"    = "Increases isolation effectiveness by 10%";
+"Increases max energy storage by 50%"         = "Increases max energy storage by 50%";
+"Increases heat inlet transfer by 50%"        = "Increases heat inlet transfer by 50%";
+"Increases water producetion by 25%"          = "Increases water producetion by 25%";
+"Increases max water by 50%"                  = "Increases max water by 50%";
+"Increases max water by 25%"                  = "Increases max water by 25%";
+"Increases energy sell amount by 50%"         = "Increases energy sell amount by 50%";
+"Increases bank effectiveness by 10%"         = "Increases bank effectiveness by 10%";
+"Increases research producetion by 25%"       = "Increases research producetion by 25%";
+"Increases library effectiveness by 10%"      = "Increases library effectiveness by 10%";
+
