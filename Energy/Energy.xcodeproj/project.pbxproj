@@ -202,8 +202,8 @@
 				8D8AF5741C84384A006541AD /* background.atlas */,
 				65386E161C2CD8A500D08B41 /* Main.storyboard */,
 				65386E1B1C2CD8A500D08B41 /* LaunchScreen.storyboard */,
-				65386E1E1C2CD8A500D08B41 /* Info.plist */,
 				65E5E2C51CF30B1D00066A85 /* Localizable.strings */,
+				65386E1E1C2CD8A500D08B41 /* Info.plist */,
 			);
 			path = Energy;
 			sourceTree = "<group>";
