@@ -638,26 +638,26 @@ class BuildingData: NSObject, NSCoding {
             
         case .SmallGenerator:
             energySystem.heat2EnergyAmount = baseToPower(3, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]!)
-            heatSystem.size = baseToPower(20, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
+            heatSystem.size = baseToPower(20, base: 1.5, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
             waterSystem.size = baseToPower(1000, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxWater]!)
             
         case .MediumGenerator:
             energySystem.heat2EnergyAmount = baseToPower(12, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]!)
-            heatSystem.size = baseToPower(80, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
+            heatSystem.size = baseToPower(80, base: 1.5, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
             waterSystem.size = baseToPower(4000, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxWater]!)
             
         case .LargeGenerator:
             energySystem.heat2EnergyAmount = baseToPower(48, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]!)
-            heatSystem.size = baseToPower(320, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
+            heatSystem.size = baseToPower(320, base: 1.5, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
             waterSystem.size = baseToPower(16000, base: 1.25, power: upgradeLevel[UpgradeType.GeneratorMaxWater]!)
             
         case .BoilerHouse:
             moneySystem.heat2MoneyAmount = baseToPower(150, base: 1.2, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]!)
-            heatSystem.size = baseToPower(2000, base: 1.25, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
+            heatSystem.size = baseToPower(2000, base: 1.5, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .LargeBoilerHouse:
             moneySystem.heat2MoneyAmount = baseToPower(600, base: 1.2, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]!)
-            heatSystem.size = baseToPower(8000, base: 1.25, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
+            heatSystem.size = baseToPower(8000, base: 1.5, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .Isolation:
             isolationPercent = 0.1 * Double(upgradeLevel[UpgradeType.IsolationEffectiveness]! + 1)
@@ -684,7 +684,7 @@ class BuildingData: NSObject, NSCoding {
             
         case .GroundwaterPump:
             waterSystem.size = baseToPower(300000, base: 1.5, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
-            waterSystem.produce = baseToPower(50000, base: 1.2, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
+            waterSystem.produce = baseToPower(50000, base: 1.25, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
             
         case .WaterPipe:
             waterSystem.size = baseToPower(200000, base: 1.5, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
@@ -699,7 +699,7 @@ class BuildingData: NSObject, NSCoding {
             moneySystem.energy2MoneyAmount = baseToPower(2000, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
             
         case .Bank:
-            bankAddPercent = 0.2 + 0.1 * Double(upgradeLevel[UpgradeType.BankEffectiveness]! + 1)
+            bankAddPercent = 0.3 + 0.1 * Double(upgradeLevel[UpgradeType.BankEffectiveness]!)
             
         case .ResearchCenter:
             researchSystem.addAmount = baseToPower(1, base: 1.25, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
@@ -708,7 +708,7 @@ class BuildingData: NSObject, NSCoding {
             researchSystem.addAmount = baseToPower(6, base: 1.25, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
             
         case .Library:
-            libraryAddPercent = 0.2  + 0.1 * Double(upgradeLevel[UpgradeType.LibraryEffectiveness]! + 1)
+            libraryAddPercent = 0.3 + 0.1 * Double(upgradeLevel[UpgradeType.LibraryEffectiveness]!)
             
         default: break
         }

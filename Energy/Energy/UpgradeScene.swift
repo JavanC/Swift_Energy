@@ -34,201 +34,201 @@ class UpgradeElement: SKNode {
         switch upgradeType {
         case .WindTurbineEffectiveness:
             imageType = BuildingType.WindTurbine
-            name = "Wind Turbine"
-            comment = "Increases energy producetion by 50%"
+            name = "Wind Turbine".localized
+            comment = "Increases energy producetion by 50%".localized
             upgradePrice = baseToPower(10, base: 3, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!)
             
         case .WindTurbineLifetime:
             imageType = BuildingType.WindTurbine
-            name = "Wind Turbine Lifetime"
-            comment = "Increases lifetime producetion by 50%"
+            name = "Wind Turbine Lifetime".localized
+            comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(30, base: 6, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
             
         case .SolarCellEffectiveness:
             imageType = BuildingType.SolarCell
-            name = "Solar Plant"
-            comment = "Increases heat producetion by 25%"
+            name = "Solar Plant".localized
+            comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.SolarCellEffectiveness]!)
             
         case .SolarCellLifetime:
             imageType = BuildingType.SolarCell
-            name = "Solar Lifetime"
-            comment = "Increases lifetime producetion by 50%"
+            name = "Solar Lifetime".localized
+            comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(300, base: 6, power: upgradeLevel[UpgradeType.SolarCellLifetime]!)
             
         case .CoalBurnerEffectiveness:
             imageType = BuildingType.CoalBurner
-            name = "Coal-Fired Plant"
-            comment = "Increases heat producetion by 25%"
+            name = "Coal-Fired Plant".localized
+            comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(10000, base: 1.8, power: upgradeLevel[UpgradeType.CoalBurnerEffectiveness]!)
             
         case .CoalBurnerLifetime:
             imageType = BuildingType.CoalBurner
-            name = "Coal-Fired Lifetime"
-            comment = "Increases lifetime producetion by 50%"
+            name = "Coal-Fired Lifetime".localized
+            comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(30000, base: 6, power: upgradeLevel[UpgradeType.CoalBurnerLifetime]!)
             
         case .WaveCellEffectiveness:
             imageType = BuildingType.WaveCell
-            name = "Wave Energy"
-            comment = "Increases energy producetion by 25%"
+            name = "Wave Energy".localized
+            comment = "Increases energy producetion by 25%".localized
             upgradePrice = baseToPower(1000000, base: 1.8, power: upgradeLevel[UpgradeType.WaveCellEffectiveness]!)
             
         case .WaveCellLifetime:
             imageType = BuildingType.WaveCell
-            name = "Wave Energy Lifetime"
-            comment = "Increases lifetime producetion by 50%"
+            name = "Wave Energy Lifetime".localized
+            comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(3000000, base: 6, power: upgradeLevel[UpgradeType.WaveCellLifetime]!)
             
         case .GasBurnerEffectiveness:
             imageType = BuildingType.GasBurner
-            name = "Gas-Fired Plant"
-            comment = "Increases heat producetion by 25%"
+            name = "Gas-Fired Plant".localized
+            comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(100000000, base: 1.8, power: upgradeLevel[UpgradeType.GasBurnerEffectiveness]!)
             
         case .GasBurnerLifetime:
             imageType = BuildingType.GasBurner
-            name = "Gas-Fired Lifetime"
-            comment = "Increases lifetime producetion by 50%"
+            name = "Gas-Fired Lifetime".localized
+            comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(300000000, base: 6, power: upgradeLevel[UpgradeType.GasBurnerLifetime]!)
             
         case .NuclearCellEffectiveness:
             imageType = BuildingType.NuclearCell
-            name = "Nuclear Plant"
-            comment = "Increases heat producetion by 25%"
+            name = "Nuclear Plant".localized
+            comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(10000000000, base: 1.8, power: upgradeLevel[UpgradeType.NuclearCellEffectiveness]!)
             
         case .NuclearCellLifetime:
             imageType = BuildingType.NuclearCell
-            name = "Nuclear Lifetime"
-            comment = "Increases lifetime producetion by 50%"
+            name = "Nuclear Lifetime".localized
+            comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(30000000000, base: 6, power: upgradeLevel[UpgradeType.NuclearCellLifetime]!)
             
         case .FusionCellEffectiveness:
             imageType = BuildingType.FusionCell
-            name = "Fusion Plant"
-            comment = "Increases heat producetion by 25%"
+            name = "Fusion Plant".localized
+            comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(1000000000000, base: 1.8, power: upgradeLevel[UpgradeType.FusionCellEffectiveness]!)
             
         case .FusionCellLifetime:
             imageType = BuildingType.FusionCell
-            name = "Fusion Lifetime"
-            comment = "Increases lifetime producetion by 50%"
+            name = "Fusion Lifetime".localized
+            comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(3000000000000, base: 6, power: upgradeLevel[UpgradeType.FusionCellLifetime]!)
             
         case .GeneratorEffectiveness:
             imageType = BuildingType.SmallGenerator
-            name = "Generator Effectiveness"
-            comment = "Increases heat to energy rate by 25%"
+            name = "Generator Effectiveness".localized
+            comment = "Increases heat to energy rate by 25%".localized
             upgradePrice = baseToPower(300, base: 1.5, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]!)
             
         case .GeneratorMaxHeat:
             imageType = BuildingType.SmallGenerator
-            name = "Generator Max Heat"
-            comment = "Increases max heat by 50%"
+            name = "Generator Max Heat".localized
+            comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(1000, base: 2.3, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
             
         case .BoilerHouseSellAmount:
             imageType = BuildingType.BoilerHouse
-            name = "Boiler House"
-            comment = "Increases energy sell amount by 20%"
+            name = "Boiler House Effectiveness".localized
+            comment = "Increases heat sell amount by 20%".localized
             upgradePrice = baseToPower(30000, base: 4, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]!)
             
         case .BoilerHouseMaxHeat:
             imageType = BuildingType.BoilerHouse
-            name = "Boiler House Max Heat"
-            comment = "Increases max heat by 50%"
+            name = "Boiler House Max Heat".localized
+            comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(80000, base: 3.7, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .IsolationEffectiveness:
             imageType = BuildingType.Isolation
-            name = "Isolation Effectiveness"
-            comment = "Increases isolation effectiveness by 10%"
+            name = "Isolation Effectiveness".localized
+            comment = "Increases isolation effectiveness by 10%".localized
             upgradePrice = baseToPower(1000, base: 10, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .EnergyBatterySize:
             imageType = BuildingType.Battery
-            name = "Battery Size"
-            comment = "Increases max energy storage by 50%"
+            name = "Battery Size".localized
+            comment = "Increases max energy storage by 50%".localized
             upgradePrice = baseToPower(50, base: 1.5, power: upgradeLevel[UpgradeType.EnergyBatterySize]!)
             
         case .HeatExchangerMaxHeat:
             imageType = BuildingType.HeatExchanger
-            name = "Heat Exchanger Max Heat"
-            comment = "Increases max heat by 50%"
+            name = "Heat Exchanger Max Heat".localized
+            comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(50000, base: 2.1, power: upgradeLevel[UpgradeType.HeatExchangerMaxHeat]!)
             
         case .HeatSinkMaxHeat:
             imageType = BuildingType.HeatSink
-            name = "Heat Sink Max Heat"
-            comment = "Increases max heat by 50%"
+            name = "Heat Sink Max Heat".localized
+            comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(50000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatSinkMaxHeat]!)
             
         case .HeatInletOutletMaxHeat:
             imageType = BuildingType.HeatInlet
-            name = "Heat Inlet,Outlet Max Heat"
-            comment = "Increases max heat by 50%"
+            name = "Heat Inlet,Outlet Max Heat".localized
+            comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(50000000000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]!)
             
         case .HeatInletMaxTransfer:
             imageType = BuildingType.HeatInlet
-            name = "Heat Inlet Max Transfer"
-            comment = "Increases heat inlet transfer by 50%"
+            name = "Heat Inlet Max Transfer".localized
+            comment = "Increases heat inlet transfer by 50%".localized
             upgradePrice = baseToPower(100000000000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatInletMaxTransfer]!)
             
         case .WaterPumpProduction:
             imageType = BuildingType.WaterPump
-            name = "Water Pump"
-            comment = "Increases water producetion by 25%"
+            name = "Water Pump".localized
+            comment = "Increases water producetion by 25%".localized
             upgradePrice = baseToPower(40000000000, base: 1.5, power: upgradeLevel[UpgradeType.WaterPumpProduction]!)
             
         case .GroundwaterPumpProduction:
             imageType = BuildingType.GroundwaterPump
-            name = "Groundwater Pump"
-            comment = "Increases water producetion by 20%"
-            upgradePrice = baseToPower(10000000000000, base: 1.9, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
+            name = "Groundwater Pump".localized
+            comment = "Increases water producetion by 25%".localized
+            upgradePrice = baseToPower(10000000000000, base: 1.6, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
             
         case .WaterElementMaxWater:
             imageType = BuildingType.WaterPipe
-            name = "Water Element Max Water"
-            comment = "Increases max water by 50%"
+            name = "Water Element Max Water".localized
+            comment = "Increases max water by 50%".localized
             upgradePrice = baseToPower(20000000000, base: 1.9, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
             
         case .GeneratorMaxWater:
             imageType = BuildingType.SmallGenerator
-            name = "Generator Max Water"
-            comment = "Increases max water by 25%"
+            name = "Generator Max Water".localized
+            comment = "Increases max water by 25%".localized
             upgradePrice = baseToPower(10000000000, base: 1.45, power: upgradeLevel[UpgradeType.GeneratorMaxWater]!)
             
         case .OfficeSellEnergy:
             imageType = BuildingType.SmallOffice
-            name = "Office Sell Amount"
-            comment = "Increases energy sell amount by 50%"
+            name = "Office Sell Amount".localized
+            comment = "Increases energy sell amount by 50%".localized
             upgradePrice = baseToPower(100, base: 1.9, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
             
         case .BankEffectiveness:
             imageType = BuildingType.Bank
-            name = "Bank Effectiveness"
-            comment = "Increases bank effectiveness by 10%"
+            name = "Bank Effectiveness".localized
+            comment = "Increases bank effectiveness by 10%".localized
             upgradePrice = baseToPower(10000000000000, base: 2, power: upgradeLevel[UpgradeType.BankEffectiveness]!)
             
         case .ResearchCenterEffectiveness:
             imageType = BuildingType.ResearchCenter
-            name = "Research Center"
-            comment = "Increases research producetion by 25%"
+            name = "Research Center Effectiveness".localized
+            comment = "Increases research producetion by 25%".localized
             upgradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
             
         case .LibraryEffectiveness:
             imageType = BuildingType.Library
-            name = "Library Effectiveness"
-            comment = "Increases library effectiveness by 10%"
+            name = "Library Effectiveness".localized
+            comment = "Increases library effectiveness by 10%".localized
             upgradePrice = baseToPower(400000000000, base: 2, power: upgradeLevel[UpgradeType.LibraryEffectiveness]!)
         
         default:
             imageType = BuildingType.WindTurbine
             name = "\(upgradeType)"
-            comment = "test123123"
-            upgradePrice = 1000
+            comment = "error"
+            upgradePrice = 1
         }
     
         // image
@@ -263,7 +263,7 @@ class UpgradeElement: SKNode {
         // level and money label
         let infoLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         infoLabel.name = "levelLabel"
-        infoLabel.text = "Lv.     Price:"
+        infoLabel.text = "Lv.     Price:".localized
         infoLabel.fontColor = SKColor.lightGrayColor()
         infoLabel.fontSize = (image.size.height - upgradeName.fontSize * 1.2) / 2
         infoLabel.horizontalAlignmentMode = .Left

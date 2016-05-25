@@ -34,212 +34,212 @@ class ResearchElement: SKNode {
         switch researchType {
         case .WindTurbineResearch:
             imageType = BuildingType.WindTurbine
-            name = "Wind Turbine"
-            comment = "Open Wind turbine technology."
+            name = "Wind Turbine".localized
+            comment = "Open Wind turbine technology.".localized
             researchPrice = 100
             
         case .WindTurbineRebuild:
             imageType = BuildingType.WindTurbine
-            name = "Wind Turbine Manager"
-            comment = "Wind Turbine are automatically replaced."
+            name = "Wind Turbine Manager".localized
+            comment = "Wind Turbine are automatically replaced.".localized
             researchPrice = 500
             
         case .SolarCellResearch:
             imageType = BuildingType.SolarCell
-            name = "Solar Plant"
-            comment = "Open Solar Plant technology."
+            name = "Solar Plant".localized
+            comment = "Open Solar Plant technology.".localized
             researchPrice = 2000
 
         case .SolarCellRebuild:
             imageType = BuildingType.SolarCell
-            name = "Solar Manager"
-            comment = "Solar Plant are automatically replaced."
+            name = "Solar Manager".localized
+            comment = "Solar Plant are automatically replaced.".localized
             researchPrice = 4000
             
         case .CoalBurnerResearch:
             imageType = BuildingType.CoalBurner
-            name = "Coal-Fired Plant"
-            comment = "Open Coal-Fired technology."
+            name = "Coal-Fired Plant".localized
+            comment = "Open Coal-Fired technology.".localized
             researchPrice = 50000
             
         case .CoalBurnerRebuild:
             imageType = BuildingType.CoalBurner
-            name = "Coal-Fired Manager"
-            comment = "Coal Coal-Fired are automatically replaced."
+            name = "Coal-Fired Manager".localized
+            comment = "Coal Coal-Fired are automatically replaced.".localized
             researchPrice = 100000
             
         case .WaveCellResearch:
             imageType = BuildingType.WaveCell
-            name = "Wave Energy"
-            comment = "Open Wave Energy technology."
+            name = "Wave Energy".localized
+            comment = "Open Wave Energy technology.".localized
             researchPrice = 500000
             
         case .WaveCellRebuild:
             imageType = BuildingType.WaveCell
-            name = "Wave Energy Manager"
-            comment = "Wave Energy are automatically replaced."
+            name = "Wave Energy Manager".localized
+            comment = "Wave Energy are automatically replaced.".localized
             researchPrice = 1000000
             
         case .GasBurnerResearch:
             imageType = BuildingType.GasBurner
-            name = "Gas-Fired Plant"
-            comment = "Open Gas-Fired Plant technology."
+            name = "Gas-Fired Plant".localized
+            comment = "Open Gas-Fired Plant technology.".localized
             researchPrice = 3000000
             
         case .GasBurnerRebuild:
             imageType = BuildingType.GasBurner
-            name = "Gas-Fired Manager"
-            comment = "Gas-Fired are automatically replaced."
+            name = "Gas-Fired Manager".localized
+            comment = "Gas-Fired are automatically replaced.".localized
             researchPrice = 6000000
             
         case .NuclearCellResearch:
             imageType = BuildingType.NuclearCell
-            name = "Nuclear Plant"
-            comment = "Open Nuclear Plant technology."
+            name = "Nuclear Plant".localized
+            comment = "Open Nuclear Plant technology.".localized
             researchPrice = 100000000
             
         case .NuclearCellRebuild:
             imageType = BuildingType.NuclearCell
-            name = "Nuclear Manager"
-            comment = "Nuclear are automatically replaced."
+            name = "Nuclear Manager".localized
+            comment = "Nuclear are automatically replaced.".localized
             researchPrice = 200000000
             
         case .FusionCellResearch:
             imageType = BuildingType.FusionCell
-            name = "Fusion Plant"
-            comment = "Open Fusion Plant technology."
+            name = "Fusion Plant".localized
+            comment = "Open Fusion Plant technology.".localized
             researchPrice = 2000000000
             
         case .FusionCellRebuild:
             imageType = BuildingType.FusionCell
-            name = "Fusion Manager"
-            comment = "Fusion are automatically replaced."
+            name = "Fusion Manager".localized
+            comment = "Fusion are automatically replaced.".localized
             researchPrice = 4000000000
             
         case .SmallGeneratorResearch:
             imageType = BuildingType.SmallGenerator
-            name = "Small Generator"
-            comment = "Open Small Generator technology."
+            name = "Small Generator".localized
+            comment = "Open Small Generator technology.".localized
             researchPrice = 2000
             
         case .MediumGeneratorResearch:
             imageType = BuildingType.MediumGenerator
-            name = "Medium Generator"
-            comment = "Open Medium Generator technology."
+            name = "Medium Generator".localized
+            comment = "Open Medium Generator technology.".localized
             researchPrice = 4000000
             
         case .LargeGeneratorResearch:
             imageType = BuildingType.LargeGenerator
-            name = "Large Generator"
-            comment = "Open Large Generator technology."
+            name = "Large Generator".localized
+            comment = "Open Large Generator technology.".localized
             researchPrice = 4000000000
             
         case .BoilerHouseResearch:
             imageType = BuildingType.BoilerHouse
-            name = "Boiler House"
-            comment = "Open Boiler House technology."
+            name = "Boiler House".localized
+            comment = "Open Boiler House technology.".localized
             researchPrice = 80000
             
         case .LargeBoilerHouseResearch:
             imageType = BuildingType.LargeBoilerHouse
-            name = "Large Boiler House"
-            comment = "Open Large Boiler House technology."
+            name = "Large Boiler House".localized
+            comment = "Open Large Boiler House technology.".localized
             researchPrice = 10000000
             
         case .IsolationResearch:
             imageType = BuildingType.Isolation
-            name = "Isolation"
-            comment = "Open Isolation technology."
+            name = "Isolation".localized
+            comment = "Open Isolation technology.".localized
             researchPrice = 1000
             
         case .BatteryResearch:
             imageType = BuildingType.Battery
-            name = "Battery"
-            comment = "Open Battery technology."
+            name = "Battery".localized
+            comment = "Open Battery technology.".localized
             researchPrice = 800
             
         case .HeatExchangerResearch:
             imageType = BuildingType.HeatExchanger
-            name = "Heat Exchanger"
-            comment = "Open Heat Exchanger technology."
+            name = "Heat Exchanger".localized
+            comment = "Open Heat Exchanger technology.".localized
             researchPrice = 20000
             
         case .HeatSinkResearch:
             imageType = BuildingType.HeatSink
-            name = "Heat Sink"
-            comment = "Open Heat Sink technology."
+            name = "Heat Sink".localized
+            comment = "Open Heat Sink technology.".localized
             researchPrice = 2000000
             
         case .HeatInletResearch:
             imageType = BuildingType.HeatInlet
-            name = "Heat Inlet"
-            comment = "Open Heat Inlet technology."
+            name = "Heat Inlet".localized
+            comment = "Open Heat Inlet technology.".localized
             researchPrice = 5000000000
             
         case .HeatOutletResearch:
             imageType = BuildingType.HeatOutlet
-            name = "Heat Outlet"
-            comment = "Open Heat Outlet technology."
+            name = "Heat Outlet".localized
+            comment = "Open Heat Outlet technology.".localized
             researchPrice = 5000000000
 
         case .WaterPumpResearch:
             imageType = BuildingType.WaterPump
-            name = "Water Pump"
-            comment = "Open Water Pump technology."
+            name = "Water Pump".localized
+            comment = "Open Water Pump technology.".localized
             researchPrice = 50000000
             
         case .GroundwaterPumpResearch:
             imageType = BuildingType.GroundwaterPump
-            name = "Groundwater Pump"
-            comment = "Open Groundwater Pump technology."
+            name = "Groundwater Pump".localized
+            comment = "Open Groundwater Pump technology.".localized
             researchPrice = 500000000
             
         case .WaterPipeResearch:
             imageType = BuildingType.WaterPipe
-            name = "Water Pipe"
-            comment = "Open Water Pipe technology."
+            name = "Water Pipe".localized
+            comment = "Open Water Pipe technology.".localized
             researchPrice = 20000000
             
         case .SmallOfficeResearch:
             imageType = BuildingType.SmallOffice
-            name = "Small Office"
-            comment = "Open Small Office technology."
+            name = "Small Office".localized
+            comment = "Open Small Office technology.".localized
             researchPrice = 500
             
         case .MediumOfficeResearch:
             imageType = BuildingType.MediumOffice
-            name = "Medium Office"
-            comment = "Open Medium Office technology."
+            name = "Medium Office".localized
+            comment = "Open Medium Office technology.".localized
             researchPrice = 150000
             
         case .LargeOfficeResearch:
             imageType = BuildingType.LargeOffice
-            name = "Large Office"
-            comment = "Open Large Office technology."
+            name = "Large Office".localized
+            comment = "Open Large Office technology.".localized
             researchPrice = 40000000
             
         case .BankResearch:
             imageType = BuildingType.Bank
-            name = "Bank"
-            comment = "Open Bank technology."
+            name = "Bank".localized
+            comment = "Open Bank technology.".localized
             researchPrice = 8000000000
             
         case .ResearchCenterResearch:
             imageType = BuildingType.ResearchCenter
-            name = "Research Center"
-            comment = "Open Research Center technology."
+            name = "Research Center".localized
+            comment = "Open Research Center technology.".localized
             researchPrice = 100
             
         case .AdvancedResearchCenterResearch:
             imageType = BuildingType.AdvancedResearchCenter
-            name = "Advanced Research Center"
-            comment = "Open Advanced Research Center technology."
+            name = "Advanced Research Center".localized
+            comment = "Open Advanced Research Center technology.".localized
             researchPrice = 150000
             
         case .LibraryResearch:
             imageType = BuildingType.Library
-            name = "Library"
-            comment = "Open Library technology."
+            name = "Library".localized
+            comment = "Open Library technology.".localized
             researchPrice = 100000000
             
         default:
@@ -280,7 +280,7 @@ class ResearchElement: SKNode {
         // research
         let researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         researchLabel.name = "researchLabel"
-        researchLabel.text = "Research:"
+        researchLabel.text = "Research:".localized
         researchLabel.fontColor = SKColor.lightGrayColor()
         researchLabel.fontSize = (image.size.height - researchName.fontSize * 1.2) / 2
         researchLabel.horizontalAlignmentMode = .Left
