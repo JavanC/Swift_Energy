@@ -23,7 +23,7 @@ class IslandsScene: SKScene {
     override func didMoveToView(view: SKView) {
         
         if !contentCreated {
-
+            
             worldLayer = WorldLayer(frameSize: frame.size)
             worldLayer.position = CGPoint(x: 0, y: -frame.height)
             addChild(worldLayer)
@@ -321,9 +321,9 @@ class IslandsScene: SKScene {
         let min = (value % 3600) / 60
         let sec = value % 60
         
-        var timeString = ""
+        var timeString = ". "
         if day < 10 { timeString += " "}
-        timeString += day > 0 ? "\(day)D " : "    "
+        timeString += day > 0 ? "\(day)D " : "   "
         if hour < 10 { timeString += "0" }
         timeString += "\(hour):"
         if min < 10 { timeString += "0" }
@@ -349,6 +349,8 @@ class IslandsScene: SKScene {
             // hide setting layer
             self.settingLayer.alpha = 0
             self.settingLayer.hidden = true
+            // reset background music
+            backgroundMusicPlayer.currentTime = 0
             // reset loading number and world position
             self.worldLayer.position = CGPoint(x: 0, y: -self.frame.height)
             self.worldLayer.skyBackground.hidden = false
@@ -362,7 +364,6 @@ class IslandsScene: SKScene {
             isRebuild   = true
             isSoundMute = false
             isMusicMute = false
-            
             // reset mapUnlocked
             for i in 1..<6 {
                 maps[i].isSold = i == 0 ? true : false

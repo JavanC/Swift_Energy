@@ -194,7 +194,7 @@ class WorldLayer: SKNode {
         timeLabel.fontColor = SKColor.whiteColor()
         timeLabel.horizontalAlignmentMode = .Left
         timeLabel.verticalAlignmentMode = .Center
-        timeLabel.position = CGPoint(x: -70 * framescale, y: 0)
+        timeLabel.position = CGPoint(x: -90 * framescale, y: 0)
         timeInfo.addChild(timeLabel)
     }
     
