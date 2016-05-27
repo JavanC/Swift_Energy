@@ -8,26 +8,21 @@
 
 import SpriteKit
 
-class BuildingSelectElement: SKNode {
-
-    var background: SKSpriteNode!
+class BuildingSelectElement: SKSpriteNode {
+    
     var buildType: BuildingType!
     
-    init(buildType: BuildingType, size: CGSize) {
+    func configureAtPosition(buildType: BuildingType, size: CGSize) {
+        self.name = "BuildingSelectElementBackground"
         self.buildType = buildType
-        super.init()
+        self.size = size
 
-        // background
-        background                           = SKSpriteNode(color: colorBlue4, size: size)
-        background.name                      = "BuildingSelectElementBackground"
-        background.anchorPoint               = CGPoint(x: 0, y: 0)
-        addChild(background)
         // image
         let gap: CGFloat                     = (size.height - tilesScaleSize.height) / 2
         let image                            = BuildingData(buildType: buildType).image("image")
         image.position                       = CGPoint(x: gap + image.size.width / 2, y: size.height / 2)
         addChild(image)
-
+        
         let buildingName                     = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         buildingName.name                    = "buildingName"
         buildingName.text                    = "\(BuildingData(buildType: buildType).name)"
@@ -39,10 +34,6 @@ class BuildingSelectElement: SKNode {
         addChild(buildingName)
         let multilineLabel                   = SKMultilineLabel(text: "\(BuildingData(buildType: buildType).comment)", labelWidth: Int(size.width - image.size.width - gap * 3), pos: CGPoint(x: (size.width + image.size.width + gap * 1) / 2 , y: size.height - gap - buildingName.fontSize), fontName: "ArialMT", fontSize: (image.size.height - buildingName.fontSize * 1.2) / 2, fontColor: SKColor.lightGrayColor(), leading: Int((image.size.height - buildingName.fontSize) / 2), alignment: .Left, shouldShowBorder: false)
         addChild(multilineLabel)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -71,7 +62,7 @@ class BuildingSelectLayer: SKNode {
             selectLayer.addChild(field)
         }
 
-        // Caculae Position
+        // Caculae 28 Position
         let num: CGFloat        = 7
         let elementsize         = CGSizeMake(midSize.width , midSize.height / num )
         for x in 0..<4 {
@@ -80,27 +71,25 @@ class BuildingSelectLayer: SKNode {
             }
         }
         
+        // add select box
+        selectBox = SKSpriteNode(color: colorBlue1, size: elementsize)
+        selectBox.alpha = 0.3
+        selectBox.name = "selectBox"
+        selectBox.position = positions[0]
+        selectBox.anchorPoint = CGPoint(x: 0, y: 0)
+        let fadeInFadeOut = SKAction.sequence([SKAction.fadeAlphaTo(0.1, duration: 1), SKAction.fadeAlphaTo(0.5, duration: 1)])
+        selectBox.runAction(SKAction.repeatActionForever(fadeInFadeOut))
+        selectLayer.addChild(selectBox)
+        
         // add building select elements
         buildingSelectElements  = [BuildingSelectElement]()
         for count in 0..<28 {
-            let element         = BuildingSelectElement(buildType: BuildingType(rawValue: count)!, size: elementsize)
+            let element         = BuildingSelectElement()
+            element.configureAtPosition(BuildingType(rawValue: count)!, size: elementsize)
             element.hidden      = true
             selectLayer.addChild(element)
             buildingSelectElements.append(element)
         }
-        
-        // add select sprite
-        selectBox = SKSpriteNode()
-        selectBox.name = "selectBox"
-        selectBox.position = positions[0]
-        let square = SKSpriteNode(color: colorBlue1, size: CGSizeMake(10 * framescale, elementsize.height))
-        square.anchorPoint = CGPoint(x: 0, y: 0)
-        selectBox.addChild(square)
-        let square2 = SKSpriteNode(color: colorBlue1, size: CGSizeMake(10 * framescale, elementsize.height))
-        square2.anchorPoint = CGPoint(x: 0, y: 0)
-        square2.position = CGPoint(x: elementsize.width - square2.size.width, y: 0)
-        selectBox.addChild(square2)
-        selectLayer.addChild(selectBox)
         
         // add top and down line
         let lineTop = SKShapeNode(rectOfSize: CGSizeMake(midSize.width * 4, 2 * framescale))
@@ -130,8 +119,6 @@ class BuildingSelectLayer: SKNode {
             }
             if researchLevel[page1ShowTypesCheck[count]] > 0 {
                 buildingSelectElements[count].position = positions[pageFirstPositionNumber]
-                let color = ((pageFirstPositionNumber % 7) % 2 == 0 ? colorBlue3 : colorBlue4)
-                buildingSelectElements[count].background.color = color
                 buildingSelectElements[count].hidden = false
                 pageFirstPositionNumber += 1
             } else {
@@ -142,7 +129,7 @@ class BuildingSelectLayer: SKNode {
     
     // Change select box position
     func changeSelectBox(buildType: BuildingType, duration: Double = 0.1) {
-        selectBox.removeAllActions()
+//        selectBox.removeAllActions()
         selectBox.runAction(SKAction.moveTo(buildingSelectElements[buildType.hashValue].position, duration: duration))
     }
     

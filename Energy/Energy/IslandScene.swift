@@ -462,7 +462,7 @@ class IslandScene: SKScene {
                     if node.hidden { return }
                     if node.name == "BuildingSelectElementBackground" {
                         if !isSoundMute{ runAction(soundSelect) }
-                        let buildType = (node.parent as! BuildingSelectElement).buildType
+                        let buildType = (node as! BuildingSelectElement).buildType
                         bottomLayer.pageBuild.changeSelectBuildType(buildType)
                         buildingSelectLayer.changeSelectBox(buildType)
                     }
