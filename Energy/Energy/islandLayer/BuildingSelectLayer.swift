@@ -129,7 +129,6 @@ class BuildingSelectLayer: SKNode {
     
     // Change select box position
     func changeSelectBox(buildType: BuildingType, duration: Double = 0.1) {
-//        selectBox.removeAllActions()
         selectBox.runAction(SKAction.moveTo(buildingSelectElements[buildType.hashValue].position, duration: duration))
     }
     
