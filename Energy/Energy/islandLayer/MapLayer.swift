@@ -127,7 +127,6 @@ class BuildingMapLayer: SKSpriteNode {
         self.mapNumber = mapNumber
         self.isSold = mapNumber == 0
         self.position = position
-        self.color = SKColor.whiteColor()
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
         self.anchorPoint = CGPoint(x: 0, y: 1)
         self.name = "MapLayer \(mapNumber)"

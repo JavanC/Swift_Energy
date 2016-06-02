@@ -56,6 +56,15 @@ class IslandScene: SKScene {
             topLayer.zPosition = 200
             addChild(topLayer)
 
+            // Island Image
+            let island1 = SKSpriteNode(imageNamed: "Island1")
+            island1.name = "island1Inage"
+            island1.setScale(frame.width / island1.size.width)
+            island1.anchorPoint = CGPoint(x: 0, y: 1)
+            island1.position = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
+            island1.zPosition = 0
+            addChild(island1)
+            
             // Map Layer
             let mapLayerSize = CGSizeMake(tilesScaleSize.width * midTileSize.width, tilesScaleSize.height * midTileSize.height)
             for map in maps {
