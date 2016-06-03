@@ -16,7 +16,8 @@ class BuildingSelectElement: SKSpriteNode {
         self.name = "BuildingSelectElementBackground"
         self.buildType = buildType
         self.size = size
-
+        self.anchorPoint = CGPoint(x: 0, y: 0)
+        
         // image
         let gap: CGFloat                     = (size.height - tilesScaleSize.height) / 2
         let image                            = BuildingData(buildType: buildType).image("image")

@@ -29,6 +29,7 @@ let buildingAtlas   = SKTextureAtlas(named: "building")
 let iconAtlas       = SKTextureAtlas(named: "icon")
 let mapsAtlas       = SKTextureAtlas(named: "maps")
 let backgroundAtlas = SKTextureAtlas(named: "background")
+let islandsAtlas    = SKTextureAtlas(named: "islands")
 
 // Game Sound
 var backgroundMusicPlayer: AVAudioPlayer!

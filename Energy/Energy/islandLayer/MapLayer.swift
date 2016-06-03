@@ -111,6 +111,7 @@ class Building: SKNode {
 class BuildingMapLayer: SKSpriteNode {
     
     var mapNumber: Int!
+    var islandImage: SKSpriteNode!
     var isSold: Bool = false
     var tileSize: CGSize = CGSizeMake(64, 64)
     var mapSize: CGSize = CGSizeMake(9, 11)
@@ -125,6 +126,12 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, mapNumber: Int) {
         self.mapNumber = mapNumber
+        self.islandImage = SKSpriteNode(texture: islandsAtlas.textureNamed("island1"))
+        self.islandImage.name = "island\(mapNumber)Image"
+        self.islandImage.setScale(576 / 360)
+        self.islandImage.anchorPoint = CGPoint(x: 0, y: 1)
+        self.islandImage.zPosition = -1
+        addChild(islandImage)
         self.isSold = mapNumber == 0
         self.position = position
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
