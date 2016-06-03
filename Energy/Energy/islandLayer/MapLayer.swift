@@ -195,39 +195,57 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: Reset Map Data
     func initialMapData() {
         self.energy = 0
-        for y in 0 ..< Int(mapSize.height) {
-            for x in 0 ..< Int(mapSize.width) {
-                let coord = CGPoint(x: x, y: y)
-                setTileMapElement(coord: coord, buildType: .Land)
+        if mapNumber == 0 {
+            let island1String = ["O","O","O","O","O","O","O","O","O",
+                                 "O","O","O","O","O","O","O","L","O",
+                                 "O","O","R","L","O","O","O","O","O",
+                                 "O","O","L","L","O","L","L","L","O",
+                                 "O","O","O","O","O","L","L","O","O",
+                                 "O","O","O","L","R","L","L","O","O",
+                                 "O","O","O","L","L","L","L","O","O",
+                                 "O","O","L","L","L","L","O","O","O",
+                                 "O","O","L","L","O","L","O","O","O",
+                                 "O","O","O","O","O","O","L","O","O",
+                                 "O","O","O","O","O","O","O","O","O"]
+            loadMapArray(island1String)
+        } else {
+            for y in 0 ..< Int(mapSize.height) {
+                for x in 0 ..< Int(mapSize.width) {
+                    let coord = CGPoint(x: x, y: y)
+                    setTileMapElement(coord: coord, buildType: .Land)
+                }
+            }
+            for y in 0 ..< 3 {
+                for x in 0 ..< 9 {
+                    let coord = CGPoint(x: x, y: y)
+                    setTileMapElement(coord: coord, buildType: .Ocean)
+                }
+            }
+            
+            for x in 0..<9 {
+                let coord = CGPoint(x: x, y: 5)
+                setTileMapElement(coord: coord, buildType: .Rock)
             }
         }
-        for y in 0 ..< 3 {
-            for x in 0 ..< 9 {
-                let coord = CGPoint(x: x, y: y)
-                setTileMapElement(coord: coord, buildType: .Ocean)
-            }
-        }
-        
-        for x in 0..<9 {
-            let coord = CGPoint(x: x, y: 5)
-            setTileMapElement(coord: coord, buildType: .Rock)
-        }
+
     }
     
-    // MARK: Load Map Data By Array
-//    func loadMapArray(array: [String]) {
-//        for y in 0..<11 {
-//            for x in 0..<9 {
-//                switch array[y * 9 + x] {
-//                case "Land":
-//                    setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Land)
-//                case "Ocean":
-//                    setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Ocean)
-//                default:break
-//                }
-//            }
-//        }
-//    }
+    // MARK: Load Map Data By String Array
+    func loadMapArray(array: [String]) {
+        for y in 0..<11 {
+            for x in 0..<9 {
+                switch array[y * 9 + x] {
+                case "L":
+                    setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Land)
+                case "O":
+                    setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Ocean)
+                case "R":
+                    setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Rock)
+                default:break
+                }
+            }
+        }
+    }
 
     // MARK: Reload Map Upgrade Data
     func reloadMap() {
