@@ -619,6 +619,13 @@ class BottomLayer: SKSpriteNode {
         pageSell         = PageSell()
         pageSell.configureAtPosition(CGPoint(x: 0, y: -size.height * 2), size: size)
         addChild(pageSell)
+        
+        let lineShadow = SKSpriteNode(color: SKColor.grayColor(), size: CGSizeMake(size.width, 3 * framescale))
+        lineShadow.alpha = 0.7
+        lineShadow.anchorPoint = CGPoint(x: 0, y: 0)
+        lineShadow.position = CGPoint(x: 0, y: size.height)
+        lineShadow.zPosition = -60
+        addChild(lineShadow)
 
         showPage(.PageEnergy)
     }

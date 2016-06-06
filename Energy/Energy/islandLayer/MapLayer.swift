@@ -196,17 +196,17 @@ class BuildingMapLayer: SKSpriteNode {
     func initialMapData() {
         self.energy = 0
         if mapNumber == 0 {
-            let island1String = ["O","O","O","O","O","O","O","O","O",
+            let island1String = ["R","O","O","O","O","O","O","O","O",
                                  "O","O","O","O","O","O","O","L","O",
-                                 "O","O","R","L","O","O","O","O","O",
-                                 "O","O","L","L","O","L","L","L","O",
-                                 "O","O","O","O","O","L","L","O","O",
+                                 "O","O","R","L","O","R","O","O","O",
+                                 "O","O","L","L","O","L","L","R","O",
+                                 "O","R","O","O","O","L","L","O","O",
                                  "O","O","O","L","R","L","L","O","O",
                                  "O","O","O","L","L","L","L","O","O",
-                                 "O","O","L","L","L","L","O","O","O",
+                                 "O","O","L","L","L","L","O","R","O",
                                  "O","O","L","L","O","L","O","O","O",
                                  "O","O","O","O","O","O","L","O","O",
-                                 "O","O","O","O","O","O","O","O","O"]
+                                 "O","O","R","O","O","O","O","O","O"]
             loadMapArray(island1String)
         } else {
             for y in 0 ..< Int(mapSize.height) {
@@ -227,7 +227,6 @@ class BuildingMapLayer: SKSpriteNode {
                 setTileMapElement(coord: coord, buildType: .Rock)
             }
         }
-
     }
     
     // MARK: Load Map Data By String Array

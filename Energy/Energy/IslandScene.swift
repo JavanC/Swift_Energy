@@ -53,7 +53,7 @@ class IslandScene: SKScene {
             let topLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayerSize.height)
             topLayer = TopLayer()
             topLayer.configureAtPosition(topLayerPosition, size: topLayerSize)
-            topLayer.zPosition = 200
+            topLayer.zPosition = 100
             addChild(topLayer)
             
             // Map Layer

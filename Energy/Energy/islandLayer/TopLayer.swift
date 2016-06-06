@@ -106,6 +106,13 @@ class TopLayer: SKSpriteNode {
         researchLabel.verticalAlignmentMode   = .Center
         researchLabel.position                = CGPoint(x: size.height * 4 / 3 + mingap * 1.5, y: size.height * 2 / 7)
         addChild(researchLabel)
+        
+        let lineShadow = SKSpriteNode(color: SKColor.grayColor(), size: CGSizeMake(size.width, 5 * framescale))
+        lineShadow.alpha = 0.7
+        lineShadow.anchorPoint = CGPoint(x: 0, y: 1)
+        lineShadow.position = CGPoint(x: 0, y: 0)
+        lineShadow.zPosition = -60
+        addChild(lineShadow)
     }
     
     func isPauseChange() {
