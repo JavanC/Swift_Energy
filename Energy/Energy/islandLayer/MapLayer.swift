@@ -38,16 +38,19 @@ class Building: SKNode {
         }
     }
     
+    func changeActivate(isActivate: Bool) {
+        activate = isActivate
+        self.alpha = activate ? 1 : 0.5
+    }
+    
     func loadBuildingData(buildingData: BuildingData) {
         name = String(buildingData.buildType.hashValue)
         
         self.buildingData = buildingData
         buildingNode.runAction(SKAction.setTexture(buildingAtlas.textureNamed(buildingData.imageName)))
-        buildingNode.alpha = 1
-        activate = true
+        changeActivate(true)
         if buildingData.timeSystem != nil {
-            activate = buildingData.timeSystem.inAmount == 0 ? false : true
-            buildingNode.alpha = activate ? 1 : 0.5
+            changeActivate(buildingData.timeSystem.inAmount == 0 ? false : true)
         }
         
         if buildingData.buildType == .Land || buildingData.buildType == .Ocean || buildingData.buildType == .Rock {
@@ -513,8 +516,7 @@ class BuildingMapLayer: SKSpriteNode {
         for element in timeSysTemElements {
             if element.activate {
                 if !element.buildingData.timeSystem.tick() {
-                    element.activate = false
-                    element.alpha = 0.5
+                    element.changeActivate(false)
                 }
             } else {
                 if isRebuild && element.buildingData.timeSystem.rebuild {
@@ -522,8 +524,7 @@ class BuildingMapLayer: SKSpriteNode {
                     if money >= price {
                         money -= price
                         element.buildingData.timeSystem.resetTime()
-                        element.activate = true
-                        element.alpha = 1
+                        element.changeActivate(true)
                     }
                 }
             }
