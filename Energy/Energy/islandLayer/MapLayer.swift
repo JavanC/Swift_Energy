@@ -129,7 +129,13 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, mapNumber: Int) {
         self.mapNumber = mapNumber
-        self.islandImage = SKSpriteNode(texture: islandsAtlas.textureNamed("island1"))
+        if mapNumber == 2 {
+            self.islandImage = SKSpriteNode(imageNamed: "Island3")
+        } else if mapNumber == 1 {
+            self.islandImage = SKSpriteNode(imageNamed: "Island2")
+        } else {
+            self.islandImage = SKSpriteNode(imageNamed: "Island1")
+        }
         self.islandImage.name = "island\(mapNumber)Image"
         self.islandImage.setScale(576 / 360)
         self.islandImage.anchorPoint = CGPoint(x: 0, y: 1)

@@ -45,7 +45,6 @@
 		658BA2341C72C1920033051A /* InfoLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2331C72C1920033051A /* InfoLayer.swift */; };
 		658BA2361C76B10F0033051A /* ConfirmBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2351C76B10F0033051A /* ConfirmBubble.swift */; };
 		658D87C71CDAEC8900D5C22B /* TeachLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658D87C61CDAEC8900D5C22B /* TeachLayer.swift */; };
-		65B482011D0134450097E289 /* islands.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 65B482001D0134450097E289 /* islands.atlas */; };
 		65B5208B1CC5C8F600875B7F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B5208A1CC5C8F600875B7F /* Reachability.swift */; };
 		65E5E2C31CF30B1D00066A85 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65E5E2C51CF30B1D00066A85 /* Localizable.strings */; };
 		65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6C1C608A8B008E0BB5 /* Explode.sks */; };
@@ -114,7 +113,6 @@
 		658BA2351C76B10F0033051A /* ConfirmBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBubble.swift; sourceTree = "<group>"; };
 		658D87C61CDAEC8900D5C22B /* TeachLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeachLayer.swift; sourceTree = "<group>"; };
 		65ACCDDC1CF589CD001F5EA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		65B482001D0134450097E289 /* islands.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = islands.atlas; sourceTree = "<group>"; };
 		65B5208A1CC5C8F600875B7F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		65E5E2C81CF30C8A00066A85 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		65E5E2C91CF30C9500066A85 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -201,7 +199,6 @@
 				655BCC0C1C48A67B007A8079 /* building.atlas */,
 				655BCC0D1C48A67B007A8079 /* icon.atlas */,
 				8D8AF5721C843716006541AD /* maps.atlas */,
-				65B482001D0134450097E289 /* islands.atlas */,
 				8D8AF5741C84384A006541AD /* background.atlas */,
 				65386E161C2CD8A500D08B41 /* Main.storyboard */,
 				65386E1B1C2CD8A500D08B41 /* LaunchScreen.storyboard */,
@@ -362,7 +359,6 @@
 				65361A701C61A30D006C3E18 /* action.wav in Resources */,
 				8DE25A6A1CAAC1FE00F2A1C2 /* icon_corner@3x.png in Resources */,
 				658352A21C44CB8A00317FFD /* Assets.xcassets in Resources */,
-				65B482011D0134450097E289 /* islands.atlas in Resources */,
 				65361A741C61A30D006C3E18 /* placing.wav in Resources */,
 				8D042CEA1C8486B100DF434C /* Launch_background@2x.png in Resources */,
 				652CD9EE1CEB0EA600905069 /* Tips@2x.png in Resources */,
