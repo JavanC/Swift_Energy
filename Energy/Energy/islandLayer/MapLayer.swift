@@ -198,38 +198,83 @@ class BuildingMapLayer: SKSpriteNode {
     // MARK: Reset Map Data
     func initialMapData() {
         self.energy = 0
-        if mapNumber == 0 {
-            let island1String = ["R","O","O","O","O","O","O","O","O",
-                                 "O","O","O","O","O","O","O","L","O",
-                                 "O","O","R","L","O","R","O","O","O",
-                                 "O","O","L","L","O","L","L","R","O",
-                                 "O","R","O","O","O","L","L","O","O",
-                                 "O","O","O","L","R","L","L","O","O",
-                                 "O","O","O","L","L","L","L","O","O",
-                                 "O","O","L","L","L","L","O","R","O",
-                                 "O","O","L","L","O","L","O","O","O",
-                                 "O","O","O","O","O","O","L","O","O",
-                                 "O","O","R","O","O","O","O","O","O"]
-            loadMapArray(island1String)
-        } else {
-            for y in 0 ..< Int(mapSize.height) {
-                for x in 0 ..< Int(mapSize.width) {
-                    let coord = CGPoint(x: x, y: y)
-                    setTileMapElement(coord: coord, buildType: .Land)
-                }
-            }
-            for y in 0 ..< 3 {
-                for x in 0 ..< 9 {
-                    let coord = CGPoint(x: x, y: y)
-                    setTileMapElement(coord: coord, buildType: .Ocean)
-                }
-            }
-            
-            for x in 0..<9 {
-                let coord = CGPoint(x: x, y: 5)
-                setTileMapElement(coord: coord, buildType: .Rock)
-            }
+        var stringArray = Array<String>()
+        switch mapNumber {
+        case 0:
+            stringArray = ["R","O","O","O","O","O","O","O","O",
+                           "O","O","O","O","O","O","O","L","O",
+                           "O","O","R","L","O","R","O","O","O",
+                           "O","O","L","L","O","L","L","R","O",
+                           "O","R","O","O","O","L","L","O","O",
+                           "O","O","O","L","R","L","L","O","O",
+                           "O","O","O","L","L","L","L","O","O",
+                           "O","O","L","L","L","L","O","R","O",
+                           "O","O","L","L","O","L","O","O","O",
+                           "O","O","O","O","O","O","L","O","O",
+                           "O","O","R","O","O","O","O","O","O"]
+        case 1:
+            stringArray = ["O","R","O","O","O","L","O","O","O",
+                           "O","O","O","R","R","O","L","O","O",
+                           "O","O","R","R","L","L","L","R","O",
+                           "O","O","R","L","L","L","R","O","O",
+                           "R","L","L","L","L","L","L","L","O",
+                           "O","L","L","L","R","L","L","O","O",
+                           "O","O","L","L","L","R","L","O","O",
+                           "O","O","R","L","L","L","L","O","O",
+                           "O","O","O","L","L","L","O","L","O",
+                           "O","L","O","R","L","O","O","L","O",
+                           "L","R","O","O","O","O","O","O","R"]
+        case 2:
+            stringArray = ["O","O","O","L","O","O","O","O","O",
+                           "O","O","L","L","L","R","L","L","O",
+                           "O","L","L","L","L","L","L","L","O",
+                           "O","R","L","L","L","L","L","R","O",
+                           "L","L","L","R","R","R","R","R","O",
+                           "R","R","R","R","R","L","L","O","O",
+                           "L","L","L","L","L","L","L","L","O",
+                           "R","L","L","L","L","L","L","L","L",
+                           "O","R","L","L","L","L","L","L","R",
+                           "O","O","R","L","L","L","L","R","O",
+                           "O","O","R","L","L","L","R","O","O"]
+        case 3:
+            stringArray = ["O","L","L","R","O","O","L","O","O",
+                           "L","L","L","L","O","R","L","L","O",
+                           "L","L","L","L","O","L","L","L","R",
+                           "L","L","L","L","O","O","L","L","L",
+                           "O","L","R","O","O","L","L","L","L",
+                           "O","O","O","O","R","L","L","L","L",
+                           "O","R","L","O","L","L","L","L","L",
+                           "R","L","L","O","O","R","L","L","L",
+                           "L","L","L","L","O","O","L","L","L",
+                           "L","L","L","L","R","O","L","L","L",
+                           "O","L","L","L","R","O","O","L","L"]
+        case 4:
+            stringArray = ["L","L","L","L","L","L","L","O","O",
+                           "L","L","L","L","L","L","L","L","O",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "O","L","L","L","L","L","L","L","L",
+                           "O","O","O","L","L","L","L","L","L"]
+        case 5:
+            stringArray = ["L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L",
+                           "L","L","L","L","L","L","L","L","L"]
+        default: break
         }
+        loadMapArray(stringArray)
     }
     
     // MARK: Load Map Data By String Array
