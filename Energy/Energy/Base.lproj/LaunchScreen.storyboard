@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_corner.png" translatesAutoresizingMaskIntoConstraints="NO" id="Udc-Jd-sE1">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_corner" translatesAutoresizingMaskIntoConstraints="NO" id="Udc-Jd-sE1">
                                 <rect key="frame" x="157" y="318" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="agi-IE-CJn"/>
@@ -47,6 +47,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon_corner.png" width="120" height="120"/>
+        <image name="icon_corner" width="120" height="120"/>
     </resources>
 </document>

@@ -12,10 +12,10 @@ import AVFoundation
 import GoogleMobileAds
 
 // Game Scene
-var islandsScene:  SKScene!
-var islandScene:   SKScene!
-var upgradeScene:  SKScene!
-var researchScene: SKScene!
+var islandsScene:   SKScene!
+var islandScene:    SKScene!
+var upgradeScene:   SKScene!
+var researchScene:  SKScene!
 
 // Game UI Data
 var tilesScaleSize: CGSize!
@@ -27,8 +27,6 @@ let door_reveal     = SKTransition.revealWithDirection(SKTransitionDirection.Dow
 // Game Atlas
 let buildingAtlas   = SKTextureAtlas(named: "building")
 let iconAtlas       = SKTextureAtlas(named: "icon")
-let mapsAtlas       = SKTextureAtlas(named: "maps")
-let backgroundAtlas = SKTextureAtlas(named: "background")
 
 // Game Sound
 var backgroundMusicPlayer: AVAudioPlayer!
@@ -123,11 +121,11 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
     }
     func hideBannerView(){
         self.hideAdLabel.hidden = true
-        self.bannerView.hidden = true
+        self.bannerView.hidden  = true
     }
     func showBannerView(){
         self.hideAdLabel.hidden = false
-        self.bannerView.hidden = false
+        self.bannerView.hidden  = false
     }
     
     override func viewWillLayoutSubviews() {
@@ -206,9 +204,9 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isMusicMute = defaults.boolForKey("isMusicMute")
 
         //1000000000000000
-        money     = 10000
+        money       = 10000
 //        money     = 888000000000000
-        research  = 10000
+        research    = 10000
 //        research  = 888000000000000
 
         // load upgrade and research level

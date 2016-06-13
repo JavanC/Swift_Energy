@@ -192,7 +192,7 @@ class IslandScene: SKScene {
         buildingSelectLayer.updateSelectLayer()
         buildingSelectLayer.changePage(bottomLayer.pageBuild.selectNumber)
         let buildType = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber]
-        buildingSelectLayer.changeSelectBox(buildType, duration: 0)
+        buildingSelectLayer.changeSelectBox(buildType)
         
         // hide map and show building select page
         maps[nowMapNumber].runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.hide()]))

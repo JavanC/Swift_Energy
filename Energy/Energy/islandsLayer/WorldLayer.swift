@@ -42,14 +42,14 @@ class WorldLayer: SKNode {
         emitter.zPosition = 1
         skyBackground.addChild(emitter)
         
-        let islandsBackground = SKSpriteNode(texture: backgroundAtlas.textureNamed("Maps_background"))
+        let islandsBackground = SKSpriteNode(imageNamed: "Maps_background")
         islandsBackground.name = "Maps_background"
         islandsBackground.size = frameSize
         islandsBackground.zPosition = -6
         islandsBackground.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
         addChild(islandsBackground)
         
-        let mountain = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_mountain"))
+        let mountain = SKSpriteNode(imageNamed: "Maps_mountain")
         mountain.name = "Maps_mountain"
         mountain.size = frameSize
         mountain.zPosition = -4
@@ -57,7 +57,7 @@ class WorldLayer: SKNode {
         addChild(mountain)
         
         for i in 1...4 {
-            let cloud = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_cloud\(i)"))
+            let cloud = SKSpriteNode(imageNamed: "Maps_cloud\(i)")
             cloud.name = "Maps_cloud\(i)"
             cloud.size = frameSize
             if i == 3 { cloud.zPosition = -5 }
@@ -70,7 +70,7 @@ class WorldLayer: SKNode {
         }
         
         for i in 1...6 {
-            let selectMap = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_select\(i)"))
+            let selectMap = SKSpriteNode(imageNamed: "Maps_select\(i)")
             selectMap.name = "Maps_select\(i)"
             selectMap.size = frameSize
             selectMap.hidden = true
@@ -81,7 +81,7 @@ class WorldLayer: SKNode {
         
         mapsLock.append(SKSpriteNode())
         for i in 2...6 {
-            let lockMap = SKSpriteNode(texture: mapsAtlas.textureNamed("Maps_locked\(i)"))
+            let lockMap = SKSpriteNode(imageNamed: "Maps_locked\(i)")
             lockMap.name = "Maps_locked\(i)"
             lockMap.size = frameSize
             lockMap.hidden = maps[i-1].isSold
@@ -186,6 +186,7 @@ class WorldLayer: SKNode {
         timeImg.name = "time image"
         timeImg.size = CGSizeMake(45 * framescale, 45 * framescale)
         timeImg.position = CGPoint(x: -100 * framescale, y: 0)
+        timeImg.zPosition = 10
         timeInfo.addChild(timeImg)
         timeLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         timeLabel.name = "time label"

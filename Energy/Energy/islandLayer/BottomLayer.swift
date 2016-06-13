@@ -383,7 +383,6 @@ class PageBuild: SKSpriteNode {
         }
     }
     
-    
     func changeSelectBuildType(buildType: BuildingType) {
         buildMenu[selectNumber] = buildType
         selectInfo.changeInformation(BuildingData(buildType: buildType))
