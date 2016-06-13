@@ -15,6 +15,7 @@ class UpgradeElement: SKNode {
     var buttonDegrade: SKShapeNode!
     var upgradeType:   UpgradeType!
     var upgradePrice:  Double!
+    var degradePrice:  Double!
     
     init(upgradeType: UpgradeType, size: CGSize) {
         super.init()
@@ -37,198 +38,231 @@ class UpgradeElement: SKNode {
             name = "Wind Turbine".localized
             comment = "Increases energy producetion by 50%".localized
             upgradePrice = baseToPower(10, base: 3, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]!)
+            degradePrice = baseToPower(10, base: 3, power: upgradeLevel[UpgradeType.WindTurbineEffectiveness]! - 1)
             
         case .WindTurbineLifetime:
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine Lifetime".localized
             comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(30, base: 6, power: upgradeLevel[UpgradeType.WindTurbineLifetime]!)
+            degradePrice = baseToPower(30, base: 6, power: upgradeLevel[UpgradeType.WindTurbineLifetime]! - 1)
             
         case .SolarCellEffectiveness:
             imageType = BuildingType.SolarCell
             name = "Solar Plant".localized
             comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.SolarCellEffectiveness]!)
+            degradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.SolarCellEffectiveness]! - 1)
             
         case .SolarCellLifetime:
             imageType = BuildingType.SolarCell
             name = "Solar Lifetime".localized
             comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(300, base: 6, power: upgradeLevel[UpgradeType.SolarCellLifetime]!)
+            degradePrice = baseToPower(300, base: 6, power: upgradeLevel[UpgradeType.SolarCellLifetime]! - 1)
             
         case .CoalBurnerEffectiveness:
             imageType = BuildingType.CoalBurner
             name = "Coal-Fired Plant".localized
             comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(10000, base: 1.8, power: upgradeLevel[UpgradeType.CoalBurnerEffectiveness]!)
+            degradePrice = baseToPower(10000, base: 1.8, power: upgradeLevel[UpgradeType.CoalBurnerEffectiveness]! - 1)
             
         case .CoalBurnerLifetime:
             imageType = BuildingType.CoalBurner
             name = "Coal-Fired Lifetime".localized
             comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(30000, base: 6, power: upgradeLevel[UpgradeType.CoalBurnerLifetime]!)
+            degradePrice = baseToPower(30000, base: 6, power: upgradeLevel[UpgradeType.CoalBurnerLifetime]! - 1)
             
         case .WaveCellEffectiveness:
             imageType = BuildingType.WaveCell
             name = "Wave Energy".localized
             comment = "Increases energy producetion by 25%".localized
             upgradePrice = baseToPower(1000000, base: 1.8, power: upgradeLevel[UpgradeType.WaveCellEffectiveness]!)
+            degradePrice = baseToPower(1000000, base: 1.8, power: upgradeLevel[UpgradeType.WaveCellEffectiveness]! - 1)
             
         case .WaveCellLifetime:
             imageType = BuildingType.WaveCell
             name = "Wave Energy Lifetime".localized
             comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(3000000, base: 6, power: upgradeLevel[UpgradeType.WaveCellLifetime]!)
+            degradePrice = baseToPower(3000000, base: 6, power: upgradeLevel[UpgradeType.WaveCellLifetime]! - 1)
             
         case .GasBurnerEffectiveness:
             imageType = BuildingType.GasBurner
             name = "Gas-Fired Plant".localized
             comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(100000000, base: 1.8, power: upgradeLevel[UpgradeType.GasBurnerEffectiveness]!)
+            degradePrice = baseToPower(100000000, base: 1.8, power: upgradeLevel[UpgradeType.GasBurnerEffectiveness]! - 1)
             
         case .GasBurnerLifetime:
             imageType = BuildingType.GasBurner
             name = "Gas-Fired Lifetime".localized
             comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(300000000, base: 6, power: upgradeLevel[UpgradeType.GasBurnerLifetime]!)
+            degradePrice = baseToPower(300000000, base: 6, power: upgradeLevel[UpgradeType.GasBurnerLifetime]! - 1)
             
         case .NuclearCellEffectiveness:
             imageType = BuildingType.NuclearCell
             name = "Nuclear Plant".localized
             comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(10000000000, base: 1.8, power: upgradeLevel[UpgradeType.NuclearCellEffectiveness]!)
+            degradePrice = baseToPower(10000000000, base: 1.8, power: upgradeLevel[UpgradeType.NuclearCellEffectiveness]! - 1)
             
         case .NuclearCellLifetime:
             imageType = BuildingType.NuclearCell
             name = "Nuclear Lifetime".localized
             comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(30000000000, base: 6, power: upgradeLevel[UpgradeType.NuclearCellLifetime]!)
+            degradePrice = baseToPower(30000000000, base: 6, power: upgradeLevel[UpgradeType.NuclearCellLifetime]! - 1)
             
         case .FusionCellEffectiveness:
             imageType = BuildingType.FusionCell
             name = "Fusion Plant".localized
             comment = "Increases heat producetion by 25%".localized
             upgradePrice = baseToPower(1000000000000, base: 1.8, power: upgradeLevel[UpgradeType.FusionCellEffectiveness]!)
+            degradePrice = baseToPower(1000000000000, base: 1.8, power: upgradeLevel[UpgradeType.FusionCellEffectiveness]! - 1)
             
         case .FusionCellLifetime:
             imageType = BuildingType.FusionCell
             name = "Fusion Lifetime".localized
             comment = "Increases lifetime producetion by 50%".localized
             upgradePrice = baseToPower(3000000000000, base: 6, power: upgradeLevel[UpgradeType.FusionCellLifetime]!)
+            degradePrice = baseToPower(3000000000000, base: 6, power: upgradeLevel[UpgradeType.FusionCellLifetime]! - 1)
             
         case .GeneratorEffectiveness:
             imageType = BuildingType.SmallGenerator
             name = "Generator Effectiveness".localized
             comment = "Increases heat to energy rate by 25%".localized
             upgradePrice = baseToPower(300, base: 1.5, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]!)
+            degradePrice = baseToPower(300, base: 1.5, power: upgradeLevel[UpgradeType.GeneratorEffectiveness]! - 1)
             
         case .GeneratorMaxHeat:
             imageType = BuildingType.SmallGenerator
             name = "Generator Max Heat".localized
             comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(1000, base: 2.3, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]!)
+            degradePrice = baseToPower(1000, base: 2.3, power: upgradeLevel[UpgradeType.GeneratorMaxHeat]! - 1)
             
         case .BoilerHouseSellAmount:
             imageType = BuildingType.BoilerHouse
             name = "Boiler House Effectiveness".localized
             comment = "Increases heat sell amount by 20%".localized
             upgradePrice = baseToPower(30000, base: 4, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]!)
+            degradePrice = baseToPower(30000, base: 4, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]! - 1)
             
         case .BoilerHouseMaxHeat:
             imageType = BuildingType.BoilerHouse
             name = "Boiler House Max Heat".localized
             comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(80000, base: 3.7, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
+            degradePrice = baseToPower(80000, base: 3.7, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]! - 1)
             
         case .IsolationEffectiveness:
             imageType = BuildingType.Isolation
             name = "Isolation Effectiveness".localized
             comment = "Increases isolation effectiveness by 10%".localized
             upgradePrice = baseToPower(1000, base: 10, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
+            degradePrice = baseToPower(1000, base: 10, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]! - 1)
             
         case .EnergyBatterySize:
             imageType = BuildingType.Battery
             name = "Battery Size".localized
             comment = "Increases max energy storage by 50%".localized
             upgradePrice = baseToPower(50, base: 1.5, power: upgradeLevel[UpgradeType.EnergyBatterySize]!)
+            degradePrice = baseToPower(50, base: 1.5, power: upgradeLevel[UpgradeType.EnergyBatterySize]! - 1)
             
         case .HeatExchangerMaxHeat:
             imageType = BuildingType.HeatExchanger
             name = "Heat Exchanger Max Heat".localized
             comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(50000, base: 2.1, power: upgradeLevel[UpgradeType.HeatExchangerMaxHeat]!)
+            degradePrice = baseToPower(50000, base: 2.1, power: upgradeLevel[UpgradeType.HeatExchangerMaxHeat]! - 1)
             
         case .HeatSinkMaxHeat:
             imageType = BuildingType.HeatSink
             name = "Heat Sink Max Heat".localized
             comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(50000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatSinkMaxHeat]!)
+            degradePrice = baseToPower(50000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatSinkMaxHeat]! - 1)
             
         case .HeatInletOutletMaxHeat:
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet,Outlet Max Heat".localized
             comment = "Increases max heat by 50%".localized
             upgradePrice = baseToPower(50000000000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]!)
+            degradePrice = baseToPower(50000000000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]! - 1)
             
         case .HeatInletMaxTransfer:
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet Max Transfer".localized
             comment = "Increases heat inlet transfer by 50%".localized
             upgradePrice = baseToPower(100000000000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatInletMaxTransfer]!)
+            degradePrice = baseToPower(100000000000000, base: 1.9, power: upgradeLevel[UpgradeType.HeatInletMaxTransfer]! - 1)
             
         case .WaterPumpProduction:
             imageType = BuildingType.WaterPump
             name = "Water Pump".localized
             comment = "Increases water producetion by 25%".localized
             upgradePrice = baseToPower(40000000000, base: 1.5, power: upgradeLevel[UpgradeType.WaterPumpProduction]!)
+            degradePrice = baseToPower(40000000000, base: 1.5, power: upgradeLevel[UpgradeType.WaterPumpProduction]! - 1)
             
         case .GroundwaterPumpProduction:
             imageType = BuildingType.GroundwaterPump
             name = "Groundwater Pump".localized
             comment = "Increases water producetion by 25%".localized
             upgradePrice = baseToPower(10000000000000, base: 1.6, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
+            degradePrice = baseToPower(10000000000000, base: 1.6, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]! - 1)
             
         case .WaterElementMaxWater:
             imageType = BuildingType.WaterPipe
             name = "Water Element Max Water".localized
             comment = "Increases max water by 50%".localized
             upgradePrice = baseToPower(20000000000, base: 1.9, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
+            degradePrice = baseToPower(20000000000, base: 1.9, power: upgradeLevel[UpgradeType.WaterElementMaxWater]! - 1)
             
         case .GeneratorMaxWater:
             imageType = BuildingType.SmallGenerator
             name = "Generator Max Water".localized
             comment = "Increases max water by 25%".localized
             upgradePrice = baseToPower(10000000000, base: 1.45, power: upgradeLevel[UpgradeType.GeneratorMaxWater]!)
+            degradePrice = baseToPower(10000000000, base: 1.45, power: upgradeLevel[UpgradeType.GeneratorMaxWater]! - 1)
             
         case .OfficeSellEnergy:
             imageType = BuildingType.SmallOffice
             name = "Office Sell Amount".localized
             comment = "Increases energy sell amount by 50%".localized
             upgradePrice = baseToPower(100, base: 1.9, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
+            degradePrice = baseToPower(100, base: 1.9, power: upgradeLevel[UpgradeType.OfficeSellEnergy]! - 1)
             
         case .BankEffectiveness:
             imageType = BuildingType.Bank
             name = "Bank Effectiveness".localized
             comment = "Increases bank effectiveness by 10%".localized
             upgradePrice = baseToPower(10000000000000, base: 2, power: upgradeLevel[UpgradeType.BankEffectiveness]!)
+            degradePrice = baseToPower(10000000000000, base: 2, power: upgradeLevel[UpgradeType.BankEffectiveness]! - 1)
             
         case .ResearchCenterEffectiveness:
             imageType = BuildingType.ResearchCenter
             name = "Research Center Effectiveness".localized
             comment = "Increases research producetion by 25%".localized
             upgradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
+            degradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]! - 1)
             
         case .LibraryEffectiveness:
             imageType = BuildingType.Library
             name = "Library Effectiveness".localized
             comment = "Increases library effectiveness by 10%".localized
             upgradePrice = baseToPower(400000000000, base: 2, power: upgradeLevel[UpgradeType.LibraryEffectiveness]!)
+            degradePrice = baseToPower(400000000000, base: 2, power: upgradeLevel[UpgradeType.LibraryEffectiveness]! - 1)
         
         default:
             imageType = BuildingType.WindTurbine
             name = "\(upgradeType)"
             comment = "error"
             upgradePrice = 1
+            degradePrice = 1
         }
     
         // image
@@ -511,7 +545,7 @@ class UpgradeScene: SKScene {
                 }
                 if node.name == "Degrade" {
                     let element = (node.parent as! UpgradeElement)
-                    let price = element.upgradePrice
+                    let price = element.degradePrice
                     let type = element.upgradeType
                     money += price
                     upgradeLevel[type]! -= 1

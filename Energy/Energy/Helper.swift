@@ -41,6 +41,9 @@ func RunAfterDelay(delay: NSTimeInterval, block: dispatch_block_t) {
 
 func baseToPower(number: Double, base: Double, power: Int) -> Double {
     var answer = number
+    if power == -1 {
+        return answer
+    }
     if power == 0 {
         return answer
     }
