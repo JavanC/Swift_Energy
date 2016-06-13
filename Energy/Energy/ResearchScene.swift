@@ -478,7 +478,7 @@ class ResearchScene: SKScene {
             researchdeLayer.addChild(researchElement)
         }
 
-        // Caculate NowPage and MaxPage
+        // Calculate NowPage and MaxPage
         if elements.count <= 8 {
             nowPage = 1
             researchdeLayer.runAction((SKAction.moveToX(0, duration: 0)))

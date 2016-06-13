@@ -41,6 +41,10 @@
 /* Energy Page */
 "TOUCH  TO  SELL  ENERGY" = "TOUCH  TO  SELL  ENERGY";
 
+/* Building Select */
+"Rebuild:ON" = "Rebuild:ON";
+"Rebuild:OFF" = "Rebuild:OFF";
+
 /* Building Information */
 "Ticks"                      = "Ticks";
 "Heat"                       = "Heat";

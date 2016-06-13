@@ -41,6 +41,10 @@
 /* Energy Page */
 "TOUCH  TO  SELL  ENERGY"    = "點 擊 來 銷 售 儲 存 能 源";
 
+/* Building Select */
+"Rebuild:ON" = "自動重建:開";
+"Rebuild:OFF" = "自動重建:關";
+
 /* Building Information */
 "Ticks"                      = "生產次數";
 "Heat"                       = "累積熱量";

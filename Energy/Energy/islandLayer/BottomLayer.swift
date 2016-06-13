@@ -311,6 +311,13 @@ class PageBuild: SKSpriteNode {
         refreshImage.name       = "refreshImage"
         refreshImage.setScale(framescale)
         rebuildButton.addChild(refreshImage)
+        let rebuildLabel        = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        rebuildLabel.name = "rebuildLabel"
+        rebuildLabel.text = "Rebuild:ON".localized
+        rebuildLabel.fontSize = 16 * framescale
+        rebuildLabel.position = CGPoint(x: 0, y: -size.height / 2 + 12 * framescale)
+        rebuildLabel.zPosition = 10
+        rebuildButton.addChild(rebuildLabel)
         rebuildOn(isRebuild)
         
         updateImageShow()
@@ -358,9 +365,11 @@ class PageBuild: SKSpriteNode {
             let action                = SKAction.rotateByAngle(CGFloat(M_PI), duration: 2)
             rebuildButton.childNodeWithName("refreshImage")!.removeAllActions()
             rebuildButton.childNodeWithName("refreshImage")!.runAction(SKAction.repeatActionForever(action))
+            (rebuildButton.childNodeWithName("rebuildLabel") as! SKLabelNode).text = "Rebuild:ON".localized
         } else {
             (rebuildButton.childNodeWithName("rebuildBG") as! SKShapeNode).fillColor   = SKColor.grayColor()
             rebuildButton.childNodeWithName("refreshImage")!.removeAllActions()
+            (rebuildButton.childNodeWithName("rebuildLabel") as! SKLabelNode).text = "Rebuild:OFF".localized
         }
     }
     

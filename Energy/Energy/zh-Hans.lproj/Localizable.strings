@@ -40,6 +40,10 @@
 /* Energy Page */
 "TOUCH TO SELL ENERGY"       = "点 击 来 销 售 储 存 能 源";
 
+/* Building Select */
+"Rebuild:ON" = "自动重建:开";
+"Rebuild:OFF" = "自动重建:关";
+
 /* Building Information */
 "Ticks"                      = "生产次数";
 "Heat"                       = "累积热量";
