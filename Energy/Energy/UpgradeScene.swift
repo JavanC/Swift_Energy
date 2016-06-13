@@ -504,7 +504,11 @@ class UpgradeScene: SKScene {
             upgradeLayer.addChild(upgradeElement)
         }
         
-        // Caculate MaxPage
+        // Caculate NowPage and MaxPage
+        if elements.count <= 8 {
+            nowPage = 1
+            upgradeLayer.runAction((SKAction.moveToX(0, duration: 0)))
+        }
         maxPage = (elements.count - 1) / 8 + 1
         
         // update item count
