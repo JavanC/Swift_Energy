@@ -272,7 +272,7 @@ class IslandsScene: SKScene {
                     confirmBubble.cancelButton.alpha = 1
                     confirmBubble.buyButton.alpha    = 1
                     confirmBubble.hideBubble()
-                    runAction(soundTap)
+                    if !isSoundMute{ runAction(soundTap) }
                 }
                 if node == confirmBubble.buyButton {
                     confirmBubble.OKButton.alpha     = 1
@@ -283,7 +283,7 @@ class IslandsScene: SKScene {
                     money -= confirmBubble.buyPrice
                     maps[confirmBubble.islandNum].isSold = true
                     worldLayer.mapsLock[confirmBubble.islandNum].hidden = true
-                    runAction(soundSell)
+                    if !isSoundMute{ runAction(soundSell) }
                 }
             }
             return

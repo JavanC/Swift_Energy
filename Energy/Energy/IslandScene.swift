@@ -514,6 +514,7 @@ class IslandScene: SKScene {
                 case .Sell:
                     let coordType = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildType
                     if maps[nowMapNumber].buildingForCoord(coord)!.activate {
+                        if coordType == .Garbage { return }
                         if !isSoundMute{ runAction(soundSell) }
                         let price = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildPrice
                         let canotSellBuildings: [BuildingType] = [.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]
@@ -584,7 +585,8 @@ class IslandScene: SKScene {
                 case .Sell:
                     let coordType = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildType
                     if maps[nowMapNumber].buildingForCoord(coord)!.activate {
-                        runAction(soundSell)
+                        if coordType == .Garbage { return }
+                        if !isSoundMute{ runAction(soundSell) }
                         let price = maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildPrice
                         let canotSellBuildings: [BuildingType] = [.WindTurbine, .SolarCell, .CoalBurner, .WaveCell, .GasBurner, .NuclearCell, .FusionCell]
                         if !canotSellBuildings.contains(maps[nowMapNumber].buildingForCoord(coord)!.buildingData.buildType) {

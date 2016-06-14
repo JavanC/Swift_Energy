@@ -206,7 +206,7 @@ class BuildingMapLayer: SKSpriteNode {
                            "O","O","R","L","O","R","O","O","O",
                            "O","O","L","L","O","L","L","R","O",
                            "O","R","O","O","O","L","L","O","O",
-                           "O","O","O","L","R","L","L","O","O",
+                           "O","O","O","L","R","L","G","O","O",
                            "O","O","O","L","L","L","L","O","O",
                            "O","O","L","L","L","L","O","R","O",
                            "O","O","L","L","O","L","O","O","O",
@@ -288,6 +288,9 @@ class BuildingMapLayer: SKSpriteNode {
                     setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Ocean)
                 case "R":
                     setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Rock)
+                case "G":
+                    setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Garbage)
+                    buildingForCoord(CGPoint(x: x, y: y))!.buildingData.heatSystem = HeatSystem(size: 10)
                 default:break
                 }
             }

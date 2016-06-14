@@ -44,6 +44,10 @@
 "Rebuild:ON" = "Rebuild:ON";
 "Rebuild:OFF" = "Rebuild:OFF";
 
+/* Garbage Information */
+"Garbage" = "Garbage";
+"Just a garbage. It can be burned!" = "Just a garbage. It can be burned!";
+
 /* Building Information */
 "Ticks"                      = "Ticks";
 "Heat"                       = "Heat";

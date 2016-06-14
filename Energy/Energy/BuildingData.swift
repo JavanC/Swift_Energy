@@ -591,6 +591,10 @@ class BuildingData: NSObject, NSCoding {
             heatSystem = HeatSystem(size: 10)
             libraryAddPercent = 0.2
             
+        case .Garbage:
+            imageName = "Garbage"
+            buildPrice = 1
+            
         default:
             imageName = "WindTurbine"
             buildPrice = 1

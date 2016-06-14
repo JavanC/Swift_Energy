@@ -226,7 +226,7 @@ class WorldLayer: SKNode {
             nowSelectNum = mapNum
             print("now select \(nowSelectNum)")
             if nowSelectNum >= 1 && nowSelectNum <= 6 {
-                runAction(soundSelect)
+                if !isSoundMute{ runAction(soundSelect) }
             }
         }
         for i in 0...5 {

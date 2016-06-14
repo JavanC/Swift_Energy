@@ -44,7 +44,12 @@
 "Rebuild:ON" = "自动重建:开";
 "Rebuild:OFF" = "自动重建:关";
 
+/* Garbage Information */
+"Garbage" = "垃圾堆";
+"Just a garbage. It can be burned!" = "就只是个占空间的垃圾堆，可以被烧毁。";
+
 /* Building Information */
+"Garbage"                    = "垃圾堆";
 "Ticks"                      = "生产次数";
 "Heat"                       = "累积热量";
 "Water"                      = "累积水量";

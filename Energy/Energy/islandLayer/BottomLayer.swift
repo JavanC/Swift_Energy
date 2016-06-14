@@ -43,6 +43,7 @@ class PageInformation: SKSpriteNode {
     
     var positions = [CGPoint]()
     
+    var infoGarbageNode: InformationLabel!
     var infoTicksNode: InformationLabel!
     var infoHeatNode: InformationLabel!
     var infoWaterNode: InformationLabel!
@@ -86,7 +87,9 @@ class PageInformation: SKSpriteNode {
         for i in 1...4 {
             positions.append(CGPoint(x: size.width / 5 , y: 8 * framescale + infogap * CGFloat(5 - i) + infoSize * CGFloat(4 - i)))
         }
-
+        
+        infoGarbageNode         = InformationLabel(title: "Garbage".localized, fontSize: infoSize, valueColor: SKColor.whiteColor())
+        addChild(infoGarbageNode)
         infoTicksNode           = InformationLabel(title: "Ticks".localized, fontSize: infoSize, valueColor: SKColor.whiteColor())
         addChild(infoTicksNode)
         infoHeatNode            = InformationLabel(title: "Heat".localized, fontSize: infoSize, valueColor: SKColor.redColor())
@@ -122,7 +125,7 @@ class PageInformation: SKSpriteNode {
         infoPriceNode           = InformationLabel(title: "Price".localized, fontSize: infoSize, valueColor: colorMoney)
         addChild(infoPriceNode)
 
-        allLabels = [infoTicksNode, infoHeatNode, infoWaterNode, infoProduceEnergyNode, infoProduceHeatNode, infoSellsMoneyNode, infoConvertedEnergyNode, infoSellHeatNode, infoIsolationNode, infoBatteryNode, infoHeatInletNode, infoHeatSinkNode, infoProduceWaterNode, infoBankNode, infoProduceResearchNode, infoLibraryNode, infoPriceNode]
+        allLabels = [infoGarbageNode, infoTicksNode, infoHeatNode, infoWaterNode, infoProduceEnergyNode, infoProduceHeatNode, infoSellsMoneyNode, infoConvertedEnergyNode, infoSellHeatNode, infoIsolationNode, infoBatteryNode, infoHeatInletNode, infoHeatSinkNode, infoProduceWaterNode, infoBankNode, infoProduceResearchNode, infoLibraryNode, infoPriceNode]
     }
     
     func changeInformation(buildingData: BuildingData) {
@@ -140,6 +143,11 @@ class PageInformation: SKSpriteNode {
             label.hidden = true
         }
         var informationLabels = [InformationLabel]()
+        if buildingData.buildType == .Garbage {
+            infoGarbageNode.hidden = false
+            infoGarbageNode.valueLabel.text = "Just a garbage. It can be burned!".localized
+            informationLabels.append(infoGarbageNode)
+        }
         if buildingData.timeSystem != nil {
             infoTicksNode.hidden = false
             infoTicksNode.valueLabel.text = "\(numberToString(buildingData.timeSystem.inAmount)) / \(numberToString(buildingData.timeSystem.size))"
@@ -224,7 +232,7 @@ class PageInformation: SKSpriteNode {
             infoPriceNode.hidden = false
             infoPriceNode.valueLabel.text = "0"
             informationLabels.append(infoPriceNode)
-        } else {
+        } else if buildingData.buildType != .Garbage {
             infoPriceNode.hidden = false
             infoPriceNode.valueLabel.text = numberToString(buildingData.buildPrice)
             informationLabels.append(infoPriceNode)
