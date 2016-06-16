@@ -8,6 +8,33 @@
 
 import SpriteKit
 
+class IslandNode: SKSpriteNode {
+    
+    var islandNum: Int!
+    var selectImg: SKSpriteNode!
+    var selectRange: SKShapeNode!
+    
+    func configureNode(frameSize: CGSize, selectNum: Int, RangePosition: CGPoint, RangeRadius: CGFloat) {
+        self.anchorPoint = CGPoint(x: 0, y: 0)
+        self.islandNum = selectNum
+        
+        selectImg = SKSpriteNode(imageNamed: "Maps_select\(selectNum)")
+        selectImg.name = "Maps_select\(selectNum)"
+        selectImg.size = frameSize
+        selectImg.hidden = true
+        selectImg.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
+        addChild(selectImg)
+        selectRange = SKShapeNode(circleOfRadius: RangeRadius)
+        selectRange.name = "Select\(selectNum)Range"
+        selectRange.lineWidth = 2
+        selectRange.position = RangePosition
+        addChild(selectRange)
+    }
+    func isHighlight(isHighlight: Bool) {
+        selectImg.hidden = !isHighlight
+    }
+}
+
 class WorldLayer: SKNode {
     var frameSize: CGSize!
     var skyBackground: SKSpriteNode!
@@ -16,6 +43,7 @@ class WorldLayer: SKNode {
     var mapsLock: [SKSpriteNode] = []
     var mapsRange: [SKShapeNode] = []
     var mapsSelect: [SKSpriteNode] = []
+    var islandNodes: [IslandNode] = []
     var nowSelectNum: Int = 0
     
     var isShowTickAdd: Bool = false
@@ -69,64 +97,23 @@ class WorldLayer: SKNode {
             clouds.append(cloud)
         }
         
-        for i in 1...6 {
-            let selectMap = SKSpriteNode(imageNamed: "Maps_select\(i)")
-            selectMap.name = "Maps_select\(i)"
-            selectMap.size = frameSize
-            selectMap.hidden = true
-            selectMap.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
-            addChild(selectMap)
-            mapsSelect.append(selectMap)
-        }
         
-        mapsLock.append(SKSpriteNode())
-        for i in 2...6 {
-            let lockMap = SKSpriteNode(imageNamed: "Maps_locked\(i)")
-            lockMap.name = "Maps_locked\(i)"
-            lockMap.size = frameSize
-            lockMap.hidden = maps[i-1].isSold
-            lockMap.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
-            lockMap.zPosition = 1
-            addChild(lockMap)
-            mapsLock.append(lockMap)
-        }
+        var rangePositions: [CGPoint] = []
+        rangePositions.append(CGPoint(x: 110 * framescale, y: 160 * framescale))
+        rangePositions.append(CGPoint(x: 420 * framescale, y: 220 * framescale))
+        rangePositions.append(CGPoint(x: 100 * framescale, y: 400 * framescale))
+        rangePositions.append(CGPoint(x: 460 * framescale, y: 500 * framescale))
+        rangePositions.append(CGPoint(x: 100 * framescale, y: 610 * framescale))
+        rangePositions.append(CGPoint(x: 380 * framescale, y: 720 * framescale))
+        rangePositions.append(CGPoint(x: 115 * framescale, y: 920 * framescale))
+        let rangeRadius: [CGFloat] = [60, 80, 80, 90, 90, 90, 70]
         
-        let map1 = SKShapeNode(circleOfRadius: 60 * framescale)
-        map1.name = "map1Range"
-        map1.lineWidth = 0
-        map1.position = CGPoint(x: 110 * framescale, y: 160 * framescale)
-        addChild(map1)
-        mapsRange.append(map1)
-        let map2 = SKShapeNode(circleOfRadius: 80 * framescale)
-        map2.name = "map2Range"
-        map2.lineWidth = 0
-        map2.position = CGPoint(x: 420 * framescale, y: 220 * framescale)
-        addChild(map2)
-        mapsRange.append(map2)
-        let map3 = SKShapeNode(circleOfRadius: 80 * framescale)
-        map3.name = "map3Range"
-        map3.lineWidth = 0
-        map3.position = CGPoint(x: 100 * framescale, y: 400 * framescale)
-        addChild(map3)
-        mapsRange.append(map3)
-        let map4 = SKShapeNode(circleOfRadius: 90 * framescale)
-        map4.name = "map4Range"
-        map4.lineWidth = 0
-        map4.position = CGPoint(x: 460 * framescale, y: 500 * framescale)
-        addChild(map4)
-        mapsRange.append(map4)
-        let map5 = SKShapeNode(circleOfRadius: 90 * framescale)
-        map5.name = "map5Range"
-        map5.lineWidth = 0
-        map5.position = CGPoint(x: 100 * framescale, y: 610 * framescale)
-        addChild(map5)
-        mapsRange.append(map5)
-        let map6 = SKShapeNode(circleOfRadius: 90 * framescale)
-        map6.name = "map6Range"
-        map6.lineWidth = 0
-        map6.position = CGPoint(x: 380 * framescale, y: 720 * framescale)
-        addChild(map6)
-        mapsRange.append(map6)
+        for i in 1...7 {
+            let island = IslandNode()
+            island.configureNode(frameSize, selectNum: i, RangePosition: rangePositions[i-1], RangeRadius: rangeRadius[i-1])
+            addChild(island)
+            islandNodes.append(island)
+        }
         
         
         let moneyInfo = SKNode()
@@ -220,24 +207,35 @@ class WorldLayer: SKNode {
             duration: 100), SKAction.moveTo(p4, duration: 0)])))
     }
     
- 
-    
     func mapHighlight(mapNum: Int) {
         if nowSelectNum != mapNum {
             nowSelectNum = mapNum
             print("now select \(nowSelectNum)")
-            if nowSelectNum >= 1 && nowSelectNum <= 6 {
+            if nowSelectNum >= 1 && nowSelectNum <= 7 {
                 if !isSoundMute{ runAction(soundSelect) }
             }
         }
+        
         for i in 0...5 {
-            mapsSelect[i].hidden = true
+            islandNodes[i].isHighlight(false)
         }
         if mapNum >= 1 && mapNum <= 6 {
-            mapsSelect[mapNum-1].hidden = false
+            islandNodes[mapNum-1].isHighlight(true)
         }
+//        if mapNum == 1 {
+//            
+//        } else {
+//            islandNodes[0].isHighlight(false)
+//        }
+//        for i in 0...0 {
+//            islandNodes[i].selectImg.hidden = true
+//            mapsSelect[i].hidden = true
+//        }
+//        if mapNum >= 1 && mapNum <= 6 {
+//            islandNodes[mapNum-1].selectImg.hidden = false
+//            mapsSelect[mapNum-1].hidden = false
+//        }
     }
-    
     
     func showTickAdd() {
         if maps[0].tickAddDone && isFirstShowTickAdd {

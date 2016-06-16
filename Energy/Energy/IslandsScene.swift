@@ -140,11 +140,18 @@ class IslandsScene: SKScene {
         if infoButton.containsPoint(location) {
             infoButton.alpha = 0.7
         }
+        
         for i in 0...5 {
-            if worldLayer.mapsRange[i].containsPoint(location) {
+            if worldLayer.islandNodes[i].selectRange.containsPoint(location) {
+                print("touch island")
                 worldLayer.mapHighlight(i+1)
             }
         }
+//        for i in 0...5 {
+//            if worldLayer.mapsRange[i].containsPoint(location) {
+//                worldLayer.mapHighlight(i+1)
+//            }
+//        }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -181,7 +188,7 @@ class IslandsScene: SKScene {
         
         var inMap = false
         for i in 0...5 {
-            if worldLayer.mapsRange[i].containsPoint(location) {
+            if worldLayer.islandNodes[i].selectRange.containsPoint(location) {
                 inMap = true
                 worldLayer.mapHighlight(i+1)
             }
@@ -189,6 +196,17 @@ class IslandsScene: SKScene {
         if inMap == false {
             worldLayer.mapHighlight(0)
         }
+            
+//        var inMap = false
+//        for i in 0...5 {
+//            if worldLayer.mapsRange[i].containsPoint(location) {
+//                inMap = true
+//                worldLayer.mapHighlight(i+1)
+//            }
+//        }
+//        if inMap == false {
+//            worldLayer.mapHighlight(0)
+//        }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -299,10 +317,11 @@ class IslandsScene: SKScene {
             infoButton.alpha = 1
             infoLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
         }
+        
         for i in 0...5 {
-            if worldLayer.mapsRange[i].containsPoint(location) {
+            if worldLayer.islandNodes[i].selectRange.containsPoint(location) {
                 worldLayer.mapHighlight(0)
-                print("Map\(i+1)")
+                print("Go to Map\(i+1)")
                 if !isSoundMute{ runAction(soundAction) }
                 
                 if !maps[i].isSold {
@@ -313,6 +332,21 @@ class IslandsScene: SKScene {
                 }
             }
         }
+        
+//        for i in 0...5 {
+//            if worldLayer.mapsRange[i].containsPoint(location) {
+//                worldLayer.mapHighlight(0)
+//                print("Map\(i+1)")
+//                if !isSoundMute{ runAction(soundAction) }
+//                
+//                if !maps[i].isSold {
+//                    confirmBubble.showBubble(i)
+//                } else {
+//                    nowMapNumber = i
+//                    self.view?.presentScene(islandScene, transition: door_Fade)
+//                }
+//            }
+//        }
     }
     
     func hourToString(value: Int) -> String {
