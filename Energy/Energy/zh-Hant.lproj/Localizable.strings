@@ -8,30 +8,32 @@
 
 
 /* Setting Layer */
-"Setting"                      = "設置";
-"Sound"                        = "音效";
-"Music"                        = "音樂";
-"Reset All Data"               = "重置資料";
-"Confirm reset all data?"      = "確認重置所有資料?";
-"Yes"                          = "是";
-"No"                           = "否";
+"Setting"                            = "設置";
+"Sound"                              = "音效";
+"Music"                              = "音樂";
+"Reset All Data"                     = "重置資料";
+"Confirm reset all data?"            = "確認重置所有資料?";
+"Yes"                                = "是";
+"No"                                 = "否";
 
 /* Boost Layer */
-"TIME RECOVER"                 = "遺失時間恢復";
-"- Max recover one hour -"     = "-最多可累積一小時-";
+"TIME RECOVER"                       = "遺失時間恢復";
+"- Max recover one hour -"           = "-最多可累積一小時-";
 
 /* Confirm Bubble */
-"You don't have enough money." = "你沒有足夠的金錢.";
-"Buy the island to building."  = "購買該地區來開始使建設.";
-"OK"                           = "確認";
-"Cancel"                       = "取消";
-"Buy"                          = "購買";
-"Small Island"                 = "小島";
-"Tree Island"                  = "樹島";
-"Canyon Island"                = "峽谷島";
-"Coconut Island"               = "椰子島";
-"Sand Island"                  = "沙漠島";
-"Mainland"                     = "寬闊草原";
+"You don't have enough money."       = "你沒有足夠的金錢";
+"Buy a mysterious alien technology." = "外星人出售一項神秘技術，要購買嗎？";
+"Buy the island to building."        = "購買該地區來開始使建設";
+"OK"                                 = "確認";
+"Cancel"                             = "取消";
+"Buy"                                = "購買";
+"Small Island"                       = "小島";
+"Tree Island"                        = "樹島";
+"Canyon Island"                      = "峽谷島";
+"Coconut Island"                     = "椰子島";
+"Sand Island"                        = "沙漠島";
+"Mainland"                           = "寬闊草原";
+"Alien Technology"                   = "外星科技";
 
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "點擊地圖上的建築物來出售";
@@ -39,7 +41,7 @@
 "recycled money."                            = "售出時不回收其金錢";
 
 /* Energy Page */
-"TOUCH  TO  SELL  ENERGY"    = "點 擊 來 銷 售 儲 存 能 源";
+"TOUCH  TO  SELL  ENERGY" = "點 擊 來 銷 售 儲 存 能 源";
 
 /* Building Select */
 "Rebuild:ON" = "自動重建:開";

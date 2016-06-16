@@ -124,14 +124,20 @@ class ConfirmBubble: SKNode {
         case 5:
             buyPrice = 100000
             islandName.text = "Mainland".localized
+        case 6:
+            buyPrice = 1000000
+            islandName.text = "Alien Technology".localized
         default: break
         }
         priceLabel.text = "\(numberToString(buyPrice, isInt: true))"
 
         self.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
     }
-    func hideBubble() {
-        self.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(0.3), SKAction.hide()]))
+    func hideBubble(duration duration: Double = 0.3) {
+        OKButton.alpha     = 1
+        cancelButton.alpha = 1
+        buyButton.alpha    = 1
+        self.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(duration), SKAction.hide()]))
     }
     func update() {
         if money < buyPrice {
@@ -140,7 +146,11 @@ class ConfirmBubble: SKNode {
             cancelButton.hidden = true
             buyButton.hidden = true
         } else {
-            buyInfoLabel.text = "Buy the island to building.".localized
+            if islandNum == 6 {
+                buyInfoLabel.text = "Buy a mysterious alien technology.".localized
+            } else {
+                buyInfoLabel.text = "Buy the island to building.".localized
+            }
             OKButton.hidden = true
             cancelButton.hidden = false
             buyButton.hidden = false

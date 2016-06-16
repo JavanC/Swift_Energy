@@ -20,17 +20,19 @@
 "- Max recover one hour -"     = "- Max recover one hour -";
 
 /* Confirm Bubble */
-"You don't have enough money." = "You don't have enough money.";
-"Buy the island to building."  = "Buy the island to building.";
-"OK"                           = "OK";
-"Cancel"                       = "Cancel";
-"Buy"                          = "Buy";
-"Small Island"                 = "Small Island";
-"Tree Island"                  = "Tree Island";
-"Canyon Island"                = "Canyon Island";
-"Coconut Island"               = "Coconut Island";
-"Sand Island"                  = "Sand Island";
-"Mainland"                     = "Mainland";
+"You don't have enough money."       = "You don't have enough money.";
+"Buy a mysterious alien technology." = "Buy a mysterious alien technology.";
+"Buy the island to building."        = "Buy the island to building.";
+"OK"                                 = "OK";
+"Cancel"                             = "Cancel";
+"Buy"                                = "Buy";
+"Small Island"                       = "Small Island";
+"Tree Island"                        = "Tree Island";
+"Canyon Island"                      = "Canyon Island";
+"Coconut Island"                     = "Coconut Island";
+"Sand Island"                        = "Sand Island";
+"Mainland"                           = "Mainland";
+"Alien Technology"                   = "Alien Technology";
 
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "Touch buildings on the map to sell it.";

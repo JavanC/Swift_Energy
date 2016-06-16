@@ -10,28 +10,56 @@ import SpriteKit
 
 class IslandNode: SKSpriteNode {
     
-    var islandNum: Int!
     var selectImg: SKSpriteNode!
+    var lockedImg: SKSpriteNode!
     var selectRange: SKShapeNode!
     
     func configureNode(frameSize: CGSize, selectNum: Int, RangePosition: CGPoint, RangeRadius: CGFloat) {
         self.anchorPoint = CGPoint(x: 0, y: 0)
-        self.islandNum = selectNum
+        self.size = frameSize
         
         selectImg = SKSpriteNode(imageNamed: "Maps_select\(selectNum)")
         selectImg.name = "Maps_select\(selectNum)"
         selectImg.size = frameSize
         selectImg.hidden = true
         selectImg.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
+        selectImg.zPosition = 1
         addChild(selectImg)
+        
+        if selectNum >= 2 && selectNum <= 6 {
+            lockedImg = SKSpriteNode(imageNamed: "Maps_locked\(selectNum)")
+            lockedImg.name = "Maps_locked\(selectNum)"
+            lockedImg.size = frameSize
+            lockedImg.hidden = maps[selectNum - 1].isSold
+            lockedImg.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
+            lockedImg.zPosition = 2
+            addChild(lockedImg)
+        }
+        
         selectRange = SKShapeNode(circleOfRadius: RangeRadius)
         selectRange.name = "Select\(selectNum)Range"
         selectRange.lineWidth = 2
         selectRange.position = RangePosition
+        selectRange.zPosition = 3
         addChild(selectRange)
     }
+    
     func isHighlight(isHighlight: Bool) {
         selectImg.hidden = !isHighlight
+    }
+    
+    func targetLanding() {
+//        self.alpha = 0
+//        self.hidden = false
+//        self.runAction(SKAction.moveToY(70, duration: 0))
+//        let landingAction = SKAction.group([SKAction.moveToY(-10 * framescale, duration: 4), SKAction.fadeInWithDuration(2)])
+//        landingAction.timingMode = SKActionTimingMode.EaseIn
+//        let moveUp = SKAction.moveToY(10 * framescale, duration: 2)
+//        moveUp.timingMode = SKActionTimingMode.EaseInEaseOut
+//        let moveDown = SKAction.moveToY(-10 * framescale, duration: 2)
+//        moveDown.timingMode = SKActionTimingMode.EaseInEaseOut
+//        let floatAction = SKAction.repeatActionForever(SKAction.sequence([moveUp, moveDown]))
+//        self.runAction(SKAction.sequence([landingAction, floatAction]))
     }
 }
 
@@ -97,7 +125,6 @@ class WorldLayer: SKNode {
             clouds.append(cloud)
         }
         
-        
         var rangePositions: [CGPoint] = []
         rangePositions.append(CGPoint(x: 110 * framescale, y: 160 * framescale))
         rangePositions.append(CGPoint(x: 420 * framescale, y: 220 * framescale))
@@ -111,10 +138,18 @@ class WorldLayer: SKNode {
         for i in 1...7 {
             let island = IslandNode()
             island.configureNode(frameSize, selectNum: i, RangePosition: rangePositions[i-1], RangeRadius: rangeRadius[i-1])
+            if i == 7 {
+                island.texture = SKTexture(imageNamed: "Maps_Target")
+                island.zPosition = -4
+                if maps[5].isSold {
+                    island.targetLanding()
+                } else {
+                    island.hidden = true
+                }
+            }
             addChild(island)
             islandNodes.append(island)
         }
-        
         
         let moneyInfo = SKNode()
         moneyInfo.position = CGPoint(x: 84 * framescale, y: 40 * framescale)
@@ -216,10 +251,10 @@ class WorldLayer: SKNode {
             }
         }
         
-        for i in 0...5 {
+        for i in 0...6 {
             islandNodes[i].isHighlight(false)
         }
-        if mapNum >= 1 && mapNum <= 6 {
+        if mapNum >= 1 && mapNum <= 7 {
             islandNodes[mapNum-1].isHighlight(true)
         }
 //        if mapNum == 1 {

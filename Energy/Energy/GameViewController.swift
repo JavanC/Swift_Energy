@@ -77,6 +77,7 @@ var isBoost: Bool         = false
 var isSoundMute: Bool     = false
 var isMusicMute: Bool     = false
 var hasTouchAd: Bool      = false
+var isFinishTarget: Bool  = false
 var boostTime: Double     = 1
 var boostTimeLess: Double = 1
 
@@ -194,15 +195,15 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // load money, research and spendTime
-        money       = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
-        research    = defaults.doubleForKey("Research")
-        spendTime   = defaults.integerForKey("spendTime")
-        isHaveTeach = defaults.boolForKey("isHaveTeach")
-        isPause     = defaults.boolForKey("isPause")
-        isRebuild   = defaults.boolForKey("isRebuild")
-        isSoundMute = defaults.boolForKey("isSoundMute")
-        isMusicMute = defaults.boolForKey("isMusicMute")
-
+        money          = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
+        research       = defaults.doubleForKey("Research")
+        spendTime      = defaults.integerForKey("spendTime")
+        isHaveTeach    = defaults.boolForKey("isHaveTeach")
+        isPause        = defaults.boolForKey("isPause")
+        isRebuild      = defaults.boolForKey("isRebuild")
+        isSoundMute    = defaults.boolForKey("isSoundMute")
+        isMusicMute    = defaults.boolForKey("isMusicMute")
+        isFinishTarget = defaults.boolForKey("isFinishTarget")
         //1000000000000000
         money       = 10000
 //        money     = 888000000000000
@@ -274,6 +275,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         defaults.setBool(isRebuild, forKey: "isRebuild")
         defaults.setBool(isSoundMute, forKey: "isSoundMute")
         defaults.setBool(isMusicMute, forKey: "isMusicMute")
+        defaults.setBool(isFinishTarget, forKey: "isFinishTarget")
         
         // save upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

@@ -141,7 +141,7 @@ class IslandsScene: SKScene {
             infoButton.alpha = 0.7
         }
         
-        for i in 0...5 {
+        for i in 0...6 {
             if worldLayer.islandNodes[i].selectRange.containsPoint(location) {
                 print("touch island")
                 worldLayer.mapHighlight(i+1)
@@ -187,7 +187,7 @@ class IslandsScene: SKScene {
         infoButton.alpha = infoButton.containsPoint(location) ? 0.7 : 1
         
         var inMap = false
-        for i in 0...5 {
+        for i in 0...6 {
             if worldLayer.islandNodes[i].selectRange.containsPoint(location) {
                 inMap = true
                 worldLayer.mapHighlight(i+1)
@@ -286,22 +286,24 @@ class IslandsScene: SKScene {
             for node in nodes {
                 if node.hidden { return }
                 if node == confirmBubble.OKButton || node == confirmBubble.cancelButton {
-                    confirmBubble.OKButton.alpha     = 1
-                    confirmBubble.cancelButton.alpha = 1
-                    confirmBubble.buyButton.alpha    = 1
                     confirmBubble.hideBubble()
                     if !isSoundMute{ runAction(soundTap) }
                 }
                 if node == confirmBubble.buyButton {
-                    confirmBubble.OKButton.alpha     = 1
-                    confirmBubble.cancelButton.alpha = 1
-                    confirmBubble.buyButton.alpha    = 1
-                    confirmBubble.alpha  = 1
-                    confirmBubble.hidden = true
+                    confirmBubble.hideBubble(duration: 0)
                     money -= confirmBubble.buyPrice
-                    maps[confirmBubble.islandNum].isSold = true
-                    worldLayer.mapsLock[confirmBubble.islandNum].hidden = true
                     if !isSoundMute{ runAction(soundSell) }
+                    
+                    if confirmBubble.islandNum == 6 {
+                        isFinishTarget = true
+                        print("buy target and show finish page")
+                        return
+                    }
+                    if confirmBubble.islandNum == 5 {
+                        worldLayer.islandNodes[6].targetLanding()
+                    }
+                    maps[confirmBubble.islandNum].isSold = true
+                    worldLayer.islandNodes[confirmBubble.islandNum].lockedImg.hidden = true
                 }
             }
             return
@@ -321,18 +323,28 @@ class IslandsScene: SKScene {
         for i in 0...5 {
             if worldLayer.islandNodes[i].selectRange.containsPoint(location) {
                 worldLayer.mapHighlight(0)
-                print("Go to Map\(i+1)")
                 if !isSoundMute{ runAction(soundAction) }
                 
                 if !maps[i].isSold {
                     confirmBubble.showBubble(i)
                 } else {
                     nowMapNumber = i
+                    print("Go to Map\(i+1)")
                     self.view?.presentScene(islandScene, transition: door_Fade)
                 }
             }
         }
         
+        if !worldLayer.islandNodes[6].hidden && worldLayer.islandNodes[6].selectRange.containsPoint(location) {
+            worldLayer.mapHighlight(0)
+            if !isSoundMute{ runAction(soundAction) }
+            if !isFinishTarget {
+                confirmBubble.showBubble(6)
+            } else {
+                print("show finish page")
+            }
+        }
+                
 //        for i in 0...5 {
 //            if worldLayer.mapsRange[i].containsPoint(location) {
 //                worldLayer.mapHighlight(0)
@@ -391,18 +403,22 @@ class IslandsScene: SKScene {
             self.loadingNum = 1
             self.view?.presentScene(islandsScene)
             // reset game data
-            money       = 1
-            research    = 1
-            spendTime   = 0
-            isPause     = false
-            isRebuild   = true
-            isSoundMute = false
-            isMusicMute = false
+            money          = 1
+            research       = 1
+            spendTime      = 0
+            isPause        = false
+            isRebuild      = true
+            isSoundMute    = false
+            isMusicMute    = false
+            isFinishTarget = false
             // reset mapUnlocked
-            for i in 1..<6 {
+            for i in 0..<6 {
                 maps[i].isSold = i == 0 ? true : false
-                self.worldLayer.mapsLock[i].hidden = i == 0 ? true : false
+                if i != 0 {
+                    self.worldLayer.islandNodes[i].lockedImg.hidden = false
+                }
             }
+            self.worldLayer.islandNodes[6].hidden = true
             // reset upgrade and research level
             for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
                 upgradeLevel[UpgradeType(rawValue: count)!] = 0
@@ -419,9 +435,9 @@ class IslandsScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        worldLayer.timeLabel.text       = hourToString(spendTime)
-        worldLayer.moneyLabel.text      = numberToString(money, isInt: true)
-        worldLayer.researchLabel.text   = numberToString(research, isInt: true)
+        worldLayer.timeLabel.text        = hourToString(spendTime)
+        worldLayer.moneyLabel.text       = numberToString(money, isInt: true)
+        worldLayer.researchLabel.text    = numberToString(research, isInt: true)
         if worldLayer.isShowTickAdd { worldLayer.showTickAdd() }
         confirmBubble.update()
     }
