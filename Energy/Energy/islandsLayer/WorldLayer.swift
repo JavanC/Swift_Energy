@@ -38,7 +38,7 @@ class IslandNode: SKSpriteNode {
         
         selectRange = SKShapeNode(circleOfRadius: RangeRadius)
         selectRange.name = "Select\(selectNum)Range"
-        selectRange.lineWidth = 2
+        selectRange.lineWidth = 0
         selectRange.position = RangePosition
         selectRange.zPosition = 3
         addChild(selectRange)
@@ -49,17 +49,18 @@ class IslandNode: SKSpriteNode {
     }
     
     func targetLanding() {
-//        self.alpha = 0
-//        self.hidden = false
-//        self.runAction(SKAction.moveToY(70, duration: 0))
-//        let landingAction = SKAction.group([SKAction.moveToY(-10 * framescale, duration: 4), SKAction.fadeInWithDuration(2)])
-//        landingAction.timingMode = SKActionTimingMode.EaseIn
-//        let moveUp = SKAction.moveToY(10 * framescale, duration: 2)
-//        moveUp.timingMode = SKActionTimingMode.EaseInEaseOut
-//        let moveDown = SKAction.moveToY(-10 * framescale, duration: 2)
-//        moveDown.timingMode = SKActionTimingMode.EaseInEaseOut
-//        let floatAction = SKAction.repeatActionForever(SKAction.sequence([moveUp, moveDown]))
-//        self.runAction(SKAction.sequence([landingAction, floatAction]))
+        self.alpha = 0
+        self.hidden = false
+        self.removeAllActions()
+        self.runAction(SKAction.moveToY(70, duration: 0))
+        let landingAction = SKAction.group([SKAction.moveToY(-10 * framescale, duration: 4), SKAction.fadeInWithDuration(2)])
+        landingAction.timingMode = SKActionTimingMode.EaseIn
+        let moveUp = SKAction.moveToY(10 * framescale, duration: 2)
+        moveUp.timingMode = SKActionTimingMode.EaseInEaseOut
+        let moveDown = SKAction.moveToY(-10 * framescale, duration: 2)
+        moveDown.timingMode = SKActionTimingMode.EaseInEaseOut
+        let floatAction = SKAction.repeatActionForever(SKAction.sequence([moveUp, moveDown]))
+        self.runAction(SKAction.sequence([landingAction, floatAction]))
     }
 }
 
@@ -68,9 +69,7 @@ class WorldLayer: SKNode {
     var skyBackground: SKSpriteNode!
     
     var clouds: [SKSpriteNode] = []
-    var mapsLock: [SKSpriteNode] = []
-    var mapsRange: [SKShapeNode] = []
-    var mapsSelect: [SKSpriteNode] = []
+    var rangePositions: [CGPoint] = []
     var islandNodes: [IslandNode] = []
     var nowSelectNum: Int = 0
     
@@ -125,7 +124,6 @@ class WorldLayer: SKNode {
             clouds.append(cloud)
         }
         
-        var rangePositions: [CGPoint] = []
         rangePositions.append(CGPoint(x: 110 * framescale, y: 160 * framescale))
         rangePositions.append(CGPoint(x: 420 * framescale, y: 220 * framescale))
         rangePositions.append(CGPoint(x: 100 * framescale, y: 400 * framescale))
@@ -250,26 +248,12 @@ class WorldLayer: SKNode {
                 if !isSoundMute{ runAction(soundSelect) }
             }
         }
-        
         for i in 0...6 {
             islandNodes[i].isHighlight(false)
         }
         if mapNum >= 1 && mapNum <= 7 {
             islandNodes[mapNum-1].isHighlight(true)
         }
-//        if mapNum == 1 {
-//            
-//        } else {
-//            islandNodes[0].isHighlight(false)
-//        }
-//        for i in 0...0 {
-//            islandNodes[i].selectImg.hidden = true
-//            mapsSelect[i].hidden = true
-//        }
-//        if mapNum >= 1 && mapNum <= 6 {
-//            islandNodes[mapNum-1].selectImg.hidden = false
-//            mapsSelect[mapNum-1].hidden = false
-//        }
     }
     
     func showTickAdd() {
@@ -295,7 +279,7 @@ class WorldLayer: SKNode {
                     addMoney.text = "+\(numberToString(maps[i].money_TickAdd))"
                     addMoney.fontColor = colorMoney
                     addMoney.fontSize = 30 * framescale
-                    addMoney.position = CGPoint(x: mapsRange[i].position.x, y: mapsRange[i].position.y + 15 * framescale)
+                    addMoney.position = CGPoint(x: rangePositions[i].x, y: rangePositions[i].y + 15 * framescale)
                     addMoney.runAction(tickAction)
                     addChild(addMoney)
                 }
@@ -306,7 +290,7 @@ class WorldLayer: SKNode {
                     addResearch.text = "+\(numberToString(maps[i].research_TickAdd))"
                     addResearch.fontColor = colorResearch
                     addResearch.fontSize = 30 * framescale
-                    addResearch.position = CGPoint(x: mapsRange[i].position.x, y: mapsRange[i].position.y - 15 * framescale)
+                    addResearch.position = CGPoint(x: rangePositions[i].x, y: rangePositions[i].y - 15 * framescale)
                     addResearch.runAction(tickAction)
                     addChild(addResearch)
                 }
