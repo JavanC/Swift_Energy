@@ -86,6 +86,7 @@ class WorldLayer: SKNode {
             lockMap.size = frameSize
             lockMap.hidden = maps[i-1].isSold
             lockMap.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
+            lockMap.zPosition = 1
             addChild(lockMap)
             mapsLock.append(lockMap)
         }
