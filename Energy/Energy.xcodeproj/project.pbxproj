@@ -33,6 +33,7 @@
 		65572A861C30DFC200461802 /* MapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A851C30DFC200461802 /* MapLayer.swift */; };
 		65572A881C31058C00461802 /* UpgradeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A871C31058C00461802 /* UpgradeScene.swift */; };
 		65572A8A1C31318E00461802 /* ResearchScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65572A891C31318E00461802 /* ResearchScene.swift */; };
+		655870DE1D12A9F300F17B50 /* FinishBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655870DD1D12A9F300F17B50 /* FinishBubble.swift */; };
 		655BCC0E1C48A67B007A8079 /* building.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 655BCC0C1C48A67B007A8079 /* building.atlas */; };
 		655BCC0F1C48A67B007A8079 /* icon.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 655BCC0D1C48A67B007A8079 /* icon.atlas */; };
 		657283CD1C3B600F00B0B98F /* BuildingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657283CC1C3B600F00B0B98F /* BuildingData.swift */; };
@@ -89,6 +90,7 @@
 		65572A851C30DFC200461802 /* MapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLayer.swift; sourceTree = "<group>"; };
 		65572A871C31058C00461802 /* UpgradeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeScene.swift; sourceTree = "<group>"; };
 		65572A891C31318E00461802 /* ResearchScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResearchScene.swift; sourceTree = "<group>"; };
+		655870DD1D12A9F300F17B50 /* FinishBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishBubble.swift; sourceTree = "<group>"; };
 		655BCC0C1C48A67B007A8079 /* building.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = building.atlas; sourceTree = "<group>"; };
 		655BCC0D1C48A67B007A8079 /* icon.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = icon.atlas; sourceTree = "<group>"; };
 		657283CC1C3B600F00B0B98F /* BuildingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingData.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				658BA2331C72C1920033051A /* InfoLayer.swift */,
 				658BA2351C76B10F0033051A /* ConfirmBubble.swift */,
 				65070DAA1C8960BB00A2D5D4 /* WorldLayer.swift */,
+				655870DD1D12A9F300F17B50 /* FinishBubble.swift */,
 			);
 			path = islandsLayer;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				65386E151C2CD8A500D08B41 /* GameViewController.swift in Sources */,
 				8DDC91321C66307300476BCD /* SettingLayer.swift in Sources */,
 				65572A861C30DFC200461802 /* MapLayer.swift in Sources */,
+				655870DE1D12A9F300F17B50 /* FinishBubble.swift in Sources */,
 				65572A881C31058C00461802 /* UpgradeScene.swift in Sources */,
 				652CD9E31CE57D8F00905069 /* BoostLayer.swift in Sources */,
 				65386E0F1C2CD8A500D08B41 /* AppDelegate.swift in Sources */,

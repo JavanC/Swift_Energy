@@ -19,6 +19,7 @@ class IslandsScene: SKScene {
     var settingButton: SKSpriteNode!
     var settingLayer: SettingLayer!
     var confirmBubble: ConfirmBubble!
+    var finishBubble: FinishBubble!
     
     override func didMoveToView(view: SKView) {
         
@@ -34,6 +35,13 @@ class IslandsScene: SKScene {
             confirmBubble.zPosition = 100
             confirmBubble.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             worldLayer.addChild(confirmBubble)
+            
+            finishBubble = FinishBubble(bubbleSize: CGSizeMake(frame.width * 0.93, frame.height * 0.64))
+            finishBubble.alpha = 0
+            finishBubble.hidden = true
+            finishBubble.zPosition = 100
+            finishBubble.position = CGPoint(x: frame.width / 2, y: frame.height * 2 / 5)
+            worldLayer.addChild(finishBubble)
             
             infoButton = SKSpriteNode(texture: iconAtlas.textureNamed("button_info"))
             infoButton.setScale(framescale)
@@ -147,11 +155,6 @@ class IslandsScene: SKScene {
                 worldLayer.mapHighlight(i+1)
             }
         }
-//        for i in 0...5 {
-//            if worldLayer.mapsRange[i].containsPoint(location) {
-//                worldLayer.mapHighlight(i+1)
-//            }
-//        }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -196,17 +199,6 @@ class IslandsScene: SKScene {
         if inMap == false {
             worldLayer.mapHighlight(0)
         }
-            
-//        var inMap = false
-//        for i in 0...5 {
-//            if worldLayer.mapsRange[i].containsPoint(location) {
-//                inMap = true
-//                worldLayer.mapHighlight(i+1)
-//            }
-//        }
-//        if inMap == false {
-//            worldLayer.mapHighlight(0)
-//        }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -296,7 +288,8 @@ class IslandsScene: SKScene {
                     
                     if confirmBubble.islandNum == 6 {
                         isFinishTarget = true
-                        print("buy target and show finish page")
+                        print("buy target and show finish bubble")
+                        finishBubble.showBubble()
                         return
                     }
                     if confirmBubble.islandNum == 5 {
@@ -307,6 +300,15 @@ class IslandsScene: SKScene {
                 }
             }
             return
+        }
+        if finishBubble.hidden == false {
+            for node in nodes {
+                if node.hidden { return }
+                if node == finishBubble.OKButton {
+                    finishBubble.hideBubble()
+                    if !isSoundMute{ runAction(soundTap) }
+                }
+            }
         }
         
         if settingButton.containsPoint(location) {            
@@ -342,23 +344,9 @@ class IslandsScene: SKScene {
                 confirmBubble.showBubble(6)
             } else {
                 print("show finish page")
+                finishBubble.showBubble()
             }
         }
-                
-//        for i in 0...5 {
-//            if worldLayer.mapsRange[i].containsPoint(location) {
-//                worldLayer.mapHighlight(0)
-//                print("Map\(i+1)")
-//                if !isSoundMute{ runAction(soundAction) }
-//                
-//                if !maps[i].isSold {
-//                    confirmBubble.showBubble(i)
-//                } else {
-//                    nowMapNumber = i
-//                    self.view?.presentScene(islandScene, transition: door_Fade)
-//                }
-//            }
-//        }
     }
     
     func hourToString(value: Int) -> String {
