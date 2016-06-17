@@ -38,7 +38,7 @@ class IslandsScene: SKScene {
             
             finishBubble = FinishBubble(bubbleSize: CGSizeMake(frame.width * 0.93, frame.height * 0.64))
             finishBubble.alpha = 0
-            finishBubble.hidden = true
+//            finishBubble.hidden = true
             finishBubble.zPosition = 100
             finishBubble.position = CGPoint(x: frame.width / 2, y: frame.height * 2 / 5)
             worldLayer.addChild(finishBubble)
