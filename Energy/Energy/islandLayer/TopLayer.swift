@@ -117,6 +117,6 @@ class TopLayer: SKSpriteNode {
     
     func isPauseChange() {
         buttonPlayPause.color = isPause ? colorCancel : colorBlue3
-        buttonPlayPause.childNodeWithName("pointerImage")!.paused = isPause
+        buttonPlayPause.childNodeWithName("pointerImage")!.speed = isPause ? 0 : 1
     }
 }
