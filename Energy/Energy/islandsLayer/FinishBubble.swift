@@ -10,6 +10,7 @@ import SpriteKit
 
 class FinishBubble: SKNode {
     var bubbleName: SKLabelNode!
+    var timeLabel: SKLabelNode!
     var OKButton: SKShapeNode!
     
     init(bubbleSize: CGSize) {
@@ -110,6 +111,16 @@ class FinishBubble: SKNode {
         bg3.position = CGPoint(x: bubbleSize.width / 2 - bg3.frame.width / 2 - 20 * framescale, y: gap * -5.2)
         addChild(bg3)
         
+        timeLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        timeLabel.name = "timeLabel"
+        timeLabel.text = hourToString(finishTime, isFinish: true)
+        timeLabel.fontSize = gap * 0.8 * framescale
+        timeLabel.fontColor = colorMoney
+        timeLabel.verticalAlignmentMode = .Center
+        timeLabel.horizontalAlignmentMode = .Right
+        timeLabel.position = CGPoint(x: bubbleSize.width / 2 - 25 * framescale, y: gap * -5.2)
+        addChild(timeLabel)
+            
         OKButton = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width - 40 * framescale, gap * 4 - 40 * framescale), cornerRadius: 5 * framescale)
         OKButton.name = "OKButton"
         OKButton.fillColor = colorBlue2
@@ -127,10 +138,16 @@ class FinishBubble: SKNode {
     func showBubble() {
         self.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
     }
+    
     func hideBubble(duration duration: Double = 0.3) {
         OKButton.alpha     = 1
         self.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(duration), SKAction.hide()]))
     }
+    
+    func updateFinishData() {
+        timeLabel.text = hourToString(finishTime, isFinish: true)
+    }
+    
     func update() {
     }
     required init?(coder aDecoder: NSCoder) {

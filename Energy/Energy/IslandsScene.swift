@@ -288,6 +288,8 @@ class IslandsScene: SKScene {
                     
                     if confirmBubble.islandNum == 6 {
                         isFinishTarget = true
+                        finishTime = spendTime
+                        finishBubble.updateFinishData()
                         print("buy target and show finish bubble")
                         finishBubble.showBubble()
                         return
@@ -349,23 +351,7 @@ class IslandsScene: SKScene {
         }
     }
     
-    func hourToString(value: Int) -> String {
-        let day = value / 86400
-        let hour = (value % 86400) / 3600
-        let min = (value % 3600) / 60
-        let sec = value % 60
-        
-        var timeString = ". "
-        if day < 10 { timeString += " "}
-        timeString += day > 0 ? "\(day)D " : "   "
-        if hour < 10 { timeString += "0" }
-        timeString += "\(hour):"
-        if min < 10 { timeString += "0" }
-        timeString += "\(min):"
-        if sec < 10 { timeString += "0" }
-        timeString += "\(sec)"
-        return timeString
-    }
+
     
     func resetAllData() {
         let black = SKSpriteNode(color: SKColor.blackColor(), size: frame.size)
@@ -394,6 +380,7 @@ class IslandsScene: SKScene {
             money          = 1
             research       = 1
             spendTime      = 0
+            finishTime     = 0
             isPause        = false
             isRebuild      = true
             isSoundMute    = false

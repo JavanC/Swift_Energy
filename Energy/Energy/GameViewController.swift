@@ -66,6 +66,7 @@ enum ResearchType: Int {
 var money: Double         = 10
 var research: Double      = 10
 var spendTime: Int        = 0
+var finishTime: Int       = 0
 var upgradeLevel          = [UpgradeType: Int]()
 var researchLevel         = [ResearchType: Int]()
 var maps                  = [BuildingMapLayer]()
@@ -198,6 +199,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         money          = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
         research       = defaults.doubleForKey("Research")
         spendTime      = defaults.integerForKey("spendTime")
+        finishTime     = defaults.integerForKey("finishTime")
         isHaveTeach    = defaults.boolForKey("isHaveTeach")
         isPause        = defaults.boolForKey("isPause")
         isRebuild      = defaults.boolForKey("isRebuild")
@@ -270,6 +272,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         defaults.setDouble(money, forKey: "Money")
         defaults.setDouble(research, forKey: "Research")
         defaults.setInteger(spendTime, forKey: "spendTime")
+        defaults.setInteger(finishTime, forKey: "finishTime")
         defaults.setBool(isHaveTeach, forKey: "isHaveTeach")
         defaults.setBool(isPause, forKey: "isPause")
         defaults.setBool(isRebuild, forKey: "isRebuild")

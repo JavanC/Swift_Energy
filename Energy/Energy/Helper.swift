@@ -81,6 +81,24 @@ func numberToString(value: Double, isInt: Bool = true) -> String {
     return "\(N)" + (isInt ? "" : (L == 0 ? "" :".\(L)"))
 }
 
+func hourToString(value: Int, isFinish: Bool = false) -> String {
+    let day = value / 86400
+    let hour = (value % 86400) / 3600
+    let min = (value % 3600) / 60
+    let sec = value % 60
+    
+    var timeString = isFinish ? "" : ". "
+    if day < 10 { timeString += " "}
+    timeString += day > 0 ? "\(day)D " : "   "
+    if hour < 10 { timeString += "0" }
+    timeString += "\(hour):"
+    if min < 10 { timeString += "0" }
+    timeString += "\(min):"
+    if sec < 10 { timeString += "0" }
+    timeString += "\(sec)"
+    return timeString
+}
+
 extension String {
     var localized: String {
         return NSLocalizedString(self, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: "")
