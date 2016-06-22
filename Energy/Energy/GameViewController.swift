@@ -66,6 +66,8 @@ enum ResearchType: Int {
 var money: Double         = 10
 var research: Double      = 10
 var spendTime: Int        = 0
+var finishBuilding: Int   = 0
+var finishExplosion: Int  = 0
 var finishTime: Int       = 0
 var upgradeLevel          = [UpgradeType: Int]()
 var researchLevel         = [ResearchType: Int]()
@@ -196,16 +198,18 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // load money, research and spendTime
-        money          = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
-        research       = defaults.doubleForKey("Research")
-        spendTime      = defaults.integerForKey("spendTime")
-        finishTime     = defaults.integerForKey("finishTime")
-        isHaveTeach    = defaults.boolForKey("isHaveTeach")
-        isPause        = defaults.boolForKey("isPause")
-        isRebuild      = defaults.boolForKey("isRebuild")
-        isSoundMute    = defaults.boolForKey("isSoundMute")
-        isMusicMute    = defaults.boolForKey("isMusicMute")
-        isFinishTarget = defaults.boolForKey("isFinishTarget")
+        money           = defaults.doubleForKey("Money") != 0 ? defaults.doubleForKey("Money") : 1
+        research        = defaults.doubleForKey("Research")
+        spendTime       = defaults.integerForKey("spendTime")
+        finishBuilding  = defaults.integerForKey("finishBuilding")
+        finishExplosion = defaults.integerForKey("finishExplosion")
+        finishTime      = defaults.integerForKey("finishTime")
+        isHaveTeach     = defaults.boolForKey("isHaveTeach")
+        isPause         = defaults.boolForKey("isPause")
+        isRebuild       = defaults.boolForKey("isRebuild")
+        isSoundMute     = defaults.boolForKey("isSoundMute")
+        isMusicMute     = defaults.boolForKey("isMusicMute")
+        isFinishTarget  = defaults.boolForKey("isFinishTarget")
         //1000000000000000
         money       = 10000
 //        money     = 888000000000000
@@ -272,6 +276,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         defaults.setDouble(money, forKey: "Money")
         defaults.setDouble(research, forKey: "Research")
         defaults.setInteger(spendTime, forKey: "spendTime")
+        defaults.setInteger(finishBuilding, forKey: "finishBuilding")
+        defaults.setInteger(finishExplosion, forKey: "finishExplosion")
         defaults.setInteger(finishTime, forKey: "finishTime")
         defaults.setBool(isHaveTeach, forKey: "isHaveTeach")
         defaults.setBool(isPause, forKey: "isPause")

@@ -353,6 +353,9 @@ class BuildingMapLayer: SKSpriteNode {
         emitter.zPosition = 1
         addChild(emitter)
         if !isSoundMute{ runAction(soundExplosion) }
+        if !isFinishTarget {
+            finishExplosion += 1
+        }
     }
     
     // MARK: BuildingMap Update
@@ -571,6 +574,9 @@ class BuildingMapLayer: SKSpriteNode {
                     let price = element.buildingData.buildPrice
                     if money >= price {
                         money -= price
+                        if !isFinishTarget {
+                            finishBuilding += 1
+                        }
                         element.buildingData.timeSystem.resetTime()
                         element.changeActivate(true)
                     }

@@ -10,6 +10,8 @@ import SpriteKit
 
 class FinishBubble: SKNode {
     var bubbleName: SKLabelNode!
+    var buildingLabel: SKLabelNode!
+    var explosionLabel: SKLabelNode!
     var timeLabel: SKLabelNode!
     var OKButton: SKShapeNode!
     
@@ -111,11 +113,31 @@ class FinishBubble: SKNode {
         bg3.position = CGPoint(x: bubbleSize.width / 2 - bg3.frame.width / 2 - 20 * framescale, y: gap * -5.2)
         addChild(bg3)
         
+        buildingLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        buildingLabel.name = "buildingLabel"
+        buildingLabel.text = "\(finishBuilding)"
+        buildingLabel.fontSize = gap * 0.8 * framescale
+        buildingLabel.fontColor = colorMoney
+        buildingLabel.verticalAlignmentMode = .Center
+        buildingLabel.horizontalAlignmentMode = .Right
+        buildingLabel.position = CGPoint(x: bubbleSize.width / 2 - 25 * framescale, y: gap * -1.8)
+        addChild(buildingLabel)
+        
+        explosionLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        explosionLabel.name = "explosionLabel"
+        explosionLabel.text = "\(finishExplosion)"
+        explosionLabel.fontSize = gap * 0.8 * framescale
+        explosionLabel.fontColor = colorCancel
+        explosionLabel.verticalAlignmentMode = .Center
+        explosionLabel.horizontalAlignmentMode = .Right
+        explosionLabel.position = CGPoint(x: bubbleSize.width / 2 - 25 * framescale, y: gap * -3.5)
+        addChild(explosionLabel)
+        
         timeLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         timeLabel.name = "timeLabel"
         timeLabel.text = hourToString(finishTime, isFinish: true)
         timeLabel.fontSize = gap * 0.8 * framescale
-        timeLabel.fontColor = colorMoney
+        timeLabel.fontColor = colorBlue1
         timeLabel.verticalAlignmentMode = .Center
         timeLabel.horizontalAlignmentMode = .Right
         timeLabel.position = CGPoint(x: bubbleSize.width / 2 - 25 * framescale, y: gap * -5.2)
@@ -145,6 +167,8 @@ class FinishBubble: SKNode {
     }
     
     func updateFinishData() {
+        buildingLabel.text = "\(finishBuilding)"
+        explosionLabel.text = "\(finishExplosion)"
         timeLabel.text = hourToString(finishTime, isFinish: true)
     }
     

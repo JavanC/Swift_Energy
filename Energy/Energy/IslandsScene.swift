@@ -38,7 +38,7 @@ class IslandsScene: SKScene {
             
             finishBubble = FinishBubble(bubbleSize: CGSizeMake(frame.width * 0.93, frame.height * 0.64))
             finishBubble.alpha = 0
-//            finishBubble.hidden = true
+            finishBubble.hidden = true
             finishBubble.zPosition = 100
             finishBubble.position = CGPoint(x: frame.width / 2, y: frame.height * 2 / 5)
             worldLayer.addChild(finishBubble)
@@ -142,6 +142,11 @@ class IslandsScene: SKScene {
             if confirmBubble.buyButton.containsPoint(NodePosition) { confirmBubble.buyButton.alpha = 0.7 }
             return
         }
+        if finishBubble.hidden == false {
+            let NodePosition = convertPoint(location, toNode: finishBubble)
+            if finishBubble.OKButton.containsPoint(NodePosition) { finishBubble.OKButton.alpha = 0.7 }
+            return
+        }
         if settingButton.containsPoint(location) {
             settingButton.alpha = 0.7
         }
@@ -183,6 +188,11 @@ class IslandsScene: SKScene {
             confirmBubble.OKButton.alpha = confirmBubble.OKButton.containsPoint(NodePosition) ? 0.7 : 1
             confirmBubble.cancelButton.alpha = confirmBubble.cancelButton.containsPoint(NodePosition) ? 0.7 : 1
             confirmBubble.buyButton.alpha = confirmBubble.buyButton.containsPoint(NodePosition) ? 0.7 : 1
+            return
+        }
+        if finishBubble.hidden == false {
+            let NodePosition = convertPoint(location, toNode: finishBubble)
+            finishBubble.OKButton.alpha = finishBubble.OKButton.containsPoint(NodePosition) ? 0.7 : 1
             return
         }
         
@@ -311,6 +321,7 @@ class IslandsScene: SKScene {
                     if !isSoundMute{ runAction(soundTap) }
                 }
             }
+            return
         }
         
         if settingButton.containsPoint(location) {            
@@ -377,15 +388,17 @@ class IslandsScene: SKScene {
             self.loadingNum = 1
             self.view?.presentScene(islandsScene)
             // reset game data
-            money          = 1
-            research       = 1
-            spendTime      = 0
-            finishTime     = 0
-            isPause        = false
-            isRebuild      = true
-            isSoundMute    = false
-            isMusicMute    = false
-            isFinishTarget = false
+            money           = 1
+            research        = 1
+            spendTime       = 0
+            finishBuilding  = 0
+            finishExplosion = 0
+            finishTime      = 0
+            isPause         = false
+            isRebuild       = true
+            isSoundMute     = false
+            isMusicMute     = false
+            isFinishTarget  = false
             // reset mapUnlocked
             for i in 0..<6 {
                 maps[i].isSold = i == 0 ? true : false

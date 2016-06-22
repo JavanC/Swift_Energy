@@ -498,6 +498,9 @@ class IslandScene: SKScene {
                                     if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
+                                    if !isFinishTarget {
+                                        finishBuilding += 1
+                                    }
                                 }
                             }
                         } else {
@@ -506,6 +509,9 @@ class IslandScene: SKScene {
                                     if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
+                                    if !isFinishTarget {
+                                        finishBuilding += 1
+                                    }
                                 }
                             }
                         }
@@ -569,6 +575,9 @@ class IslandScene: SKScene {
                                     if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
+                                    if !isFinishTarget {
+                                        finishBuilding += 1
+                                    }
                                 }
                             }
                         } else {
@@ -577,6 +586,9 @@ class IslandScene: SKScene {
                                     if !isSoundMute{ runAction(soundPlacing) }
                                     maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
                                     money -= price
+                                    if !isFinishTarget {
+                                        finishBuilding += 1
+                                    }
                                 }
                             }
                         }
