@@ -95,7 +95,7 @@ class Building: SKNode {
     
     // MARK: progress update
     func progressUpdate() {
-        if buildingData.progress != nil {
+        if !isBoost && buildingData.progress != nil {
             switch buildingData.progress! {
             case .Time:
                 let persent = CGFloat(buildingData.timeSystem.inAmount) / CGFloat(buildingData.timeSystem.size)
@@ -566,6 +566,11 @@ class BuildingMapLayer: SKSpriteNode {
         // 2. Activate and Rebuild
         for element in timeSysTemElements {
             if element.activate {
+                if !isBoost && element.buildingData.buildType == .WindTurbine {
+                    let imageNumber = Int(element.buildingData.timeSystem.inAmount) % 4
+                    let imageName = "\(element.buildingData.buildType)\(imageNumber)"
+                    element.buildingNode.texture = buildingAtlas.textureNamed(imageName)
+                }
                 if !element.buildingData.timeSystem.tick() {
                     element.changeActivate(false)
                 }

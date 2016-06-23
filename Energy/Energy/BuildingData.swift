@@ -348,7 +348,7 @@ class BuildingData: NSObject, NSCoding {
             buildPrice = 0
 
         case .WindTurbine:
-            imageName = "WindTurbine"
+            imageName = "WindTurbine0"
             name = "Wind Turbine".localized
             comment = "Produced energy by the wind.".localized
             buildPrice = 1
@@ -596,7 +596,7 @@ class BuildingData: NSObject, NSCoding {
             buildPrice = 1
             
         default:
-            imageName = "WindTurbine"
+            imageName = "WindTurbine0"
             buildPrice = 1
         }
         
