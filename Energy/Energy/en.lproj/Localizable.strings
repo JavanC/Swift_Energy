@@ -7,32 +7,40 @@
  */
 
 /* Setting Layer */
-"Setting"                      = "Setting";
-"Sound"                        = "Sound";
-"Music"                        = "Music";
-"Reset All Data"               = "Reset All Data";
-"Confirm reset all data?"      = "Confirm reset all data?";
-"Yes"                          = "Yes";
-"No"                           = "No";
+"Setting"                             = "Setting";
+"Sound"                               = "Sound";
+"Music"                               = "Music";
+"Reset All Data"                      = "Reset All Data";
+"Confirm reset all data?"             = "Confirm reset all data?";
+"Yes"                                 = "Yes";
+"No"                                  = "No";
 
 /* Boost Layer */
-"TIME RECOVER"                 = "TIME RECOVER";
-"- Max recover one hour -"     = "- Max recover one hour -";
+"TIME RECOVER"                        = "TIME RECOVER";
+"- Max recover one hour -"            = "- Max recover one hour -";
 
 /* Confirm Bubble */
-"You don't have enough money."       = "You don't have enough money.";
-"Buy a mysterious alien technology." = "Buy a mysterious alien technology.";
-"Buy the island to building."        = "Buy the island to building.";
-"OK"                                 = "OK";
-"Cancel"                             = "Cancel";
-"Buy"                                = "Buy";
-"Small Island"                       = "Small Island";
-"Tree Island"                        = "Tree Island";
-"Canyon Island"                      = "Canyon Island";
-"Coconut Island"                     = "Coconut Island";
-"Sand Island"                        = "Sand Island";
-"Mainland"                           = "Mainland";
-"Alien Technology"                   = "Alien Technology";
+"You don't have enough money."        = "You don't have enough money.";
+"Buy a mysterious alien technology."  = "Buy a mysterious alien technology.";
+"Buy the island to building."         = "Buy the island to building.";
+"OK"                                  = "OK";
+"Cancel"                              = "Cancel";
+"Buy"                                 = "Buy";
+"Small Island"                        = "Small Island";
+"Tree Island"                         = "Tree Island";
+"Canyon Island"                       = "Canyon Island";
+"Coconut Island"                      = "Coconut Island";
+"Sand Island"                         = "Sand Island";
+"Mainland"                            = "Mainland";
+"Alien Technology"                    = "Alien Technology";
+
+/* Finish Bubble */
+"Congratulation!"                     = "Congratulation!";
+"You get a perpetual motion machine," = "You get a perpetual motion machine,";
+"it has unlimited energy."            = "it has unlimited energy.";
+"Building"                            = "Building";
+"Explosion"                           = "Explosion";
+"Spend Time"                          = "Spend Time";
 
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "Touch buildings on the map to sell it.";

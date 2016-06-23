@@ -30,7 +30,7 @@ class FinishBubble: SKNode {
         
         bubbleName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         bubbleName.name = "bubbleName"
-        bubbleName.text = "Congratulation!"
+        bubbleName.text = "Congratulation!".localized
         bubbleName.fontSize = gap * 1.6
         bubbleName.verticalAlignmentMode = .Center
         bubbleName.position = CGPoint(x: 0, y: gap * 8.2)
@@ -155,6 +155,18 @@ class FinishBubble: SKNode {
         OKLabel.verticalAlignmentMode = .Center
         OKButton.addChild(OKLabel)
         addChild(OKButton)
+        
+        NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: #selector(FinishBubble.launchFireworks), userInfo: nil, repeats: true)
+    }
+    
+    func launchFireworks() {
+        let emitter = SKEmitterNode(fileNamed: "Firework.sks")!
+        let xPosition = CGFloat(RandomInt(min: -576 / 2, max: 576 / 2)) * framescale
+        let yPosition = CGFloat(RandomInt(min: 256, max: 1024 / 2)) * framescale
+        let pos = CGPoint(x: xPosition, y: yPosition)
+        emitter.position = pos
+        emitter.zPosition = -1
+        addChild(emitter)
     }
     
     func showBubble() {

@@ -7,32 +7,40 @@
 */
 
 /* Setting Layer */
-"Setting"                            = "设置";
-"Sound"                              = "音效";
-"Music"                              = "音乐";
-"Reset All Data"                     = "重置资料";
-"Confirm reset all data?"            = "确认重置所有资料?";
-"Yes"                                = "是";
-"No"                                 = "否";
+"Setting"                             = "设置";
+"Sound"                               = "音效";
+"Music"                               = "音乐";
+"Reset All Data"                      = "重置资料";
+"Confirm reset all data?"             = "确认重置所有资料?";
+"Yes"                                 = "是";
+"No"                                  = "否";
 
 /* Boost Layer */
-"TIME RECOVER"                       = "遗失时间恢复";
-"- Max recover one hour -"           = "-最多可累积一小时-";
+"TIME RECOVER"                        = "遗失时间恢复";
+"- Max recover one hour -"            = "-最多可累积一小时-";
 
 /* Confirm Bubble */
-"You don't have enough money."       = "你没有足够的金钱.";
-"Buy a mysterious alien technology." = "外星人出售一项神秘技术，要购买吗？";
-"Buy the island to building."        = "购买该地区来开始使建设.";
-"OK"                                 = "确认";
-"Cancel"                             = "取消";
-"Buy"                                = "购买";
-"Small Island"                       = "小岛";
-"Tree Island"                        = "树岛";
-"Canyon Island"                      = "峡谷岛";
-"Coconut Island"                     = "椰子岛";
-"Sand Island"                        = "沙漠岛";
-"Mainland"                           = "宽阔草原";
-"Alien Technology"                   = "外星科技";
+"You don't have enough money."        = "你没有足够的金钱.";
+"Buy a mysterious alien technology."  = "外星人出售一项神秘技术，要购买吗？";
+"Buy the island to building."         = "购买该地区来开始使建设.";
+"OK"                                  = "确认";
+"Cancel"                              = "取消";
+"Buy"                                 = "购买";
+"Small Island"                        = "小岛";
+"Tree Island"                         = "树岛";
+"Canyon Island"                       = "峡谷岛";
+"Coconut Island"                      = "椰子岛";
+"Sand Island"                         = "沙漠岛";
+"Mainland"                            = "宽阔草原";
+"Alien Technology"                    = "外星科技";
+
+/* Finish Bubble */
+"Congratulation!"                     = "恭喜您！";
+"You get a perpetual motion machine," = "你从外星人身上得到了永动机科技";
+"it has unlimited energy."            = "现在你拥有无尽的能源了";
+"Building"                            = "建造数量";
+"Explosion"                           = "炸毁数量";
+"Spend Time"                          = "花费时间";
 
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "点击地图上的建筑物来出售";

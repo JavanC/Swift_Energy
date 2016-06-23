@@ -43,6 +43,7 @@
 		658BA2341C72C1920033051A /* InfoLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2331C72C1920033051A /* InfoLayer.swift */; };
 		658BA2361C76B10F0033051A /* ConfirmBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BA2351C76B10F0033051A /* ConfirmBubble.swift */; };
 		658D87C71CDAEC8900D5C22B /* TeachLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658D87C61CDAEC8900D5C22B /* TeachLayer.swift */; };
+		65A006151D1BB276008A2633 /* Firework.sks in Resources */ = {isa = PBXBuildFile; fileRef = 65A006141D1BB276008A2633 /* Firework.sks */; };
 		65B5208B1CC5C8F600875B7F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B5208A1CC5C8F600875B7F /* Reachability.swift */; };
 		65E5E2C31CF30B1D00066A85 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65E5E2C51CF30B1D00066A85 /* Localizable.strings */; };
 		65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 65ED1E6C1C608A8B008E0BB5 /* Explode.sks */; };
@@ -100,6 +101,7 @@
 		658BA2331C72C1920033051A /* InfoLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoLayer.swift; sourceTree = "<group>"; };
 		658BA2351C76B10F0033051A /* ConfirmBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmBubble.swift; sourceTree = "<group>"; };
 		658D87C61CDAEC8900D5C22B /* TeachLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeachLayer.swift; sourceTree = "<group>"; };
+		65A006141D1BB276008A2633 /* Firework.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Firework.sks; path = Content/Firework.sks; sourceTree = "<group>"; };
 		65ACCDDC1CF589CD001F5EA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65B5208A1CC5C8F600875B7F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		65E5E2C81CF30C8A00066A85 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 			children = (
 				65ED1E6C1C608A8B008E0BB5 /* Explode.sks */,
 				8D042CED1C84933900DF434C /* Starfield.sks */,
+				65A006141D1BB276008A2633 /* Firework.sks */,
 				65ED1E6D1C608A8B008E0BB5 /* spark.png */,
 				65361A691C61A30D006C3E18 /* action.wav */,
 				65361A6A1C61A30D006C3E18 /* backgroundMusic.mp3 */,
@@ -322,6 +325,7 @@
 				65361A7C1C61D93A006C3E18 /* select.wav in Resources */,
 				65361A701C61A30D006C3E18 /* action.wav in Resources */,
 				658352A21C44CB8A00317FFD /* Assets.xcassets in Resources */,
+				65A006151D1BB276008A2633 /* Firework.sks in Resources */,
 				65361A741C61A30D006C3E18 /* placing.wav in Resources */,
 				65361A7A1C61D886006C3E18 /* click.wav in Resources */,
 				65361A751C61A30D006C3E18 /* sell.wav in Resources */,
