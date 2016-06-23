@@ -59,7 +59,7 @@ class FinishBubble: SKNode {
         
         let infoLabel2 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         infoLabel2.name = "buyLabel"
-        infoLabel2.text = "it has unlimited energy.".localized
+        infoLabel2.text = "it has unlimited energy!".localized
         infoLabel2.fontSize = gap * 0.8 * framescale
         infoLabel2.verticalAlignmentMode = .Center
         infoLabel2.position = CGPoint(x: 0, y: gap * 0.2)
@@ -92,26 +92,26 @@ class FinishBubble: SKNode {
         label3.position = CGPoint(x: -bubbleSize.width / 2 + 20 * framescale, y: gap * -5.2)
         addChild(label3)
         
-        let bg1 = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width - 60 * framescale - label1.frame.width, gap * 0.9 * framescale), cornerRadius: 6 * framescale)
-        bg1.fillColor = SKColor.blackColor()
-        bg1.lineWidth = 0
-        bg1.alpha = 0.3
-        bg1.position = CGPoint(x: bubbleSize.width / 2 - bg1.frame.width / 2 - 20 * framescale, y: gap * -1.8)
-        addChild(bg1)
+        let labelBG1 = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width - 60 * framescale - label1.frame.width, gap * 0.9 * framescale), cornerRadius: 6 * framescale)
+        labelBG1.fillColor = SKColor.blackColor()
+        labelBG1.lineWidth = 0
+        labelBG1.alpha = 0.3
+        labelBG1.position = CGPoint(x: bubbleSize.width / 2 - labelBG1.frame.width / 2 - 20 * framescale, y: gap * -1.8)
+        addChild(labelBG1)
         
-        let bg2 = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width - 60 * framescale - label2.frame.width, gap * 0.9 * framescale), cornerRadius: 6 * framescale)
-        bg2.fillColor = SKColor.blackColor()
-        bg2.lineWidth = 0
-        bg2.alpha = 0.3
-        bg2.position = CGPoint(x: bubbleSize.width / 2 - bg2.frame.width / 2 - 20 * framescale, y: gap * -3.5)
-        addChild(bg2)
+        let labelBG2 = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width - 60 * framescale - label2.frame.width, gap * 0.9 * framescale), cornerRadius: 6 * framescale)
+        labelBG2.fillColor = SKColor.blackColor()
+        labelBG2.lineWidth = 0
+        labelBG2.alpha = 0.3
+        labelBG2.position = CGPoint(x: bubbleSize.width / 2 - labelBG2.frame.width / 2 - 20 * framescale, y: gap * -3.5)
+        addChild(labelBG2)
         
-        let bg3 = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width - 60 * framescale - label3.frame.width, gap * 0.9 * framescale), cornerRadius: 6 * framescale)
-        bg3.fillColor = SKColor.blackColor()
-        bg3.lineWidth = 0
-        bg3.alpha = 0.3
-        bg3.position = CGPoint(x: bubbleSize.width / 2 - bg3.frame.width / 2 - 20 * framescale, y: gap * -5.2)
-        addChild(bg3)
+        let labelBG3 = SKShapeNode(rectOfSize: CGSizeMake(bubbleSize.width - 60 * framescale - label3.frame.width, gap * 0.9 * framescale), cornerRadius: 6 * framescale)
+        labelBG3.fillColor = SKColor.blackColor()
+        labelBG3.lineWidth = 0
+        labelBG3.alpha = 0.3
+        labelBG3.position = CGPoint(x: bubbleSize.width / 2 - labelBG3.frame.width / 2 - 20 * framescale, y: gap * -5.2)
+        addChild(labelBG3)
         
         buildingLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
         buildingLabel.name = "buildingLabel"

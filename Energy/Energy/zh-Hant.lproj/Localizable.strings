@@ -37,7 +37,7 @@
 /* Finish Bubble */
 "Congratulation!"                     = "恭喜您！";
 "You get a perpetual motion machine," = "你從外星人身上得到了永動機科技";
-"it has unlimited energy."            = "現在你擁有無盡的能源了";
+"it has unlimited energy!"            = "現在你擁有無盡的能源了！";
 "Building"                            = "建造數量";
 "Explosion"                           = "炸毀數量";
 "Spend Time"                          = "花費時間";
