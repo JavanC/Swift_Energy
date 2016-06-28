@@ -153,14 +153,15 @@ class IslandScene: SKScene {
     }
     
     func showAdSpace() {
+        let scale = UIScreen.mainScreen().scale
         let midheight = tilesScaleSize.height * midTileSize.height
-        let midscale = (midheight - 100) / midheight
+        let midscale = (midheight - 50 * scale) / midheight
         for map in maps {
             map.runAction(SKAction.scaleYTo(framescale * midscale, duration: 0))
         }
         buildingSelectLayer.runAction(SKAction.scaleYTo(midscale, duration: 0))
-        bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 100, duration: 0))
-        buttonLayer.runAction(SKAction.moveToY(100, duration: 0))
+        bottomLayer.runAction(SKAction.moveToY(buttonLayer.size.height + 50 * scale, duration: 0))
+        buttonLayer.runAction(SKAction.moveToY(50 * scale, duration: 0))
         RunAfterDelay(1) {
             print("show AD")
             NSNotificationCenter.defaultCenter().postNotificationName("showAd", object: nil)
