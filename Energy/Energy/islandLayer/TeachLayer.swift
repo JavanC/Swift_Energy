@@ -55,7 +55,7 @@ class TeachLayer: SKSpriteNode {
         labels[2].text = ""
         switch step {
         case 1:
-            labels[0].text = "Welcome to the first play!"
+            labels[0].text = "Welcome to the first island!"
             labels[1].text = "Let me teach you how to play."
         case 2:
             labels[1].text = "Tap to switch to page construction."
