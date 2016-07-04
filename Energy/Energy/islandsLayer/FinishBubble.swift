@@ -43,7 +43,7 @@ class FinishBubble: SKNode {
         line1.position = CGPoint(x: 0, y: gap * 6.8)
         addChild(line1)
         
-        let machinImg = SKSpriteNode(texture: iconAtlas.textureNamed("coint"))
+        let machinImg = SKSpriteNode(texture: iconAtlas.textureNamed("Alien"))
         machinImg.name = "machinImg"
         machinImg.setScale(1.6 * framescale)
         machinImg.position = CGPoint(x: 0, y: gap * 4.3)
