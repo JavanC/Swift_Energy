@@ -60,7 +60,7 @@
 
 /* Building Information */
 "Ticks"                      = "生產次數";
-"Heat"                       = "累積熱量";
+"Heat"                       = "熱容量";
 "Water"                      = "累積水量";
 "Produce Energy"             = "能源生產量";
 "Produce Heat"               = "熱能生產量";

@@ -402,7 +402,11 @@ class PageBuild: SKSpriteNode {
         if selectNumber > 3 || selectNumber < 0 { return }
         
         // Remove Action
-        childNodeWithName("SelectImage\(selectNumber)")?.removeAllActions()
+        buildLine.removeAllActions()
+        selectBox.removeAllActions()
+        for i in 0...4 {
+            childNodeWithName("SelectImage\(i)")?.removeAllActions()
+        }
         // Hide
         buildLine.runAction(SKAction.sequence([SKAction.waitForDuration(0.3), SKAction.fadeOutWithDuration(0.2), SKAction.hide()]))
         selectBox.runAction(SKAction.sequence([SKAction.hide(), SKAction.fadeAlphaTo(0, duration: 0)]))
@@ -430,7 +434,11 @@ class PageBuild: SKSpriteNode {
         let pos = imagePosition[selectNumber]
         
         // Remove Action
-        childNodeWithName("SelectImage\(selectNumber)")?.removeAllActions()
+        buildLine.removeAllActions()
+        selectBox.removeAllActions()
+        for i in 0...4 {
+            childNodeWithName("SelectImage\(i)")?.removeAllActions()
+        }
         // Hide
         selectInfo.childNodeWithName("infoImage")?.runAction(SKAction.sequence([SKAction.hide(), SKAction.waitForDuration(0.2), SKAction.unhide()]))
         selectInfo.runAction(SKAction.sequence([SKAction.fadeAlphaTo(0, duration: 0.2), SKAction.hide()]))

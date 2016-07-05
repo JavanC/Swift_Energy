@@ -61,7 +61,7 @@
 /* Building Information */
 "Garbage"                    = "垃圾堆";
 "Ticks"                      = "生产次数";
-"Heat"                       = "累积热量";
+"Heat"                       = "热容量";
 "Water"                      = "累积水量";
 "Produce Energy"             = "能源生产量";
 "Produce Heat"               = "热能生产量";
