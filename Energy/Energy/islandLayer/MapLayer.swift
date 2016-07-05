@@ -566,7 +566,7 @@ class BuildingMapLayer: SKSpriteNode {
         // 2. Activate and Rebuild
         for element in timeSysTemElements {
             if element.activate {
-                if !isBoost && element.buildingData.buildType == .WindTurbine {
+                if !isBoost {
                     let imageNumber = Int(element.buildingData.timeSystem.inAmount) % 4
                     let imageName = "\(element.buildingData.buildType)\(imageNumber)"
                     element.buildingNode.texture = buildingAtlas.textureNamed(imageName)

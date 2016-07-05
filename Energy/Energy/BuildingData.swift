@@ -358,7 +358,7 @@ class BuildingData: NSObject, NSCoding {
             energySystem = EnergySystem(initAmount: 0, produce: 0.1)
             
         case .SolarCell:
-            imageName = "SolarCell"
+            imageName = "SolarCell0"
             name = "Solar Plant".localized
             comment = "Produced heat by the solar. Transfer Heat to the surrounding buildings, Such as a generator.".localized
             buildPrice = 100
@@ -368,7 +368,7 @@ class BuildingData: NSObject, NSCoding {
             heatSystem = HeatSystem(size: 10, produce: 3, output: true)
             
         case .CoalBurner:
-            imageName = "CoalBurner"
+            imageName = "CoalBurner0"
             name = "Coal-Fired Plant".localized
             comment = "Produce heat by burning coal.".localized
             buildPrice = 10000
@@ -378,7 +378,7 @@ class BuildingData: NSObject, NSCoding {
             heatSystem = HeatSystem(size: 10, produce: 100, output: true)
             
         case .WaveCell:
-            imageName = "WaveCell"
+            imageName = "WaveCell0"
             name = "Wave Energy".localized
             comment = "Produced energy by the ocean wave. Must be placed in water.".localized
             buildPrice = 1000000
@@ -388,7 +388,7 @@ class BuildingData: NSObject, NSCoding {
             energySystem = EnergySystem(initAmount: 10, produce: 2700)
             
         case .GasBurner:
-            imageName = "GasBurner"
+            imageName = "GasBurner0"
             name = "Gas-Fired Plant".localized
             comment = "Produce heat by burning gas.".localized
             buildPrice = 100000000
@@ -398,7 +398,7 @@ class BuildingData: NSObject, NSCoding {
             heatSystem = HeatSystem(size: 10, produce: 200000, output: true)
             
         case .NuclearCell:
-            imageName = "NuclearCell"
+            imageName = "NuclearCell0"
             name = "Nuclear Plant".localized
             comment = "Produce heat by nuclear fission.".localized
             buildPrice = 10000000000
@@ -408,7 +408,7 @@ class BuildingData: NSObject, NSCoding {
             heatSystem = HeatSystem(size: 10, produce: 10000000, output: true)
             
         case .FusionCell:
-            imageName = "FusionCell"
+            imageName = "FusionCell0"
             name = "Fusion Plant".localized
             comment = "Produce heat by nuclear fusion.".localized
             buildPrice = 1000000000000
