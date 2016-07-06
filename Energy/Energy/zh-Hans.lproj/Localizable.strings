@@ -62,7 +62,7 @@
 "Garbage"                    = "垃圾堆";
 "Ticks"                      = "生产次数";
 "Heat"                       = "热容量";
-"Water"                      = "累积水量";
+"Water"                      = "水容量";
 "Produce Energy"             = "能源生产量";
 "Produce Heat"               = "热能生产量";
 "Sells Energy"               = "能源销售量";

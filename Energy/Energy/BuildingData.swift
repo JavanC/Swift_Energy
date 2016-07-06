@@ -460,7 +460,7 @@ class BuildingData: NSObject, NSCoding {
             imageName = "LargeBoilerHouse"
             name = "Large Boiler House".localized
             comment = "Direct sales more store heat.".localized
-            buildPrice = 500000000
+            buildPrice = 50000000
             progress = .Heat
             heatSystem = HeatSystem(size: 8000, initAmount: 0)
             moneySystem = MoneySystem(initAmount: 0, heat2MoneyAmount: 600)
@@ -660,7 +660,7 @@ class BuildingData: NSObject, NSCoding {
             heatSystem.size = baseToPower(2000, base: 1.5, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .LargeBoilerHouse:
-            moneySystem.heat2MoneyAmount = baseToPower(600, base: 1.2, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]!)
+            moneySystem.heat2MoneyAmount = baseToPower(20000, base: 1.2, power: upgradeLevel[UpgradeType.BoilerHouseSellAmount]!)
             heatSystem.size = baseToPower(8000, base: 1.5, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
             
         case .Isolation:

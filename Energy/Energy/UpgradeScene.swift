@@ -163,8 +163,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.Isolation
             name = "Isolation Effectiveness".localized
             comment = "Increases isolation effectiveness by 10%".localized
-            upgradePrice = baseToPower(1000, base: 10, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]!)
-            degradePrice = baseToPower(1000, base: 10, power: upgradeLevel[UpgradeType.BoilerHouseMaxHeat]! - 1)
+            upgradePrice = baseToPower(1000, base: 10, power: upgradeLevel[UpgradeType.IsolationEffectiveness]!)
+            degradePrice = baseToPower(1000, base: 10, power: upgradeLevel[UpgradeType.IsolationEffectiveness]! - 1)
             
         case .EnergyBatterySize:
             imageType = BuildingType.Battery
@@ -247,8 +247,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.ResearchCenter
             name = "Research Center Effectiveness".localized
             comment = "Increases research producetion by 25%".localized
-            upgradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
-            degradePrice = baseToPower(100, base: 1.8, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]! - 1)
+            upgradePrice = baseToPower(100, base: 2.3, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]!)
+            degradePrice = baseToPower(100, base: 2.3, power: upgradeLevel[UpgradeType.ResearchCenterEffectiveness]! - 1)
             
         case .LibraryEffectiveness:
             imageType = BuildingType.Library
