@@ -256,7 +256,7 @@ class ResearchElement: SKNode {
         addChild(image)
         
         // name
-        let researchName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let researchName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         researchName.name = "researchName"
         researchName.text = name
         researchName.fontColor = SKColor.whiteColor()
@@ -267,7 +267,7 @@ class ResearchElement: SKNode {
         addChild(researchName)
         
         // comment
-        let commentLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let commentLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         commentLabel.name = "commentLabel"
         commentLabel.text = comment
         commentLabel.fontColor = SKColor.lightGrayColor()
@@ -278,7 +278,7 @@ class ResearchElement: SKNode {
         addChild(commentLabel)
         
         // research
-        let researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         researchLabel.name = "researchLabel"
         researchLabel.text = "Research:".localized
         researchLabel.fontColor = SKColor.lightGrayColor()
@@ -289,7 +289,7 @@ class ResearchElement: SKNode {
         addChild(researchLabel)
         
         // price
-        let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         priceLabel.name = "priceLabel"
         priceLabel.text = numberToString(researchPrice)
         priceLabel.fontColor = colorResearch
@@ -372,7 +372,7 @@ class ResearchScene: SKScene {
             researchImage.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI_2), duration: 5)))
             addChild(researchImage)
             
-            researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+            researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
             researchLabel.name = "top label"
             researchLabel.fontSize = unitHeight * 0.2
             researchLabel.fontColor = colorResearch
@@ -382,7 +382,7 @@ class ResearchScene: SKScene {
             researchLabel.position = CGPoint(x: frame.size.width * 0.05, y: frame.size.height - unitHeight * 0.9)
             addChild(researchLabel)
             
-            itemLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+            itemLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
             itemLabel.name = "item label"
             itemLabel.fontSize = unitHeight * 0.2
             itemLabel.fontColor = colorResearch

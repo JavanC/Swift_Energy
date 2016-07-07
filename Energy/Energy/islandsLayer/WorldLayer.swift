@@ -274,7 +274,7 @@ class WorldLayer: SKNode {
                 let tickAction = SKAction.sequence([group, SKAction.removeFromParent()])
                 
                 if maps[i].money_TickAdd != 0 {
-                    let addMoney = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+                    let addMoney = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
                     addMoney.name = "add Money"
                     addMoney.text = "+\(numberToString(maps[i].money_TickAdd))"
                     addMoney.fontColor = colorMoney
@@ -285,7 +285,7 @@ class WorldLayer: SKNode {
                 }
                 
                 if maps[i].research_TickAdd != 0 {
-                    let addResearch = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+                    let addResearch = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
                     addResearch.name = "add research"
                     addResearch.text = "+\(numberToString(maps[i].research_TickAdd))"
                     addResearch.fontColor = colorResearch

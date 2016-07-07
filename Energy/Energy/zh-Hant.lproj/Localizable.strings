@@ -8,6 +8,7 @@
 
 /* Font */
 "SanFranciscoRounded-Black"           = "PingFangTC-Semibold";
+"ArialMT"                             = "PingFangTC-Semibold";
 
 /* Setting Layer */
 "Setting"                             = "設置";
@@ -44,6 +45,13 @@
 "Building"                            = "建造數量";
 "Explosion"                           = "炸毀數量";
 "Spend Time"                          = "花費時間";
+
+/* Teach Layer */
+"Teach1-en"                           = "Teach1-tw";
+"Teach2-en"                           = "Teach2-tw";
+"Teach3-en"                           = "Teach3-tw";
+"Teach4-en"                           = "Teach4-tw";
+"Teach5-en"                           = "Teach5-tw";
 
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "點擊地圖上的建築物來出售";

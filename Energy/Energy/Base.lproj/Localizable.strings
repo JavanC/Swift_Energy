@@ -8,6 +8,7 @@
 
 /* Font */
 "SanFranciscoRounded-Black"           = "SanFranciscoRounded-Black";
+"ArialMT"                             = "ArialMT";
 
 /* Setting Layer */
 "Setting"                             = "Setting";
@@ -44,6 +45,13 @@
 "Building"                            = "Building";
 "Explosion"                           = "Explosion";
 "Spend Time"                          = "Spend Time";
+
+/* Teach Layer */
+"Teach1-en"                           = "Teach1-en";
+"Teach2-en"                           = "Teach2-en";
+"Teach3-en"                           = "Teach3-en";
+"Teach4-en"                           = "Teach4-en";
+"Teach5-en"                           = "Teach5-en";
 
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "Touch buildings on the map to sell it.";

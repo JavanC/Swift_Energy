@@ -14,14 +14,14 @@ class InformationLabel: SKNode {
     
     init(title: String, fontSize: CGFloat, valueColor: SKColor) {
         super.init()
-        titleLabel                         = SKLabelNode(fontNamed: "ArialMT")
+        titleLabel                         = SKLabelNode(fontNamed: "ArialMT".localized)
         titleLabel.name                    = "title"
         titleLabel.text                    = "\(title) :"
         titleLabel.fontSize                = fontSize
         titleLabel.fontColor               = SKColor.whiteColor()
         titleLabel.horizontalAlignmentMode = .Left
         addChild(titleLabel)
-        valueLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        valueLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         valueLabel.name                    = "value"
         valueLabel.text                    = ""
         valueLabel.fontSize                = fontSize
@@ -289,7 +289,7 @@ class PageBuild: SKSpriteNode {
             addChild(image)
             
             let price = BuildingData.init(buildType: buildMenu[i]).buildPrice
-            let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+            let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
             priceLabel.name = "price label \(i)"
             priceLabel.text = numberToString(price) 
             priceLabel.hidden = i == selectNumber ? false : true
@@ -319,7 +319,7 @@ class PageBuild: SKSpriteNode {
         refreshImage.name       = "refreshImage"
         refreshImage.setScale(framescale)
         rebuildButton.addChild(refreshImage)
-        let rebuildLabel        = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let rebuildLabel        = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         rebuildLabel.name = "rebuildLabel"
         rebuildLabel.text = "Rebuild:ON".localized
         rebuildLabel.fontSize = 16 * framescale
@@ -522,21 +522,21 @@ class PageSell: SKSpriteNode {
         self.anchorPoint = CGPoint(x: 0, y: 0)
         let gap          = size.height * 3 / 6 / 8
 
-        let Label1 = SKLabelNode(fontNamed: "ArialMT")
+        let Label1 = SKLabelNode(fontNamed: "ArialMT".localized)
         Label1.text = "Touch buildings on the map to sell it.".localized
         Label1.fontColor = colorMoney
         Label1.fontSize = size.height / 6
         Label1.position = CGPoint(x: size.width / 2, y: size.height * 2 / 6 + gap * 5)
         addChild(Label1)
         
-        let Label2 = SKLabelNode(fontNamed: "ArialMT")
+        let Label2 = SKLabelNode(fontNamed: "ArialMT".localized)
         Label2.text = "Notice: Produce energy building can not be".localized
         Label2.fontColor = colorMoney
         Label2.fontSize = size.height / 6
         Label2.position = CGPoint(x: size.width / 2, y: size.height * 1 / 6 + gap * 4)
         addChild(Label2)
         
-        let Label3 = SKLabelNode(fontNamed: "ArialMT")
+        let Label3 = SKLabelNode(fontNamed: "ArialMT".localized)
         Label3.text = "recycled money.".localized
         Label3.fontColor = colorMoney
         Label3.fontSize = size.height / 6
@@ -575,7 +575,7 @@ class PageEnergy: SKSpriteNode {
         energy_ProgressFront.position              = CGPoint(x: 0, y: size.height / 2)
         addChild(energy_ProgressFront)
 
-        energyLabel                                = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        energyLabel                                = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         energyLabel.name                           = "EnergyLabel"
         energyLabel.fontColor                      = SKColor.whiteColor()
         energyLabel.fontSize                       = size.height / 5
@@ -583,7 +583,7 @@ class PageEnergy: SKSpriteNode {
         energyLabel.position                       = CGPoint(x: size.width - 5 * framescale, y: 5 * framescale)
         addChild(energyLabel)
 
-        energyTickAddLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        energyTickAddLabel                         = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         energyTickAddLabel.name                    = "energyTickAddLabel"
         energyTickAddLabel.fontColor               = colorEnergy
         energyTickAddLabel.fontSize                = size.height / 5
@@ -591,7 +591,7 @@ class PageEnergy: SKSpriteNode {
         energyTickAddLabel.position                = CGPoint(x: size.width - 5 * framescale, y: size.height / 5 + 10 * framescale)
         addChild(energyTickAddLabel)
 
-        let label                                  = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let label                                  = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         label.name                                 = "ExplanationLabel"
         label.text                                 = "TOUCH  TO  SELL  ENERGY".localized
         label.fontColor                            = colorBlue2

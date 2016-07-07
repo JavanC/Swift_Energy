@@ -272,7 +272,7 @@ class UpgradeElement: SKNode {
         addChild(image)
         
         // name
-        let upgradeName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let upgradeName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         upgradeName.name = "upgradeName"
         upgradeName.text = name
         upgradeName.fontColor = SKColor.whiteColor()
@@ -284,7 +284,7 @@ class UpgradeElement: SKNode {
         addChild(upgradeName)
 
         // comment
-        let commentLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let commentLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         commentLabel.name = "commentLabel"
         commentLabel.text = comment
         commentLabel.fontColor = SKColor.lightGrayColor()
@@ -295,7 +295,7 @@ class UpgradeElement: SKNode {
         addChild(commentLabel)
 
         // level and money label
-        let infoLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let infoLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         infoLabel.name = "levelLabel"
         infoLabel.text = "Lv.     Price:".localized
         infoLabel.fontColor = SKColor.lightGrayColor()
@@ -306,7 +306,7 @@ class UpgradeElement: SKNode {
         addChild(infoLabel)
 
         // level
-        let levelLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let levelLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         levelLabel.name = "levelValue"
         levelLabel.text = "\(level)"
         levelLabel.fontColor = colorBlue1
@@ -317,7 +317,7 @@ class UpgradeElement: SKNode {
         addChild(levelLabel)
     
         // price
-        let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         priceLabel.name = "priceLabel"
         priceLabel.text = numberToString(upgradePrice)
         priceLabel.fontColor = colorMoney
@@ -399,7 +399,7 @@ class UpgradeScene: SKScene {
             upgradeImage.position = topCenter
             addChild(upgradeImage)
             
-            moneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+            moneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
             moneyLabel.name = "top label"
             moneyLabel.fontSize = unitHeight * 0.2
             moneyLabel.fontColor = colorMoney
@@ -409,7 +409,7 @@ class UpgradeScene: SKScene {
             moneyLabel.position = CGPoint(x: frame.size.width * 0.05, y: frame.size.height - unitHeight * 0.9)
             addChild(moneyLabel)
             
-            itemLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+            itemLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
             itemLabel.name = "item label"
             itemLabel.fontSize = unitHeight * 0.2
             itemLabel.fontColor = colorMoney

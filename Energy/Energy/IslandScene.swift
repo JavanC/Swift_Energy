@@ -107,17 +107,19 @@ class IslandScene: SKScene {
             addChild(tipsLayer)
             
             //testestestestestestestestestestestest
-            isHaveTeach = false
+//            isHaveTeach = false
             
             // Teach Layer
+            teachLayer = TeachLayer()
+            teachLayer.configureAtPosition(CGPoint(x: frame.width / 2, y: frame.height / 2), size: frame.size)
+            teachLayer.zPosition = 800
+            addChild(teachLayer)
+            teachStep = 1
+            teachLayer.changeTeachStep(teachStep)
             if !isHaveTeach {
                 hasTouchAd = true
-                teachLayer = TeachLayer()
-                teachLayer.configureAtPosition(CGPoint(x: frame.width / 2, y: frame.height / 2), size: frame.size)
-                teachLayer.zPosition = 800
-                addChild(teachLayer)
-                teachStep = 1
-                teachLayer.changeTeachStep(teachStep)
+            } else {
+                teachLayer.hidden = true
             }
             
             contentCreated = true
@@ -137,6 +139,13 @@ class IslandScene: SKScene {
         
         // update boostLayer hidden
         boostLayer.hidden = !isBoost
+        
+        // update teach layer hidden when reset data
+        if !isHaveTeach {
+            teachLayer.hidden = false
+            teachStep = 1
+            teachLayer.changeTeachStep(teachStep)
+        }
 
         print("load 6")
         
@@ -365,6 +374,8 @@ class IslandScene: SKScene {
  
                 /////// try resize AD
                 hideAdSpace()
+                money = money * 10
+                research = research * 10
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
@@ -399,12 +410,7 @@ class IslandScene: SKScene {
                 
             // GMMMMM
             case bottomLayer.pageSell:
-                money = money * 10
-                research = research * 10
-                
-//                for _ in 1...100 {
-//                    tickUpdata()
-//                }
+                for _ in 1...600 { tickUpdata() }
                 
             // Energy Page
             case bottomLayer.pageEnergy.energy_ProgressBack:

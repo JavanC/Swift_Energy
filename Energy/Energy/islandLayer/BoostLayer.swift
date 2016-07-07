@@ -17,7 +17,7 @@ class BoostLayer: SKNode {
         boostBG.alpha = 0.7
         addChild(boostBG)
         
-        let boostLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let boostLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         boostLabel.name = "boostLabel"
         boostLabel.text = "TIME RECOVER".localized
         boostLabel.fontColor = SKColor.whiteColor()
@@ -25,7 +25,7 @@ class BoostLayer: SKNode {
         boostLabel.verticalAlignmentMode = .Center
         addChild(boostLabel)
         
-        let boostPSLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let boostPSLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         boostPSLabel.name = "boostPSLabel"
         boostPSLabel.text = "- Max recover one hour -".localized
         boostPSLabel.fontColor = SKColor.whiteColor()

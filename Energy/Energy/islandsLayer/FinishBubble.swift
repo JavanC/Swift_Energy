@@ -28,7 +28,7 @@ class FinishBubble: SKNode {
         bg.alpha = 0.7
         addChild(bg)
         
-        bubbleName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        bubbleName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         bubbleName.name = "bubbleName"
         bubbleName.text = "Congratulation!".localized
         bubbleName.fontSize = gap * 1.6
@@ -49,7 +49,7 @@ class FinishBubble: SKNode {
         machinImg.position = CGPoint(x: 0, y: gap * 4.3)
         addChild(machinImg)
         
-        let infoLabel1 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let infoLabel1 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         infoLabel1.name = "buyLabel"
         infoLabel1.text = "You get a perpetual motion machine,".localized
         infoLabel1.fontSize = gap * 0.8 * framescale
@@ -57,7 +57,7 @@ class FinishBubble: SKNode {
         infoLabel1.position = CGPoint(x: 0, y: gap * 1.6)
         addChild(infoLabel1)
         
-        let infoLabel2 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let infoLabel2 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         infoLabel2.name = "buyLabel"
         infoLabel2.text = "it has unlimited energy!".localized
         infoLabel2.fontSize = gap * 0.8 * framescale
@@ -65,7 +65,7 @@ class FinishBubble: SKNode {
         infoLabel2.position = CGPoint(x: 0, y: gap * 0.2)
         addChild(infoLabel2)
         
-        let label1 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let label1 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         label1.name = "buildingNumber"
         label1.text = "Building".localized
         label1.fontSize = gap * 0.8 * framescale
@@ -74,7 +74,7 @@ class FinishBubble: SKNode {
         label1.position = CGPoint(x: -bubbleSize.width / 2 + 20 * framescale, y: gap * -1.8)
         addChild(label1)
         
-        let label2 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let label2 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         label2.name = "buildingNumber"
         label2.text = "Explosion".localized
         label2.fontSize = gap * 0.8 * framescale
@@ -83,7 +83,7 @@ class FinishBubble: SKNode {
         label2.position = CGPoint(x: -bubbleSize.width / 2 + 20 * framescale, y: gap * -3.5)
         addChild(label2)
         
-        let label3 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let label3 = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         label3.name = "buildingNumber"
         label3.text = "Spend Time".localized
         label3.fontSize = gap * 0.8 * framescale
@@ -113,7 +113,7 @@ class FinishBubble: SKNode {
         labelBG3.position = CGPoint(x: bubbleSize.width / 2 - labelBG3.frame.width / 2 - 20 * framescale, y: gap * -5.2)
         addChild(labelBG3)
         
-        buildingLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        buildingLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         buildingLabel.name = "buildingLabel"
         buildingLabel.text = "\(finishBuilding)"
         buildingLabel.fontSize = gap * 0.8 * framescale
@@ -123,7 +123,7 @@ class FinishBubble: SKNode {
         buildingLabel.position = CGPoint(x: bubbleSize.width / 2 - 25 * framescale, y: gap * -1.8)
         addChild(buildingLabel)
         
-        explosionLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        explosionLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         explosionLabel.name = "explosionLabel"
         explosionLabel.text = "\(finishExplosion)"
         explosionLabel.fontSize = gap * 0.8 * framescale
@@ -133,7 +133,7 @@ class FinishBubble: SKNode {
         explosionLabel.position = CGPoint(x: bubbleSize.width / 2 - 25 * framescale, y: gap * -3.5)
         addChild(explosionLabel)
         
-        timeLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        timeLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         timeLabel.name = "timeLabel"
         timeLabel.text = hourToString(finishTime, isFinish: true)
         timeLabel.fontSize = gap * 0.8 * framescale
@@ -148,7 +148,7 @@ class FinishBubble: SKNode {
         OKButton.fillColor = colorBlue2
         OKButton.lineWidth = 0
         OKButton.position = CGPoint(x: 0, y: gap * -8)
-        let OKLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let OKLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         OKLabel.name = "OKLabel"
         OKLabel.text = "OK".localized
         OKLabel.fontSize = 40 * framescale

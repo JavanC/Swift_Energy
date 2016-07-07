@@ -79,7 +79,7 @@ class SettingLayer: SKNode {
         musicButton.position = CGPoint(x: -frameSize.width / 6, y: gap * 4)
         addChild(musicButton)
         
-        let musicLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let musicLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         musicLabel.name = "musicLabel"
         musicLabel.text = "Music".localized
         musicLabel.fontSize = 20 * framescale
@@ -104,7 +104,7 @@ class SettingLayer: SKNode {
         confirmNode = SKNode()
         confirmNode.hidden = true
         addChild(confirmNode)
-        let confirmLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let confirmLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         confirmLabel.name = "ConfirmLabel"
         confirmLabel.text = "Confirm reset all data?".localized
         confirmLabel.fontSize = 30 * framescale
@@ -115,7 +115,7 @@ class SettingLayer: SKNode {
         resetNoButton.name = "no node"
         resetNoButton.position = CGPoint(x: -frameSize.width / 7, y: gap * -1.65)
         resetNoButton.lineWidth = 3 * framescale
-        let noLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let noLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         noLabel.name = "no Label"
         noLabel.text = "No".localized
         noLabel.fontSize = 30 * framescale
@@ -126,7 +126,7 @@ class SettingLayer: SKNode {
         resetYesButton.name = "yes node"
         resetYesButton.position = CGPoint(x: frameSize.width / 7, y: gap * -1.65)
         resetYesButton.lineWidth = 3 * framescale
-        let yesLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let yesLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         yesLabel.name = "yes Label"
         yesLabel.text = "Yes".localized
         yesLabel.fontSize = 30 * framescale
@@ -141,7 +141,7 @@ class SettingLayer: SKNode {
         line2.position = CGPoint(x: 0, y: gap * -3)
         addChild(line2)
         
-        let noAdLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let noAdLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         noAdLabel.name = "noAdLabel"
         noAdLabel.text = "No Ad"
         noAdLabel.fontSize = 30 * framescale

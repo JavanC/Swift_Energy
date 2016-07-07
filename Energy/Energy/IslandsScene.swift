@@ -390,6 +390,7 @@ class IslandsScene: SKScene {
             // reset game status
             isPause         = false
             isRebuild       = true
+            isHaveTeach     = false
             isBoost         = false
             isSoundMute     = false
             isMusicMute     = false

@@ -65,15 +65,15 @@ class TeachLayer: SKSpriteNode {
 //        labels[2].text = ""
         switch step {
         case 1:
-            background.texture = SKTexture(imageNamed: "Teach1-en")
+            background.texture = SKTexture(imageNamed: "Teach1-en".localized)
         case 2:
-            background.texture = SKTexture(imageNamed: "Teach2-en")
+            background.texture = SKTexture(imageNamed: "Teach2-en".localized)
         case 3:
-            background.texture = SKTexture(imageNamed: "Teach3-en")
+            background.texture = SKTexture(imageNamed: "Teach3-en".localized)
         case 4:
-            background.texture = SKTexture(imageNamed: "Teach4-en")
+            background.texture = SKTexture(imageNamed: "Teach4-en".localized)
         case 5:
-            background.texture = SKTexture(imageNamed: "Teach5-en")
+            background.texture = SKTexture(imageNamed: "Teach5-en".localized)
 
 //        case 1:
 //            labels[0].text = "Welcome to the first island!"
