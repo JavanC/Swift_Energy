@@ -6,6 +6,9 @@
   Copyright © 2016年 Javan chen. All rights reserved.
 */
 
+/* Font */
+"SanFranciscoRounded-Black"           = "PingFangTC-Semibold";
+
 /* Setting Layer */
 "Setting"                             = "設置";
 "Sound"                               = "音效";
@@ -229,4 +232,3 @@
 "Increases bank effectiveness by 10%"         = "對周遭建築銷售能源效率增加 10%";
 "Increases research producetion by 25%"       = "研發中心研究效率增加 25%";
 "Increases library effectiveness by 10%"      = "對周遭建築研究效率增加 10%";
-

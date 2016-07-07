@@ -53,7 +53,7 @@ class SettingLayer: SKNode {
         bg.alpha = 0.8
         addChild(bg)
         
-        let settingLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let settingLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         settingLabel.name = "settingLabel"
         settingLabel.text = "Setting".localized
         settingLabel.fontSize = 60 * framescale
@@ -66,7 +66,8 @@ class SettingLayer: SKNode {
         soundButton.position = CGPoint(x: frameSize.width / 6, y: gap * 4)
         addChild(soundButton)
         
-        let soundLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        let soundLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
+        soundLabel
         soundLabel.name = "soundLabel"
         soundLabel.text = "Sound".localized
         soundLabel.fontSize = 20 * framescale
@@ -92,7 +93,7 @@ class SettingLayer: SKNode {
         line1.position = CGPoint(x: 0, y: gap * 1)
         addChild(line1)
         
-        resetButton = SKLabelNode(fontNamed: "SanFranciscoRounded-Black")
+        resetButton = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         resetButton.name = "resetButton"
         resetButton.text = "Reset All Data".localized
         resetButton.fontSize = 30 * framescale

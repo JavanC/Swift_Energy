@@ -6,6 +6,9 @@
   Copyright © 2016年 Javan chen. All rights reserved.
 */
 
+/* Font */
+"SanFranciscoRounded-Black"           = "PingFangSC-Semibold";
+
 /* Setting Layer */
 "Setting"                             = "设置";
 "Sound"                               = "音效";

@@ -387,6 +387,13 @@ class IslandsScene: SKScene {
             self.worldLayer.skyBackground.hidden = false
             self.loadingNum = 1
             self.view?.presentScene(islandsScene)
+            // reset game status
+            isPause         = false
+            isRebuild       = true
+            isBoost         = false
+            isSoundMute     = false
+            isMusicMute     = false
+            isFinishTarget  = false
             // reset game data
             money           = 1
             research        = 1
@@ -394,11 +401,6 @@ class IslandsScene: SKScene {
             finishBuilding  = 0
             finishExplosion = 0
             finishTime      = 0
-            isPause         = false
-            isRebuild       = true
-            isSoundMute     = false
-            isMusicMute     = false
-            isFinishTarget  = false
             // reset mapUnlocked
             for i in 0..<6 {
                 maps[i].isSold = i == 0 ? true : false

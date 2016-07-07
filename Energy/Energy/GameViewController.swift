@@ -261,6 +261,12 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
                             research += maps[i].research_TickAdd
                         }
                     }
+                    // If reset data in boost time
+                    if !isBoost {
+                        money    = 1
+                        research = 1
+                        break
+                    }
                 }
             }
             isBoost = false
