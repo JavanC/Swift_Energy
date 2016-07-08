@@ -19,6 +19,7 @@ class TipsLayer: SKNode {
         tipsImage.size = size
         addChild(tipsImage)
         
+        
         OKButton = SKShapeNode(circleOfRadius: 40 * framescale)
         OKButton.name = "OKButton"
         OKButton.fillColor = SKColor.clearColor()
