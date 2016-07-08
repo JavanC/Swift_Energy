@@ -63,17 +63,26 @@ class TeachLayer: SKSpriteNode {
 //        labels[0].text = ""
 //        labels[1].text = ""
 //        labels[2].text = ""
-        switch step {
-        case 1:
-            background.texture = SKTexture(imageNamed: "Teach1-en".localized)
-        case 2:
-            background.texture = SKTexture(imageNamed: "Teach2-en".localized)
-        case 3:
-            background.texture = SKTexture(imageNamed: "Teach3-en".localized)
-        case 4:
-            background.texture = SKTexture(imageNamed: "Teach4-en".localized)
-        case 5:
-            background.texture = SKTexture(imageNamed: "Teach5-en".localized)
+        
+        if step >= 1 && step <= 13 {
+            print("Teach\(step)-EN")
+            background.texture = SKTexture(imageNamed: "Teach\(step)-EN".localized)
+        } else {
+            print("else step")
+            self.hidden = true
+        }
+        
+//        switch step {
+//        case 1:
+//            background.texture = SKTexture(imageNamed: "Teach1-EN".localized)
+//        case 2:
+//            background.texture = SKTexture(imageNamed: "Teach2-EN".localized)
+//        case 3:
+//            background.texture = SKTexture(imageNamed: "Teach3-EN".localized)
+//        case 4:
+//            background.texture = SKTexture(imageNamed: "Teach4-EN".localized)
+//        case 5:
+//            background.texture = SKTexture(imageNamed: "Teach5-EN".localized)
 
 //        case 1:
 //            labels[0].text = "Welcome to the first island!"
@@ -108,8 +117,8 @@ class TeachLayer: SKSpriteNode {
 //            labels[1].text = "Building Sales"
 //            labels[2].text = "Upgrade building   Research building"
             
-        default:
-            self.hidden = true
-        }
+//        default:
+//            self.hidden = true
+//        }
     }
 }

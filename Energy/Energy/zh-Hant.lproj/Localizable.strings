@@ -47,11 +47,19 @@
 "Spend Time"                          = "花費時間";
 
 /* Teach Layer */
-"Teach1-en"                           = "Teach1-tw";
-"Teach2-en"                           = "Teach2-tw";
-"Teach3-en"                           = "Teach3-tw";
-"Teach4-en"                           = "Teach4-tw";
-"Teach5-en"                           = "Teach5-tw";
+"Teach1-EN"                           = "Teach1-TC";
+"Teach2-EN"                           = "Teach2-TC";
+"Teach3-EN"                           = "Teach3-TC";
+"Teach4-EN"                           = "Teach4-TC";
+"Teach5-EN"                           = "Teach5-TC";
+"Teach6-EN"                           = "Teach6-TC";
+"Teach7-EN"                           = "Teach7-TC";
+"Teach8-EN"                           = "Teach8-TC";
+"Teach9-EN"                           = "Teach9-TC";
+"Teach10-EN"                          = "Teach10-TC";
+"Teach11-EN"                          = "Teach11-TC";
+"Teach12-EN"                          = "Teach12-TC";
+"Teach13-EN"                          = "Teach13-TC";
 
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "點擊地圖上的建築物來出售";

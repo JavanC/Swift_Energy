@@ -47,11 +47,19 @@
 "Spend Time"                          = "Spend Time";
 
 /* Teach Layer */
-"Teach1-en"                           = "Teach1-en";
-"Teach2-en"                           = "Teach2-en";
-"Teach3-en"                           = "Teach3-en";
-"Teach4-en"                           = "Teach4-en";
-"Teach5-en"                           = "Teach5-en";
+"Teach1-EN"                           = "Teach1-EN";
+"Teach2-EN"                           = "Teach2-EN";
+"Teach3-EN"                           = "Teach3-EN";
+"Teach4-EN"                           = "Teach4-EN";
+"Teach5-EN"                           = "Teach5-EN";
+"Teach6-EN"                           = "Teach6-EN";
+"Teach7-EN"                           = "Teach7-EN";
+"Teach8-EN"                           = "Teach8-EN";
+"Teach9-EN"                           = "Teach9-EN";
+"Teach10-EN"                          = "Teach10-EN";
+"Teach11-EN"                          = "Teach11-EN";
+"Teach12-EN"                          = "Teach12-EN";
+"Teach13-EN"                          = "Teach13-EN";
 
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "Touch buildings on the map to sell it.";

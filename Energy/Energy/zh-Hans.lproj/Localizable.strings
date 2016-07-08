@@ -47,11 +47,19 @@
 "Spend Time"                          = "花费时间";
 
 /* Teach Layer */
-"Teach1-en"                           = "Teach1-en";
-"Teach2-en"                           = "Teach2-en";
-"Teach3-en"                           = "Teach3-en";
-"Teach4-en"                           = "Teach4-en";
-"Teach5-en"                           = "Teach5-en";
+"Teach1-EN"                           = "Teach1-SC";
+"Teach2-EN"                           = "Teach2-SC";
+"Teach3-EN"                           = "Teach3-SC";
+"Teach4-EN"                           = "Teach4-SC";
+"Teach5-EN"                           = "Teach5-SC";
+"Teach6-EN"                           = "Teach6-SC";
+"Teach7-EN"                           = "Teach7-SC";
+"Teach8-EN"                           = "Teach8-SC";
+"Teach9-EN"                           = "Teach9-SC";
+"Teach10-EN"                          = "Teach10-SC";
+"Teach11-EN"                          = "Teach11-SC";
+"Teach12-EN"                          = "Teach12-SC";
+"Teach13-EN"                          = "Teach13-SC";
 
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "点击地图上的建筑物来出售";

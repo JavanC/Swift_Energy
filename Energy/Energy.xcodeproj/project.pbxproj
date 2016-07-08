@@ -147,8 +147,8 @@
 		65386E021C2CD8A500D08B41 = {
 			isa = PBXGroup;
 			children = (
-				8DA366961CBFF2A7001551B8 /* Framework */,
 				65386E0D1C2CD8A500D08B41 /* Energy */,
+				8DA366961CBFF2A7001551B8 /* Framework */,
 				65386E0C1C2CD8A500D08B41 /* Products */,
 			);
 			sourceTree = "<group>";

@@ -254,6 +254,7 @@ class IslandScene: SKScene {
                 if teachStep == 1 && node == teachLayer.OKButton {
                     teachStep = 2
                     teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
                     teachLayer.OKButton.hidden = true
                 }
                 if teachStep == 2 && node == buttonLayer.buttonBuild {
@@ -261,7 +262,6 @@ class IslandScene: SKScene {
                     teachLayer.changeTeachStep(teachStep)
                     if !isSoundMute{ runAction(soundClick) }
                     changeTouchTypeAndShowPage(.Builded, duration: 0.1)
-                    
                 }
                 if teachStep == 3 && node == bottomLayer.pageBuild.images[0] {
                     teachStep = 4
@@ -278,52 +278,65 @@ class IslandScene: SKScene {
                 if teachStep == 5 && node == maps[0].buildingForCoord(CGPoint(x: 5, y: 8))!.buildingNode {
                     teachStep = 6
                     teachLayer.changeTeachStep(teachStep)
-//                    if !isSoundMute{ runAction(soundPlacing) }
-//                    maps[nowMapNumber].setTileMapElement(coord: CGPoint(x: 4, y: 8), buildType: .WindTurbine)
-//                    maps[0].buildingForCoord(CGPoint(x: 4, y: 8))!.buildingNode.zPosition = 900
-//                    money -= 1
-//                    return
+                    if !isSoundMute{ runAction(soundPlacing) }
+                    maps[nowMapNumber].setTileMapElement(coord: CGPoint(x: 5, y: 8), buildType: .WindTurbine)
+                    money -= 1
+                    return
+                }
+                if teachStep == 6 && node == maps[0].buildingForCoord(CGPoint(x: 5, y: 8))!.buildingNode {
+                    teachStep = 7
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
+                    info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 5, y: 8))
+                    bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
+                    changeTouchTypeAndShowPage(.Information, duration: 0.1)
+                }
+                if teachStep == 7 && node == buttonLayer.buttonEnergy {
+                    teachStep = 8
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
+                    changeTouchTypeAndShowPage(.Energy, duration: 0.1)
+                }
+                if teachStep == 8 && node == bottomLayer.pageEnergy.energy_ProgressBack {
+                    teachStep = 9
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundSell) }
+                    money += maps[nowMapNumber].energy
+                    maps[nowMapNumber].energy = 0
+                    // draw energy circle
+                    let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
+                    buttonLayer.drawEnergyCircle(percent)
+                    teachLayer.OKButton.hidden = false
+                }
+                if teachStep == 9 && node == teachLayer.OKButton {
+                    teachStep = 10
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
+                    return
+                }
+                if teachStep == 10 && node == teachLayer.OKButton {
+                    teachStep = 11
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
+                    return
+                }
+                if teachStep == 11 && node == teachLayer.OKButton {
+                    teachStep = 12
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
+                    return
+                }
+                if teachStep == 12 && node == teachLayer.OKButton {
+                    teachStep = 13
+                    teachLayer.changeTeachStep(teachStep)
+                    if !isSoundMute{ runAction(soundClick) }
+                    return
+                }
+                if teachStep == 13 && node == teachLayer.OKButton {
+                    if !isSoundMute{ runAction(soundClick) }
+                    teachLayer.hidden = true
                     isHaveTeach = true
                 }
-//                if teachStep == 6 && node == maps[0].buildingForCoord(CGPoint(x: 4, y: 8))!.buildingNode {
-//                    teachStep = 7
-//                    teachLayer.changeTeachStep(teachStep)
-//                    if !isSoundMute{ runAction(soundClick) }
-//                    info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 4, y: 8))
-//                    bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
-//                    changeTouchTypeAndShowPage(.Information, duration: 0.1)
-//                    buttonLayer.buttonEnergy.zPosition = 900
-//                }
-//                if teachStep == 7 && node == buttonLayer.buttonEnergy {
-//                    buttonLayer.buttonEnergy.zPosition = buttonLayer.buttonSell.zPosition
-//                    maps[0].buildingForCoord(CGPoint(x: 4, y: 8))!.buildingNode.zPosition = 0
-//                    teachStep = 8
-//                    teachLayer.changeTeachStep(teachStep)
-//                    if !isSoundMute{ runAction(soundClick) }
-//                    changeTouchTypeAndShowPage(.Energy, duration: 0.1)
-//                }
-//                if teachStep == 8 && node == bottomLayer.pageEnergy.energy_ProgressBack {
-//                    bottomLayer.zPosition = 100
-//                    teachStep = 9
-//                    teachLayer.changeTeachStep(teachStep)
-//                    if !isSoundMute{ runAction(soundSell) }
-//                    money += maps[nowMapNumber].energy
-//                    teachLayer.labels[0].text = "You sell energy to get \(maps[nowMapNumber].energy)$"
-//                    maps[nowMapNumber].energy = 0
-//                    // draw energy circle
-//                    let percent = Double(maps[nowMapNumber].energy) / Double(maps[nowMapNumber].energyMax)
-//                    buttonLayer.drawEnergyCircle(percent)
-//                    teachLayer.OKButton.hidden = false
-//                }
-//                if teachStep == 9 && node == teachLayer.OKButton {
-//                    teachStep = 10
-//                    teachLayer.changeTeachStep(teachStep)
-//                    return
-//                }
-//                if teachStep == 10 && node == teachLayer.OKButton {
-//                    teachLayer.hidden = true
-//                    isHaveTeach = true
-//                }
             }
             return
         }
