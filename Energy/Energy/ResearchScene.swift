@@ -311,7 +311,7 @@ class ResearchElement: SKNode {
             buttonUpgrade.strokeColor = color
             buttonUpgrade.position = CGPoint(x: size.width - gap - tilesScaleSize.width / 2, y: size.height / 2)
             let levelupImage = SKSpriteNode(texture: iconAtlas.textureNamed("levelup"))
-            levelupImage.setScale(0.6 * framescale)
+            levelupImage.setScale(0.7 * framescale)
             buttonUpgrade.addChild(levelupImage)
             addChild(buttonUpgrade)
         }
@@ -347,7 +347,7 @@ class ResearchScene: SKScene {
     var researchLabel: SKLabelNode!
     var itemLabel: SKLabelNode!
     
-    var researchdeLayer: SKSpriteNode!
+    var elementsLayer: SKSpriteNode!
     var researchElements = [ResearchElement]()
     
     override func didMoveToView(view: SKView) {
@@ -356,21 +356,27 @@ class ResearchScene: SKScene {
             self.backgroundColor = colorBlue4
             
             let unitHeight = size.height / 10
-            let topCenter = CGPoint(x: size.width / 2, y: frame.size.height - unitHeight / 2)
             
-            let line = SKShapeNode(rectOfSize: CGSizeMake(frame.size.width * 0.9, 3 * framescale))
+            let line = SKShapeNode(rectOfSize: CGSizeMake(frame.width * 0.9, 3 * framescale))
             line.name = "line"
             line.lineWidth = 0
             line.fillColor = SKColor.whiteColor()
-            line.position = CGPoint(x: size.width / 2, y: frame.size.height - unitHeight)
+            line.position = CGPoint(x: size.width / 2, y: frame.height - unitHeight)
             addChild(line)
             
-            let researchImage = SKSpriteNode(texture: iconAtlas.textureNamed("atoms"))
-            researchImage.name = "researchImage"
-            researchImage.setScale(0.9 * framescale)
-            researchImage.position = topCenter
-            researchImage.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI_2), duration: 5)))
-            addChild(researchImage)
+            let researchTitle = SKLabelNode (fontNamed: "SanFranciscoRounded-Black".localized)
+            researchTitle.name = "research title"
+            researchTitle.text = "Research"
+            researchTitle.fontSize = 58 * framescale
+            researchTitle.position = CGPoint(x: frame.width / 2, y: frame.height - unitHeight * 0.8)
+            addChild(researchTitle)
+            
+            let researchIcon = SKSpriteNode(texture: iconAtlas.textureNamed("Research"))
+            researchIcon.name = "research icon"
+            researchIcon.size = CGSizeMake(unitHeight * 0.2, unitHeight * 0.2)
+            researchIcon.position = CGPoint(x: frame.size.width * 0.05, y: frame.height - unitHeight * 0.9)
+            researchIcon.anchorPoint = CGPoint(x: 0, y: 0)
+            addChild(researchIcon)
             
             researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
             researchLabel.name = "top label"
@@ -379,7 +385,7 @@ class ResearchScene: SKScene {
             researchLabel.text = numberToString(research)
             researchLabel.horizontalAlignmentMode = .Left
             researchLabel.verticalAlignmentMode = .Bottom
-            researchLabel.position = CGPoint(x: frame.size.width * 0.05, y: frame.size.height - unitHeight * 0.9)
+            researchLabel.position = CGPoint(x: researchIcon.position.x + unitHeight * 0.2, y: frame.size.height - unitHeight * 0.9)
             addChild(researchLabel)
             
             itemLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
@@ -391,6 +397,26 @@ class ResearchScene: SKScene {
             itemLabel.verticalAlignmentMode = .Bottom
             itemLabel.position = CGPoint(x: frame.size.width * 0.95, y: frame.size.height - unitHeight * 0.9)
             addChild(itemLabel)
+
+            // add Field
+            for x in 0..<4 {
+                let field = SKSpriteNode(color: colorBlue3, size: CGSizeMake(frame.width, unitHeight))
+                field.name = "field\(x)"
+                field.anchorPoint = CGPoint(x: 0, y: 0)
+                field.position = CGPoint(x: 0, y: (2 * CGFloat(x) + 1) * unitHeight)
+                addChild(field)
+            }
+            
+            let bottomNode = SKSpriteNode(color: colorBlue4, size: CGSizeMake(frame.width, unitHeight))
+            bottomNode.name = "bottomNode"
+            bottomNode.position = CGPoint(x: frame.width / 2, y: unitHeight / 2)
+            let bottomLine = SKShapeNode(rectOfSize: CGSizeMake(frame.width, 1 * framescale))
+            bottomLine.name = "line"
+            bottomLine.lineWidth = 0
+            bottomLine.fillColor = SKColor.whiteColor()
+            bottomLine.position = CGPoint(x: 0, y: unitHeight / 2)
+            bottomNode.addChild(bottomLine)
+            addChild(bottomNode)
             
             backButton = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_down"))
             backButton.name = "back button"
@@ -411,11 +437,11 @@ class ResearchScene: SKScene {
             prevPage.position = CGPoint(x: frame.size.width * 0.1, y: unitHeight  / 2)
             prevPage.zRotation = CGFloat(M_PI)
             addChild(prevPage)
-            researchdeLayer = SKSpriteNode(color: colorBlue4, size: CGSizeMake(frame.size.width * 4, frame.size.height - unitHeight * 2))
-            researchdeLayer.name = "ResearchLayer"
-            researchdeLayer.anchorPoint = CGPoint(x: 0, y: 0)
-            researchdeLayer.position = CGPoint(x: 0, y: unitHeight)
-            addChild(researchdeLayer)
+            elementsLayer = SKSpriteNode(color: SKColor.clearColor(), size: CGSizeMake(frame.size.width * 4, frame.size.height - unitHeight * 2))
+            elementsLayer.name = "ResearchLayer"
+            elementsLayer.anchorPoint = CGPoint(x: 0, y: 0)
+            elementsLayer.position = CGPoint(x: 0, y: unitHeight)
+            addChild(elementsLayer)
             
             contentCreated = true
             
@@ -432,14 +458,14 @@ class ResearchScene: SKScene {
     }
     
     func updateElement() {
-        researchdeLayer.removeAllChildren()
+        elementsLayer.removeAllChildren()
         // Caculae Position
         var positions = [CGPoint]()
         let num:CGFloat = 8
-        let elementsize = CGSizeMake(frame.size.width, researchdeLayer.size.height / num)
+        let elementsize = CGSizeMake(frame.size.width, elementsLayer.size.height / num)
         for x in 0..<5 {
             for y in 0..<Int(num) {
-                positions.append(CGPoint(x: frame.size.width * CGFloat(x), y: researchdeLayer.size.height - elementsize.height * CGFloat(y + 1)))
+                positions.append(CGPoint(x: frame.size.width * CGFloat(x), y: elementsLayer.size.height - elementsize.height * CGFloat(y + 1)))
             }
         }
         
@@ -475,13 +501,13 @@ class ResearchScene: SKScene {
             researchElement.position = positions[count]
             researchElement.background.color = (count % 2 == 0 ? colorBlue4 : colorBlue3)
             researchElements.append(researchElement)
-            researchdeLayer.addChild(researchElement)
+            elementsLayer.addChild(researchElement)
         }
 
         // Calculate NowPage and MaxPage
         if elements.count <= 8 {
             nowPage = 1
-            researchdeLayer.runAction((SKAction.moveToX(0, duration: 0)))
+            elementsLayer.runAction((SKAction.moveToX(0, duration: 0)))
         }
         maxPage = (elements.count - 1) / 8 + 1
         
@@ -495,18 +521,18 @@ class ResearchScene: SKScene {
             let nodes = nodesAtPoint(location)
             for node in nodes {
                 if node.hidden { return }
-                if backButton.containsPoint(location) {
+                if node == backButton {
                     if !isSoundMute{ runAction(soundTap) }
                     self.view?.presentScene(islandScene, transition: door_reveal)
                 }
-                if nextPage.containsPoint(location) {
+                if node == nextPage {
                     nowPage += 1
-                    researchdeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
+                    elementsLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
                     if !isSoundMute{ runAction(soundSlide) }
                 }
-                if prevPage.containsPoint(location) {
+                if node == prevPage {
                     nowPage -= 1
-                    researchdeLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
+                    elementsLayer.runAction((SKAction.moveToX(-frame.size.width * CGFloat(nowPage - 1), duration: 0.2)))
                     if !isSoundMute{ runAction(soundSlide) }
                 }
                 if node.name == "Upgrade" {

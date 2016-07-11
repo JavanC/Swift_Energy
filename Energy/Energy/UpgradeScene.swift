@@ -335,7 +335,7 @@ class UpgradeElement: SKNode {
         buttonUpgrade.strokeColor = color
         buttonUpgrade.position = CGPoint(x: size.width - gap - tilesScaleSize.width / 2, y: size.height / 2)
         let levelupImage = SKSpriteNode(texture: iconAtlas.textureNamed("levelup"))
-        levelupImage.setScale(0.6 * framescale)
+        levelupImage.setScale(0.7 * framescale)
         buttonUpgrade.addChild(levelupImage)
         addChild(buttonUpgrade)
 
@@ -346,7 +346,7 @@ class UpgradeElement: SKNode {
         buttonDegrade.strokeColor = colorBlue2
         buttonDegrade.position = CGPoint(x: size.width - gap * 2 - tilesScaleSize.width * 3 / 2, y: size.height / 2)
         let leveldownImage = SKSpriteNode(texture: iconAtlas.textureNamed("levelup"))
-        leveldownImage.setScale(0.6 * framescale)
+        leveldownImage.setScale(0.7 * framescale)
         leveldownImage.zRotation = CGFloat(M_PI)
         buttonDegrade.addChild(leveldownImage)
         buttonDegrade.hidden = (level > 0 ? false : true)
