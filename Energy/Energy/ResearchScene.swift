@@ -20,7 +20,7 @@ class ResearchElement: SKNode {
         self.researchType = researchType
         
         // background
-        background = SKSpriteNode(color: colorBlue4, size: size)
+        background = SKSpriteNode(color: SKColor.clearColor(), size: size)
         background.name = "researchElementBackground"
         background.anchorPoint = CGPoint(x: 0, y: 0)
         addChild(background)
@@ -357,6 +357,7 @@ class ResearchScene: SKScene {
             
             let unitHeight = size.height / 10
             
+            // Top
             let line = SKShapeNode(rectOfSize: CGSizeMake(frame.width * 0.9, 3 * framescale))
             line.name = "line"
             line.lineWidth = 0
@@ -364,10 +365,17 @@ class ResearchScene: SKScene {
             line.position = CGPoint(x: size.width / 2, y: frame.height - unitHeight)
             addChild(line)
             
-            let researchTitle = SKLabelNode (fontNamed: "SanFranciscoRounded-Black".localized)
+            let TitleBackground = SKSpriteNode(texture: iconAtlas.textureNamed("atoms"))
+            TitleBackground.name = "title background"
+            TitleBackground.setScale(framescale)
+            TitleBackground.alpha = 0.3
+            TitleBackground.position = CGPoint(x: frame.width / 2, y: frame.height - unitHeight * 0.5)
+            addChild(TitleBackground)
+            
+            let researchTitle = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
             researchTitle.name = "research title"
-            researchTitle.text = "Research"
-            researchTitle.fontSize = 58 * framescale
+            researchTitle.text = "Research".localized
+            researchTitle.fontSize = 40 * framescale
             researchTitle.position = CGPoint(x: frame.width / 2, y: frame.height - unitHeight * 0.8)
             addChild(researchTitle)
             
@@ -379,7 +387,7 @@ class ResearchScene: SKScene {
             addChild(researchIcon)
             
             researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
-            researchLabel.name = "top label"
+            researchLabel.name = "research label"
             researchLabel.fontSize = unitHeight * 0.2
             researchLabel.fontColor = colorResearch
             researchLabel.text = numberToString(research)
@@ -398,7 +406,7 @@ class ResearchScene: SKScene {
             itemLabel.position = CGPoint(x: frame.size.width * 0.95, y: frame.size.height - unitHeight * 0.9)
             addChild(itemLabel)
 
-            // add Field
+            // Center
             for x in 0..<4 {
                 let field = SKSpriteNode(color: colorBlue3, size: CGSizeMake(frame.width, unitHeight))
                 field.name = "field\(x)"
@@ -407,6 +415,14 @@ class ResearchScene: SKScene {
                 addChild(field)
             }
             
+            elementsLayer = SKSpriteNode(color: SKColor.clearColor(), size: CGSizeMake(frame.size.width * 4, frame.size.height - unitHeight * 2))
+            elementsLayer.name = "ResearchLayer"
+            elementsLayer.anchorPoint = CGPoint(x: 0, y: 0)
+            elementsLayer.position = CGPoint(x: 0, y: unitHeight)
+            addChild(elementsLayer)
+            
+            
+            // Bottom
             let bottomNode = SKSpriteNode(color: colorBlue4, size: CGSizeMake(frame.width, unitHeight))
             bottomNode.name = "bottomNode"
             bottomNode.position = CGPoint(x: frame.width / 2, y: unitHeight / 2)
@@ -418,30 +434,64 @@ class ResearchScene: SKScene {
             bottomNode.addChild(bottomLine)
             addChild(bottomNode)
             
-            backButton = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_down"))
+            backButton = SKSpriteNode(color: SKColor.clearColor(), size: CGSizeMake(frame.width / 3, unitHeight))
             backButton.name = "back button"
-            backButton.setScale(framescale)
-            backButton.position = CGPoint(x: frame.size.width / 2, y: unitHeight / 2)
-            let downAction = SKAction.sequence([SKAction.moveByX(0, y: -5, duration: 0.5), SKAction.moveByX(0, y: 5, duration: 0.5)])
-            backButton.runAction(SKAction.repeatActionForever(downAction))
+            backButton.anchorPoint = CGPoint(x: 0.5, y: 0)
+            backButton.position = CGPoint(x: frame.size.width / 2, y: 0)
+            let backLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
+            backLabel.name = "backLabel"
+            backLabel.text = "Back".localized
+            backLabel.fontSize = 40 * framescale
+            backLabel.verticalAlignmentMode = .Center
+            backLabel.position = CGPoint(x: 0, y: unitHeight / 2)
+            backButton.addChild(backLabel)
+            let arrow_down = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_down"))
+            arrow_down.name = "arrow_down"
+            arrow_down.size = CGSizeMake(unitHeight * 0.22, unitHeight * 0.22)
+            arrow_down.anchorPoint = CGPoint(x: 0.5, y: 1)
+            arrow_down.position = CGPoint(x: 0, y: unitHeight * 0.3)
+            backButton.addChild(arrow_down)
             addChild(backButton)
-            
-            nextPage = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_right"))
+
+            nextPage = SKSpriteNode(color: SKColor.clearColor(), size: CGSizeMake(frame.width / 3, unitHeight))
             nextPage.name = "NextPage"
-            nextPage.setScale(0.8 * framescale)
-            nextPage.position = CGPoint(x: frame.size.width * 0.9, y: unitHeight  / 2)
+            nextPage.anchorPoint = CGPoint(x: 1, y: 0.5)
+            nextPage.position = CGPoint(x: frame.width, y: unitHeight / 2)
+            let arrow_right = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_right"))
+            arrow_right.name = "arrow_right"
+            arrow_right.setScale(0.6 * framescale)
+            arrow_right.anchorPoint = CGPoint(x: 1, y: 0.5)
+            arrow_right.position = CGPoint(x: -20 * framescale, y: 0)
+            nextPage.addChild(arrow_right)
+            let nextLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
+            nextLabel.name = "nextLabel"
+            nextLabel.text = "Next".localized
+            nextLabel.fontSize = 30 * framescale
+            nextLabel.verticalAlignmentMode = .Center
+            nextLabel.horizontalAlignmentMode = .Right
+            nextLabel.position = CGPoint(x: -18 * framescale - arrow_right.frame.width, y: 0)
+            nextPage.addChild(nextLabel)
             addChild(nextPage)
-            prevPage = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_right"))
-            prevPage.name = "PrevPage"
-            prevPage.setScale(0.8 * framescale)
-            prevPage.position = CGPoint(x: frame.size.width * 0.1, y: unitHeight  / 2)
-            prevPage.zRotation = CGFloat(M_PI)
+            
+            prevPage = SKSpriteNode(color: SKColor.clearColor(), size: CGSizeMake(frame.width / 3, unitHeight))
+            prevPage.name = "PreviousPage"
+            prevPage.anchorPoint = CGPoint(x: 0, y: 0.5)
+            prevPage.position = CGPoint(x: 0, y: unitHeight / 2)
+            let arrow_left = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_left"))
+            arrow_left.name = "arrow_left"
+            arrow_left.setScale(0.6 * framescale)
+            arrow_left.anchorPoint = CGPoint(x: 0, y: 0.5)
+            arrow_left.position = CGPoint(x: 20 * framescale, y: 0)
+            prevPage.addChild(arrow_left)
+            let prevLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
+            prevLabel.name = "PreviousLabel"
+            prevLabel.text = "Previous".localized
+            prevLabel.fontSize = 30 * framescale
+            prevLabel.verticalAlignmentMode = .Center
+            prevLabel.horizontalAlignmentMode = .Left
+            prevLabel.position = CGPoint(x: 18 * framescale + arrow_right.frame.width, y: 0)
+            prevPage.addChild(prevLabel)
             addChild(prevPage)
-            elementsLayer = SKSpriteNode(color: SKColor.clearColor(), size: CGSizeMake(frame.size.width * 4, frame.size.height - unitHeight * 2))
-            elementsLayer.name = "ResearchLayer"
-            elementsLayer.anchorPoint = CGPoint(x: 0, y: 0)
-            elementsLayer.position = CGPoint(x: 0, y: unitHeight)
-            addChild(elementsLayer)
             
             contentCreated = true
             
@@ -499,7 +549,6 @@ class ResearchScene: SKScene {
                 researchElement.childNodeWithName("priceLabel")?.hidden = true
             }
             researchElement.position = positions[count]
-            researchElement.background.color = (count % 2 == 0 ? colorBlue4 : colorBlue3)
             researchElements.append(researchElement)
             elementsLayer.addChild(researchElement)
         }

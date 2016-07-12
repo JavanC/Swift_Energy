@@ -158,7 +158,11 @@
 "Boosts Research Center production research points speed." = "增加在旁研发中心的效率。";
 
 /* Research Name */
-"Research:"                                   = "研发需求：";
+"Research"                                    = "研 发";
+"Back"                                        = "返回";
+"Next"                                        = "下一页";
+"Previous"                                    = "上一页";
+"Research:"                                   = "需求研究点：";
 "Wind Turbine Manager"                        = "风力发电站管理员";
 "Solar Manager"                               = "太阳能阵列管理员";
 "Coal-Fired Manager"                          = "煤炭燃烧厂管理员";

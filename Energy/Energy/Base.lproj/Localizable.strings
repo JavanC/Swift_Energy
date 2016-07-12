@@ -157,6 +157,10 @@
 "Boosts Research Center production research points speed." = "Boosts Research Center production research points speed.";
 
 /* Research Name */
+"Research"                                    = "Research";
+"Back"                                        = "Back";
+"Next"                                        = "Next";
+"Previous"                                    = "Previous";
 "Research:"                                   = "Research:";
 "Wind Turbine Manager"                        = "Wind Turbine Manager";
 "Solar Manager"                               = "Solar Manager";
