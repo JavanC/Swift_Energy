@@ -156,11 +156,14 @@
 "Production more Research points so that you can research new technology." = "Production more Research points so that you can research new technology.";
 "Boosts Research Center production research points speed." = "Boosts Research Center production research points speed.";
 
-/* Research Name */
+/* research and upgrade */
 "Research"                                    = "Research";
+"Upgrade"                                     = "Upgrade";
 "Back"                                        = "Back";
 "Next"                                        = "Next";
 "Previous"                                    = "Previous";
+
+/* Research Name */
 "Research:"                                   = "Research:";
 "Wind Turbine Manager"                        = "Wind Turbine Manager";
 "Solar Manager"                               = "Solar Manager";
@@ -208,7 +211,7 @@
 "Open Library technology."                    = "Open Library technology.";
 
 /* Upgrade Name */
-"Lv.     Price:"                              = "Lv.     Price:";
+"Lv.     Upgrade Price:"                      = "Lv.     Upgrade Price:";
 "Wind Turbine Lifetime"                       = "Wind Turbine Lifetime";
 "Solar Lifetime"                              = "Solar Lifetime";
 "Coal-Fired Lifetime"                         = "Coal-Fired Lifetime";

@@ -9,7 +9,6 @@
 import SpriteKit
 
 class ResearchElement: SKNode {
-    var background: SKSpriteNode!
     var buttonUpgrade: SKShapeNode!
     var researchType: ResearchType!
     var researchPrice: Double!
@@ -18,13 +17,7 @@ class ResearchElement: SKNode {
     init(researchType: ResearchType, size: CGSize) {
         super.init()
         self.researchType = researchType
-        
-        // background
-        background = SKSpriteNode(color: SKColor.clearColor(), size: size)
-        background.name = "researchElementBackground"
-        background.anchorPoint = CGPoint(x: 0, y: 0)
-        addChild(background)
-        
+            
         // Find information
         var imageType: BuildingType!
         var name: String!
@@ -379,7 +372,7 @@ class ResearchScene: SKScene {
             researchTitle.position = CGPoint(x: frame.width / 2, y: frame.height - unitHeight * 0.8)
             addChild(researchTitle)
             
-            let researchIcon = SKSpriteNode(texture: iconAtlas.textureNamed("Research"))
+            let researchIcon = SKSpriteNode(texture: iconAtlas.textureNamed("research"))
             researchIcon.name = "research icon"
             researchIcon.size = CGSizeMake(unitHeight * 0.2, unitHeight * 0.2)
             researchIcon.position = CGPoint(x: frame.size.width * 0.05, y: frame.height - unitHeight * 0.9)

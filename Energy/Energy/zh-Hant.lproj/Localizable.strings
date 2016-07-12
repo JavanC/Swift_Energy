@@ -156,11 +156,15 @@
 "Production more Research points so that you can research new technology." = "產生更多研究點，可以使用來解鎖新技術及建築。";
 "Boosts Research Center production research points speed." = "增加在旁研發中心的效率。";
 
-/* Research Name */
+/* research and upgrade */
 "Research"                                    = "研 發";
+"Upgrade"                                     = "升 級";
 "Back"                                        = "返回";
 "Next"                                        = "下一頁";
 "Previous"                                    = "上一頁";
+
+/* Research Name */
+
 "Research:"                                   = "需求研究點：";
 "Wind Turbine Manager"                        = "風力發電站管理員";
 "Solar Manager"                               = "太陽能陣列管理員";
@@ -208,7 +212,7 @@
 "Open Library technology."                    = "研發圖書館建造技術。";
 
 /* Upgrade Name */
-"Lv.     Price:"                              = "Lv.     需求:";
+"Lv.     Upgrade Price:"                      = "Lv.    下一級需求:";
 "Wind Turbine Lifetime"                       = "風力站週期";
 "Solar Lifetime"                              = "太陽能週期";
 "Coal-Fired Lifetime"                         = "煤炭廠週期";
