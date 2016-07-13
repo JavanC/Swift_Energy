@@ -199,8 +199,10 @@ class BuildingMapLayer: SKSpriteNode {
     func initialMapData() {
         self.energy = 0
         var stringArray = Array<String>()
+        var garbageHeat = Double()
         switch mapNumber {
         case 0:
+            garbageHeat = 1
             stringArray = ["R","O","O","O","O","O","O","O","O",
                            "O","O","O","O","O","O","O","L","O",
                            "O","O","R","L","O","R","O","O","O",
@@ -213,6 +215,7 @@ class BuildingMapLayer: SKSpriteNode {
                            "O","O","O","O","O","O","L","O","O",
                            "O","O","R","O","O","O","O","O","O"]
         case 1:
+            garbageHeat = 1000
             stringArray = ["O","R","O","O","O","L","O","O","O",
                            "O","O","O","R","R","O","L","O","O",
                            "O","O","R","R","L","L","L","R","O",
@@ -225,6 +228,7 @@ class BuildingMapLayer: SKSpriteNode {
                            "O","L","O","R","L","O","O","L","O",
                            "L","R","O","O","O","O","O","O","R"]
         case 2:
+            garbageHeat = 800000
             stringArray = ["O","O","O","L","O","O","O","O","O",
                            "O","O","G","L","L","R","L","L","O",
                            "O","L","L","G","L","L","G","L","O",
@@ -237,6 +241,7 @@ class BuildingMapLayer: SKSpriteNode {
                            "O","O","R","L","G","L","L","R","O",
                            "O","O","R","L","L","L","R","O","O"]
         case 3:
+            garbageHeat = 9000000
             stringArray = ["O","G","G","R","O","O","L","O","O",
                            "G","G","G","G","O","R","L","L","O",
                            "G","G","G","G","O","L","G","L","R",
@@ -249,6 +254,7 @@ class BuildingMapLayer: SKSpriteNode {
                            "L","L","L","L","R","O","L","L","L",
                            "O","L","G","L","R","O","O","G","L"]
         case 4:
+            garbageHeat = 1000000000
             stringArray = ["L","L","L","L","L","L","L","O","O",
                            "L","G","L","L","L","L","L","L","O",
                            "L","L","L","L","L","L","L","L","L",
@@ -261,6 +267,7 @@ class BuildingMapLayer: SKSpriteNode {
                            "O","L","L","L","L","L","G","L","L",
                            "O","O","O","L","L","L","L","L","L"]
         case 5:
+            garbageHeat = 10
             stringArray = ["G","G","G","G","G","G","G","G","G",
                            "G","G","G","G","G","G","G","G","G",
                            "G","G","G","G","G","G","G","G","G",
@@ -274,11 +281,11 @@ class BuildingMapLayer: SKSpriteNode {
                            "G","G","G","G","G","G","G","G","G"]
         default: break
         }
-        loadMapArray(stringArray)
+        loadMapArray(stringArray, garbageHeat: garbageHeat)
     }
     
     // MARK: Load Map Data By String Array
-    func loadMapArray(array: [String]) {
+    func loadMapArray(array: [String], garbageHeat: Double) {
         for y in 0..<11 {
             for x in 0..<9 {
                 switch array[y * 9 + x] {
@@ -290,7 +297,7 @@ class BuildingMapLayer: SKSpriteNode {
                     setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Rock)
                 case "G":
                     setTileMapElement(coord: CGPoint(x: x, y: y), buildType: .Garbage)
-                    buildingForCoord(CGPoint(x: x, y: y))!.buildingData.heatSystem = HeatSystem(size: 10)
+                    buildingForCoord(CGPoint(x: x, y: y))!.buildingData.heatSystem = HeatSystem(size: garbageHeat)
                 default:break
                 }
             }

@@ -164,7 +164,7 @@
 "Previous"                                    = "上一頁";
 
 /* Research Name */
-
+"Price:"                                      = "需求金錢：";
 "Research:"                                   = "需求研究點：";
 "Wind Turbine Manager"                        = "風力發電站管理員";
 "Solar Manager"                               = "太陽能陣列管理員";

@@ -273,7 +273,7 @@ class ResearchElement: SKNode {
         // research
         let researchLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         researchLabel.name = "researchLabel"
-        researchLabel.text = "Research:".localized
+        researchLabel.text = researchType == .ResearchCenterResearch ? "Price:".localized : "Research:".localized
         researchLabel.fontColor = SKColor.lightGrayColor()
         researchLabel.fontSize = (image.size.height - researchName.fontSize * 1.2) / 2
         researchLabel.horizontalAlignmentMode = .Left
@@ -284,7 +284,7 @@ class ResearchElement: SKNode {
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         priceLabel.name = "priceLabel"
-        priceLabel.text = numberToString(researchPrice)
+        priceLabel.text = "\(numberToString(researchPrice)) $"
         priceLabel.fontColor = colorResearch
         if researchType == .ResearchCenterResearch {
             priceLabel.fontColor = colorMoney

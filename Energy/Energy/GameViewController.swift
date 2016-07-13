@@ -99,9 +99,10 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         // play background music
         playBackgroundMusic()
         
-        // save game data when app will resign
+        // save game data when app will resign and boost when app active
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: #selector(GameViewController.saveGameData), name: UIApplicationWillResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(GameViewController.loadTime), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         // google mobile ad
         self.hideAdLabel.hidden = true
@@ -119,6 +120,9 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         // hide Ad Label
         hideAdLabel.layer.borderWidth = 1
         hideAdLabel.layer.borderColor = UIColor.whiteColor().CGColor
+    }
+    override func viewWillDisappear(animated: Bool) {
+        print("view will disappear")
     }
     func adViewWillLeaveApplication(bannerView: GADBannerView!) {
         print("has touch ad")
@@ -212,10 +216,10 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isSoundMute     = defaults.boolForKey("isSoundMute")
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
-        //1000000000000000
-        money       = 10000
+
+//        money       = 10000
 //        money     = 888000000000000
-        research    = 10000
+//        research    = 10000
 //        research  = 888000000000000
 
         // load upgrade and research level
@@ -235,12 +239,16 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
             maps.append(buildingMapLayer)
         }
         maps[0].isSold = true
+    }
+    
+    func loadTime() {
         // Boost lost time
         if isPause { return }
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
             print("Start Boost time!")
             isBoost = true
             // load date and update game date
+            let defaults = NSUserDefaults.standardUserDefaults()
             let lastDate = defaults.objectForKey("Date") as? NSDate
             if let intervall = lastDate?.timeIntervalSinceNow {
                 var pastSeconds = -Int(intervall)
@@ -263,7 +271,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
                             research += maps[i].research_TickAdd
                         }
                     }
-                    // If reset data in boost time
+                    // If reset data during boost time
                     if !isBoost {
                         money    = 1
                         research = 1
@@ -310,7 +318,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         }
         
         // save now date
-        let now = NSDate(timeInterval: -3600, sinceDate: NSDate())
+        let now = NSDate(timeInterval: 0, sinceDate: NSDate())
         defaults.setObject(now, forKey: "Date")
     }
 }

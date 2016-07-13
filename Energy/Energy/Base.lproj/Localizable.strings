@@ -164,6 +164,7 @@
 "Previous"                                    = "Previous";
 
 /* Research Name */
+"Price:"                                      = "Price:";
 "Research:"                                   = "Research:";
 "Wind Turbine Manager"                        = "Wind Turbine Manager";
 "Solar Manager"                               = "Solar Manager";

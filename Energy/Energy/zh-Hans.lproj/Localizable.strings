@@ -165,7 +165,7 @@
 "Previous"                                    = "上一页";
 
 /* Research Name */
-
+"Price:"                                      = "需求金钱：";
 "Research:"                                   = "需求研究点：";
 "Wind Turbine Manager"                        = "风力发电站管理员";
 "Solar Manager"                               = "太阳能阵列管理员";
