@@ -284,7 +284,7 @@ class ResearchElement: SKNode {
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         priceLabel.name = "priceLabel"
-        priceLabel.text = "\(numberToString(researchPrice)) $"
+        priceLabel.text = "\(numberToString(researchPrice))"
         priceLabel.fontColor = colorResearch
         if researchType == .ResearchCenterResearch {
             priceLabel.fontColor = colorMoney

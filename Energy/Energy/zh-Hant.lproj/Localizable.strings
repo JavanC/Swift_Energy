@@ -137,8 +137,8 @@
 "Converts heat to energy." = "把儲存的熱能轉換成能源。";
 "Converts more heat to energy." = "把更多的熱能轉換成能源，冷卻水可以提升轉換效率。";
 "Converts mass heat to energy." = "把大量的熱能轉換成能源，冷卻水可以提升轉換效率。";
-"Direct sales store heat." = "直接銷售儲存的熱能，小心不要讓鍋爐炸了。";
-"Direct sales more store heat." = "直接銷售更多儲存的熱能，小心不要讓鍋爐炸了。";
+"Direct sales store heat." = "直接銷售鍋爐房儲存的熱能，小心不要讓鍋爐炸了。";
+"Direct sales more store heat." = "直接銷售更多鍋爐房儲存的熱能，小心不要讓鍋爐炸了。";
 "Increases heat produce of adjacent building." = "阻隔逸散的熱能，增加週遭產熱建築的效率。";
 "Increase the maximum energy that can be stored." = "可以儲存更多的能源，再一次性的賣出。";
 "Balance heat between adjacent components." = "平衡所連接建築物的熱能。";

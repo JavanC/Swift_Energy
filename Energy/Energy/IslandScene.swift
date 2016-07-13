@@ -427,7 +427,20 @@ class IslandScene: SKScene {
                 
             // GMMMMM
             case bottomLayer.pageSell:
-                for _ in 1...600 { tickUpdata() }
+                isBoost = true
+                spendTime += 600
+                for _ in 1...600 {
+                    for i in 0..<6 {
+                        if maps[i].isSold {
+                            // Update map data
+                            maps[i].Update()
+                            // Calculate money and research
+                            money       += maps[i].money_TickAdd
+                            research    += maps[i].research_TickAdd
+                        }
+                    }
+                }
+                isBoost = false
                 
             // Energy Page
             case bottomLayer.pageEnergy.energy_ProgressBack:

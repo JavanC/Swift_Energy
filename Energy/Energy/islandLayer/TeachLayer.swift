@@ -41,7 +41,6 @@ class TeachLayer: SKSpriteNode {
     func changeTeachStep(step: Int) {
         
         if step >= 1 && step <= 13 {
-            print("Teach\(step)-EN")
             background.texture = SKTexture(imageNamed: "Teach\(step)-EN".localized)
         } else {
             print("else step")
