@@ -414,7 +414,6 @@ class ResearchScene: SKScene {
             elementsLayer.position = CGPoint(x: 0, y: unitHeight)
             addChild(elementsLayer)
             
-            
             // Bottom
             let bottomNode = SKSpriteNode(color: colorBlue4, size: CGSizeMake(frame.width, unitHeight))
             bottomNode.name = "bottomNode"

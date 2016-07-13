@@ -142,7 +142,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         if (skView.scene == nil) {
             let scale:CGFloat          = UIScreen.mainScreen().scale
             let size                   = CGSizeMake(skView.frame.width * scale, skView.frame.height * scale)
-            framescale                 = size.width / (9 * 64)
+            framescale                 = size.height / (16 * 64)
             tilesScaleSize             = CGSize(width: 64 * framescale, height: 64 * framescale)
             islandsScene               = IslandsScene(size: size)
             islandScene                = IslandScene(size: size)

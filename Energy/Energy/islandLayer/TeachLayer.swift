@@ -21,7 +21,7 @@ class TeachLayer: SKSpriteNode {
         self.size     = size
         self.name     = "TeachLayer"
         
-        background = SKSpriteNode(imageNamed: "Teach1-en")
+        background = SKSpriteNode(imageNamed: "Teach1-EN")
         background.name = "teachImages"
         background.size = size
         addChild(background)

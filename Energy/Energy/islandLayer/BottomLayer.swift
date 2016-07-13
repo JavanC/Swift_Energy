@@ -276,7 +276,7 @@ class PageBuild: SKSpriteNode {
             bg.anchorPoint = CGPoint(x: 0.5, y: 0)
             bg.alpha = 0.8
             bg.position = CGPoint(x: imagePosition[i].x, y: 0)
-            bg.zPosition = 2
+            bg.zPosition = 3
             buildLine.addChild(bg)
         }
         addChild(buildLine)

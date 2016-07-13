@@ -141,13 +141,13 @@ class SettingLayer: SKNode {
         line2.position = CGPoint(x: 0, y: gap * -3)
         addChild(line2)
         
-        let noAdLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
-        noAdLabel.name = "noAdLabel"
-        noAdLabel.text = "No Ad"
-        noAdLabel.fontSize = 30 * framescale
-        noAdLabel.verticalAlignmentMode = .Center
-        noAdLabel.position = CGPoint(x: 0, y: gap * -4.5)
-        addChild(noAdLabel)
+        let rateMeLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
+        rateMeLabel.name = "rateMeLabel"
+        rateMeLabel.text = "Coming Soon"
+        rateMeLabel.fontSize = 30 * framescale
+        rateMeLabel.verticalAlignmentMode = .Center
+        rateMeLabel.position = CGPoint(x: 0, y: gap * -4.5)
+        addChild(rateMeLabel)
         
         saveButton = SKShapeNode(circleOfRadius: 40 * framescale)
         saveButton.name = "saveButton"

@@ -61,6 +61,10 @@ class IslandScene: SKScene {
             for map in maps {
                 map.position = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
                 map.setScale(framescale)
+                // if device is 4s
+                if frame.height == 960 {
+                    map.xScale = 640 / (64 * 9)
+                }
                 map.hidden = true
                 map.zPosition = 1
                 addChild(map)
@@ -84,7 +88,7 @@ class IslandScene: SKScene {
             addChild(bottomLayer)
             
             // Building Select Layer
-            let buildingSelectLayerSize = mapLayerSize
+            let buildingSelectLayerSize = maps[0].size
             let buildingSelectLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
             buildingSelectLayer = BuildingSelectLayer(position: buildingSelectLayerPosition, midSize: buildingSelectLayerSize)
             buildingSelectLayer.zPosition = 50
