@@ -15,9 +15,6 @@ class IslandScene: SKScene {
     enum TouchType: Int {
         case Information, Energy, Builded, Sell
     }
-    let topTileSize = CGSizeMake(9, 1.5)
-    let midTileSize = CGSizeMake(9, 11)
-    let buttonTileSize = CGSizeMake(9, 1.5)
     let tilesize = CGSizeMake(64, 64)
     var gameTimer: NSTimer!
     
@@ -48,38 +45,34 @@ class IslandScene: SKScene {
             // Game Timer
             gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(IslandScene.tickUpdata), userInfo: nil, repeats: true)
             
-            // Top Layer
-            let topLayerSize = CGSizeMake(frame.size.width, topTileSize.height * tilesScaleSize.height)
+            // Top Layer (1.5/16)
+            let topLayerSize = CGSizeMake(frame.width, frame.height * 1.5 / 16)
             let topLayerPosition = CGPoint(x: 0, y: frame.size.height - topLayerSize.height)
             topLayer = TopLayer()
             topLayer.configureAtPosition(topLayerPosition, size: topLayerSize)
             topLayer.zPosition = 100
             addChild(topLayer)
             
-            // Map Layer
-            let mapLayerSize = CGSizeMake(tilesScaleSize.width * midTileSize.width, tilesScaleSize.height * midTileSize.height)
+            // Map Layer (11/16)
             for map in maps {
                 map.position = CGPoint(x: 0, y: frame.size.height - topLayer.size.height)
-                map.setScale(framescale)
-                // if device is 4s
-                if frame.height == 960 {
-                    map.xScale = 640 / (64 * 9)
-                }
+                map.xScale = frame.width / (64 * 9)
+                map.yScale = frame.height / (64 * 16)
                 map.hidden = true
                 map.zPosition = 1
                 addChild(map)
             }
             info_Building = maps[nowMapNumber].buildingForCoord(CGPoint(x: 0, y: 0))!
 
-            // Button Layer
-            let buttonLayerSize = CGSizeMake(frame.size.width, buttonTileSize.height * tilesScaleSize.height)
+            // Button Layer (1.5/16)
+            let buttonLayerSize = CGSizeMake(frame.width, frame.height * 1.5 / 16)
             buttonLayer = ButtonLayer()
             buttonLayer.configureAtPosition(CGPoint(x: 0, y: 0), size: buttonLayerSize)
             buttonLayer.zPosition = 200
             addChild(buttonLayer)
 
-            // Bottom Layer
-            let bottomLayerSize = CGSizeMake(frame.size.width, frame.size.height - topLayer.size.height - mapLayerSize.height - buttonLayer.size.height)
+            // Bottom Layer (2/16)
+            let bottomLayerSize = CGSizeMake(frame.width, frame.height * 2 / 16)
             let bottomLayerPosition = CGPoint(x: 0, y: buttonLayer.size.height)
             bottomLayer = BottomLayer()
             
@@ -109,9 +102,6 @@ class IslandScene: SKScene {
             tipsLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             tipsLayer.zPosition = 700
             addChild(tipsLayer)
-            
-            //testestestestestestestestestestestest
-//            isHaveTeach = false
             
             // Teach Layer
             teachLayer = TeachLayer()
@@ -167,7 +157,7 @@ class IslandScene: SKScene {
     
     func showAdSpace() {
         let scale = UIScreen.mainScreen().scale
-        let midheight = tilesScaleSize.height * midTileSize.height
+        let midheight = frame.height * 11 / 16
         let midscale = (midheight - 50 * scale) / midheight
         for map in maps {
             map.runAction(SKAction.scaleYTo(framescale * midscale, duration: 0))

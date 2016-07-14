@@ -285,7 +285,7 @@
 				TargetAttributes = {
 					65386E0A1C2CD8A500D08B41 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = DXW4P24PDX;
+						DevelopmentTeam = 5332NKLEL7;
 					};
 				};
 			};
@@ -496,9 +496,10 @@
 				);
 				INFOPLIST_FILE = Energy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.JavanChen.Energy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JavanLab.Energy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -514,9 +515,10 @@
 				);
 				INFOPLIST_FILE = Energy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.JavanChen.Energy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JavanLab.Energy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
