@@ -61,6 +61,9 @@
 "Teach12-EN"                          = "Teach12-EN";
 "Teach13-EN"                          = "Teach13-EN";
 
+/* Tips Layer */
+"Tips-EN"                             = "Tips-EN";
+
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "Touch buildings on the map to sell it.";
 "Notice: Produce energy building can not be" = "Notice: Produce energy building can not be";

@@ -61,6 +61,9 @@
 "Teach12-EN"                          = "Teach12-SC";
 "Teach13-EN"                          = "Teach13-SC";
 
+/* Tips Layer */
+"Tips-EN"                             = "Tips-SC";
+
 /* Sell Page */
 "Touch buildings on the map to sell it."     = "点击地图上的建筑物来出售";
 "Notice: Produce energy building can not be" = "注意：生产能源及生产热能的建筑物";
