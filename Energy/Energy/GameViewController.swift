@@ -217,9 +217,11 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
 
-//        money       = 10000
+//        money = 1
+//        research = 1
+//        money       = 374000000000
 //        money     = 888000000000000
-//        research    = 10000
+//        research    = 87000000
 //        research  = 888000000000000
 
         // load upgrade and research level
