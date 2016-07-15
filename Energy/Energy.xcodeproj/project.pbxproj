@@ -58,7 +58,6 @@
 		8DFFD4C11CAD6FE9008C668B /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFFD4C01CAD6FE9008C668B /* EventKitUI.framework */; };
 		8DFFD4C31CAD6FEF008C668B /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFFD4C21CAD6FEF008C668B /* EventKit.framework */; };
 		8DFFD4C51CAD6FFA008C668B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFFD4C41CAD6FFA008C668B /* MessageUI.framework */; };
-		8DFFD4C71CAD7001008C668B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFFD4C61CAD7001008C668B /* StoreKit.framework */; };
 		8DFFD4C91CAD700B008C668B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFFD4C81CAD700B008C668B /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
@@ -119,7 +118,6 @@
 		8DFFD4C01CAD6FE9008C668B /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		8DFFD4C21CAD6FEF008C668B /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		8DFFD4C41CAD6FFA008C668B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		8DFFD4C61CAD7001008C668B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		8DFFD4C81CAD700B008C668B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -129,7 +127,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DFFD4C91CAD700B008C668B /* SystemConfiguration.framework in Frameworks */,
-				8DFFD4C71CAD7001008C668B /* StoreKit.framework in Frameworks */,
 				8DFFD4C51CAD6FFA008C668B /* MessageUI.framework in Frameworks */,
 				8DFFD4C31CAD6FEF008C668B /* EventKit.framework in Frameworks */,
 				8DFFD4C11CAD6FE9008C668B /* EventKitUI.framework in Frameworks */,
@@ -228,7 +225,6 @@
 			isa = PBXGroup;
 			children = (
 				8DFFD4C81CAD700B008C668B /* SystemConfiguration.framework */,
-				8DFFD4C61CAD7001008C668B /* StoreKit.framework */,
 				8DFFD4C41CAD6FFA008C668B /* MessageUI.framework */,
 				8DFFD4C21CAD6FEF008C668B /* EventKit.framework */,
 				8DFFD4C01CAD6FE9008C668B /* EventKitUI.framework */,
@@ -286,6 +282,11 @@
 					65386E0A1C2CD8A500D08B41 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 5332NKLEL7;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -507,8 +508,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Energy/Content/GoogleMobileAdsSdkiOS-7.7.0",
