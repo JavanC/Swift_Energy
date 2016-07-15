@@ -110,12 +110,11 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         self.bannerView.delegate = self
         self.bannerView.rootViewController = self
         let request: GADRequest  = GADRequest()
-//        request.testDevices = ["d868130e73c7b6a9e776f9a6706450bd11fe77d7"]
+        // request.testDevices = ["d868130e73c7b6a9e776f9a6706450bd11fe77d7"]
         self.bannerView.loadRequest(request)
         self.bannerView.hidden = true
         notificationCenter.addObserver(self, selector: #selector(GameViewController.hideBannerView), name: "hideAd", object: nil)
         notificationCenter.addObserver(self, selector: #selector(GameViewController.showBannerView), name: "showAd", object: nil)
-        // NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
         
         // hide Ad Label
         hideAdLabel.layer.borderWidth = 1
@@ -216,13 +215,6 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isSoundMute     = defaults.boolForKey("isSoundMute")
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
-
-//        money = 1000000000
-//        research = 3000000
-//        money       = 374000000000
-//        money     = 888000000000000
-//        research    = 87000000
-//        research  = 888000000000000
 
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

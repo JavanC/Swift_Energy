@@ -143,7 +143,7 @@ class SettingLayer: SKNode {
         
         let rateMeLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         rateMeLabel.name = "rateMeLabel"
-        rateMeLabel.text = "Coming Soon"
+        rateMeLabel.text = "[Coming Soon]"
         rateMeLabel.fontSize = 30 * framescale
         rateMeLabel.verticalAlignmentMode = .Center
         rateMeLabel.position = CGPoint(x: 0, y: gap * -4.5)

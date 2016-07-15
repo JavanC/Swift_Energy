@@ -340,9 +340,10 @@ class PageBuild: SKSpriteNode {
         
         selectBoxArrow          = SKSpriteNode(texture: iconAtlas.textureNamed("arrow_up"))
         selectBoxArrow.name     = "selectBoxArrow"
-        selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50)
+        selectBoxArrow.setScale(framescale)
+        selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50 * framescale)
         selectBoxArrow.zPosition = 2
-        let upAction            = SKAction.sequence([SKAction.moveByX(0, y: 5, duration: 0.5), SKAction.moveByX(0, y: -5, duration: 0.5)])
+        let upAction            = SKAction.sequence([SKAction.moveByX(0, y: 5 * framescale, duration: 0.5), SKAction.moveByX(0, y: -5 * framescale, duration: 0.5)])
         selectBoxArrow.runAction(SKAction.repeatActionForever(upAction))
         addChild(selectBoxArrow)
 
@@ -384,7 +385,7 @@ class PageBuild: SKSpriteNode {
     func changeSelectNumber(selectNumber: Int) {
         self.selectNumber       = selectNumber
         selectBox.position      = imagePosition[selectNumber]
-        selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50)
+        selectBoxArrow.position = CGPoint(x: selectBox.position.x, y: selectBox.position.y + 50 * framescale)
         selectInfo.changeInformation(BuildingData(buildType: buildMenu[selectNumber]))
         for i in 0...3 {
             priceLabels[i].hidden = i == selectNumber ? false : true

@@ -397,7 +397,7 @@ class IslandsScene: SKScene {
             isFinishTarget  = false
             // reset game data
             money           = 1
-            research        = 1
+            research        = 0
             spendTime       = 0
             finishBuilding  = 0
             finishExplosion = 0
@@ -426,6 +426,9 @@ class IslandsScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        if !isHaveTeach {
+            worldLayer.islandNodes[0].isHighlight(true)
+        }
         worldLayer.timeLabel.text        = hourToString(spendTime)
         worldLayer.moneyLabel.text       = numberToString(money, isInt: true)
         worldLayer.researchLabel.text    = numberToString(research, isInt: true)

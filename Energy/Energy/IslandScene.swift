@@ -43,7 +43,7 @@ class IslandScene: SKScene {
             notificationCenter.addObserver(self, selector: #selector(IslandScene.hideAdSpace), name: "hideAdSpace", object: nil)
             
             // Game Timer
-            gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(IslandScene.tickUpdata), userInfo: nil, repeats: true)
+            gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(IslandScene.tickUpdata), userInfo: nil, repeats: true)
             
             // Top Layer (1.5/16)
             let topLayerSize = CGSizeMake(frame.width, frame.height * 1.5 / 16)
@@ -353,6 +353,7 @@ class IslandScene: SKScene {
                     print("tips ok button")
                     isShowTips = false
                     tipsLayer.showLayer(isShowTips)
+                    if !isSoundMute{ runAction(soundClick) }
                 }
             }
             return
@@ -379,10 +380,10 @@ class IslandScene: SKScene {
                 isPause = !isPause
                 topLayer.isPauseChange()
  
-                /////// try resize AD
-                hideAdSpace()
-                money = money * 10
-                research = research * 10
+                /////// GM Test
+                // hideAdSpace()
+                // money = money * 10
+                // research = research * 10
                 
             case buttonLayer.buttonBuild:
                 print("Build Button")
@@ -415,22 +416,22 @@ class IslandScene: SKScene {
                     self.view?.presentScene(researchScene, transition: door_Float)
                 }
                 
-            // GMMMMM
-            case bottomLayer.pageSell:
-                isBoost = true
-                spendTime += 600
-                for _ in 1...600 {
-                    for i in 0..<6 {
-                        if maps[i].isSold {
-                            // Update map data
-                            maps[i].Update()
-                            // Calculate money and research
-                            money       += maps[i].money_TickAdd
-                            research    += maps[i].research_TickAdd
-                        }
-                    }
-                }
-                isBoost = false
+            /////// GM Test 2
+            // case bottomLayer.pageSell:
+            //     isBoost = true
+            //     spendTime += 600
+            //     for _ in 1...600 {
+            //         for i in 0..<6 {
+            //             if maps[i].isSold {
+            //                 // Update map data
+            //                 maps[i].Update()
+            //                 // Calculate money and research
+            //                 money       += maps[i].money_TickAdd
+            //                 research    += maps[i].research_TickAdd
+            //             }
+            //         }
+            //     }
+            //     isBoost = false
                 
             // Energy Page
             case bottomLayer.pageEnergy.energy_ProgressBack:

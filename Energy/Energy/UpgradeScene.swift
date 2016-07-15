@@ -135,8 +135,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.SmallGenerator
             name = "Generator Max Heat".localized
             comment = "Increases max heat by 50%".localized
-            upgradePrice = baseToPower(1000, base: 2.3, power: level)
-            degradePrice = baseToPower(1000, base: 2.3, power: level - 1)
+            upgradePrice = baseToPower(1000, base: 1.9, power: level)
+            degradePrice = baseToPower(1000, base: 1.9, power: level - 1)
             
         case .BoilerHouseSellAmount:
             imageType = BuildingType.BoilerHouse
@@ -184,15 +184,15 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet,Outlet Max Heat".localized
             comment = "Increases max heat by 50%".localized
-            upgradePrice = baseToPower(50000000000000, base: 1.9, power: level)
-            degradePrice = baseToPower(50000000000000, base: 1.9, power: level - 1)
+            upgradePrice = baseToPower(10000000000000, base: 1.9, power: level)
+            degradePrice = baseToPower(10000000000000, base: 1.9, power: level - 1)
             
         case .HeatInletMaxTransfer:
             imageType = BuildingType.HeatInlet
             name = "Heat Inlet Max Transfer".localized
             comment = "Increases heat inlet transfer by 50%".localized
-            upgradePrice = baseToPower(100000000000000, base: 1.9, power: level)
-            degradePrice = baseToPower(100000000000000, base: 1.9, power: level - 1)
+            upgradePrice = baseToPower(8000000000000, base: 1.9, power: level)
+            degradePrice = baseToPower(8000000000000, base: 1.9, power: level - 1)
             
         case .WaterPumpProduction:
             imageType = BuildingType.WaterPump
@@ -226,8 +226,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.SmallOffice
             name = "Office Sell Amount".localized
             comment = "Increases energy sell amount by 50%".localized
-            upgradePrice = baseToPower(100, base: 2.0, power: level)
-            degradePrice = baseToPower(100, base: 2.0, power: level - 1)
+            upgradePrice = baseToPower(100, base: 2.1, power: level)
+            degradePrice = baseToPower(100, base: 2.1, power: level - 1)
             
         case .BankEffectiveness:
             imageType = BuildingType.Bank

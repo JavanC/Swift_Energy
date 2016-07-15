@@ -499,15 +499,15 @@ class BuildingData: NSObject, NSCoding {
             imageName = "HeatInlet"
             name = "Heat Inlet".localized
             comment = "Heat distributes evenly to every heat outlet.".localized
-            buildPrice = 100000000000000
+            buildPrice = 5000000000000
             progress = .Heat
-            heatSystem = HeatSystem(size: 8000000000, initAmount: 0, inletTransfer: 5000000000)
+            heatSystem = HeatSystem(size: 8000000000, initAmount: 0, inletTransfer: 3000000000)
             
         case .HeatOutlet:
             imageName = "HeatOutlet"
             name = "Heat Outlet".localized
             comment = "Heat transfer from the heat inlet, heat output need heat exchanger or heat sink.".localized
-            buildPrice = 100000000000000
+            buildPrice = 3000000000000
             progress = .Heat
             heatSystem = HeatSystem(size: 8000000000, initAmount: 0)
             
@@ -677,7 +677,7 @@ class BuildingData: NSObject, NSCoding {
 
         case .HeatInlet:
             heatSystem.size = baseToPower(8000000000, base: 1.5, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]!)
-            heatSystem.inletTransfer = baseToPower(5000000000, base: 1.5, power: upgradeLevel[UpgradeType.HeatInletMaxTransfer]!)
+            heatSystem.inletTransfer = baseToPower(3000000000, base: 1.5, power: upgradeLevel[UpgradeType.HeatInletMaxTransfer]!)
 
         case .HeatOutlet:
             heatSystem.size = baseToPower(8000000000, base: 1.5, power: upgradeLevel[UpgradeType.HeatInletOutletMaxHeat]!)

@@ -528,8 +528,7 @@ class ResearchScene: SKScene {
         if researchLevel[.LargeBoilerHouseResearch] == 1 { elements += [.NuclearCellResearch] }
         if researchLevel[.NuclearCellResearch] == 1      { elements += [.NuclearCellRebuild, .WaterPumpResearch, .WaterPipeResearch, .LargeOfficeResearch] }
         if researchLevel[.LargeOfficeResearch] == 1      { elements += [.LibraryResearch, .GroundwaterPumpResearch, .FusionCellResearch] }
-        if researchLevel[.FusionCellResearch] == 1       { elements += [.FusionCellRebuild, .LargeGeneratorResearch] }
-        if researchLevel[.LargeGeneratorResearch] == 1   { elements += [.BankResearch, .HeatInletResearch, .HeatOutletResearch] }
+        if researchLevel[.FusionCellResearch] == 1       { elements += [.FusionCellRebuild, .LargeGeneratorResearch, .HeatInletResearch, .HeatOutletResearch, .BankResearch] }
         
         // Add Element
         var researchDoneNumber = 0

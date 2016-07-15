@@ -70,7 +70,7 @@
 "recycled money."                            = "售出时不回收其金钱";
 
 /* Energy Page */
-"TOUCH TO SELL ENERGY" = "点 击 来 销 售 储 存 能 源";
+"TOUCH  TO  SELL  ENERGY" = "点 击 来 销 售 储 存 能 源";
 
 /* Building Select */
 "Rebuild:ON" = "自动重建:开";
