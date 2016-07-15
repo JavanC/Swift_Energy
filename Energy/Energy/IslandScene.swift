@@ -43,7 +43,7 @@ class IslandScene: SKScene {
             notificationCenter.addObserver(self, selector: #selector(IslandScene.hideAdSpace), name: "hideAdSpace", object: nil)
             
             // Game Timer
-            gameTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(IslandScene.tickUpdata), userInfo: nil, repeats: true)
+            gameTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(IslandScene.tickUpdata), userInfo: nil, repeats: true)
             
             // Top Layer (1.5/16)
             let topLayerSize = CGSizeMake(frame.width, frame.height * 1.5 / 16)
@@ -661,12 +661,12 @@ class IslandScene: SKScene {
         }
 
         // Updata text imformation
-        topLayer.moneyLabel.text = "\(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd, isInt: false))"
-        topLayer.researchLabel.text = "\(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd, isInt: false))"
+        topLayer.moneyLabel.text = "\(numberToString(money)) + \(numberToString(maps[nowMapNumber].money_TickAdd))"
+        topLayer.researchLabel.text = "\(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd))"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
-        bottomLayer.pageEnergy.energyLabel.text = "\(numberToString(maps[nowMapNumber].energy)) / \(numberToString(maps[nowMapNumber].energyMax))"
-        bottomLayer.pageEnergy.energyTickAddLabel.text = "+\(numberToString(maps[nowMapNumber].energy_TickAdd, isInt: false))"
+        bottomLayer.pageEnergy.energyLabel.text = "\(numberToString(maps[nowMapNumber].energy, isInt: true)) / \(numberToString(maps[nowMapNumber].energyMax, isInt: true))"
+        bottomLayer.pageEnergy.energyTickAddLabel.text = "+\(numberToString(maps[nowMapNumber].energy_TickAdd))"
     }
     
     func tickUpdata() {

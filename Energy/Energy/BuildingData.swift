@@ -431,7 +431,7 @@ class BuildingData: NSObject, NSCoding {
             imageName = "MediumGenerator"
             name = "Medium Generator".localized
             comment = "Converts more heat to energy.".localized
-            buildPrice = 200000000
+            buildPrice = 50000000
             progress = .Heat
             energySystem = EnergySystem(initAmount: 0, heat2EnergyAmount: 12, water2Energy: true)
             heatSystem = HeatSystem(size: 80, initAmount: 0)
@@ -460,7 +460,7 @@ class BuildingData: NSObject, NSCoding {
             imageName = "LargeBoilerHouse"
             name = "Large Boiler House".localized
             comment = "Direct sales more store heat.".localized
-            buildPrice = 50000000
+            buildPrice = 200000000
             progress = .Heat
             heatSystem = HeatSystem(size: 8000, initAmount: 0)
             moneySystem = MoneySystem(initAmount: 0, heat2MoneyAmount: 600)
@@ -485,7 +485,7 @@ class BuildingData: NSObject, NSCoding {
             comment = "Balance heat between adjacent components.".localized
             buildPrice = 50000
             progress = .Heat
-            heatSystem = HeatSystem(size: 500, initAmount: 0)
+            heatSystem = HeatSystem(size: 5000, initAmount: 0)
             
         case .HeatSink:
             imageName = "HeatSink"
@@ -515,7 +515,7 @@ class BuildingData: NSObject, NSCoding {
             imageName = "WaterPump"
             name = "Water Pump".localized
             comment = "Produce Water to cools generators so they produce much more energy. Must be placed next to water.".localized
-            buildPrice = 40000000000
+            buildPrice = 20000000000
             progress = .Water
             waterSystem = WaterSystem(size: 200000, produce: 30000, output: true)
  
@@ -523,9 +523,9 @@ class BuildingData: NSObject, NSCoding {
             imageName = "GroundwaterPump"
             name = "Groundwater Pump".localized
             comment = "Produce Water to cools generators so they produce much more energy.".localized
-            buildPrice = 10000000000000
+            buildPrice = 4000000000000
             progress = .Water
-            waterSystem = WaterSystem(size: 300000, produce: 50000, output: true)
+            waterSystem = WaterSystem(size: 300000, produce: 150000, output: true)
 
         case .WaterPipe:
             imageName = "WaterPipe"
@@ -670,7 +670,7 @@ class BuildingData: NSObject, NSCoding {
             batteryEnergySize = baseToPower(1000, base: 1.5, power: upgradeLevel[UpgradeType.EnergyBatterySize]!)
             
         case .HeatExchanger:
-            heatSystem.size = baseToPower(500, base: 1.5, power: upgradeLevel[UpgradeType.HeatExchangerMaxHeat]!)
+            heatSystem.size = baseToPower(5000, base: 1.5, power: upgradeLevel[UpgradeType.HeatExchangerMaxHeat]!)
 
         case .HeatSink:
             heatSystem.size = baseToPower(500000, base: 1.5, power: upgradeLevel[UpgradeType.HeatSinkMaxHeat]!)
@@ -688,7 +688,7 @@ class BuildingData: NSObject, NSCoding {
             
         case .GroundwaterPump:
             waterSystem.size = baseToPower(300000, base: 1.5, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
-            waterSystem.produce = baseToPower(50000, base: 1.25, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
+            waterSystem.produce = baseToPower(150000, base: 1.25, power: upgradeLevel[UpgradeType.GroundwaterPumpProduction]!)
             
         case .WaterPipe:
             waterSystem.size = baseToPower(200000, base: 1.5, power: upgradeLevel[UpgradeType.WaterElementMaxWater]!)
@@ -697,10 +697,10 @@ class BuildingData: NSObject, NSCoding {
             moneySystem.energy2MoneyAmount = baseToPower(5, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
             
         case .MediumOffice:
-            moneySystem.energy2MoneyAmount = baseToPower(100, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
+            moneySystem.energy2MoneyAmount = baseToPower(80, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
 
         case .LargeOffice:
-            moneySystem.energy2MoneyAmount = baseToPower(2000, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
+            moneySystem.energy2MoneyAmount = baseToPower(1280, base: 1.5, power: upgradeLevel[UpgradeType.OfficeSellEnergy]!)
             
         case .Bank:
             bankAddPercent = 0.3 + 0.1 * Double(upgradeLevel[UpgradeType.BankEffectiveness]!)
@@ -732,14 +732,14 @@ class BuildingData: NSObject, NSCoding {
     
     func waterTransformEnergy() {
         if waterSystem != nil && energySystem != nil && energySystem.water2Energy {
-            if heatSystem.inAmount >= waterSystem.inAmount * 100 {
-                energySystem.inAmount += waterSystem.inAmount * 100
-                heatSystem.inAmount -= waterSystem.inAmount * 100
+            if heatSystem.inAmount >= waterSystem.inAmount * 1000 {
+                energySystem.inAmount += waterSystem.inAmount * 1000
+                heatSystem.inAmount -= waterSystem.inAmount * 1000
                 waterSystem.inAmount = 0
             } else {
                 energySystem.inAmount += heatSystem.inAmount
                 if heatSystem.inAmount > 0 {
-                    waterSystem.inAmount -= heatSystem.inAmount / 100 + 1
+                    waterSystem.inAmount -= heatSystem.inAmount / 1000 + 1
                 }
                 heatSystem.inAmount = 0
             }

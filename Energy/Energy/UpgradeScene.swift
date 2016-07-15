@@ -72,8 +72,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.WaveCell
             name = "Wave Energy".localized
             comment = "Increases energy producetion by 25%".localized
-            upgradePrice = baseToPower(1000000, base: 1.8, power: level)
-            degradePrice = baseToPower(1000000, base: 1.8, power: level - 1)
+            upgradePrice = baseToPower(1000000, base: 3, power: level)
+            degradePrice = baseToPower(1000000, base: 3, power: level - 1)
             
         case .WaveCellLifetime:
             imageType = BuildingType.WaveCell
@@ -170,8 +170,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.HeatExchanger
             name = "Heat Exchanger Max Heat".localized
             comment = "Increases max heat by 50%".localized
-            upgradePrice = baseToPower(50000, base: 2.1, power: level)
-            degradePrice = baseToPower(50000, base: 2.1, power: level - 1)
+            upgradePrice = baseToPower(50000, base: 1.8, power: level)
+            degradePrice = baseToPower(50000, base: 1.8, power: level - 1)
             
         case .HeatSinkMaxHeat:
             imageType = BuildingType.HeatSink
@@ -205,8 +205,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.GroundwaterPump
             name = "Groundwater Pump".localized
             comment = "Increases water producetion by 25%".localized
-            upgradePrice = baseToPower(10000000000000, base: 1.6, power: level)
-            degradePrice = baseToPower(10000000000000, base: 1.6, power: level - 1)
+            upgradePrice = baseToPower(4000000000000, base: 1.6, power: level)
+            degradePrice = baseToPower(4000000000000, base: 1.6, power: level - 1)
             
         case .WaterElementMaxWater:
             imageType = BuildingType.WaterPipe
@@ -226,8 +226,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.SmallOffice
             name = "Office Sell Amount".localized
             comment = "Increases energy sell amount by 50%".localized
-            upgradePrice = baseToPower(100, base: 1.9, power: level)
-            degradePrice = baseToPower(100, base: 1.9, power: level - 1)
+            upgradePrice = baseToPower(100, base: 2.0, power: level)
+            degradePrice = baseToPower(100, base: 2.0, power: level - 1)
             
         case .BankEffectiveness:
             imageType = BuildingType.Bank
@@ -240,8 +240,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.ResearchCenter
             name = "Research Center Effectiveness".localized
             comment = "Increases research producetion by 25%".localized
-            upgradePrice = baseToPower(100, base: 2.3, power: level)
-            degradePrice = baseToPower(100, base: 2.3, power: level - 1)
+            upgradePrice = baseToPower(100, base: 2.5, power: level)
+            degradePrice = baseToPower(100, base: 2.5, power: level - 1)
             
         case .LibraryEffectiveness:
             imageType = BuildingType.Library
@@ -311,7 +311,7 @@ class UpgradeElement: SKNode {
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         priceLabel.name = "priceLabel"
-        priceLabel.text = "\(numberToString(upgradePrice)) $"
+        priceLabel.text = "\(numberToString(upgradePrice, isInt: true)) $"
         priceLabel.fontColor = colorMoney
         priceLabel.fontSize = infoLabel.fontSize
         priceLabel.horizontalAlignmentMode = .Left
@@ -410,7 +410,7 @@ class UpgradeScene: SKScene {
             moneyLabel.name = "top label"
             moneyLabel.fontSize = unitHeight * 0.2
             moneyLabel.fontColor = colorMoney
-            moneyLabel.text = numberToString(money)
+            moneyLabel.text = numberToString(money, isInt: true)
             moneyLabel.horizontalAlignmentMode = .Left
             moneyLabel.verticalAlignmentMode = .Bottom
             moneyLabel.position = CGPoint(x: moneyIcon.position.x + unitHeight * 0.2, y: frame.height - unitHeight * 0.9)
@@ -632,7 +632,7 @@ class UpgradeScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
-        moneyLabel.text = numberToString(money)
+        moneyLabel.text = numberToString(money, isInt: true)
         for upgradeElement in upgradeElements {
             upgradeElement.checkUpgradeAndDegrade()
         }

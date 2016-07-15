@@ -291,7 +291,7 @@ class PageBuild: SKSpriteNode {
             let price = BuildingData.init(buildType: buildMenu[i]).buildPrice
             let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
             priceLabel.name = "price label \(i)"
-            priceLabel.text = numberToString(price) 
+            priceLabel.text = numberToString(price, isInt: true)
             priceLabel.hidden = i == selectNumber ? false : true
             priceLabel.fontSize = 16 * framescale
             priceLabel.fontColor = colorMoney
@@ -395,7 +395,7 @@ class PageBuild: SKSpriteNode {
         buildMenu[selectNumber] = buildType
         selectInfo.changeInformation(BuildingData(buildType: buildType))
         images[selectNumber].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildType).imageName)))
-        priceLabels[selectNumber].text = numberToString(BuildingData.init(buildType: buildType).buildPrice) 
+        priceLabels[selectNumber].text = numberToString(BuildingData.init(buildType: buildType).buildPrice, isInt: true)
     }
     
     func openSelectInformation() {
@@ -488,13 +488,13 @@ class PageBuild: SKSpriteNode {
         if researchLevel[.SmallGeneratorResearch] == 0 {
             buildMenu[1] = .Battery
             images[1].runAction(SKAction.setTexture(buildingAtlas.textureNamed("Battery")))
-            priceLabels[1].text = numberToString(BuildingData.init(buildType: buildMenu[1]).buildPrice) 
+            priceLabels[1].text = numberToString(BuildingData.init(buildType: buildMenu[1]).buildPrice, isInt: true)
             childNodeWithName("SelectImage\(2)")?.runAction(SKAction.setTexture(buildingAtlas.textureNamed("Battery")))
         }
         if researchLevel[.SmallOfficeResearch] == 0 {
             buildMenu[3] = .ResearchCenter
             images[3].runAction(SKAction.setTexture(buildingAtlas.textureNamed("ResearchCenter")))
-            priceLabels[3].text = numberToString(BuildingData.init(buildType: buildMenu[3]).buildPrice) 
+            priceLabels[3].text = numberToString(BuildingData.init(buildType: buildMenu[3]).buildPrice, isInt: true)
             childNodeWithName("SelectImage\(4)")?.runAction(SKAction.setTexture(buildingAtlas.textureNamed("ResearchCenter")))
         }
         
@@ -506,7 +506,7 @@ class PageBuild: SKSpriteNode {
         buildMenu = [BuildingType.WindTurbine, BuildingType.SmallGenerator, BuildingType.HeatExchanger, BuildingType.SmallOffice]
         for i in 0..<4 {
             images[i].runAction(SKAction.setTexture(buildingAtlas.textureNamed(BuildingData(buildType: buildMenu[i]).imageName)))
-            priceLabels[i].text = numberToString(BuildingData.init(buildType: buildMenu[i]).buildPrice) 
+            priceLabels[i].text = numberToString(BuildingData.init(buildType: buildMenu[i]).buildPrice, isInt: true) 
         }
         
         updateImageShow()

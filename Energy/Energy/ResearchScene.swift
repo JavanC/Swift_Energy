@@ -284,7 +284,7 @@ class ResearchElement: SKNode {
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         priceLabel.name = "priceLabel"
-        priceLabel.text = "\(numberToString(researchPrice))"
+        priceLabel.text = "\(numberToString(researchPrice, isInt: true))"
         priceLabel.fontColor = colorResearch
         if researchType == .ResearchCenterResearch {
             priceLabel.fontColor = colorMoney
@@ -383,7 +383,7 @@ class ResearchScene: SKScene {
             researchLabel.name = "research label"
             researchLabel.fontSize = unitHeight * 0.2
             researchLabel.fontColor = colorResearch
-            researchLabel.text = numberToString(research)
+            researchLabel.text = numberToString(research, isInt: true)
             researchLabel.horizontalAlignmentMode = .Left
             researchLabel.verticalAlignmentMode = .Bottom
             researchLabel.position = CGPoint(x: researchIcon.position.x + unitHeight * 0.2, y: frame.size.height - unitHeight * 0.9)
@@ -605,7 +605,7 @@ class ResearchScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
-        researchLabel.text = "\(numberToString(research))"
+        researchLabel.text = "\(numberToString(research, isInt: true))"
         for researchElement in researchElements {
             researchElement.checkUpgradeButton()
         }

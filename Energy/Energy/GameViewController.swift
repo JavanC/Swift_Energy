@@ -217,8 +217,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
 
-//        money = 1
-//        research = 1
+//        money = 1000000000
+//        research = 3000000
 //        money       = 374000000000
 //        money     = 888000000000000
 //        research    = 87000000
@@ -254,7 +254,10 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
             let lastDate = defaults.objectForKey("Date") as? NSDate
             if let intervall = lastDate?.timeIntervalSinceNow {
                 var pastSeconds = -Int(intervall)
-                if pastSeconds <= 0 { return }
+                if pastSeconds <= 0 {
+                    isBoost = false
+                    return
+                }
                 if pastSeconds > 3600 {
                     pastSeconds = 3600
                 }

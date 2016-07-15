@@ -53,7 +53,7 @@ func baseToPower(number: Double, base: Double, power: Int) -> Double {
     return answer
 }
 
-func numberToString(value: Double, isInt: Bool = true) -> String {
+func numberToString(value: Double, isInt: Bool = false) -> String {
     let number = value
     let P = IntMax(number/1000000000000000)
     let T = IntMax((number%1000000000000000)/1000000000000)

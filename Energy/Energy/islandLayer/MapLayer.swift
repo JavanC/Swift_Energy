@@ -65,6 +65,11 @@ class Building: SKNode {
     
     // MARK: add progress
     func addProgress() {
+        let back = SKSpriteNode(color: SKColor.whiteColor(), size: CGSizeMake(58, 7))
+        back.anchorPoint = CGPoint(x: 0, y: 0)
+        back.position = CGPoint(x: 3, y: -61)
+        back.zPosition = 0.5
+        addChild(back)
         progressBack = SKSpriteNode()
         progressBack.size = CGSize(width: 56, height: 5)
         progressBack.anchorPoint = CGPoint(x: 0, y: 0)
@@ -76,12 +81,12 @@ class Building: SKNode {
         progress.size = CGSize(width: 56, height: 5)
         progress.anchorPoint = CGPoint(x: 0, y: 0)
         progress.position = CGPoint(x: 4, y: -60)
-        progress.alpha = 0.7
+        progress.alpha = 1
         progress.zPosition = 1
         addChild(progress)
         switch buildingData.progress! {
         case .Time:
-            progressBack.color = SKColor.yellowColor()
+            progressBack.color = SKColor.whiteColor()
             progress.color = SKColor.yellowColor()
         case .Heat:
             progressBack.color = SKColor.redColor()
@@ -254,7 +259,7 @@ class BuildingMapLayer: SKSpriteNode {
                            "L","L","L","L","R","O","L","L","L",
                            "O","L","G","L","R","O","O","G","L"]
         case 4:
-            garbageHeat = 1000000000
+            garbageHeat = 87000000000
             stringArray = ["L","L","L","L","L","L","L","O","O",
                            "L","G","L","L","L","L","L","L","O",
                            "L","L","L","L","L","L","L","L","L",
@@ -267,7 +272,7 @@ class BuildingMapLayer: SKSpriteNode {
                            "O","L","L","L","L","L","G","L","L",
                            "O","O","O","L","L","L","L","L","L"]
         case 5:
-            garbageHeat = 10
+            garbageHeat = 3600000000
             stringArray = ["G","G","G","G","G","G","G","G","G",
                            "G","G","G","G","G","G","G","G","G",
                            "G","G","G","G","G","G","G","G","G",

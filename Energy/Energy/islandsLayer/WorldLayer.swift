@@ -276,7 +276,7 @@ class WorldLayer: SKNode {
                 if maps[i].money_TickAdd != 0 {
                     let addMoney = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
                     addMoney.name = "add Money"
-                    addMoney.text = "+\(numberToString(maps[i].money_TickAdd))"
+                    addMoney.text = "+\(numberToString(maps[i].money_TickAdd, isInt: true))"
                     addMoney.fontColor = colorMoney
                     addMoney.fontSize = 30 * framescale
                     addMoney.position = CGPoint(x: rangePositions[i].x, y: rangePositions[i].y + 15 * framescale)
@@ -287,7 +287,7 @@ class WorldLayer: SKNode {
                 if maps[i].research_TickAdd != 0 {
                     let addResearch = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
                     addResearch.name = "add research"
-                    addResearch.text = "+\(numberToString(maps[i].research_TickAdd))"
+                    addResearch.text = "+\(numberToString(maps[i].research_TickAdd, isInt: true))"
                     addResearch.fontColor = colorResearch
                     addResearch.fontSize = 30 * framescale
                     addResearch.position = CGPoint(x: rangePositions[i].x, y: rangePositions[i].y - 15 * framescale)
