@@ -215,7 +215,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isSoundMute     = defaults.boolForKey("isSoundMute")
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
-
+        
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
             upgradeLevel[UpgradeType(rawValue: count)!] = defaults.integerForKey("upgradeData_\(count)")

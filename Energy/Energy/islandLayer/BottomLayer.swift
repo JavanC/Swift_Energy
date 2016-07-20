@@ -150,7 +150,7 @@ class PageInformation: SKSpriteNode {
         }
         if buildingData.timeSystem != nil {
             infoTicksNode.hidden = false
-            infoTicksNode.valueLabel.text = "\(numberToString(buildingData.timeSystem.inAmount)) / \(numberToString(buildingData.timeSystem.size))"
+            infoTicksNode.valueLabel.text = "\(numberToString(buildingData.timeSystem.inAmount, isInt: true)) / \(numberToString(buildingData.timeSystem.size, isInt: true))"
             informationLabels.append(infoTicksNode)
         }
         if buildingData.heatSystem != nil {

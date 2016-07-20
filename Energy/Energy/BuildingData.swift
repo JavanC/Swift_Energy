@@ -20,7 +20,7 @@ class TimeSystem: NSObject, NSCoding {
     }
     func tick() -> Bool{
         if inAmount > 0 { inAmount -= 1 }
-        if inAmount == 0 { return false }
+        if inAmount <= 0 { return false }
         return true
     }
     func resetTime() {
