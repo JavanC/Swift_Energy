@@ -12,14 +12,14 @@ import AVFoundation
 import GoogleMobileAds
 
 // Game Scene
-var islandsScene:   SKScene!
-var islandScene:    SKScene!
-var upgradeScene:   SKScene!
-var researchScene:  SKScene!
+var islandsScene:    SKScene!
+var islandScene:     SKScene!
+var upgradeScene:    SKScene!
+var researchScene:   SKScene!
 
 // Game UI Data
-var tilesScaleSize: CGSize!
-var framescale:     CGFloat!
+var tilesScaleSize:  CGSize!
+var framescale:      CGFloat!
 let door_Fade        = SKTransition.fadeWithDuration(2)
 let door_Float       = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
 let door_reveal      = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
