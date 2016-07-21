@@ -141,8 +141,6 @@ class IslandScene: SKScene {
             teachLayer.changeTeachStep(teachStep)
         }
 
-        print("load 6")
-        
         // if not first load and is connect network, show AD
         if firstLoad {
             firstLoad = false
@@ -153,6 +151,9 @@ class IslandScene: SKScene {
                 hideAdSpace()
             }
         }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("playMusic", object: nowMapNumber + 1)
+        print("load 6")
     }
     
     func showAdSpace() {

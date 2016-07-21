@@ -100,6 +100,7 @@ class IslandsScene: SKScene {
                 self.worldLayer.isShowTickAdd = true
             }
             NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("playMusic", object: 0)
             print("load 10")
             loadingNum = 2
         default:
@@ -110,6 +111,7 @@ class IslandsScene: SKScene {
                 self.worldLayer.isShowTickAdd = true
             }
             NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("playMusic", object: 0)
             print("load 10")
         }
     }
@@ -250,12 +252,16 @@ class IslandsScene: SKScene {
                     if isMusicMute {
                         settingLayer.musicButton.off()
                         if !isSoundMute{ runAction(soundTap) }
-                        backgroundMusicPlayer.pause()
+                        for backgroundMusic in backgroundMusics {
+                            backgroundMusic.volume = 0
+                        }
                         print("music off")
                     } else {
                         settingLayer.musicButton.on()
                         if !isSoundMute{ runAction(soundTap) }
-                        backgroundMusicPlayer.play()
+                        for backgroundMusic in backgroundMusics {
+                            backgroundMusic.volume = 0.5
+                        }
                         print("music on")
                     }
                 }
@@ -381,7 +387,7 @@ class IslandsScene: SKScene {
             self.settingLayer.alpha = 0
             self.settingLayer.hidden = true
             // reset background music
-            backgroundMusicPlayer.currentTime = 0
+            NSNotificationCenter.defaultCenter().postNotificationName("playMusic", object: 0)
             // reset loading number and world position
             self.worldLayer.position = CGPoint(x: 0, y: -self.frame.height)
             self.worldLayer.skyBackground.hidden = false

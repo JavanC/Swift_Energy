@@ -64,6 +64,7 @@ class SettingLayer: SKNode {
         soundButton = SwitchButton(texture: iconAtlas.textureNamed("sound"))
         soundButton.name = "soundButton"
         soundButton.position = CGPoint(x: frameSize.width / 6, y: gap * 4)
+        isSoundMute ? soundButton.off() : soundButton.on()
         addChild(soundButton)
         
         let soundLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
@@ -77,6 +78,7 @@ class SettingLayer: SKNode {
         musicButton = SwitchButton(texture: iconAtlas.textureNamed("music"))
         musicButton.name = "musicButton"
         musicButton.position = CGPoint(x: -frameSize.width / 6, y: gap * 4)
+        isMusicMute ? musicButton.off() : musicButton.on()
         addChild(musicButton)
         
         let musicLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)

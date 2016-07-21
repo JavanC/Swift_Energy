@@ -20,37 +20,37 @@ var researchScene:  SKScene!
 // Game UI Data
 var tilesScaleSize: CGSize!
 var framescale:     CGFloat!
-let door_Fade       = SKTransition.fadeWithDuration(2)
-let door_Float      = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
-let door_reveal     = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
+let door_Fade        = SKTransition.fadeWithDuration(2)
+let door_Float       = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 0.5)
+let door_reveal      = SKTransition.revealWithDirection(SKTransitionDirection.Down, duration: 0.5)
 
 // Game Atlas
-let buildingAtlas   = SKTextureAtlas(named: "building")
-let iconAtlas       = SKTextureAtlas(named: "icon")
+let buildingAtlas    = SKTextureAtlas(named: "building")
+let iconAtlas        = SKTextureAtlas(named: "icon")
 
 // Game Sound
-var backgroundMusicPlayer: AVAudioPlayer!
-let soundTap        = SKAction.playSoundFileNamed("tap.wav", waitForCompletion: false)
-let soundSell       = SKAction.playSoundFileNamed("sell.wav", waitForCompletion: false)
-let soundPlacing    = SKAction.playSoundFileNamed("placing.wav", waitForCompletion: false)
-let soundExplosion  = SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false)
-let soundLevelup    = SKAction.playSoundFileNamed("levelup.wav", waitForCompletion: false)
-let soundSlide      = SKAction.playSoundFileNamed("slide.wav", waitForCompletion: false)
-let soundClick      = SKAction.playSoundFileNamed("click.wav", waitForCompletion: false)
-let soundSelect     = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
-let soundAction     = SKAction.playSoundFileNamed("action.wav", waitForCompletion: false)
+var backgroundMusics = [AVAudioPlayer]()
+let soundTap         = SKAction.playSoundFileNamed("tap.wav", waitForCompletion: false)
+let soundSell        = SKAction.playSoundFileNamed("sell.wav", waitForCompletion: false)
+let soundPlacing     = SKAction.playSoundFileNamed("placing.wav", waitForCompletion: false)
+let soundExplosion   = SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false)
+let soundLevelup     = SKAction.playSoundFileNamed("levelup.wav", waitForCompletion: false)
+let soundSlide       = SKAction.playSoundFileNamed("slide.wav", waitForCompletion: false)
+let soundClick       = SKAction.playSoundFileNamed("click.wav", waitForCompletion: false)
+let soundSelect      = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
+let soundAction      = SKAction.playSoundFileNamed("action.wav", waitForCompletion: false)
 
 // Game Color
-var colorMoney      = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000)// #DAD74E
-var colorResearch   = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
-var colorEnergy     = UIColor(red: 0.000, green: 0.698, blue: 0.875, alpha: 1.000)
-var colorBlue1      = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
-var colorBlue2      = UIColor(red: 0.208, green: 0.455, blue: 0.635, alpha: 1.000)// #3474A2
-var colorBlue3      = UIColor(red: 0.067, green: 0.310, blue: 0.490, alpha: 1.000)
-var colorBlue4      = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000)// #02374B
-var colorBoost      = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000)// #FF9800
-var colorCancel     = UIColor(red: 0.898, green: 0.224, blue: 0.282, alpha: 1.000)
-var colorBrown      = UIColor(red: 0.323, green: 0.113, blue: 0.034, alpha: 1.000)
+var colorMoney       = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000)// #DAD74E
+var colorResearch    = UIColor(red: 0.596, green: 0.894, blue: 0.000, alpha: 1.000)
+var colorEnergy      = UIColor(red: 0.000, green: 0.698, blue: 0.875, alpha: 1.000)
+var colorBlue1       = UIColor(red: 0.519, green: 0.982, blue: 1.000, alpha: 1.000)
+var colorBlue2       = UIColor(red: 0.208, green: 0.455, blue: 0.635, alpha: 1.000)// #3474A2
+var colorBlue3       = UIColor(red: 0.067, green: 0.310, blue: 0.490, alpha: 1.000)
+var colorBlue4       = UIColor(red: 0.008, green: 0.216, blue: 0.294, alpha: 1.000)// #02374B
+var colorBoost       = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.000)// #FF9800
+var colorCancel      = UIColor(red: 0.898, green: 0.224, blue: 0.282, alpha: 1.000)
+var colorBrown       = UIColor(red: 0.323, green: 0.113, blue: 0.034, alpha: 1.000)
 
 
 // Game Level
@@ -97,11 +97,12 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         // load game data
         loadGameData()
         
-        // play background music
-        playBackgroundMusic()
+        // background music
+        backgroundMusicInit()
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: #selector(GameViewController.playBackgroundMusic), name: "playMusic", object: nil)
         
         // save game data when app will resign, boost when app active and every 1 min
-        let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: #selector(GameViewController.saveGameData), name: UIApplicationWillResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(GameViewController.loadTime), name: UIApplicationDidBecomeActiveNotification, object: nil)
         NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(GameViewController.saveGameData), userInfo: nil, repeats: true)
@@ -195,17 +196,30 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         return true
     }
     
-    func playBackgroundMusic() {
-        let aSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("backgroundMusic", ofType: "mp3")!)
-        do {
-            backgroundMusicPlayer = try AVAudioPlayer(contentsOfURL:aSound)
-            backgroundMusicPlayer!.numberOfLoops = -1
-            backgroundMusicPlayer!.volume = 0.5
-            backgroundMusicPlayer!.prepareToPlay()
-            backgroundMusicPlayer!.play()
-        } catch {
-            print("Cannot play the file")
+    func backgroundMusicInit() {
+        for i in 0...6 {
+            let aSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("music-\(i)", ofType: "mp3")!)
+            do {
+                let music = try AVAudioPlayer(contentsOfURL:aSound)
+                music.numberOfLoops = -1
+                music.volume = isMusicMute ? 0 : 0.5
+                music.prepareToPlay()
+                backgroundMusics.append(music)
+                print("Preload music \(i)")
+            } catch {
+                print("Cannot play the file")
+            }
         }
+    }
+    
+    func playBackgroundMusic(notifaction: NSNotification) {
+        for backgroundMusic in backgroundMusics {
+            backgroundMusic.currentTime = 0
+            backgroundMusic.stop()
+        }
+        let playNumber = notifaction.object as! Int
+        print("play music \(playNumber)")
+        backgroundMusics[playNumber].play()
     }
     
     func loadGameData() {
