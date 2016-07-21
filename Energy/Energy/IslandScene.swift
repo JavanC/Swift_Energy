@@ -520,6 +520,20 @@ class IslandScene: SKScene {
                         let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber]
                         let price = BuildingData.init(buildType: building).buildPrice
                         let coordType = maps[nowMapNumber].buildingForCoord(coord)?.buildingData.buildType
+                        func noMoneyLabel() {
+                            let label = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
+                            label.name = "noMoneyLabel"
+                            label.text = "You don't have enough money.".localized
+                            label.fontSize = 30 * framescale
+                            label.verticalAlignmentMode = .Center
+                            label.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+                            label.zPosition = 250
+                            let float = SKAction.moveByX(0, y: 30 * framescale, duration: 1)
+                            let group = SKAction.group([float, SKAction.fadeOutWithDuration(1.5)])
+                            let action = SKAction.sequence([group, SKAction.removeFromParent()])
+                            label.runAction(action)
+                            addChild(label)
+                        }
                         if building == BuildingType.WaveCell {
                             if coordType == .Ocean || coordType == .WaveCell {
                                 if money >= price {
@@ -529,6 +543,9 @@ class IslandScene: SKScene {
                                     if !isFinishTarget {
                                         finishBuilding += 1
                                     }
+                                } else {
+                                    if !isSoundMute{ runAction(soundTap) }
+                                    noMoneyLabel()
                                 }
                             }
                         } else {
@@ -540,6 +557,9 @@ class IslandScene: SKScene {
                                     if !isFinishTarget {
                                         finishBuilding += 1
                                     }
+                                } else {
+                                    if !isSoundMute{ runAction(soundTap) }
+                                    noMoneyLabel()
                                 }
                             }
                         }
