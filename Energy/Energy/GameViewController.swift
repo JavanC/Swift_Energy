@@ -71,6 +71,7 @@ var spendTime: Int        = 0
 var finishBuilding: Int   = 0
 var finishExplosion: Int  = 0
 var finishTime: Int       = 0
+var GADTime: Int          = 0
 var upgradeLevel          = [UpgradeType: Int]()
 var researchLevel         = [ResearchType: Int]()
 var maps                  = [BuildingMapLayer]()
@@ -99,10 +100,11 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         // play background music
         playBackgroundMusic()
         
-        // save game data when app will resign and boost when app active
+        // save game data when app will resign, boost when app active and every 1 min
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: #selector(GameViewController.saveGameData), name: UIApplicationWillResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(GameViewController.loadTime), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(GameViewController.saveGameData), userInfo: nil, repeats: true)
         
         // google mobile ad
         self.hideAdLabel.hidden = true
@@ -126,7 +128,15 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
     func adViewWillLeaveApplication(bannerView: GADBannerView!) {
         print("has touch ad")
         hasTouchAd = true
+        
+        // hide ad space
         NSNotificationCenter.defaultCenter().postNotificationName("hideAdSpace", object: nil)
+        
+        // save new ad date
+        print("reset ad time")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let now = NSDate(timeInterval: 0, sinceDate: NSDate())
+        defaults.setObject(now, forKey: "adDate")
     }
     func hideBannerView(){
         self.hideAdLabel.hidden = true
@@ -157,8 +167,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
             islandScene.scaleMode      = .AspectFill
             upgradeScene.scaleMode     = .AspectFill
             researchScene.scaleMode    = .AspectFill
-//            skView.showsFPS            = true
-//            skView.showsNodeCount      = true
+            // skView.showsFPS            = true
+            // skView.showsNodeCount      = true
             skView.ignoresSiblingOrder = true
             skView.presentScene(islandsScene)
         }
@@ -233,6 +243,20 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
             maps.append(buildingMapLayer)
         }
         maps[0].isSold = true
+        
+        // check ad time is over 12 hour
+        let lastADDate = defaults.objectForKey("adDate") as? NSDate
+        if let intervall = lastADDate?.timeIntervalSinceNow {
+            let pastSeconds = -Int(intervall)
+            print("ad past seconds: \(pastSeconds)")
+            if pastSeconds <= 43200 {
+                print("No AD")
+                hasTouchAd = true
+            } else {
+                print("Show AD")
+                hasTouchAd = false
+            }
+        }
     }
     
     func loadTime() {
@@ -271,7 +295,7 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
                     // If reset data during boost time
                     if !isBoost {
                         money    = 1
-                        research = 1
+                        research = 0
                         break
                     }
                 }
