@@ -409,7 +409,7 @@ class BuildingMapLayer: SKSpriteNode {
         var heatIsolationElements    = [Building]()
         var heatProduceElements      = [Building]()
         var heatInletHeatElements    = [Building]()
-        var heatOutletHeatSystems    = [HeatSystem]()
+        var heatOutletHeatElements   = [Building]()
         var heatExchangerElements    = [Building]()
         var heatSinkElements         = [Building]()
         var heatToMoneyElements      = [Building]()
@@ -459,7 +459,7 @@ class BuildingMapLayer: SKSpriteNode {
                         heatInletHeatElements.append(building!)
                         
                     case .HeatOutlet:
-                        heatOutletHeatSystems.append(building!.buildingData.heatSystem)
+                        heatOutletHeatElements.append(building!)
                         
                     case .HeatExchanger:
                         heatExchangerElements.append(building!)
@@ -533,17 +533,31 @@ class BuildingMapLayer: SKSpriteNode {
             element.buildingData.heatSystem.produceMultiply = 1
             var heatSystems = [HeatSystem]()
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
-                if buildingData.heatSystem != nil && !buildingData.heatSystem.output{
+                if buildingData.heatSystem != nil && !buildingData.heatSystem.output {
                     heatSystems.append(buildingData.heatSystem)
                 }
             }
             element.buildingData.heatSystem.outputHeatToOtherHeatSystem(heatSystems)
         }
         // 2. Heat Inlet to Outlet
+        var heatOutletHeatSystems = [HeatSystem]()
+        for heatOutletHeatElement in heatOutletHeatElements {
+            heatOutletHeatSystems.append(heatOutletHeatElement.buildingData.heatSystem)
+        }
         for element in heatInletHeatElements {
             element.buildingData.heatSystem.heatInletToOutletHeatSystem(heatOutletHeatSystems)
         }
-        // 3. Heat exchanger
+        // 3. Heat Outlet exchanger
+        for element in heatOutletHeatElements {
+            var heatSystems: [HeatSystem] = [element.buildingData.heatSystem]
+            for buildingData in aroundCoordBuildingData(coord: element.coord) {
+                if buildingData.heatSystem != nil && !buildingData.heatSystem.output {
+                    heatSystems.append(buildingData.heatSystem)
+                }
+            }
+            element.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
+        }
+        // 4. Heat exchanger
         for element in heatExchangerElements {
             var heatSystems: [HeatSystem] = [element.buildingData.heatSystem]
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
@@ -553,11 +567,11 @@ class BuildingMapLayer: SKSpriteNode {
             }
             element.buildingData.heatSystem.exchangerHeatToOtherHeatSystem(heatSystems)
         }
-        // 4. Heat Sink Cooling
+        // 5. Heat Sink Cooling
         for element in heatSinkElements {
             element.buildingData.heatSystem.coolingHeat()
         }
-        // 5. Heat Conversion Money
+        // 6. Heat Conversion Money
         for element in heatToMoneyElements {
             element.buildingData.heatTransformMoney()
             money_TickAdd += element.buildingData.moneySystem.inAmount

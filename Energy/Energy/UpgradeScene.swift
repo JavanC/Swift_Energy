@@ -30,15 +30,15 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine".localized
             comment = "Increases energy producetion by 50%".localized
-            upgradePrice = baseToPower(10, base: 3, power: level)
-            degradePrice = baseToPower(10, base: 3, power: level - 1)
+            upgradePrice = baseToPower(30, base: 4, power: level)
+            degradePrice = baseToPower(30, base: 4, power: level - 1)
             
         case .WindTurbineLifetime:
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine Lifetime".localized
             comment = "Increases lifetime producetion by 50%".localized
-            upgradePrice = baseToPower(30, base: 6, power: level)
-            degradePrice = baseToPower(30, base: 6, power: level - 1)
+            upgradePrice = baseToPower(60, base: 6, power: level)
+            degradePrice = baseToPower(60, base: 6, power: level - 1)
             
         case .SolarCellEffectiveness:
             imageType = BuildingType.SolarCell
@@ -72,8 +72,8 @@ class UpgradeElement: SKNode {
             imageType = BuildingType.WaveCell
             name = "Wave Energy".localized
             comment = "Increases energy producetion by 25%".localized
-            upgradePrice = baseToPower(1000000, base: 3, power: level)
-            degradePrice = baseToPower(1000000, base: 3, power: level - 1)
+            upgradePrice = baseToPower(1000000, base: 4, power: level)
+            degradePrice = baseToPower(1000000, base: 4, power: level - 1)
             
         case .WaveCellLifetime:
             imageType = BuildingType.WaveCell
@@ -311,7 +311,7 @@ class UpgradeElement: SKNode {
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         priceLabel.name = "priceLabel"
-        priceLabel.text = "\(numberToString(upgradePrice, isInt: true)) $"
+        priceLabel.text = "\(numberToString(upgradePrice, isInt: false)) $"
         priceLabel.fontColor = colorMoney
         priceLabel.fontSize = infoLabel.fontSize
         priceLabel.horizontalAlignmentMode = .Left
@@ -410,7 +410,7 @@ class UpgradeScene: SKScene {
             moneyLabel.name = "top label"
             moneyLabel.fontSize = unitHeight * 0.2
             moneyLabel.fontColor = colorMoney
-            moneyLabel.text = numberToString(money, isInt: true)
+            moneyLabel.text = numberToString(money, isInt: false)
             moneyLabel.horizontalAlignmentMode = .Left
             moneyLabel.verticalAlignmentMode = .Bottom
             moneyLabel.position = CGPoint(x: moneyIcon.position.x + unitHeight * 0.2, y: frame.height - unitHeight * 0.9)
@@ -632,7 +632,7 @@ class UpgradeScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
-        moneyLabel.text = numberToString(money, isInt: true)
+        moneyLabel.text = numberToString(money, isInt: false)
         for upgradeElement in upgradeElements {
             upgradeElement.checkUpgradeAndDegrade()
         }

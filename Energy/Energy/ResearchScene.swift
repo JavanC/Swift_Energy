@@ -35,7 +35,7 @@ class ResearchElement: SKNode {
             imageType = BuildingType.WindTurbine
             name = "Wind Turbine Manager".localized
             comment = "Wind Turbine are automatically replaced.".localized
-            researchPrice = 500
+            researchPrice = 300
             
         case .SolarCellResearch:
             imageType = BuildingType.SolarCell
@@ -197,7 +197,7 @@ class ResearchElement: SKNode {
             imageType = BuildingType.SmallOffice
             name = "Small Office".localized
             comment = "Open Small Office technology.".localized
-            researchPrice = 500
+            researchPrice = 300
             
         case .MediumOfficeResearch:
             imageType = BuildingType.MediumOffice
@@ -284,7 +284,7 @@ class ResearchElement: SKNode {
         // price
         let priceLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
         priceLabel.name = "priceLabel"
-        priceLabel.text = "\(numberToString(researchPrice, isInt: true))"
+        priceLabel.text = "\(numberToString(researchPrice, isInt: false))"
         priceLabel.fontColor = colorResearch
         if researchType == .ResearchCenterResearch {
             priceLabel.fontColor = colorMoney
@@ -383,7 +383,7 @@ class ResearchScene: SKScene {
             researchLabel.name = "research label"
             researchLabel.fontSize = unitHeight * 0.2
             researchLabel.fontColor = colorResearch
-            researchLabel.text = numberToString(research, isInt: true)
+            researchLabel.text = numberToString(research, isInt: false)
             researchLabel.horizontalAlignmentMode = .Left
             researchLabel.verticalAlignmentMode = .Bottom
             researchLabel.position = CGPoint(x: researchIcon.position.x + unitHeight * 0.2, y: frame.size.height - unitHeight * 0.9)
@@ -604,7 +604,7 @@ class ResearchScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         prevPage.hidden = (nowPage == 1 ? true : false)
         nextPage.hidden = (nowPage == maxPage ? true : false)
-        researchLabel.text = "\(numberToString(research, isInt: true))"
+        researchLabel.text = "\(numberToString(research, isInt: false))"
         for researchElement in researchElements {
             researchElement.checkUpgradeButton()
         }

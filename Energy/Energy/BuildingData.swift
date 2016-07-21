@@ -509,7 +509,7 @@ class BuildingData: NSObject, NSCoding {
             comment = "Heat transfer from the heat inlet, heat output need heat exchanger or heat sink.".localized
             buildPrice = 3000000000000
             progress = .Heat
-            heatSystem = HeatSystem(size: 8000000000, initAmount: 0)
+            heatSystem = HeatSystem(size: 8000000000, initAmount: 0, output: true)
             
         case .WaterPump:
             imageName = "WaterPump"
