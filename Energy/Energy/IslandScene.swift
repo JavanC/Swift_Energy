@@ -208,6 +208,7 @@ class IslandScene: SKScene {
         self.touchType = touchType
         maps[nowMapNumber].removeAllActions()
         maps[nowMapNumber].hidden = false
+        maps[nowMapNumber].selectInfoBox.hidden = true
         bottomLayer.pageBuild.closeSelectInformation()
         if duration == 0 {
             buildingSelectLayer.showPage(false, duration: 0)
@@ -216,6 +217,7 @@ class IslandScene: SKScene {
         }
         switch touchType {
         case .Information:
+            maps[nowMapNumber].selectInfoBox.hidden = false
             buttonLayer.tapButtonNil(duration)
             bottomLayer.showPage(BottomLayer.PageType.PageInformation, duration: duration)
             
@@ -501,6 +503,7 @@ class IslandScene: SKScene {
                 case .Information, .Energy:
                     if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                         if !isSoundMute{ runAction(soundClick) }
+                        maps[nowMapNumber].selectBoxChange(coord)
                         info_Building = maps[nowMapNumber].buildingForCoord(coord)
                         bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
                         changeTouchTypeAndShowPage(.Information, duration: 0.1)
@@ -509,6 +512,7 @@ class IslandScene: SKScene {
                 case .Builded:
                     if maps[nowMapNumber].buildingForCoord(coord)!.activate {
                         if !isSoundMute{ runAction(soundClick) }
+                        maps[nowMapNumber].selectBoxChange(coord)
                         info_Building = maps[nowMapNumber].buildingForCoord(coord)
                         bottomLayer.pageInformation.changeInformation(info_Building.buildingData)
                         changeTouchTypeAndShowPage(.Information, duration: 0.1)

@@ -130,6 +130,7 @@ class BuildingMapLayer: SKSpriteNode {
     var tickAddDone: Bool = false
     var energy: Double = 0
     var energyMax: Double = 100
+    var selectInfoBox: SKSpriteNode!
     
     // MARK: Configure At Position
     func configureAtPosition(position: CGPoint, mapNumber: Int) {
@@ -140,6 +141,20 @@ class BuildingMapLayer: SKSpriteNode {
         self.islandImage.anchorPoint = CGPoint(x: 0, y: 1)
         self.islandImage.zPosition = -1
         addChild(islandImage)
+        self.selectInfoBox = SKSpriteNode()
+        self.selectInfoBox.name = "selectInfoBox"
+        self.selectInfoBox.hidden = true
+        self.selectInfoBox.alpha = 0.6
+        self.selectInfoBox.position = coord2Position(CGPoint(x: 5, y: 5))
+        let box = SKShapeNode(rectOfSize: tileSize, cornerRadius: 6)
+        box.fillColor = colorCancel
+        box.lineWidth = 0
+        box.position = CGPoint(x: tileSize.width / 2, y: -tileSize.height / 2)
+        self.selectInfoBox.addChild(box)
+        let fadeInOut = SKAction.sequence([SKAction.fadeAlphaTo(0.6, duration: 0.5), SKAction.fadeAlphaTo(0.3, duration: 0.5)])
+        self.selectInfoBox.runAction(SKAction.repeatActionForever(fadeInOut))
+        addChild(selectInfoBox)
+        
         self.isSold = mapNumber == 0
         self.position = position
         self.size = CGSize(width: tileSize.width * mapSize.width, height: tileSize.height * mapSize.height)
@@ -165,6 +180,11 @@ class BuildingMapLayer: SKSpriteNode {
         let x = mapPosition.x / tileSize.width
         let y = mapPosition.y / -tileSize.height
         return CGPoint(x: Int(x), y: Int(y))
+    }
+    
+    // MARK: Show and Move Select Box
+    func selectBoxChange(coord: CGPoint) {
+        selectInfoBox.position = coord2Position(coord)
     }
     
     // MARK: Return the building by coord
