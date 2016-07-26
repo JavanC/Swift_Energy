@@ -521,47 +521,56 @@ class IslandScene: SKScene {
                         let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber]
                         let price = BuildingData.init(buildType: building).buildPrice
                         let coordType = maps[nowMapNumber].buildingForCoord(coord)?.buildingData.buildType
-                        func noMoneyLabel() {
-                            let label = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
-                            label.name = "noMoneyLabel"
-                            label.text = "You don't have enough money.".localized
-                            label.fontSize = 30 * framescale
-                            label.verticalAlignmentMode = .Center
-                            label.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-                            label.zPosition = 250
-                            let float = SKAction.moveByX(0, y: 30 * framescale, duration: 1)
-                            let group = SKAction.group([float, SKAction.fadeOutWithDuration(1.5)])
-                            let action = SKAction.sequence([group, SKAction.removeFromParent()])
-                            label.runAction(action)
-                            addChild(label)
+                        func construct() {
+                            if money >= price {
+                                if !isSoundMute{ runAction(soundPlacing) }
+                                maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
+                                money -= price
+                                if !isFinishTarget {
+                                    finishBuilding += 1
+                                }
+                            } else {
+                                if !isSoundMute{ runAction(soundTap) }
+                                let noMoneyLabel = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
+                                noMoneyLabel.name = "noMoneyLabel"
+                                noMoneyLabel.text = "You don't have enough money.".localized
+                                noMoneyLabel.fontSize = 30 * framescale
+                                noMoneyLabel.verticalAlignmentMode = .Center
+                                noMoneyLabel.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+                                noMoneyLabel.zPosition = 250
+                                let float = SKAction.moveByX(0, y: 30 * framescale, duration: 1)
+                                let group = SKAction.group([float, SKAction.fadeOutWithDuration(1.5)])
+                                let action = SKAction.sequence([group, SKAction.removeFromParent()])
+                                noMoneyLabel.runAction(action)
+                                addChild(noMoneyLabel)
+                            }
                         }
                         if building == BuildingType.WaveCell {
                             if coordType == .Ocean || coordType == .WaveCell {
-                                if money >= price {
-                                    if !isSoundMute{ runAction(soundPlacing) }
-                                    maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
-                                    money -= price
-                                    if !isFinishTarget {
-                                        finishBuilding += 1
-                                    }
-                                } else {
-                                    if !isSoundMute{ runAction(soundTap) }
-                                    noMoneyLabel()
+                                construct()
+                            }
+                        } else if building == BuildingType.WaterPump {
+                            func isWaterside(coord: CGPoint) -> Bool {
+                                if let left = maps[nowMapNumber].buildingForCoord(CGPoint(x: coord.x - 1, y: coord.y))?.buildingData.buildType {
+                                    if left == .Ocean || left == .WaveCell { return true }
                                 }
+                                if let right = maps[nowMapNumber].buildingForCoord(CGPoint(x: coord.x + 1, y: coord.y))?.buildingData.buildType {
+                                    if right == .Ocean || right == .WaveCell { return true }
+                                }
+                                if let down = maps[nowMapNumber].buildingForCoord(CGPoint(x: coord.x, y: coord.y - 1))?.buildingData.buildType {
+                                    if down == .Ocean || down == .WaveCell { return true }
+                                }
+                                if let up = maps[nowMapNumber].buildingForCoord(CGPoint(x: coord.x, y: coord.y + 1))?.buildingData.buildType {
+                                    if up == .Ocean || up == .WaveCell { return true }
+                                }
+                                return false
+                            }
+                            if coordType != .Ocean && coordType != .WaveCell && coordType != .Rock && isWaterside(coord) {
+                                construct()
                             }
                         } else {
                             if coordType != .Ocean && coordType != .WaveCell && coordType != .Rock {
-                                if money >= price {
-                                    if !isSoundMute{ runAction(soundPlacing) }
-                                    maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
-                                    money -= price
-                                    if !isFinishTarget {
-                                        finishBuilding += 1
-                                    }
-                                } else {
-                                    if !isSoundMute{ runAction(soundTap) }
-                                    noMoneyLabel()
-                                }
+                                construct()
                             }
                         }
                     }
@@ -618,27 +627,42 @@ class IslandScene: SKScene {
                         let building = bottomLayer.pageBuild.buildMenu[bottomLayer.pageBuild.selectNumber]
                         let price = BuildingData.init(buildType: building).buildPrice
                         let coordType = maps[nowMapNumber].buildingForCoord(coord)?.buildingData.buildType
+                        func construct() {
+                            if money >= price {
+                                if !isSoundMute{ runAction(soundPlacing) }
+                                maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
+                                money -= price
+                                if !isFinishTarget {
+                                    finishBuilding += 1
+                                }
+                            }
+                        }
                         if building == BuildingType.WaveCell {
                             if coordType == .Ocean || coordType == .WaveCell {
-                                if money >= price {
-                                    if !isSoundMute{ runAction(soundPlacing) }
-                                    maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
-                                    money -= price
-                                    if !isFinishTarget {
-                                        finishBuilding += 1
-                                    }
+                                construct()
+                            }
+                        } else if building == BuildingType.WaterPump {
+                            func isWaterside(coord: CGPoint) -> Bool {
+                                if let left = maps[nowMapNumber].buildingForCoord(CGPoint(x: coord.x - 1, y: coord.y))?.buildingData.buildType {
+                                    if left == .Ocean || left == .WaveCell { return true }
                                 }
+                                if let right = maps[nowMapNumber].buildingForCoord(CGPoint(x: coord.x + 1, y: coord.y))?.buildingData.buildType {
+                                    if right == .Ocean || right == .WaveCell { return true }
+                                }
+                                if let down = maps[nowMapNumber].buildingForCoord(CGPoint(x: coord.x, y: coord.y - 1))?.buildingData.buildType {
+                                    if down == .Ocean || down == .WaveCell { return true }
+                                }
+                                if let up = maps[nowMapNumber].buildingForCoord(CGPoint(x: coord.x, y: coord.y + 1))?.buildingData.buildType {
+                                    if up == .Ocean || up == .WaveCell { return true }
+                                }
+                                return false
+                            }
+                            if coordType != .Ocean && coordType != .WaveCell && coordType != .Rock && isWaterside(coord) {
+                                construct()
                             }
                         } else {
                             if coordType != .Ocean && coordType != .WaveCell && coordType != .Rock {
-                                if money >= price {
-                                    if !isSoundMute{ runAction(soundPlacing) }
-                                    maps[nowMapNumber].setTileMapElement(coord: coord, buildType: building)
-                                    money -= price
-                                    if !isFinishTarget {
-                                        finishBuilding += 1
-                                    }
-                                }
+                                construct()
                             }
                         }
                     }
@@ -691,7 +715,7 @@ class IslandScene: SKScene {
         topLayer.researchLabel.text = "\(numberToString(research)) + \(numberToString(maps[nowMapNumber].research_TickAdd))"
         let percent = CGFloat(maps[nowMapNumber].energy) / CGFloat(maps[nowMapNumber].energyMax)
         bottomLayer.pageEnergy.progressPercent(percent)
-        bottomLayer.pageEnergy.energyLabel.text = "\(numberToString(maps[nowMapNumber].energy, isInt: true)) / \(numberToString(maps[nowMapNumber].energyMax, isInt: true))"
+        bottomLayer.pageEnergy.energyLabel.text = "\(numberToString(maps[nowMapNumber].energy)) / \(numberToString(maps[nowMapNumber].energyMax, isInt: true))"
         bottomLayer.pageEnergy.energyTickAddLabel.text = "+\(numberToString(maps[nowMapNumber].energy_TickAdd))"
     }
     

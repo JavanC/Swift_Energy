@@ -370,10 +370,10 @@ class BuildingMapLayer: SKSpriteNode {
         let x = Int(coord.x)
         let y = Int(coord.y)
         var data: [BuildingData] = []
-        if y - 1 >= 0 { data.append(buildings[y-1][x]!.buildingData) }
-        if y + 1 < Int(mapSize.height) { data.append(buildings[y+1][x]!.buildingData) }
-        if x - 1 >= 0 { data.append(buildings[y][x-1]!.buildingData) }
-        if x + 1 < Int(mapSize.width) { data.append(buildings[y][x+1]!.buildingData) }
+        if y - 1 >= 0 && buildings[y-1][x]!.activate { data.append(buildings[y-1][x]!.buildingData) }
+        if y + 1 < 11 && buildings[y+1][x]!.activate { data.append(buildings[y+1][x]!.buildingData) }
+        if x - 1 >= 0 && buildings[y][x-1]!.activate { data.append(buildings[y][x-1]!.buildingData) }
+        if x + 1 < 9  && buildings[y][x+1]!.activate { data.append(buildings[y][x+1]!.buildingData) }
         return data
     }
     
@@ -521,6 +521,10 @@ class BuildingMapLayer: SKSpriteNode {
         */
         
         // 1. Isolation Multiply and Production Output
+        
+        for element in heatProduceElements {
+            element.buildingData.heatSystem.produceMultiply = 1
+        }
         for element in heatIsolationElements {
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
                 if [.SolarCell, .CoalBurner, .GasBurner, .NuclearCell, .FusionCell].contains(buildingData.buildType) {
@@ -530,7 +534,6 @@ class BuildingMapLayer: SKSpriteNode {
         }
         for element in heatProduceElements {
             element.buildingData.heatSystem.produceHeat()
-            element.buildingData.heatSystem.produceMultiply = 1
             var heatSystems = [HeatSystem]()
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
                 if buildingData.heatSystem != nil && !buildingData.heatSystem.output {
@@ -641,6 +644,9 @@ class BuildingMapLayer: SKSpriteNode {
         */
         
         // 1. officeElements
+        for element in officeElements {
+            element.buildingData.moneySystem.multiply = 1
+        }
         for element in bankElements {
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
                 if [.SmallOffice, .MediumOffice, .LargeOffice].contains(buildingData.buildType) {
@@ -650,9 +656,11 @@ class BuildingMapLayer: SKSpriteNode {
         }
         for element in officeElements {
             energy2MoneyAmount += element.buildingData.moneySystem.energy2MoneyMultiplyAmount()
-            element.buildingData.moneySystem.multiply = 1
         }
         // 2. researchCenterElements
+        for element in researchCenterElements {
+            element.buildingData.researchSystem.multiply = 1
+        }
         for element in libraryElements {
             for buildingData in aroundCoordBuildingData(coord: element.coord) {
                 if buildingData.buildType == .ResearchCenter || buildingData.buildType == .AdvancedResearchCenter {
@@ -662,7 +670,6 @@ class BuildingMapLayer: SKSpriteNode {
         }
         for element in researchCenterElements {
             research_TickAdd += element.buildingData.researchSystem.researchMultiplyAmount()
-            element.buildingData.researchSystem.multiply = 1
         }
         
         /*

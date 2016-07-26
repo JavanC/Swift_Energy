@@ -168,8 +168,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
             islandScene.scaleMode      = .AspectFill
             upgradeScene.scaleMode     = .AspectFill
             researchScene.scaleMode    = .AspectFill
-            // skView.showsFPS            = true
-            // skView.showsNodeCount      = true
+            skView.showsFPS            = true
+            skView.showsNodeCount      = true
             skView.ignoresSiblingOrder = true
             skView.presentScene(islandsScene)
         }
@@ -239,6 +239,9 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isSoundMute     = defaults.boolForKey("isSoundMute")
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
+        
+        //money = 1000000000000000
+        //research = 1000000000000000
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

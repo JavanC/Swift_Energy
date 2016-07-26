@@ -210,7 +210,7 @@ class PageInformation: SKSpriteNode {
         }
         if ([.SmallOffice, .MediumOffice, .LargeOffice]).contains(buildingData.buildType) {
             infoSellsMoneyNode.hidden = false
-            infoSellsMoneyNode.valueLabel.text = "\(numberToString(buildingData.moneySystem.energy2MoneyAmount))"
+            infoSellsMoneyNode.valueLabel.text = "\(numberToString(buildingData.moneySystem.energy2MoneyMultiplyAmount()))"
             informationLabels.append(infoSellsMoneyNode)
         }
         if buildingData.buildType == .Bank {
@@ -220,7 +220,7 @@ class PageInformation: SKSpriteNode {
         }
         if ([.ResearchCenter, .AdvancedResearchCenter]).contains(buildingData.buildType) {
             infoProduceResearchNode.hidden = false
-            infoProduceResearchNode.valueLabel.text = "\(numberToString(buildingData.researchSystem.addAmount))"
+            infoProduceResearchNode.valueLabel.text = "\(numberToString(buildingData.researchSystem.researchMultiplyAmount()))"
             informationLabels.append(infoProduceResearchNode)
         }
         if buildingData.buildType == .Library {

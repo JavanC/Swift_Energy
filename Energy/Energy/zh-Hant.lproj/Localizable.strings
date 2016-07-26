@@ -237,7 +237,7 @@
 "Generator Max Water"                         = "發電機水容量";
 "Office Sell Amount"                          = "銷售公司效率";
 "Bank Effectiveness"                          = "銀行影響效率";
-"Research Center Effectiveness"               = "研發中心效率";
+"Research Effectiveness"                      = "研發中心效率";
 "Library Effectiveness"                       = "圖書館影響效率";
 
 /* Upgrade Comment */

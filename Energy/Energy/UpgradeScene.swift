@@ -238,7 +238,7 @@ class UpgradeElement: SKNode {
             
         case .ResearchCenterEffectiveness:
             imageType = BuildingType.ResearchCenter
-            name = "Research Center Effectiveness".localized
+            name = "Research Effectiveness".localized
             comment = "Increases research producetion by 25%".localized
             upgradePrice = baseToPower(100, base: 2.5, power: level)
             degradePrice = baseToPower(100, base: 2.5, power: level - 1)
