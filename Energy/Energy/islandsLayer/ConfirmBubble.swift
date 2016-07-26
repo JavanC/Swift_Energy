@@ -119,13 +119,13 @@ class ConfirmBubble: SKNode {
             buyPrice = 5000000000
             islandName.text = "Coconut Island".localized
         case 4:
-            buyPrice = 100000000000
+            buyPrice = 400000000000
             islandName.text = "Sand Island".localized
         case 5:
-            buyPrice = 2000000000000
+            buyPrice = 20000000000000
             islandName.text = "Mainland".localized
         case 6:
-            buyPrice = 3000000000000000
+            buyPrice = 10000000000000000
             islandName.text = "Alien Technology".localized
         default: break
         }

@@ -272,12 +272,12 @@ class PageBuild: SKSpriteNode {
         buildLine = SKNode()
         let colors = [colorBlue1, colorCancel, SKColor.orangeColor(), colorMoney, SKColor.lightGrayColor()]
         for i in 0...4 {
-            let bg = SKSpriteNode(color: colors[i], size: CGSizeMake(size.width / 5, 8 * framescale))
-            bg.anchorPoint = CGPoint(x: 0.5, y: 0)
-            bg.alpha = 0.8
-            bg.position = CGPoint(x: imagePosition[i].x, y: 0)
-            bg.zPosition = 3
-            buildLine.addChild(bg)
+            let line = SKSpriteNode(color: colors[i], size: CGSizeMake(size.width / 5, 8 * framescale))
+            line.anchorPoint = CGPoint(x: 0.5, y: 0)
+            line.alpha = 0.8
+            line.position = CGPoint(x: imagePosition[i].x, y: 0)
+            line.zPosition = 3
+            buildLine.addChild(line)
         }
         addChild(buildLine)
         

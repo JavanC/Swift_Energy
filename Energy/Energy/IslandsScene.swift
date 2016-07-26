@@ -100,6 +100,7 @@ class IslandsScene: SKScene {
                 self.worldLayer.isShowTickAdd = true
             }
             NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
+            isMusicContinue = false
             NSNotificationCenter.defaultCenter().postNotificationName("playMusic", object: 0)
             print("load 10")
             loadingNum = 2

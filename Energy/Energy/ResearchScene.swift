@@ -494,6 +494,8 @@ class ResearchScene: SKScene {
         
         // update element
         updateElement()
+        // music continue
+        isMusicContinue = true
         // hide AD
         NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
         print("load 8")

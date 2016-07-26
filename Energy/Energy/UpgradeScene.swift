@@ -520,6 +520,8 @@ class UpgradeScene: SKScene {
         
         // update element
         updateElement()
+        // music continue
+        isMusicContinue = true
         // hide AD
         NSNotificationCenter.defaultCenter().postNotificationName("hideAd", object: nil)
         

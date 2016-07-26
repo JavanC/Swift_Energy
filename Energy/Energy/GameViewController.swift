@@ -82,6 +82,7 @@ var isRebuild: Bool       = true
 var isBoost: Bool         = false
 var isSoundMute: Bool     = false
 var isMusicMute: Bool     = false
+var isMusicContinue:Bool  = false
 var hasTouchAd: Bool      = false
 var isFinishTarget: Bool  = false
 var boostTime: Double     = 1
@@ -213,13 +214,18 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
     }
     
     func playBackgroundMusic(notifaction: NSNotification) {
-        for backgroundMusic in backgroundMusics {
-            backgroundMusic.currentTime = 0
-            backgroundMusic.stop()
+        if isMusicContinue {
+            isMusicContinue = false
+            return
+        } else {
+            for backgroundMusic in backgroundMusics {
+                backgroundMusic.currentTime = 0
+                backgroundMusic.stop()
+            }
+            let playNumber = notifaction.object as! Int
+            print("play music \(playNumber)")
+            backgroundMusics[playNumber].play()
         }
-        let playNumber = notifaction.object as! Int
-        print("play music \(playNumber)")
-        backgroundMusics[playNumber].play()
     }
     
     func loadGameData() {
@@ -240,8 +246,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
         
-        //money = 1000000000000000
-        //research = 1000000000000000
+        money = 1000000000000000
+        research = 1000000000000000
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
