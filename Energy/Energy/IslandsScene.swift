@@ -316,6 +316,7 @@ class IslandsScene: SKScene {
                     }
                     maps[confirmBubble.islandNum].isSold = true
                     worldLayer.islandNodes[confirmBubble.islandNum].lockedImg.hidden = true
+                    buyIsland(2)
                 }
             }
             return
@@ -369,7 +370,28 @@ class IslandsScene: SKScene {
         }
     }
     
-
+    func buyIsland(islandNum: Int) {
+        let buyAnimation = SKNode()
+        buyAnimation.name = "buy animation"
+        buyAnimation.alpha = 0
+        buyAnimation.setScale(0.8)
+        buyAnimation.position = CGPoint(x: frame.width / 2, y: frame.maxY / 2)
+        addChild(buyAnimation)
+        let light = SKSpriteNode(color: SKColor.yellowColor(), size: CGSizeMake(400 * framescale, 50 * framescale))
+        light.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(-M_PI), duration: 0.5)))
+        buyAnimation.addChild(light)
+        let island2 = SKSpriteNode(color: SKColor.greenColor(), size: CGSizeMake(200 * framescale, 200 * framescale))
+        buyAnimation.addChild(island2)
+        let actionfade = SKAction.group([SKAction.fadeInWithDuration(0.2), SKAction.scaleTo(1.2, duration: 0.2)])
+        actionfade.timingMode = SKActionTimingMode.EaseInEaseOut
+        let actionIn = SKAction.sequence([actionfade, SKAction.scaleTo(1, duration: 0.1)])
+        actionIn.timingMode = SKActionTimingMode.EaseIn
+        let actionOut = SKAction.moveToY(-frame.height / 2, duration: 0.4)
+        actionOut.timingMode = SKActionTimingMode.EaseInEaseOut
+        let seq = SKAction.sequence([actionIn, SKAction.waitForDuration(2), actionOut, SKAction.removeFromParent()])
+        seq.timingMode = SKActionTimingMode.EaseInEaseOut
+        buyAnimation.runAction(seq)
+    }
     
     func resetAllData() {
         let black = SKSpriteNode(color: SKColor.blackColor(), size: frame.size)
