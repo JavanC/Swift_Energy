@@ -52,7 +52,6 @@ var colorBoost       = UIColor(red: 1.000, green: 0.600, blue: 0.000, alpha: 1.0
 var colorCancel      = UIColor(red: 0.898, green: 0.224, blue: 0.282, alpha: 1.000)
 var colorBrown       = UIColor(red: 0.323, green: 0.113, blue: 0.034, alpha: 1.000)
 
-
 // Game Level
 enum BuildingType: Int {
     case WindTurbine, SolarCell, CoalBurner, WaveCell, GasBurner, NuclearCell, FusionCell, SmallGenerator, MediumGenerator, LargeGenerator, BoilerHouse, LargeBoilerHouse, Isolation, Battery, HeatExchanger, HeatSink, HeatInlet, HeatOutlet, WaterPump, GroundwaterPump, WaterPipe, SmallOffice, MediumOffice, LargeOffice, Bank, ResearchCenter, AdvancedResearchCenter, Library, Garbage, Ocean, Land, Rock, BuildingTypeLength
@@ -65,6 +64,7 @@ enum ResearchType: Int {
 }
 
 // User Data
+var saveDataTimer         = NSTimer()
 var money: Double         = 10
 var research: Double      = 10
 var spendTime: Int        = 0
@@ -104,9 +104,9 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         notificationCenter.addObserver(self, selector: #selector(GameViewController.playBackgroundMusic), name: "playMusic", object: nil)
         
         // save game data when app will resign, boost when app active and every 1 min
-        notificationCenter.addObserver(self, selector: #selector(GameViewController.saveGameData), name: UIApplicationWillResignActiveNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(GameViewController.loadTime), name: UIApplicationDidBecomeActiveNotification, object: nil)
-        NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(GameViewController.saveGameData), userInfo: nil, repeats: true)
+        notificationCenter.addObserver(self, selector: #selector(GameViewController.resignActive), name: UIApplicationWillResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(GameViewController.becomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil)
+
         
         // google mobile ad
         self.hideAdLabel.hidden = true
@@ -282,6 +282,16 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         }
     }
     
+    func becomeActive() {
+        loadTime()
+        autoSaveData(true)
+    }
+    
+    func resignActive() {
+        saveGameData()
+        autoSaveData(false)
+    }
+    
     func loadTime() {
         // Boost lost time
         if isPause { return }
@@ -325,6 +335,16 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
             }
             isBoost = false
             print("End Boost time!")
+        }
+    }
+    
+    func autoSaveData(enable: Bool) {
+        if enable {
+            print("enable save data timer")
+            saveDataTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(GameViewController.saveGameData), userInfo: nil, repeats: true)
+        } else {
+            print("unabel save data timer")
+            saveDataTimer.invalidate()
         }
     }
     
