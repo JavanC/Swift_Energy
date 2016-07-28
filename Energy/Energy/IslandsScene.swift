@@ -267,17 +267,20 @@ class IslandsScene: SKScene {
                     }
                 }
                 if node == settingLayer.resetButton {
+                    if !isSoundMute{ runAction(soundSelect) }
                     settingLayer.resetNoButton.alpha  = 1
                     settingLayer.resetYesButton.alpha = 1
                     settingLayer.showResetConfirm(true)
                 }
                 if node == settingLayer.resetNoButton {
+                    if !isSoundMute{ runAction(soundSelect) }
                     settingLayer.resetButton.alpha    = 0
                     settingLayer.resetNoButton.alpha  = 1
                     settingLayer.resetYesButton.alpha = 1
                     settingLayer.showResetConfirm(false)
                 }
                 if node == settingLayer.resetYesButton {
+                    if !isSoundMute{ runAction(soundSelect) }
                     settingLayer.resetButton.alpha    = 0
                     settingLayer.resetNoButton.alpha  = 1
                     settingLayer.resetYesButton.alpha = 1
@@ -316,7 +319,7 @@ class IslandsScene: SKScene {
                     }
                     maps[confirmBubble.islandNum].isSold = true
                     worldLayer.islandNodes[confirmBubble.islandNum].lockedImg.hidden = true
-                    buyIsland(2)
+                    buyIsland(confirmBubble.islandNum + 1)
                 }
             }
             return
@@ -332,13 +335,15 @@ class IslandsScene: SKScene {
             return
         }
         
-        if settingButton.containsPoint(location) {            
+        if settingButton.containsPoint(location) {
+            if !isSoundMute{ runAction(soundClick) }
             settingButton.alpha = 1
             settingLayer.showResetConfirm(false, duration: 0)
             settingLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
         }
         
         if infoButton.containsPoint(location) {
+            if !isSoundMute{ runAction(soundClick) }
             infoButton.alpha = 1
             infoLayer.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
         }
@@ -371,25 +376,53 @@ class IslandsScene: SKScene {
     }
     
     func buyIsland(islandNum: Int) {
+        if islandNum > 6 || islandNum < 2 { return }
+        if !isSoundMute{ runAction(soundBuyIsland) }
         let buyAnimation = SKNode()
         buyAnimation.name = "buy animation"
         buyAnimation.alpha = 0
         buyAnimation.setScale(0.8)
         buyAnimation.position = CGPoint(x: frame.width / 2, y: frame.maxY / 2)
         addChild(buyAnimation)
-        let light = SKSpriteNode(color: SKColor.yellowColor(), size: CGSizeMake(400 * framescale, 50 * framescale))
-        light.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(-M_PI), duration: 0.5)))
+        let light = SKSpriteNode(imageNamed: "lights")
+        light.size = CGSizeMake(frame.width, frame.width)
+        light.runAction(SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(-M_PI), duration: 30)))
+        light.zPosition = 0
         buyAnimation.addChild(light)
-        let island2 = SKSpriteNode(color: SKColor.greenColor(), size: CGSizeMake(200 * framescale, 200 * framescale))
-        buyAnimation.addChild(island2)
-        let actionfade = SKAction.group([SKAction.fadeInWithDuration(0.2), SKAction.scaleTo(1.2, duration: 0.2)])
+        let islandImg = SKSpriteNode(imageNamed: "buyIsland\(islandNum)")
+        islandImg.size = CGSizeMake(400 * framescale, 400 * framescale)
+        islandImg.zPosition = 1
+        buyAnimation.addChild(islandImg)
+        let islandName = SKLabelNode(fontNamed: "SanFranciscoRounded-Black".localized)
+        islandName.name = "islandName"
+        switch islandNum {
+        case 2: islandName.text = "Tree Island".localized
+        case 3: islandName.text = "Canyon Island".localized
+        case 4: islandName.text = "Coconut Island".localized
+        case 5: islandName.text = "Sand Island".localized
+        case 6: islandName.text = "Mainland".localized
+        default: break
+        }
+        islandName.fontSize = 40 * framescale
+        islandName.verticalAlignmentMode = .Center
+        islandName.position = CGPoint(x: 0, y: -115 * framescale)
+        islandName.zPosition = 3
+        buyAnimation.addChild(islandName)
+        let islandNameBG = SKShapeNode(rectOfSize: CGSizeMake(islandName.frame.width + 40 * framescale, 60 * framescale), cornerRadius: 10 * framescale)
+        islandNameBG.alpha = 0.8
+        islandNameBG.fillColor = SKColor.grayColor()
+        islandNameBG.lineWidth = 0
+        islandNameBG.position = CGPoint(x: 0, y: -115 * framescale)
+        islandNameBG.zPosition = 2
+        buyAnimation.addChild(islandNameBG)
+        let actionfade = SKAction.group([SKAction.fadeInWithDuration(0.4), SKAction.scaleTo(1.1, duration: 0.4)])
         actionfade.timingMode = SKActionTimingMode.EaseInEaseOut
-        let actionIn = SKAction.sequence([actionfade, SKAction.scaleTo(1, duration: 0.1)])
+        let actionIn = SKAction.sequence([actionfade, SKAction.scaleTo(1, duration: 0.2)])
         actionIn.timingMode = SKActionTimingMode.EaseIn
-        let actionOut = SKAction.moveToY(-frame.height / 2, duration: 0.4)
+        let actionOut = SKAction.group([SKAction.moveByX(0, y: -150 * framescale, duration: 0.4), SKAction.fadeOutWithDuration(0.3)])
         actionOut.timingMode = SKActionTimingMode.EaseInEaseOut
+        RunAfterDelay(2.4) { if !isSoundMute{ self.runAction(soundWhoosh) } }
         let seq = SKAction.sequence([actionIn, SKAction.waitForDuration(2), actionOut, SKAction.removeFromParent()])
-        seq.timingMode = SKActionTimingMode.EaseInEaseOut
         buyAnimation.runAction(seq)
     }
     

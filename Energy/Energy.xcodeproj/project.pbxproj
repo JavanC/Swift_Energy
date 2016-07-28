@@ -55,6 +55,11 @@
 		8D21079B1D41242C00F5BE76 /* music-5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8D2107951D41242C00F5BE76 /* music-5.mp3 */; };
 		8D21079C1D41242C00F5BE76 /* music-6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8D2107961D41242C00F5BE76 /* music-6.mp3 */; };
 		8D21079E1D412A1600F5BE76 /* music-0.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8D21079D1D412A1600F5BE76 /* music-0.mp3 */; };
+		8D727B8C1D4A4F3A00FA2B2A /* buyIsland.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8D727B8B1D4A4F3A00FA2B2A /* buyIsland.wav */; };
+		8D727B8E1D4A5B1A00FA2B2A /* whoosh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8D727B8D1D4A5B1A00FA2B2A /* whoosh.mp3 */; };
+		8D727B911D4A6C3900FA2B2A /* firework2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8D727B8F1D4A6C3900FA2B2A /* firework2.wav */; };
+		8D727B921D4A6C3900FA2B2A /* firework1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8D727B901D4A6C3900FA2B2A /* firework1.wav */; };
+		8D727B941D4A73E500FA2B2A /* finish.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8D727B931D4A73E500FA2B2A /* finish.wav */; };
 		8DDC91321C66307300476BCD /* SettingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDC91311C66307300476BCD /* SettingLayer.swift */; };
 		8DFFD4B71CAD6F62008C668B /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFFD4B61CAD6F62008C668B /* GoogleMobileAds.framework */; };
 		8DFFD4B91CAD6F9B008C668B /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFFD4B81CAD6F9B008C668B /* AdSupport.framework */; };
@@ -121,6 +126,11 @@
 		8D2107951D41242C00F5BE76 /* music-5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "music-5.mp3"; path = "Content/music-5.mp3"; sourceTree = "<group>"; };
 		8D2107961D41242C00F5BE76 /* music-6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "music-6.mp3"; path = "Content/music-6.mp3"; sourceTree = "<group>"; };
 		8D21079D1D412A1600F5BE76 /* music-0.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "music-0.mp3"; path = "Content/music-0.mp3"; sourceTree = "<group>"; };
+		8D727B8B1D4A4F3A00FA2B2A /* buyIsland.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = buyIsland.wav; path = Content/buyIsland.wav; sourceTree = "<group>"; };
+		8D727B8D1D4A5B1A00FA2B2A /* whoosh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = whoosh.mp3; path = Content/whoosh.mp3; sourceTree = "<group>"; };
+		8D727B8F1D4A6C3900FA2B2A /* firework2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = firework2.wav; path = Content/firework2.wav; sourceTree = "<group>"; };
+		8D727B901D4A6C3900FA2B2A /* firework1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = firework1.wav; path = Content/firework1.wav; sourceTree = "<group>"; };
+		8D727B931D4A73E500FA2B2A /* finish.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = finish.wav; path = Content/finish.wav; sourceTree = "<group>"; };
 		8DDC91311C66307300476BCD /* SettingLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingLayer.swift; sourceTree = "<group>"; };
 		8DFFD4B61CAD6F62008C668B /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "Energy/Content/GoogleMobileAdsSdkiOS-7.7.0/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		8DFFD4B81CAD6F9B008C668B /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -227,6 +237,10 @@
 				8D2107941D41242C00F5BE76 /* music-4.mp3 */,
 				8D2107951D41242C00F5BE76 /* music-5.mp3 */,
 				8D2107961D41242C00F5BE76 /* music-6.mp3 */,
+				8D727B8B1D4A4F3A00FA2B2A /* buyIsland.wav */,
+				8D727B931D4A73E500FA2B2A /* finish.wav */,
+				8D727B901D4A6C3900FA2B2A /* firework1.wav */,
+				8D727B8F1D4A6C3900FA2B2A /* firework2.wav */,
 				65361A6B1C61A30D006C3E18 /* explosion.mp3 */,
 				65361A6C1C61A30D006C3E18 /* levelup.wav */,
 				65361A6D1C61A30D006C3E18 /* placing.wav */,
@@ -235,6 +249,7 @@
 				65361A791C61D886006C3E18 /* click.wav */,
 				65361A7B1C61D93A006C3E18 /* select.wav */,
 				653E36711C86E8DB00AE0900 /* tap.wav */,
+				8D727B8D1D4A5B1A00FA2B2A /* whoosh.mp3 */,
 			);
 			name = Content;
 			sourceTree = "<group>";
@@ -340,6 +355,7 @@
 				65361A721C61A30D006C3E18 /* explosion.mp3 in Resources */,
 				65361A731C61A30D006C3E18 /* levelup.wav in Resources */,
 				8D2107981D41242C00F5BE76 /* music-2.mp3 in Resources */,
+				8D727B941D4A73E500FA2B2A /* finish.wav in Resources */,
 				8D042CEE1C84933900DF434C /* Starfield.sks in Resources */,
 				65ED1E6E1C608A8B008E0BB5 /* Explode.sks in Resources */,
 				65361A7C1C61D93A006C3E18 /* select.wav in Resources */,
@@ -352,11 +368,15 @@
 				8D21079E1D412A1600F5BE76 /* music-0.mp3 in Resources */,
 				65361A741C61A30D006C3E18 /* placing.wav in Resources */,
 				65361A7A1C61D886006C3E18 /* click.wav in Resources */,
+				8D727B921D4A6C3900FA2B2A /* firework1.wav in Resources */,
+				8D727B8C1D4A4F3A00FA2B2A /* buyIsland.wav in Resources */,
 				8D21079C1D41242C00F5BE76 /* music-6.mp3 in Resources */,
 				65361A751C61A30D006C3E18 /* sell.wav in Resources */,
 				655BCC0F1C48A67B007A8079 /* icon.atlas in Resources */,
 				8D2107971D41242C00F5BE76 /* music-1.mp3 in Resources */,
+				8D727B8E1D4A5B1A00FA2B2A /* whoosh.mp3 in Resources */,
 				65E5E2C31CF30B1D00066A85 /* Localizable.strings in Resources */,
+				8D727B911D4A6C3900FA2B2A /* firework2.wav in Resources */,
 				65361A781C61D572006C3E18 /* slide.wav in Resources */,
 				65386E181C2CD8A500D08B41 /* Main.storyboard in Resources */,
 			);

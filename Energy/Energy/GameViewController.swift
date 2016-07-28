@@ -39,6 +39,11 @@ let soundSlide       = SKAction.playSoundFileNamed("slide.wav", waitForCompletio
 let soundClick       = SKAction.playSoundFileNamed("click.wav", waitForCompletion: false)
 let soundSelect      = SKAction.playSoundFileNamed("select.wav", waitForCompletion: false)
 let soundAction      = SKAction.playSoundFileNamed("action.wav", waitForCompletion: false)
+let soundBuyIsland   = SKAction.playSoundFileNamed("buyIsland.wav", waitForCompletion: false)
+let soundWhoosh      = SKAction.playSoundFileNamed("whoosh.mp3", waitForCompletion: false)
+let soundFirework1   = SKAction.playSoundFileNamed("firework1.wav", waitForCompletion: false)
+let soundFirework2   = SKAction.playSoundFileNamed("firework2.wav", waitForCompletion: false)
+let soundFinish      = SKAction.playSoundFileNamed("finish.wav", waitForCompletion: false)
 
 // Game Color
 var colorMoney       = UIColor(red: 0.855, green: 0.847, blue: 0.314, alpha: 1.000)// #DAD74E
@@ -246,8 +251,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
         
-        money = 1000000000000000
-        research = 1000000000000000
+//        money = 100000000000000000
+//        research = 100000000000000000
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {

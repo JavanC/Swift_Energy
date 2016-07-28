@@ -155,22 +155,28 @@ class FinishBubble: SKNode {
         OKLabel.verticalAlignmentMode = .Center
         OKButton.addChild(OKLabel)
         addChild(OKButton)
-        
-        NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: #selector(FinishBubble.launchFireworks), userInfo: nil, repeats: true)
     }
     
     func launchFireworks() {
-        let emitter = SKEmitterNode(fileNamed: "Firework.sks")!
-        let xPosition = CGFloat(RandomInt(min: -576 / 2, max: 576 / 2)) * framescale
-        let yPosition = CGFloat(RandomInt(min: 256, max: 1024 / 2)) * framescale
-        let pos = CGPoint(x: xPosition, y: yPosition)
-        emitter.position = pos
-        emitter.zPosition = -1
-        addChild(emitter)
+        if self.hidden == true { return }
+        if !isSoundMute { runAction(soundFirework1) }
+        RunAfterDelay(2) {
+            if !isSoundMute { self.runAction(soundFirework2) }
+            let emitter = SKEmitterNode(fileNamed: "Firework.sks")!
+            let xPosition = CGFloat(RandomInt(min: -576 / 2, max: 576 / 2)) * framescale
+            let yPosition = CGFloat(RandomInt(min: 256, max: 1024 / 2)) * framescale
+            let pos = CGPoint(x: xPosition, y: yPosition)
+            emitter.position = pos
+            emitter.zPosition = -1
+            self.addChild(emitter)
+        }
+        if self.hidden == true { return }
+        RunAfterDelay(NSTimeInterval(RandomFloat(min: 0.5, max: 1.5)), block: launchFireworks)
     }
     
     func showBubble() {
-        self.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3)]))
+        if !isSoundMute { runAction(soundFinish) }
+        self.runAction(SKAction.sequence([SKAction.unhide(), SKAction.fadeInWithDuration(0.3), SKAction.runBlock(launchFireworks)]))
     }
     
     func hideBubble(duration duration: Double = 0.3) {
