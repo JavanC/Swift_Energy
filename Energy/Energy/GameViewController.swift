@@ -251,8 +251,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
         
-//        money = 100000000000000000
-//        research = 100000000000000000
+        //money = 100000000000000000
+        //research = 100000000000000000
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
@@ -329,12 +329,6 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
                             money    += maps[i].money_TickAdd
                             research += maps[i].research_TickAdd
                         }
-                    }
-                    // If reset data during boost time
-                    if !isBoost {
-                        money    = 1
-                        research = 0
-                        break
                     }
                 }
             }
