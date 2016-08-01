@@ -174,8 +174,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
             islandScene.scaleMode      = .AspectFill
             upgradeScene.scaleMode     = .AspectFill
             researchScene.scaleMode    = .AspectFill
-            skView.showsFPS            = true
-            skView.showsNodeCount      = true
+//            skView.showsFPS            = true
+//            skView.showsNodeCount      = true
             skView.ignoresSiblingOrder = true
             skView.presentScene(islandsScene)
         }
