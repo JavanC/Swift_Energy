@@ -70,8 +70,8 @@ enum ResearchType: Int {
 
 // User Data
 var saveDataTimer         = NSTimer()
-var money: Double         = 10
-var research: Double      = 10
+var money: Double         = 1
+var research: Double      = 0
 var spendTime: Int        = 0
 var finishBuilding: Int   = 0
 var finishExplosion: Int  = 0
@@ -174,8 +174,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
             islandScene.scaleMode      = .AspectFill
             upgradeScene.scaleMode     = .AspectFill
             researchScene.scaleMode    = .AspectFill
-//            skView.showsFPS            = true
-//            skView.showsNodeCount      = true
+            //skView.showsFPS            = true
+            //skView.showsNodeCount      = true
             skView.ignoresSiblingOrder = true
             skView.presentScene(islandsScene)
         }
@@ -251,8 +251,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
         
-        money = 100000000000000000
-        research = 100000000000000000
+        //money = 100000000000000000
+        //research = 100000000000000000
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
