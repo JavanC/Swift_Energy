@@ -428,20 +428,19 @@ class IslandsScene: SKScene {
     
     func resetAllData() {
         
+        // until boost end to reset data
+        while isBoost {}
+        
         let black = SKSpriteNode(color: SKColor.blackColor(), size: frame.size)
         black.alpha = 0
         black.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
         black.zPosition = 1000
         let fadeIn = SKAction.fadeInWithDuration(1)
         let wait = SKAction.waitForDuration(0.5)
-        black.runAction(SKAction.sequence([fadeIn, wait]))
-        addChild(black)
-    
-        // until boost end to reset data
-        while isBoost {}
         let fadeOut = SKAction.fadeOutWithDuration(2)
         let remove = SKAction.removeFromParent()
-        black.runAction(SKAction.sequence([fadeOut, remove]))
+        black.runAction(SKAction.sequence([fadeIn, wait, fadeOut, remove]))
+        addChild(black)
         
         RunAfterDelay(1) {
             // hide setting layer

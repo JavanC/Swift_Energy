@@ -251,8 +251,8 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
         isMusicMute     = defaults.boolForKey("isMusicMute")
         isFinishTarget  = defaults.boolForKey("isFinishTarget")
         
-        //money = 100000000000000000
-        //research = 100000000000000000
+        money = 100000000000000000
+        research = 100000000000000000
         
         // load upgrade and research level
         for count in 0..<UpgradeType.UpgradeTypeLength.hashValue {
@@ -298,8 +298,11 @@ class GameViewController: UIViewController, GADBannerViewDelegate {
     }
     
     func loadTime() {
-        // Boost lost time
+        // if in pause, no load time
         if isPause { return }
+        // if in last boost, no load time
+        if isBoost { return }
+        // Boost lost time
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)) {
             print("Start Boost time!")
             isBoost = true
