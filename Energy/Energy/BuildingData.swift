@@ -739,7 +739,7 @@ class BuildingData: NSObject, NSCoding {
             } else {
                 energySystem.inAmount += heatSystem.inAmount
                 if heatSystem.inAmount > 0 {
-                    waterSystem.inAmount -= heatSystem.inAmount / 1000 + 1
+                    waterSystem.inAmount -= heatSystem.inAmount / 1000
                 }
                 heatSystem.inAmount = 0
             }
